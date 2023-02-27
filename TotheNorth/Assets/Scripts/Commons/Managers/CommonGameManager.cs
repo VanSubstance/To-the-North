@@ -18,35 +18,69 @@ public class CommonGameManager : MonoBehaviour
     void Update()
     {
     }
-    private IEnumerator CoroutineFadeScreen(bool isFadeIn)
+
+    public void FadeScreen(bool isFadein)
+    {
+        FadeObject(fadeImage.transform, isFadein);
+    }
+
+    public void FadeObject(Transform targetTf, bool isFadeIn, System.Action afterAction = null)
+    {
+        StartCoroutine(CoroutineFadeObject(targetTf, isFadeIn, afterAction));
+    }
+    private IEnumerator CoroutineFadeObject(Transform targetTf, bool isFadeIn, System.Action afterAction = null)
     {
         float goalOpacity = isFadeIn ? 1.0f : 0.0f, curOpacity = isFadeIn ? 0.0f : 1.0f;
-        GlobalStatus.isInFade = true;
         while (isFadeIn ? curOpacity < goalOpacity : curOpacity > goalOpacity)
         {
             yield return new WaitForSeconds(0.01f);
             curOpacity = curOpacity + 0.01f * (GlobalSetting.accelSpeed * (isFadeIn ? 1f : -1f));
-            fadeImage.color = new Color(0f, 0f, 0f, curOpacity);
+            if (targetTf == null) break;
+            if (targetTf.GetComponent<Image>() != null) targetTf.GetComponent<Image>().color = new Color(
+                targetTf.GetComponent<Image>().color.r,
+                targetTf.GetComponent<Image>().color.g,
+                targetTf.GetComponent<Image>().color.b,
+                curOpacity);
+            if (targetTf == null) break;
+            if (targetTf.GetComponent<TextMeshProUGUI>() != null) targetTf.GetComponent<TextMeshProUGUI>().color = new Color(
+                targetTf.GetComponent<TextMeshProUGUI>().color.r,
+                targetTf.GetComponent<TextMeshProUGUI>().color.g,
+                targetTf.GetComponent<TextMeshProUGUI>().color.b,
+                curOpacity);
         }
-        GlobalStatus.isInFade = false;
+        if (afterAction != null) afterAction();
     }
-    private void FadeScreen(bool isFadeIn)
+
+    public void MoveObject(Transform targetTf, DirectionType direction, float distanceToMove, System.Action afterAction = null)
     {
-        if (GlobalStatus.isInFade)
+        StartCoroutine(CoroutineMoveObject(targetTf, direction, distanceToMove, afterAction));
+    }
+    private IEnumerator CoroutineMoveObject(Transform targetTf, DirectionType direction, float distanceToMove, System.Action afterAction = null)
+    {
+        float cnt = 1f;
+        Vector3 dirVector = Vector3.zero;
+        switch (direction)
         {
-            // 이미 작동중인 페이드 관련 기능이 있다
-            // => 현재 페이드 기능은 작동하지 않는다
-            // 에러 메세지 출력 필요
-            return;
+            case DirectionType.UP:
+                dirVector = Vector3.up;
+                break;
+            case DirectionType.DOWN:
+                dirVector = Vector3.down;
+                break;
+            case DirectionType.LEFT:
+                dirVector = Vector3.left;
+                break;
+            case DirectionType.RIGHT:
+                dirVector = Vector3.right;
+                break;
         }
-        StartCoroutine(CoroutineFadeScreen(isFadeIn));
-    }
-    private void TryChangeScene(string trargetSceneName)
-    {
-
-    }
-    private void TryPrintErr(ErrorType errType, string errStr)
-    {
-
+        while (cnt > 0f)
+        {
+            yield return new WaitForSeconds(0.01f * GlobalSetting.accelSpeed);
+            cnt -= 0.01f * GlobalSetting.accelSpeed;
+            if (targetTf == null) break;
+            targetTf.Translate(dirVector * distanceToMove * 0.01f * GlobalSetting.accelSpeed);
+        }
+        if (afterAction != null) afterAction();
     }
 }
