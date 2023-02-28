@@ -1,0 +1,49 @@
+<mxfile host="app.diagrams.net" modified="2023-02-26T07:17:50.434Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="4g1hrKhrAKVC1Af0WqTa" version="20.8.23" type="github">
+  <diagram name="페이지-1" id="L9Ek9IRtOELw0pnV7WeG">
+    <mxGraphModel dx="1434" dy="876" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Vp8wJ5OXnfNlvd5L-agy-10" value="새 게임 시작 / 기존 게임 불러오기" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Vp8wJ5OXnfNlvd5L-agy-2" target="Vp8wJ5OXnfNlvd5L-agy-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Vp8wJ5OXnfNlvd5L-agy-2" value="MainMenuScene" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="160" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="Vp8wJ5OXnfNlvd5L-agy-3" value="메인 메뉴 씬" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;horizontal=1;" vertex="1" parent="Vp8wJ5OXnfNlvd5L-agy-2">
+          <mxGeometry y="30" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Vp8wJ5OXnfNlvd5L-agy-15" value="구역 진입/ 구역 탈출" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="Vp8wJ5OXnfNlvd5L-agy-6" target="Vp8wJ5OXnfNlvd5L-agy-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Vp8wJ5OXnfNlvd5L-agy-6" value="VillageScene" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="160" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="Vp8wJ5OXnfNlvd5L-agy-7" value="공동체 씬&lt;br&gt;마을 내부를 돌아다닐 수 있다&lt;br&gt;루팅은 불가능&lt;br&gt;대신 npc들과 상호작용 가능하고, 상점 등등 편의시설 이용 가능" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Vp8wJ5OXnfNlvd5L-agy-6">
+          <mxGeometry y="30" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Vp8wJ5OXnfNlvd5L-agy-11" value="SectionScene" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="360" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="Vp8wJ5OXnfNlvd5L-agy-12" value="구역 씬&lt;br&gt;실질적인 인게임이 아닐까 싶음&lt;br&gt;전투, 루팅 등 논한 인게임 구현 필요" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Vp8wJ5OXnfNlvd5L-agy-11">
+          <mxGeometry y="30" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Vp8wJ5OXnfNlvd5L-agy-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Vp8wJ5OXnfNlvd5L-agy-16" target="Vp8wJ5OXnfNlvd5L-agy-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Vp8wJ5OXnfNlvd5L-agy-16" value="유저가 게임 시작" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Vp8wJ5OXnfNlvd5L-agy-25" value="SectionEditorScene" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="560" width="340" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="Vp8wJ5OXnfNlvd5L-agy-26" value="구역 제작용 에디터&lt;br&gt;배치 가능 요소: 벽, 장애물, 은엄폐물 등&lt;br&gt;추가적으로 루팅 아이템의 등장 위치도 설정 가능해야 한다&lt;br&gt;루팅 아이템 종류는 크게 두가지 중 선택&lt;br&gt;1. 퀘스트용 아이템&lt;br&gt;2. 일반 루팅 아이템&lt;br&gt;2 의 경우, 설정 가능 수치는&lt;br&gt;2.a. 아이템 카테고리&lt;br&gt;2.b. 아이템 스폰 확률&lt;br&gt;몬스터 배치&lt;br&gt;그 외의 요소는 논의가 필요할 것으로 보임" style="text;strokeColor=default;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;horizontal=1;" vertex="1" parent="Vp8wJ5OXnfNlvd5L-agy-25">
+          <mxGeometry y="30" width="340" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="Vp8wJ5OXnfNlvd5L-agy-27" value="크게 봐서 필요한 씬은 총 4개가 될 듯 함.&lt;br&gt;유저가 접근 가능한 씬은 3개, 에디터로써 접근 가능해야 하는 씬은 1개" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="40" width="480" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
