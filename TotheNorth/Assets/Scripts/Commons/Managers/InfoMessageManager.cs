@@ -82,8 +82,8 @@ public class InfoMessageManager : MonoBehaviour
             }
             newInfoText.color = new Color(c.r, c.g, c.b, 0f);
             isAnimating = true;
-            GetComponent<CommonGameManager>().MoveObject(newInfoText.transform, DirectionType.DOWN, distanceToMove / 128f);
-            GetComponent<CommonGameManager>().FadeObject(newInfoText.transform, true, () => { isAnimating = false; });
+            GetComponent<CommonGameManager>().MoveObject(newInfoText.transform, DirectionType.DOWN, 3f, distanceToMove / 128f);
+            GetComponent<CommonGameManager>().FadeObject(newInfoText.transform, true, 3f, () => { isAnimating = false; });
         }
         catch (MissingReferenceException err)
         {
@@ -103,8 +103,8 @@ public class InfoMessageManager : MonoBehaviour
         try
         {
             isAnimating = true;
-            GetComponent<CommonGameManager>().MoveObject(newInfoText.transform, DirectionType.DOWN, distanceToMove / 128f);
-            GetComponent<CommonGameManager>().FadeObject(newInfoText.transform, false, () =>
+            GetComponent<CommonGameManager>().MoveObject(newInfoText.transform, DirectionType.DOWN, 3f, distanceToMove / 128f);
+            GetComponent<CommonGameManager>().FadeObject(newInfoText.transform, false, 3f, () =>
             {
                 Destroy(newInfoTextGb);
                 timer = 0f;

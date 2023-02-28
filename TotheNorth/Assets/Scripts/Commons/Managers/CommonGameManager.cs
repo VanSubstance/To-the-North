@@ -8,33 +8,44 @@ public class CommonGameManager : MonoBehaviour
     [SerializeField]
     private Image fadeImage;
 
+    private int curStatus = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        switch (curStatus)
+        {
+            case 0:
+                FadeScreen(false);
+                curStatus = 1;
+                break;
+            case 1:
+
+                break;
+        }
     }
 
     public void FadeScreen(bool isFadein)
     {
-        FadeObject(fadeImage.transform, isFadein);
+        FadeObject(fadeImage.transform, isFadein, 1f);
     }
 
-    public void FadeObject(Transform targetTf, bool isFadeIn, System.Action afterAction = null)
+    public void FadeObject(Transform targetTf, bool isFadeIn, float accelSpeed, System.Action afterAction = null)
     {
-        StartCoroutine(CoroutineFadeObject(targetTf, isFadeIn, afterAction));
+        StartCoroutine(CoroutineFadeObject(targetTf, isFadeIn, accelSpeed, afterAction));
     }
-    private IEnumerator CoroutineFadeObject(Transform targetTf, bool isFadeIn, System.Action afterAction = null)
+    private IEnumerator CoroutineFadeObject(Transform targetTf, bool isFadeIn, float accelSpeed, System.Action afterAction = null)
     {
         float goalOpacity = isFadeIn ? 1.0f : 0.0f, curOpacity = isFadeIn ? 0.0f : 1.0f;
         while (isFadeIn ? curOpacity < goalOpacity : curOpacity > goalOpacity)
         {
             yield return new WaitForSeconds(0.01f);
-            curOpacity = curOpacity + 0.01f * (GlobalSetting.accelSpeed * (isFadeIn ? 1f : -1f));
+            curOpacity = curOpacity + (0.01f * (GlobalSetting.accelSpeed * (isFadeIn ? 1f : -1f)) * accelSpeed);
             if (targetTf == null) break;
             if (targetTf.GetComponent<Image>() != null) targetTf.GetComponent<Image>().color = new Color(
                 targetTf.GetComponent<Image>().color.r,
@@ -51,11 +62,11 @@ public class CommonGameManager : MonoBehaviour
         if (afterAction != null) afterAction();
     }
 
-    public void MoveObject(Transform targetTf, DirectionType direction, float distanceToMove, System.Action afterAction = null)
+    public void MoveObject(Transform targetTf, DirectionType direction, float accelAmount, float distanceToMove, System.Action afterAction = null)
     {
-        StartCoroutine(CoroutineMoveObject(targetTf, direction, distanceToMove, afterAction));
+        StartCoroutine(CoroutineMoveObject(targetTf, direction, accelAmount, distanceToMove, afterAction));
     }
-    private IEnumerator CoroutineMoveObject(Transform targetTf, DirectionType direction, float distanceToMove, System.Action afterAction = null)
+    private IEnumerator CoroutineMoveObject(Transform targetTf, DirectionType direction, float accelAmount, float distanceToMove, System.Action afterAction = null)
     {
         float cnt = 1f;
         Vector3 dirVector = Vector3.zero;
@@ -76,10 +87,10 @@ public class CommonGameManager : MonoBehaviour
         }
         while (cnt > 0f)
         {
-            yield return new WaitForSeconds(0.01f * GlobalSetting.accelSpeed);
-            cnt -= 0.01f * GlobalSetting.accelSpeed;
+            yield return new WaitForSeconds(0.01f);
+            cnt -= 0.01f * GlobalSetting.accelSpeed * accelAmount;
             if (targetTf == null) break;
-            targetTf.Translate(dirVector * distanceToMove * 0.01f * GlobalSetting.accelSpeed);
+            targetTf.Translate(dirVector * distanceToMove * 0.01f * GlobalSetting.accelSpeed * accelAmount);
         }
         if (afterAction != null) afterAction();
     }
