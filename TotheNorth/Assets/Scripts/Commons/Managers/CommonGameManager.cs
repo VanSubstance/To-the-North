@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -21,18 +22,35 @@ public class CommonGameManager : MonoBehaviour
         switch (curStatus)
         {
             case 0:
+                GlobalStatus.Loading.System.CommonGameManager = true;
                 FadeScreen(false);
                 curStatus = 1;
                 break;
             case 1:
-
+                if (GlobalStatus.Loading.System.isSystemLoadingDone())
+                {
+                    GetComponent<InfoMessageManager>().AddMessageIntoQueue(new InfoStat(GlobalStatus.curScene, InfoType.ERROR));
+                    curStatus = 2;
+                }
+                break;
+            case 2:
                 break;
         }
     }
 
-    public void FadeScreen(bool isFadein)
+    public void MoveScene(string targetSceneName)
     {
-        FadeObject(fadeImage.transform, isFadein, 1f);
+        FadeScreen(true, () =>
+        {
+            GlobalStatus.resetLoading();
+            GlobalStatus.curScene = targetSceneName;
+            SceneManager.LoadScene(targetSceneName);
+        });
+    }
+
+    public void FadeScreen(bool isFadein, System.Action actionAfter = null)
+    {
+        FadeObject(fadeImage.transform, isFadein, 1f, actionAfter);
     }
 
     public void FadeObject(Transform targetTf, bool isFadeIn, float accelSpeed, System.Action afterAction = null)

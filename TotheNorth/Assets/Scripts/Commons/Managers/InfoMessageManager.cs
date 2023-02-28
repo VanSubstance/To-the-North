@@ -17,11 +17,6 @@ public class InfoMessageManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        infoStatQueue = new Queue<InfoStat>();
-        infoStatTfQueue = new Queue<GameObject>();
-        timer = 0f;
-        distanceToMove = 64f;
-        curStatus = 1;
     }
 
     // Update is called once per frame
@@ -31,8 +26,10 @@ public class InfoMessageManager : MonoBehaviour
         {
             case 0:
                 infoStatQueue = new Queue<InfoStat>();
+                infoStatTfQueue = new Queue<GameObject>();
                 timer = 0f;
-                distanceToMove = 30f;
+                distanceToMove = 64f;
+                GlobalStatus.Loading.System.InfoMessageManager = true;
                 curStatus = 1;
                 break;
             case 1:
@@ -44,7 +41,7 @@ public class InfoMessageManager : MonoBehaviour
     public void testBtn()
     {
         InfoStat temp = new InfoStat();
-        temp.text = "Å×½ºÆ® ¸Þ¼¼Áö";
+        temp.text = "í…ŒìŠ¤íŠ¸ ë©”ì„¸ì§€";
         temp.type = InfoType.NORMAL;
         infoStatQueue.Enqueue(temp);
     }
@@ -87,7 +84,7 @@ public class InfoMessageManager : MonoBehaviour
         }
         catch (MissingReferenceException err)
         {
-            // ½ÇÇà Áß »õ·Î¿î ¸Þ¼¼Áö »ðÀÔÀ¸·Î ÀÎÇÑ ÆÄ¼Õ
+            // ì‹¤í–‰ ì¤‘ ìƒˆë¡œìš´ ë©”ì„¸ì§€ ì‚½ìž…ìœ¼ë¡œ ì¸í•œ íŒŒì†
         }
         while (isAnimating)
         {
@@ -112,7 +109,7 @@ public class InfoMessageManager : MonoBehaviour
         }
         catch (MissingReferenceException err)
         {
-            // ½ÇÇà Áß »õ·Î¿î ¸Þ¼¼Áö »ðÀÔÀ¸·Î ÀÎÇÑ ÆÄ¼Õ
+            // ì‹¤í–‰ ì¤‘ ìƒˆë¡œìš´ ë©”ì„¸ì§€ ì‚½ìž…ìœ¼ë¡œ ì¸í•œ íŒŒì†
         }
     }
 
@@ -122,8 +119,8 @@ public class InfoMessageManager : MonoBehaviour
         if (infoStatQueue != null && infoStatQueue.Count > 0)
         {
             curInfoStat = infoStatQueue.Dequeue();
-            // ¸Þ¼¼Áö Ãâ·Â
-            // ¸¸¾à Áö±Ý Àç»ýÁßÀÎ ¸Þ¼¼Áö°¡ ÀÖ´Ù = infoStatTfQueue¿¡ ¹º°¡ µé¾îÀÖ´Ù -> ±âÁ¸ ¸Þ¼¼Áö ÆÄ±« = infoStatTfQueue Dequeue ÈÄ Destroy
+            // ë©”ì„¸ì§€ ì¶œë ¥
+            // ë§Œì•½ ì§€ê¸ˆ ìž¬ìƒì¤‘ì¸ ë©”ì„¸ì§€ê°€ ìžˆë‹¤ = infoStatTfQueueì— ë­”ê°€ ë“¤ì–´ìžˆë‹¤ -> ê¸°ì¡´ ë©”ì„¸ì§€ íŒŒê´´ = infoStatTfQueue Dequeue í›„ Destroy
             GameObject tempGo = null;
             if (infoStatTfQueue.TryDequeue(out tempGo))
             {
