@@ -1,13 +1,11 @@
-<mxfile host="app.diagrams.net" modified="2023-03-01T06:11:41.192Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="tFdnwiZlMoPF3jvpw_rR" version="20.8.23" type="github">
+<mxfile host="app.diagrams.net" modified="2023-03-01T07:12:50.333Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="UGSPoOagf_-6fEUJBIKK" version="20.8.23" type="github">
   <diagram name="페이지-1" id="oaGXcSRPwz7FZ0cOwOvJ">
-    <mxGraphModel dx="2024" dy="1588" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2530" dy="1985" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="VUXAhS1RK0JVEm_HKfFF-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" parent="1" source="VUXAhS1RK0JVEm_HKfFF-2" target="VUXAhS1RK0JVEm_HKfFF-40" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="280" y="80" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="2l95wYTiK5Krl4A1ftNN-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-2" target="2l95wYTiK5Krl4A1ftNN-39">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="VUXAhS1RK0JVEm_HKfFF-2" value="에디터 실행" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="40" y="40" width="160" height="80" as="geometry" />
@@ -23,7 +21,7 @@
         <mxCell id="VUXAhS1RK0JVEm_HKfFF-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" parent="1" source="VUXAhS1RK0JVEm_HKfFF-14" target="VUXAhS1RK0JVEm_HKfFF-34" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="VUXAhS1RK0JVEm_HKfFF-14" value="추상 함수 실행:&lt;br&gt;에디터 켜기" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" parent="1" vertex="1">
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-14" value="추상 함수 실행:&lt;br&gt;에디터 켜기" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#0000FF;" parent="1" vertex="1">
           <mxGeometry x="40" y="720" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="VUXAhS1RK0JVEm_HKfFF-16" value="에디팅" style="swimlane;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" parent="1" vertex="1">
@@ -38,7 +36,7 @@
         <mxCell id="VUXAhS1RK0JVEm_HKfFF-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" parent="VUXAhS1RK0JVEm_HKfFF-16" source="VUXAhS1RK0JVEm_HKfFF-19" target="VUXAhS1RK0JVEm_HKfFF-21" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="VUXAhS1RK0JVEm_HKfFF-19" value="추상 함수 실행:&lt;br&gt;에디터 초기화" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" parent="VUXAhS1RK0JVEm_HKfFF-16" vertex="1">
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-19" value="추상 함수 실행:&lt;br&gt;에디터 초기화" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#0000FF;" parent="VUXAhS1RK0JVEm_HKfFF-16" vertex="1">
           <mxGeometry x="240" y="40" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="VUXAhS1RK0JVEm_HKfFF-21" value="초기화 종료" style="rounded=1;whiteSpace=wrap;html=1;" parent="VUXAhS1RK0JVEm_HKfFF-16" vertex="1">
@@ -53,7 +51,7 @@
         <mxCell id="VUXAhS1RK0JVEm_HKfFF-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" parent="VUXAhS1RK0JVEm_HKfFF-16" source="VUXAhS1RK0JVEm_HKfFF-24" target="VUXAhS1RK0JVEm_HKfFF-26" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="VUXAhS1RK0JVEm_HKfFF-24" value="추상 함수 실행:&lt;br&gt;다른 이름으로 저장" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" parent="VUXAhS1RK0JVEm_HKfFF-16" vertex="1">
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-24" value="추상 함수 실행:&lt;br&gt;다른 이름으로 저장" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#0000FF;" parent="VUXAhS1RK0JVEm_HKfFF-16" vertex="1">
           <mxGeometry x="240" y="200" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="VUXAhS1RK0JVEm_HKfFF-26" value="저장 종료" style="rounded=1;whiteSpace=wrap;html=1;" parent="VUXAhS1RK0JVEm_HKfFF-16" vertex="1">
@@ -70,13 +68,13 @@
             <mxPoint x="440" y="400" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="VUXAhS1RK0JVEm_HKfFF-29" value="추상 함수 실행:&lt;br&gt;에디터 초기화" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" parent="VUXAhS1RK0JVEm_HKfFF-16" vertex="1">
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-29" value="추상 함수 실행:&lt;br&gt;에디터 초기화" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#0000FF;" parent="VUXAhS1RK0JVEm_HKfFF-16" vertex="1">
           <mxGeometry x="240" y="360" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="VUXAhS1RK0JVEm_HKfFF-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" parent="VUXAhS1RK0JVEm_HKfFF-16" source="VUXAhS1RK0JVEm_HKfFF-33" target="VUXAhS1RK0JVEm_HKfFF-42" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="VUXAhS1RK0JVEm_HKfFF-33" value="추상 함수 실행:&lt;br&gt;에디터 끄기" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" parent="VUXAhS1RK0JVEm_HKfFF-16" vertex="1">
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-33" value="추상 함수 실행:&lt;br&gt;에디터 끄기" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#0000FF;" parent="VUXAhS1RK0JVEm_HKfFF-16" vertex="1">
           <mxGeometry x="440" y="360" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="VUXAhS1RK0JVEm_HKfFF-37" value="메인메뉴로 돌아가기" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" parent="VUXAhS1RK0JVEm_HKfFF-16" vertex="1">
@@ -109,7 +107,7 @@
         <mxCell id="VUXAhS1RK0JVEm_HKfFF-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" parent="1" source="VUXAhS1RK0JVEm_HKfFF-34" target="VUXAhS1RK0JVEm_HKfFF-50" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="VUXAhS1RK0JVEm_HKfFF-34" value="추상 함수 실행:&lt;br&gt;에디터 초기화" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" parent="1" vertex="1">
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-34" value="추상 함수 실행:&lt;br&gt;에디터 초기화" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#0000FF;" parent="1" vertex="1">
           <mxGeometry x="40" y="880" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="VUXAhS1RK0JVEm_HKfFF-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" parent="1" source="VUXAhS1RK0JVEm_HKfFF-37" target="VUXAhS1RK0JVEm_HKfFF-40" edge="1">
@@ -134,7 +132,7 @@
         <mxCell id="VUXAhS1RK0JVEm_HKfFF-64" value="종료" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="VUXAhS1RK0JVEm_HKfFF-40" vertex="1">
           <mxGeometry x="440" y="40" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="VUXAhS1RK0JVEm_HKfFF-50" value="추상 함수 실행:&lt;br&gt;커스텀 버튼들 추가" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" parent="1" vertex="1">
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-50" value="추상 함수 실행:&lt;br&gt;커스텀 버튼들 추가" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#0000FF;" parent="1" vertex="1">
           <mxGeometry x="40" y="1040" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="VUXAhS1RK0JVEm_HKfFF-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" parent="1" source="VUXAhS1RK0JVEm_HKfFF-52" target="VUXAhS1RK0JVEm_HKfFF-61" edge="1">
@@ -183,10 +181,10 @@
         <mxCell id="2l95wYTiK5Krl4A1ftNN-14" value="콜백 함수" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="2l95wYTiK5Krl4A1ftNN-8">
           <mxGeometry x="280" y="40" width="640" height="320" as="geometry" />
         </mxCell>
-        <mxCell id="2l95wYTiK5Krl4A1ftNN-16" value="추상 함수 실행:&lt;br&gt;에디터 켜기" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="2l95wYTiK5Krl4A1ftNN-14">
+        <mxCell id="2l95wYTiK5Krl4A1ftNN-16" value="추상 함수 실행:&lt;br&gt;에디터 켜기" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#0000FF;" vertex="1" parent="2l95wYTiK5Krl4A1ftNN-14">
           <mxGeometry x="440" y="40" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="2l95wYTiK5Krl4A1ftNN-18" value="추상 함수 실행:&lt;br&gt;에디터 초기화" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="2l95wYTiK5Krl4A1ftNN-14">
+        <mxCell id="2l95wYTiK5Krl4A1ftNN-18" value="추상 함수 실행:&lt;br&gt;에디터 초기화" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#0000FF;" vertex="1" parent="2l95wYTiK5Krl4A1ftNN-14">
           <mxGeometry x="40" y="200" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="2l95wYTiK5Krl4A1ftNN-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="2l95wYTiK5Krl4A1ftNN-14" source="2l95wYTiK5Krl4A1ftNN-16" target="2l95wYTiK5Krl4A1ftNN-18">
@@ -203,7 +201,7 @@
         <mxCell id="2l95wYTiK5Krl4A1ftNN-20" value="메인메뉴 UI 끄기" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="2l95wYTiK5Krl4A1ftNN-14">
           <mxGeometry x="240" y="40" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="2l95wYTiK5Krl4A1ftNN-21" value="추상 함수 실행:&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;커스텀 버튼들 추가" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="2l95wYTiK5Krl4A1ftNN-14">
+        <mxCell id="2l95wYTiK5Krl4A1ftNN-21" value="추상 함수 실행:&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;커스텀 버튼들 추가" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#0000FF;" vertex="1" parent="2l95wYTiK5Krl4A1ftNN-14">
           <mxGeometry x="240" y="200" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="2l95wYTiK5Krl4A1ftNN-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="2l95wYTiK5Krl4A1ftNN-14" source="2l95wYTiK5Krl4A1ftNN-18" target="2l95wYTiK5Krl4A1ftNN-21">
@@ -212,7 +210,7 @@
         <mxCell id="2l95wYTiK5Krl4A1ftNN-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="2l95wYTiK5Krl4A1ftNN-14" source="2l95wYTiK5Krl4A1ftNN-35" target="2l95wYTiK5Krl4A1ftNN-20">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="2l95wYTiK5Krl4A1ftNN-35" value="추상 함수 실행:&lt;br&gt;마우스 이벤트 할당" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="2l95wYTiK5Krl4A1ftNN-14">
+        <mxCell id="2l95wYTiK5Krl4A1ftNN-35" value="추상 함수 실행:&lt;br&gt;마우스 이벤트 할당" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#0000FF;" vertex="1" parent="2l95wYTiK5Krl4A1ftNN-14">
           <mxGeometry x="40" y="40" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="2l95wYTiK5Krl4A1ftNN-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="2l95wYTiK5Krl4A1ftNN-8" source="2l95wYTiK5Krl4A1ftNN-24" target="2l95wYTiK5Krl4A1ftNN-27">
@@ -241,7 +239,7 @@
         <mxCell id="2l95wYTiK5Krl4A1ftNN-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="2l95wYTiK5Krl4A1ftNN-31" target="2l95wYTiK5Krl4A1ftNN-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="2l95wYTiK5Krl4A1ftNN-31" value="추상 함수 실행:&lt;br&gt;마우스 이벤트 할당" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="1">
+        <mxCell id="2l95wYTiK5Krl4A1ftNN-31" value="추상 함수 실행:&lt;br&gt;마우스 이벤트 할당" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#0000FF;" vertex="1" parent="1">
           <mxGeometry x="40" y="400" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="2l95wYTiK5Krl4A1ftNN-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-4" target="2l95wYTiK5Krl4A1ftNN-31">
@@ -253,6 +251,12 @@
               <mxPoint x="1520" y="1480" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="2l95wYTiK5Krl4A1ftNN-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="2l95wYTiK5Krl4A1ftNN-39" target="VUXAhS1RK0JVEm_HKfFF-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2l95wYTiK5Krl4A1ftNN-39" value="기능 선택 버튼 기능 부여" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="280" y="40" width="160" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
