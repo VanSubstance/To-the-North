@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using TMPro;
 
@@ -9,10 +10,22 @@ public class InfoMessageManager : MonoBehaviour
     private Transform infoTextParentTf;
     [SerializeField]
     private TMP_FontAsset fontAsset;
-    private Queue<InfoStat> infoStatQueue { get; set; }
-    private Queue<GameObject> infoStatTfQueue { get; set; }
-    private float timer { get; set; }
-    private float distanceToMove { get; set; }
+    private Queue<InfoStat> infoStatQueue
+    {
+        get; set;
+    }
+    private Queue<GameObject> infoStatTfQueue
+    {
+        get; set;
+    }
+    private float timer
+    {
+        get; set;
+    }
+    private float distanceToMove
+    {
+        get; set;
+    }
     private int curStatus = 0;
     // Start is called before the first frame update
     void Start()
@@ -29,6 +42,7 @@ public class InfoMessageManager : MonoBehaviour
                 infoStatTfQueue = new Queue<GameObject>();
                 timer = 0f;
                 distanceToMove = 64f;
+                GlobalComponent.Modal.Info.controller = this;
                 GlobalStatus.Loading.System.InfoMessageManager = true;
                 curStatus = 1;
                 break;
@@ -36,14 +50,6 @@ public class InfoMessageManager : MonoBehaviour
                 TryPrintMessageFromQueue();
                 break;
         }
-    }
-
-    public void testBtn()
-    {
-        InfoStat temp = new InfoStat();
-        temp.text = "테스트 메세지";
-        temp.type = InfoType.NORMAL;
-        infoStatQueue.Enqueue(temp);
     }
 
     public void AddMessageIntoQueue(InfoStat infoStat)
