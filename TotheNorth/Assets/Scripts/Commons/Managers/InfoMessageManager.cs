@@ -82,7 +82,7 @@ public class InfoMessageManager : MonoBehaviour
             GetComponent<CommonGameManager>().MoveObject(newInfoText.transform, DirectionType.DOWN, 3f, distanceToMove / 128f);
             GetComponent<CommonGameManager>().FadeObject(newInfoText.transform, true, 3f, () => { isAnimating = false; });
         }
-        catch (MissingReferenceException err)
+        catch (MissingReferenceException)
         {
             // 실행 중 새로운 메세지 삽입으로 인한 파손
         }
@@ -107,7 +107,7 @@ public class InfoMessageManager : MonoBehaviour
                 timer = 0f;
             });
         }
-        catch (MissingReferenceException err)
+        catch (MissingReferenceException)
         {
             // 실행 중 새로운 메세지 삽입으로 인한 파손
         }
