@@ -9,9 +9,9 @@ public class MapEditorImplementation : IBasicEditor
         Debug.Log("마우스 이벤트 할당");
     }
 
-    public void TryLoadData()
+    public void TryLoadData(string targetFileName)
     {
-        Debug.Log("데이터 불러오기");
+        Debug.Log("데이터 불러오기:: " + targetFileName);
     }
 
     public void TryResetEditor()

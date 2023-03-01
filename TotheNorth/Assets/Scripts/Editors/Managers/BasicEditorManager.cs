@@ -62,27 +62,40 @@ public class BasicEditorManager : MonoBehaviour
     {
         if (isGameNew)
         {
-            editorFunctions.TryAllocateMouseAction();
-            ToggleMainMenuUI(true);
-            editorFunctions.TryTurnEditorOn();
-            editorFunctions.TryResetEditor();
-            editorFunctions.TryAddCustomButtons();
-            curStatus = 1;
+            GlobalComponent.Modal.Popup.controller.AwakeModal(
+                ModalType.INFO_NORMAL,
+                contentToInit: "새로운 맵을 생성하시겠습니까??",
+                callbackConfirm: () =>
+                {
+                    editorFunctions.TryAllocateMouseAction();
+                    ToggleMainMenuUI(true);
+                    editorFunctions.TryTurnEditorOn();
+                    editorFunctions.TryResetEditor();
+                    editorFunctions.TryAddCustomButtons();
+                    curStatus = 1;
+                }
+            );
         }
         else
         {
-            // 파일 이름 받는 모달 필요
-            //GlobalComponent.modalPopup.setType(ModalType.TextInput);
-            //GlobalComponent.modalPopup.setInfo(textConfirm: "불러오기");
-            //GlobalComponent.modalPopup.openModal(onConfirm: (inputText) => {
-            //    TryAllocateMouseAction();
-            //    ToggleMainMenuUI(true);
-            //    TryTurnEditorOn();
-            //    TryResetEditor();
-            //    TryAddCustomButtons();
-            //    TryLoadData();
-            //    curStatus = 1;
-            //};
+            GlobalComponent.Modal.Popup.controller.AwakeModal<string>(
+                ModalType.INPUT_TEXT,
+                textConfirm: "불러오기",
+                conditionConfirm: (inputText) =>
+                {
+                    return inputText.Length > 0;
+                },
+                callbackConfirm: (inputText) =>
+                {
+                    editorFunctions.TryAllocateMouseAction();
+                    ToggleMainMenuUI(true);
+                    editorFunctions.TryTurnEditorOn();
+                    editorFunctions.TryResetEditor();
+                    editorFunctions.TryAddCustomButtons();
+                    editorFunctions.TryLoadData(inputText);
+                    curStatus = 1;
+                }
+            );
         }
     }
     private void ExitGame()
