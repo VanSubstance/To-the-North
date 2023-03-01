@@ -22,10 +22,16 @@ public class CommonGameManager : MonoBehaviour
         switch (curStatus)
         {
             case 0:
-                FadeScreen(false, () =>
+                if (fadeImage != null)
+                {
+                    FadeScreen(false, () =>
+                    {
+                        GlobalStatus.Loading.System.CommonGameManager = true;
+                    });
+                } else
                 {
                     GlobalStatus.Loading.System.CommonGameManager = true;
-                });
+                }
                 curStatus = 1;
                 break;
             case 1:
