@@ -1,1 +1,174 @@
-<mxfile host="app.diagrams.net" modified="2023-03-01T04:27:18.523Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" version="20.8.23" etag="QIsP7Grk2Pj9pCUkF46y" type="github"><diagram name="페이지-1" id="oaGXcSRPwz7FZ0cOwOvJ">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2023-03-01T04:57:34.399Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="fiokgP3TMKg_5qYJUSms" version="20.8.23" type="github">
+  <diagram name="페이지-1" id="oaGXcSRPwz7FZ0cOwOvJ">
+    <mxGraphModel dx="2206" dy="1348" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-54" target="VUXAhS1RK0JVEm_HKfFF-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-2" target="VUXAhS1RK0JVEm_HKfFF-54">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-2" value="에디터 실행" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-4" target="VUXAhS1RK0JVEm_HKfFF-14">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120.09090909090901" y="399.9999999999998" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-50" target="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-14" target="VUXAhS1RK0JVEm_HKfFF-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-14" value="추상 함수 실행:&lt;br&gt;에디터 켜기" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="40" y="400" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-16" value="에디팅" style="swimlane;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="520" y="400" width="1040" height="720" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="VUXAhS1RK0JVEm_HKfFF-16" source="VUXAhS1RK0JVEm_HKfFF-18" target="VUXAhS1RK0JVEm_HKfFF-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-18" value="초기화 버튼 클릭" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry x="40" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="VUXAhS1RK0JVEm_HKfFF-16" source="VUXAhS1RK0JVEm_HKfFF-19" target="VUXAhS1RK0JVEm_HKfFF-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-19" value="추상 함수 실행:&lt;br&gt;에디터 초기화" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry x="240" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-21" value="초기화 종료" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry x="440" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="VUXAhS1RK0JVEm_HKfFF-16" source="VUXAhS1RK0JVEm_HKfFF-23" target="VUXAhS1RK0JVEm_HKfFF-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-23" value="버튼 클릭&lt;br&gt;다른 이름으로 저장" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry x="40" y="200" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="VUXAhS1RK0JVEm_HKfFF-16" source="VUXAhS1RK0JVEm_HKfFF-24" target="VUXAhS1RK0JVEm_HKfFF-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-24" value="추상 함수 실행:&lt;br&gt;다른 이름으로 저장" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry x="240" y="200" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-26" value="저장 종료" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry x="440" y="200" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="VUXAhS1RK0JVEm_HKfFF-16" source="VUXAhS1RK0JVEm_HKfFF-28" target="VUXAhS1RK0JVEm_HKfFF-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-28" value="버튼 클릭&lt;br&gt;메인 메뉴로 돌아가기" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry x="40" y="360" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="VUXAhS1RK0JVEm_HKfFF-16" source="VUXAhS1RK0JVEm_HKfFF-29" target="VUXAhS1RK0JVEm_HKfFF-33">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="440" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-29" value="추상 함수 실행:&lt;br&gt;에디터 초기화" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry x="240" y="360" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="VUXAhS1RK0JVEm_HKfFF-16" source="VUXAhS1RK0JVEm_HKfFF-33" target="VUXAhS1RK0JVEm_HKfFF-42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-33" value="추상 함수 실행:&lt;br&gt;에디터 끄기" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry x="440" y="360" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-37" value="메인메뉴로 돌아가기" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry x="840" y="360" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="VUXAhS1RK0JVEm_HKfFF-16" source="VUXAhS1RK0JVEm_HKfFF-42" target="VUXAhS1RK0JVEm_HKfFF-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-42" value="마우스 이벤트 초기화" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry x="640" y="360" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-44" value="커스텀 버튼들" style="swimlane;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry x="40" y="520" width="720" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="VUXAhS1RK0JVEm_HKfFF-44" source="VUXAhS1RK0JVEm_HKfFF-45" target="VUXAhS1RK0JVEm_HKfFF-46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-45" value="버튼 클릭" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-44">
+          <mxGeometry x="40" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="VUXAhS1RK0JVEm_HKfFF-44" source="VUXAhS1RK0JVEm_HKfFF-46" target="VUXAhS1RK0JVEm_HKfFF-48">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-46" value="기능 실행" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-44">
+          <mxGeometry x="280" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-48" value="기능 종료" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-44">
+          <mxGeometry x="520" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-34" target="VUXAhS1RK0JVEm_HKfFF-50">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-34" value="추상 함수 실행:&lt;br&gt;에디터 초기화" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="40" y="560" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-37" target="VUXAhS1RK0JVEm_HKfFF-40">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1580" y="460" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1600" y="800" />
+              <mxPoint x="1600" y="360" />
+              <mxPoint x="600" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-40" value="기능 선택" style="swimlane;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="40" y="160" width="640" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-4" value="새로 만들기&amp;nbsp;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-40">
+          <mxGeometry x="40" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-52" value="불러오기" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-40">
+          <mxGeometry x="240" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-64" value="종료" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="VUXAhS1RK0JVEm_HKfFF-40">
+          <mxGeometry x="440" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-50" value="추상 함수 실행:&lt;br&gt;커스텀 버튼들 추가" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="40" y="720" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-54" value="추상 함수 실행:&lt;br&gt;마우스 이벤트 할당" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="280" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-57" target="VUXAhS1RK0JVEm_HKfFF-59">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-57" value="추상 함수 실행:&lt;br&gt;에디터 켜기" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="280" y="400" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-52" target="VUXAhS1RK0JVEm_HKfFF-57">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-59" target="VUXAhS1RK0JVEm_HKfFF-61">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-59" value="추상 함수 실행:&lt;br&gt;에디터 초기화" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="280" y="560" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-61" target="VUXAhS1RK0JVEm_HKfFF-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-61" value="추상 함수 실행:&lt;br&gt;데이터 불러오기" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=auto;fillColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="280" y="720" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-66" value="에디터 종료" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="VUXAhS1RK0JVEm_HKfFF-67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="VUXAhS1RK0JVEm_HKfFF-64" target="VUXAhS1RK0JVEm_HKfFF-66">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
