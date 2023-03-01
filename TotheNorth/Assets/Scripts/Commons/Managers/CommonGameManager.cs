@@ -22,8 +22,10 @@ public class CommonGameManager : MonoBehaviour
         switch (curStatus)
         {
             case 0:
-                GlobalStatus.Loading.System.CommonGameManager = true;
-                FadeScreen(false);
+                FadeScreen(false, () =>
+                {
+                    GlobalStatus.Loading.System.CommonGameManager = true;
+                });
                 curStatus = 1;
                 break;
             case 1:
