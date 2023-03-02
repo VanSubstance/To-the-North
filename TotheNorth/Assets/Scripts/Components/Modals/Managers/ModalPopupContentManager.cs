@@ -5,7 +5,7 @@ using UnityEngine;
 public class ModalPopupContentManager : MonoBehaviour
 {
     [SerializeField]
-    Transform popupModalContentInputText, popupModalContentText;
+    Transform popUpModalControllerPrefab, popupModalContentInputText, popupModalContentText;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +20,11 @@ public class ModalPopupContentManager : MonoBehaviour
 
     private void setModalContentControllersIntoGlobal()
     {
+        Transform popupModal = Instantiate(popUpModalControllerPrefab);
+        popupModal.SetParent(GameObject.FindWithTag("UI Container").transform);
+        popupModal.localPosition = Vector3.zero;
+        popupModal.localScale = Vector3.one;
+        popupModal.GetComponent<RectTransform>().sizeDelta = new Vector2(640f, 320f);
         GlobalComponent.Modal.Popup.contentPrefabs[ModalType.INFO_NORMAL] = popupModalContentText;
         GlobalComponent.Modal.Popup.contentPrefabs[ModalType.INPUT_TEXT] = popupModalContentInputText;
         GlobalStatus.Loading.System.PopupModalContentControllers = true;
