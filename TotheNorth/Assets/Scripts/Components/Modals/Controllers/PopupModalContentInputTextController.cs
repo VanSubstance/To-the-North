@@ -24,7 +24,7 @@ public class PopupModalContentInputTextController : MonoBehaviour, IPopupModalCo
         {
             return (T)(object)textInput.text;
         }
-        return (T)(object)null;
+        return (T)(object)false;
     }
 
     public void InitContent<T>(T contentToInit)
