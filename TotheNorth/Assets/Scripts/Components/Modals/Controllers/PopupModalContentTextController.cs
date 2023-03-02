@@ -20,11 +20,7 @@ public class PopupModalContentTextController : MonoBehaviour, IPopupModalContent
 
     public T ReturnValueForCallback<T>()
     {
-        return (T)(object)null;
-    }
-    public void InitContent(string contentToInit)
-    {
-        text.text = contentToInit;
+        return (T)(object)false;
     }
 
     public void InitContent<T>(T contentToInit)

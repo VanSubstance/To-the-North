@@ -39,38 +39,27 @@ public class PopupModalController : MonoBehaviour
         btnConfirm.onClick.RemoveAllListeners();
         Destroy(popupContentControllerTf.gameObject);
     }
-    // 인풋이 없는 정보 전달용 모달
-    public void AwakeModal<T>(ModalType modalType, T contentToInit, string textCancel = "취소", string textConfirm = "확인", System.Action callbackConfirm = null)
+    public void AwakeModal<TContent, TReturn>(
+        ModalType modalType,
+        TContent contentToInit,
+        string textCancel = "취소", string textConfirm = "확인",
+        System.Func<TReturn, bool> conditionConfirm = null,
+        System.Action<TReturn> callbackConfirm = null
+        )
     {
         // 모달 초기화
         this.textCancel.text = textCancel;
         this.textConfirm.text = textConfirm;
         SetContentByModalType(modalType);
-        // 모달 컨텐츠 적용
         popupContentControllerTf.GetComponent<IPopupModalContentController>().InitContent(contentToInit);
-        btnConfirm.onClick.AddListener(() =>
-        {
-            callbackConfirm();
-            ToggleModal(false);
-            ClearModal();
-        });
-        ToggleModal(true);
-    }
-    // 인풋이 있는 모달
-    public void AwakeModal<T>(ModalType modalType, string textCancel = "취소", string textConfirm = "확인", System.Func<T, bool> conditionConfirm = null, System.Action<T> callbackConfirm = null)
-    {
-        // 모달 초기화
-        this.textCancel.text = textCancel;
-        this.textConfirm.text = textConfirm;
-        SetContentByModalType(modalType);
-        T inputRet;
+        TReturn inputRet;
         // 만약에 해당 타입의 모달이 받아야하는 값이 있다 :
         // 값 받기 ->
         // 성공 여부 조건 확인 ->
         // 완료 콜백에 전달
         btnConfirm.onClick.AddListener(() =>
         {
-            if (conditionConfirm != null && !conditionConfirm((inputRet = popupContentControllerTf.GetComponent<IPopupModalContentController>().ReturnValueForCallback<T>())))
+            if (conditionConfirm != null && !conditionConfirm((inputRet = popupContentControllerTf.GetComponent<IPopupModalContentController>().ReturnValueForCallback<TReturn>())))
             {
                 // 조건이 있고, 조건을 통과 못함
                 // 실패 ->
@@ -82,7 +71,7 @@ public class PopupModalController : MonoBehaviour
                 // 콜백 함수 호출
                 // 모달 닫기
                 // 모달 초기화
-                callbackConfirm(popupContentControllerTf.GetComponent<IPopupModalContentController>().ReturnValueForCallback<T>());
+                callbackConfirm(popupContentControllerTf.GetComponent<IPopupModalContentController>().ReturnValueForCallback<TReturn>());
                 ToggleModal(false);
                 ClearModal();
             }
@@ -91,6 +80,7 @@ public class PopupModalController : MonoBehaviour
     }
     private void SetContentByModalType(ModalType modalType)
     {
+        // 모달 컨텐츠 컴포넌트 생성
         popupContentControllerTf = Instantiate(GlobalComponent.Modal.Popup.contentPrefabs[modalType]);
         popupContentControllerTf.SetParent(popupContentContainerTf);
         popupContentControllerTf.localPosition = Vector3.zero;

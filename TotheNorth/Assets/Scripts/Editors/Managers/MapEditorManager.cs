@@ -10,10 +10,10 @@ public class MapEditorManager : BasicEditorManager
     {
         if (isGameNew)
         {
-            GlobalComponent.Modal.Popup.controller.AwakeModal(
+            GlobalComponent.Modal.Popup.controller.AwakeModal<string, bool>(
                 ModalType.INFO_NORMAL,
                 contentToInit: "새로운 맵을 생성하시겠습니까??",
-                callbackConfirm: () =>
+                callbackConfirm: (allwaysTrue) =>
                 {
                     mapEditorController.TryAllocateMouseAction();
                     ToggleMainMenuUI(true);
@@ -25,8 +25,9 @@ public class MapEditorManager : BasicEditorManager
         }
         else
         {
-            GlobalComponent.Modal.Popup.controller.AwakeModal<string>(
+            GlobalComponent.Modal.Popup.controller.AwakeModal<bool, string>(
                 ModalType.INPUT_TEXT,
+                contentToInit: false,
                 textConfirm: "불러오기",
                 conditionConfirm: (inputText) =>
                 {
