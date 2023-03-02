@@ -45,7 +45,7 @@ public class PopupModalController : MonoBehaviour
         // 모달 초기화
         this.textCancel.text = textCancel;
         this.textConfirm.text = textConfirm;
-        setContentByModalType(modalType);
+        SetContentByModalType(modalType);
         // 모달 컨텐츠 적용
         popupContentControllerTf.GetComponent<IPopupModalContentController>().InitContent(contentToInit);
         btnConfirm.onClick.AddListener(() =>
@@ -62,7 +62,7 @@ public class PopupModalController : MonoBehaviour
         // 모달 초기화
         this.textCancel.text = textCancel;
         this.textConfirm.text = textConfirm;
-        setContentByModalType(modalType);
+        SetContentByModalType(modalType);
         T inputRet;
         // 만약에 해당 타입의 모달이 받아야하는 값이 있다 :
         // 값 받기 ->
@@ -89,7 +89,7 @@ public class PopupModalController : MonoBehaviour
         });
         ToggleModal(true);
     }
-    private void setContentByModalType(ModalType modalType)
+    private void SetContentByModalType(ModalType modalType)
     {
         popupContentControllerTf = Instantiate(GlobalComponent.Modal.Popup.contentPrefabs[modalType]);
         popupContentControllerTf.SetParent(popupContentContainerTf);

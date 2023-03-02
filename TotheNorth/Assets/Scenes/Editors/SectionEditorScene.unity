@@ -134,9 +134,9 @@ GameObject:
   - component: {fileID: 86613564}
   - component: {fileID: 86613562}
   - component: {fileID: 86613561}
-  - component: {fileID: 86613565}
   - component: {fileID: 86613566}
   - component: {fileID: 86613567}
+  - component: {fileID: 86613568}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -185,23 +185,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &86613565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 86613560}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32dfb4f87edbee74481ff855e3af41d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  btnMainStartNew: {fileID: 655529062}
-  btnMainStartLoad: {fileID: 844275850}
-  btnMainExit: {fileID: 1061824925}
-  TfMainMenu: {fileID: 255263451}
-  editorType: 0
 --- !u!114 &86613566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +212,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeImage: {fileID: 0}
+--- !u!114 &86613568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86613560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 403d576c17ecd6e41b020b473954f4f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnMainStartNew: {fileID: 655529062}
+  btnMainStartLoad: {fileID: 844275850}
+  btnMainExit: {fileID: 1061824925}
+  TfMainMenu: {fileID: 255263451}
+  mapControllerPrefab: {fileID: 0}
+  mapEditorController: {fileID: 1243290595}
 --- !u!1 &255263450
 GameObject:
   m_ObjectHideFlags: 0
@@ -1301,6 +1302,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1216858480}
   m_CullTransparentMesh: 1
+--- !u!1 &1243290594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1243290596}
+  - component: {fileID: 1243290595}
+  m_Layer: 0
+  m_Name: Map Editor Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1243290595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243290594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da56859729045f45a9c605ea68a8a38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1243290596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243290594}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.35318983, y: -0.9252725, z: -19.917767}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1247070426
 GameObject:
   m_ObjectHideFlags: 0
