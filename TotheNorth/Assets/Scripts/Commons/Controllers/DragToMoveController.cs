@@ -6,12 +6,21 @@ public class DragToMoveController : MonoBehaviour
 {
     [SerializeField]
     private Transform tfToMove;
+    [SerializeField]
+    private Vector2 unitToBoxColliderForce = Vector2.zero;
     private Vector3 correctionDistance;
     private int z;
     // Start is called before the first frame update
     void Start()
     {
-
+        if (unitToBoxColliderForce.Equals(Vector2.zero))
+        {
+            GetComponent<BoxCollider>().size = GetComponent<RectTransform>().sizeDelta;
+        }
+        else
+        {
+            GetComponent<BoxCollider>().size = unitToBoxColliderForce * GlobalSetting.unitSize;
+        }
     }
 
     // Update is called once per frame

@@ -454,6 +454,7 @@ GameObject:
   - component: {fileID: 76761271828701112}
   - component: {fileID: 76761271828701113}
   - component: {fileID: 438478651477127315}
+  - component: {fileID: 5590435122665364452}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -533,6 +534,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tfToMove: {fileID: 76761272101309956}
+  unitToBoxColliderForce: {x: 4, y: 0.41666666}
+--- !u!65 &5590435122665364452
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76761271828701115}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &76761271910276338
 GameObject:
   m_ObjectHideFlags: 0

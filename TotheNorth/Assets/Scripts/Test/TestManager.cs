@@ -9,7 +9,7 @@ public class TestManager : MonoBehaviour
     private ContentModalContentTestController tes;
     void Start()
     {
-        //testInitContentModal();
+        testInitContentModal();
     }
 
     // Update is called once per frame
@@ -20,7 +20,8 @@ public class TestManager : MonoBehaviour
     private void testInitContentModal()
     {
         // 컨텐츠 팝업 초기화 테스트
-        tes.InitContentByType(new ModalContentTestStat("테스트", "중입니다", "되는지 보죠"));
+        if (tes != null)
+            tes.InitContentByType(new ModalContentTestStat("테스트", "중입니다", "되는지 보죠"));
     }
 
     private void TestMouseEventSetting()
