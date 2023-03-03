@@ -9,7 +9,7 @@ public class TestManager : MonoBehaviour
     private ContentModalContentTestController tes;
     void Start()
     {
-        testInitContentModal();
+        //testInitContentModal();
     }
 
     // Update is called once per frame
