@@ -8,6 +8,7 @@ public abstract class AContentModalController<TContent> : MonoBehaviour, IConten
     [SerializeField]
     private Vector2 sizeToUnit;
     private Button btnX;
+    private Transform contentContainerTf, headerTf;
     private int curStatus = 0;
     void Start()
     {
@@ -20,14 +21,17 @@ public abstract class AContentModalController<TContent> : MonoBehaviour, IConten
     {
         switch (curStatus)
         {
+            case 0:
+                InitComposition();
+                break;
             case 1:
+                // 초기화 종료
                 break;
             case 2:
                 // 눈에 안보이는 중
                 break;
             case 3:
                 // 눈에 보이는 중
-                TrackingMove();
                 break;
         }
     }
@@ -38,36 +42,34 @@ public abstract class AContentModalController<TContent> : MonoBehaviour, IConten
     {
         bool toOpen = purpose == 1 ? true : purpose == 2 ? false :
             gameObject.activeSelf ? false : true;
-        curStatus = toOpen ? 3 : 2;
         ;
         gameObject.SetActive(toOpen);
-    }
-    // 이동 마우스 이벤트 추적
-    private void TrackingMove()
-    {
-
-    }
-
-    public void InitContent<T>(T contentToInit)
-    {
-        if (typeof(T).Equals(typeof(TContent)))
-        {
-            InitContentByType((TContent)(object)contentToInit);
-        }
-        return;
     }
 
     private void InitComposition()
     {
+        if (curStatus == 1) return;
+        headerTf = transform.GetChild(0);
+        contentContainerTf = transform.GetChild(1);
         transform.GetComponent<RectTransform>().sizeDelta = sizeToUnit * GlobalSetting.unitSize;
-        btnX = transform.GetChild(0).GetChild(0).GetComponent<Button>();
+        btnX = headerTf.GetChild(0).GetComponent<Button>();
         btnX.onClick.AddListener(() =>
         {
             Toggle(2);
         });
+        InitCompositionByType();
+        curStatus = 1;
     }
+
+    public Transform GetContentContainer()
+    {
+        if (contentContainerTf == null) InitComposition();
+        return contentContainerTf;
+    }
+
+    public abstract void InitCompositionByType();
     // 컨텐츠 비우기
-    public abstract void clearContent();
+    public abstract void ClearContent();
     // 컨텐츠 적용하기
     public abstract void InitContentByType(TContent contentToInit);
 }

@@ -4,6 +4,5 @@ using UnityEngine;
 
 public interface IContentModalContentController
 {
-    public void clearContent();
-    void InitContent<T>(T contentToInit);
+    public void ClearContent();
 }

@@ -29,7 +29,6 @@ public class PopupModalContentTextController : MonoBehaviour, IPopupModalContent
             text = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         if (typeof(T) == typeof(string))
         {
-            Debug.Log(contentToInit);
             text.text = (string)(object)contentToInit;
         }
         return;

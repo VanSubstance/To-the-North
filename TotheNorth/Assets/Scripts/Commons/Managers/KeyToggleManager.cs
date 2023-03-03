@@ -19,6 +19,11 @@ public class KeyToggleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        TrackKeys();
+    }
+
+    private void TrackKeys()
+    {
         if (keysToToggle.Count > 0)
             for (int i = 0; i < keysToToggle.Count; i++)
             {
