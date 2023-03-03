@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class AContentModalController<TContent> : MonoBehaviour, IContentModalContentController
 {
     [SerializeField]
     private Vector2 sizeToUnit;
+    private Button btnX;
     private int curStatus = 0;
     void Start()
     {
         InitComposition();
-        Toggle(false);
-        StartTracking();
+        Toggle(2);
     }
 
     // Update is called once per frame
@@ -23,48 +24,23 @@ public abstract class AContentModalController<TContent> : MonoBehaviour, IConten
                 break;
             case 2:
                 // 눈에 안보이는 중
-                // = 키 토글만 추적
                 break;
             case 3:
                 // 눈에 보이는 중
-                // = 키 토글 + 이동 둘 다 추적
+                TrackingMove();
                 break;
         }
     }
 
     // 모달 토글
-    private void Toggle(bool isOpen = true)
+    // purpose: 0 <- 그냥 토글, 1 <- 열기, 2 <- 닫기
+    public void Toggle(int purpose = 0)
     {
-        curStatus = isOpen ? 3 : 2;
-        gameObject.SetActive(isOpen);
-    }
-
-    // 추적 시작
-    private void StartTracking()
-    {
-        StartCoroutine(CoroutineTracking());
-        curStatus = 2;
-    }
-
-    // 추적 코루틴
-    private IEnumerator CoroutineTracking()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(0.01f);
-            // 키 토글 추적
-            TrackingToggleKey();
-            if (curStatus == 3)
-            {
-                // 마우스 이동 추적
-                TrackingMove();
-            }
-        }
-    }
-    // 토글 키 추적
-    private void TrackingToggleKey()
-    {
-
+        bool toOpen = purpose == 1 ? true : purpose == 2 ? false :
+            gameObject.activeSelf ? false : true;
+        curStatus = toOpen ? 3 : 2;
+        ;
+        gameObject.SetActive(toOpen);
     }
     // 이동 마우스 이벤트 추적
     private void TrackingMove()
@@ -84,6 +60,11 @@ public abstract class AContentModalController<TContent> : MonoBehaviour, IConten
     private void InitComposition()
     {
         transform.GetComponent<RectTransform>().sizeDelta = sizeToUnit * GlobalSetting.unitSize;
+        btnX = transform.GetChild(0).GetChild(0).GetComponent<Button>();
+        btnX.onClick.AddListener(() =>
+        {
+            Toggle(2);
+        });
     }
     // 컨텐츠 비우기
     public abstract void clearContent();
