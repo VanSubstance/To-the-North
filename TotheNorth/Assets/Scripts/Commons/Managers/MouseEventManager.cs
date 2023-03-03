@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class MouseEventManager : MonoBehaviour
 {
@@ -16,7 +17,12 @@ public class MouseEventManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        MarkMousePosition(false);
         TrackMouseEvent();
+        if (GlobalStatus.Loading.System.MouseCursorManager)
+        {
+            TrackMousePosition();
+        }
     }
 
     private void TrackMouseEvent()
@@ -71,7 +77,6 @@ public class MouseEventManager : MonoBehaviour
         {
             // 드래그 이벤트 발생중
             // OnMouseDrag
-            MarkMousePosition();
             switch (curMouseButton)
             {
                 case MouseButton.LEFT:
@@ -168,12 +173,15 @@ public class MouseEventManager : MonoBehaviour
 
     private void MarkMousePosition(bool isForClick = false)
     {
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = -20f;
         if (isForClick)
         {
             mousePositionForClick = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePositionForClick.z = -20f;
+        }
+        else
+        {
+            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = -20f;
         }
     }
 
@@ -202,5 +210,27 @@ public class MouseEventManager : MonoBehaviour
     public enum MouseButton
     {
         LEFT = 0, RIGHT = 1, MIDDLE = 2, NONE = -1
+    }
+    private void TrackMousePosition()
+    {
+        Transform temp;
+        if ((temp = GetTransformBelow()) == null)
+        {
+            GlobalComponent.Common.Event.mouseCursorManager.SetMouseCursor(MouseCursorType.NORMAL);
+            return;
+        }
+        string tag = temp.tag;
+        if (tag.Contains("QUESTION"))
+        {
+            GlobalComponent.Common.Event.mouseCursorManager.SetMouseCursor(MouseCursorType.QUESTION);
+            return;
+        }
+        if (tag.Contains("BUTTON"))
+        {
+            GlobalComponent.Common.Event.mouseCursorManager.SetMouseCursor(MouseCursorType.BUTTON);
+            return;
+        }
+        GlobalComponent.Common.Event.mouseCursorManager.SetMouseCursor(MouseCursorType.NORMAL);
+        return;
     }
 }

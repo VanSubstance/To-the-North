@@ -42,7 +42,7 @@ public class InfoMessageManager : MonoBehaviour
                 infoStatTfQueue = new Queue<GameObject>();
                 timer = 0f;
                 distanceToMove = 64f;
-                GlobalComponent.Modal.Info.controller = this;
+                GlobalComponent.Common.Info.controller = this;
                 GlobalStatus.Loading.System.InfoMessageManager = true;
                 curStatus = 1;
                 break;
