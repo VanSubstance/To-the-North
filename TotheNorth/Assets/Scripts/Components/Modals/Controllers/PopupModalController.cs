@@ -64,7 +64,7 @@ public class PopupModalController : MonoBehaviour
                 // 조건이 있고, 조건을 통과 못함
                 // 실패 ->
                 // 에러 메세지 송충
-                GlobalComponent.Modal.Info.controller.AddMessageIntoQueue(new InfoStat("조건을 다시 한번 확인하세요!", InfoType.ERROR));
+                GlobalComponent.Common.Info.controller.AddMessageIntoQueue(new InfoStat("조건을 다시 한번 확인하세요!", InfoType.ERROR));
             }
             else
             {

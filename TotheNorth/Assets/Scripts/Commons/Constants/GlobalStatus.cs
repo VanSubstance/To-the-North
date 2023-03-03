@@ -10,10 +10,16 @@ public static class GlobalStatus
             public static bool InfoMessageManager = false;
             public static bool PopupModalContentControllers = false;
             public static bool PopupModalController = false;
+            public static bool MouseCursorManager = false;
 
             public static bool isSystemLoadingDone()
             {
-                return CommonGameManager && InfoMessageManager && PopupModalContentControllers && PopupModalController;
+                return CommonGameManager &&
+                    InfoMessageManager &&
+                    PopupModalContentControllers &&
+                    PopupModalController &&
+                    MouseCursorManager
+                    ;
             }
         }
     }
