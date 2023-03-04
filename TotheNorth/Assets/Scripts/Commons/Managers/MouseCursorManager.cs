@@ -25,8 +25,8 @@ public class MouseCursorManager : MonoBehaviour
 
     private void LoadCursors()
     {
-        textures[MouseCursorType.NORMAL] = Resources.Load<Texture2D>($"{PathInfo.Common.MouseCursor}NORMAL");
-        textures[MouseCursorType.QUESTION] = Resources.Load<Texture2D>($"{PathInfo.Common.MouseCursor}QUESTION");
-        textures[MouseCursorType.BUTTON] = Resources.Load<Texture2D>($"{PathInfo.Common.MouseCursor}BUTTON");
+        textures[MouseCursorType.NORMAL] = Resources.Load<Texture2D>($"{PathInfo.Image.Common.MouseCursor}NORMAL");
+        textures[MouseCursorType.QUESTION] = Resources.Load<Texture2D>($"{PathInfo.Image.Common.MouseCursor}QUESTION");
+        textures[MouseCursorType.BUTTON] = Resources.Load<Texture2D>($"{PathInfo.Image.Common.MouseCursor}BUTTON");
     }
 }

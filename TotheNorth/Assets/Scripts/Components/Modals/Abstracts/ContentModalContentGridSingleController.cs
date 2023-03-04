@@ -5,14 +5,14 @@ using UnityEngine.UI;
 using TMPro;
 
 // TContent : contentPrefab을 초기화하기 위한 VO
-// ContentModalContentGridSingleController 의 빈 칸 = 슬롯으로 사용되는 프리펩의 경우, 반드시 IContentModalGridSlot을 implement 해야함
-// ContentModalContentGridSingleController 의 컨텐츠 = 아이템 = 슬롯 위에 설치되는 오브젝트로 사용되는 프리펩의 경우, 반드시 IContentModalGridSlot을 implement 해야함
+// ContentModalContentGridSingleController: 타일같이 칸에 뭔가 띄웠다 꼈다 하는 것이 아닌 고정인 경우에 사용하는 그리드 컨텐츠 모달 컨트롤러
+// ContentModalContentGridSingleController 의 컨텐츠 = slotPrefab = 반드시 IContentModalGridSlot, IContentModalGriditem을 implement 해야함
 public class ContentModalContentGridSingleController<TContent> : AContentModalController<List<TContent>>
 {
     // slotPrefab: 빈칸 채우기용 프리펩 = 타일같은, contentPrefab : 실제 컨텐츠용 프리펩
     // = contentPrefab이 slotPrefab에 설치되는 형태
     [SerializeField]
-    private Transform slotPrefab, contentPrefab;
+    private Transform slotPrefab;
 
     private GridLayoutGroup grid;
     private bool isInit = false;
@@ -33,6 +33,7 @@ public class ContentModalContentGridSingleController<TContent> : AContentModalCo
     public sealed override void InitCompositionByType()
     {
         if (isInit) return;
+        isInit = true;
         Transform temp = base.GetContentContainer();
         grid = temp.GetComponent<GridLayoutGroup>();
         for (int i = 0; i < size.x; i++)
@@ -46,7 +47,6 @@ public class ContentModalContentGridSingleController<TContent> : AContentModalCo
                 slotsTf[i][j] = emptySlot;
             }
         }
-        isInit = true;
     }
 
     public sealed override void InitContentByType(List<TContent> contentToInit)
@@ -55,9 +55,7 @@ public class ContentModalContentGridSingleController<TContent> : AContentModalCo
         ClearContent();
         for (int i = 0; i < contentToInit.Count; i++)
         {
-            Transform newItem = Instantiate(contentPrefab);
-            newItem.GetComponent<IContentModalGridItem>().InstallOnSlot(slotsTf[i % 6][i / 6].GetComponent<IContentModalGridSlot>());
-            newItem.GetComponent<IContentModalGridItem>().InitContent(contentToInit[i]);
+            slotsTf[i / 6][i % 6].GetComponent<IContentModalGridItem>().InitContent(contentToInit[i]);
         }
     }
 }

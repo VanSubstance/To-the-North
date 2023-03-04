@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3508891889468517316}
   - component: {fileID: 1956520204826355636}
   m_Layer: 5
-  m_Name: ContentGridSlotPrefab
+  m_Name: ContentGridMapTilePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -7,14 +7,29 @@ public class TestManager : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]
     private ContentModalContentTestController tes;
+    [SerializeField]
+    private ContentModalContentGridMapTileController mapTileController;
     void Start()
     {
         testInitContentModal();
+        testInitMapTileController();
     }
 
     // Update is called once per frame
     void Update()
     {
+    }
+
+    private void testInitMapTileController()
+    {
+        mapTileController.InitContentByType(
+            new List<ContentModalGridMapTileController.MapTileVO>() {
+                new ContentModalGridMapTileController.MapTileVO(0, "Test_01"),
+                new ContentModalGridMapTileController.MapTileVO(0, "Test_02"),
+                new ContentModalGridMapTileController.MapTileVO(0, "Test_03"),
+                new ContentModalGridMapTileController.MapTileVO(0, "Test_04"),
+            }
+            );
     }
 
     private void testInitContentModal()

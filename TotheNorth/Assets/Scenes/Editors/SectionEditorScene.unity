@@ -296,7 +296,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27b9e153b6b2fd444975133007842fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tes: {fileID: 0}
+  tes: {fileID: 765314007}
+  mapTileController: {fileID: 1535469800}
 --- !u!4 &465701122
 Transform:
   m_ObjectHideFlags: 0

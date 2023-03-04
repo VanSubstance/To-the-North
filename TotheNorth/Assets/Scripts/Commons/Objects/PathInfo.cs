@@ -10,9 +10,19 @@ public static class PathInfo
         public const string root = PathInfo.root + "Jsons/";
     }
 
-    public static class Common
+    public static class Image
     {
-        private const string root = "Commons/";
-        public const string MouseCursor = root + "MouseCursors/";
+        private const string root = "Images/";
+        public static class Common
+        {
+            private const string root = Image.root + "Commons/";
+            public const string MouseCursor = root + "MouseCursors/";
+        }
+
+        public static class Map
+        {
+            private const string root = Image.root + "Maps/";
+            public const string tile = root + "Tiles/";
+        }
     }
 }

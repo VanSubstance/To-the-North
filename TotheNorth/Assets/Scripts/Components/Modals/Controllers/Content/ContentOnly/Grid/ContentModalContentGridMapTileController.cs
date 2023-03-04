@@ -2,6 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContentModalContentGridMapTileController : ContentModalContentGridSingleController<string>
+public class ContentModalContentGridMapTileController : ContentModalContentGridSingleController<ContentModalGridMapTileController.MapTileVO>
 {
 }
