@@ -9,7 +9,7 @@ public class KeyToggleManager : MonoBehaviour
     [SerializeField]
     private List<string> keysToToggle;
     [SerializeField]
-    private List<UnityEvent> actionsForToggle;
+    private List<AIContentModalContentController> modalsToToggle;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +29,7 @@ public class KeyToggleManager : MonoBehaviour
             {
                 if (Input.GetKeyDown(keysToToggle[i]))
                 {
-                    actionsForToggle[i].Invoke();
+                    modalsToToggle[i].Toggle(0);
                     return;
                 }
             }

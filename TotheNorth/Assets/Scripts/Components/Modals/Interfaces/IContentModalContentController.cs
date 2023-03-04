@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IContentModalContentController
 {
     public void ClearContent();
+    public void Toggle(int purpose);
 }

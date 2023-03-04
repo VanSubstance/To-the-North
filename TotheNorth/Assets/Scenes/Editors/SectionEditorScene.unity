@@ -1579,37 +1579,9 @@ MonoBehaviour:
   keysToToggle:
   - i
   - d
-  actionsForToggle:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1535469800}
-        m_TargetAssemblyTypeName: AContentModalController`1[[System.Collections.Generic.List`1[[System.String,
-          mscorlib
-        m_MethodName: Toggle
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 765314007}
-        m_TargetAssemblyTypeName: AContentModalController`1[[ModalContentTestStat,
-          Assembly-CSharp
-        m_MethodName: Toggle
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  modalsToToggle:
+  - {fileID: 765314007}
+  - {fileID: 1535469800}
 --- !u!4 &1426833113
 Transform:
   m_ObjectHideFlags: 0
@@ -1669,6 +1641,18 @@ PrefabInstance:
       value: 690
       objectReference: {fileID: 0}
     - target: {fileID: 76761272101309956, guid: 2f4816ff83593f547a3d946b6e9c7931, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 76761272101309956, guid: 2f4816ff83593f547a3d946b6e9c7931, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 76761272101309956, guid: 2f4816ff83593f547a3d946b6e9c7931, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 76761272101309956, guid: 2f4816ff83593f547a3d946b6e9c7931, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1698,11 +1682,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 76761272101309956, guid: 2f4816ff83593f547a3d946b6e9c7931, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -583
+      value: -582.9985
       objectReference: {fileID: 0}
     - target: {fileID: 76761272101309956, guid: 2f4816ff83593f547a3d946b6e9c7931, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -56
+      value: -56.000134
       objectReference: {fileID: 0}
     - target: {fileID: 76761272101309956, guid: 2f4816ff83593f547a3d946b6e9c7931, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

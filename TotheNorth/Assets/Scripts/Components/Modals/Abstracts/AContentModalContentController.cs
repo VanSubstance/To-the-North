@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class AContentModalController<TContent> : MonoBehaviour, IContentModalContentController
+public abstract class AContentModalController<TContent> : AIContentModalContentController
 {
     [SerializeField]
     private Vector2 sizeToUnit;
@@ -38,7 +38,7 @@ public abstract class AContentModalController<TContent> : MonoBehaviour, IConten
 
     // 모달 토글
     // purpose: 0 <- 그냥 토글, 1 <- 열기, 2 <- 닫기
-    public void Toggle(int purpose = 0)
+    public sealed override void Toggle(int purpose = 0)
     {
         bool toOpen = purpose == 1 ? true : purpose == 2 ? false :
             gameObject.activeSelf ? false : true;
@@ -68,8 +68,6 @@ public abstract class AContentModalController<TContent> : MonoBehaviour, IConten
     }
 
     public abstract void InitCompositionByType();
-    // 컨텐츠 비우기
-    public abstract void ClearContent();
     // 컨텐츠 적용하기
     public abstract void InitContentByType(TContent contentToInit);
 }
