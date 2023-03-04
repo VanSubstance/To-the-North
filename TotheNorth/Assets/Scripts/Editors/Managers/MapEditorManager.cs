@@ -20,6 +20,7 @@ public class MapEditorManager : BasicEditorManager
                     mapEditorController.ToggleController(true);
                     mapEditorController.TryApplyData(null);
                     mapEditorController.TryAddCustomButtons();
+                    InitModals();
                 }
             );
         }
@@ -40,6 +41,7 @@ public class MapEditorManager : BasicEditorManager
                     mapEditorController.ToggleController(true);
                     mapEditorController.TryAddCustomButtons();
                     mapEditorController.TryApplyData(mapEditorController.TryLoadData(inputText));
+                    InitModals();
                 }
             );
         }

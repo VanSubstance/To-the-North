@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapEditorController : MonoBehaviour, IBasicEditorController<MapInfo>
+public class MapEditorController : MonoBehaviour, IBasicEditorController<MapInfoVO>
 {
-    private MapInfo mapInfo;
+    private MapInfoVO mapInfoVO;
     void Start()
     {
 
@@ -16,20 +16,20 @@ public class MapEditorController : MonoBehaviour, IBasicEditorController<MapInfo
 
 
     // 인터페이스 구현
-    public void TryApplyData(MapInfo dataToApply)
+    public void TryApplyData(MapInfoVO dataToApply)
     {
         if (dataToApply == null) return; // 리셋
         // 데이터 적용
     }
-    public MapInfo TryExtractData()
+    public MapInfoVO TryExtractData()
     {
-        return mapInfo;
+        return mapInfoVO;
     }
-    public MapInfo TryLoadData(string targetFilePath)
+    public MapInfoVO TryLoadData(string targetFilePath)
     {
         Debug.Log("데이터 불러오기:: " + targetFilePath);
-        MapInfo info;
-        if ((info = DataFunction.LoadObjectFromJson<MapInfo>(targetFilePath)) != null)
+        MapInfoVO info;
+        if ((info = DataFunction.LoadObjectFromJson<MapInfoVO>(targetFilePath)) != null)
         {
             return info;
         }
