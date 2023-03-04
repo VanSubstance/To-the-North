@@ -24,7 +24,7 @@ public class KeyToggleManager : MonoBehaviour
 
     private void TrackKeys()
     {
-        if (keysToToggle.Count > 0)
+        if (keysToToggle != null && keysToToggle.Count > 0)
             for (int i = 0; i < keysToToggle.Count; i++)
             {
                 if (Input.GetKeyDown(keysToToggle[i]))
@@ -33,5 +33,11 @@ public class KeyToggleManager : MonoBehaviour
                     return;
                 }
             }
+    }
+
+    public void InitKeysAndModals(List<string> keysToToggle, List<AIContentModalContentController> modalsToToggle)
+    {
+        this.keysToToggle = keysToToggle;
+        this.modalsToToggle = modalsToToggle;
     }
 }

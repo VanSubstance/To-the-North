@@ -9,9 +9,19 @@ public class BasicEditorManager : MonoBehaviour
     private Button btnMainStartNew, btnMainStartLoad, btnMainExit;
     [SerializeField]
     private Transform TfMainMenu;
+    private KeyToggleManager keyToggleManager;
+    [SerializeField]
+    private List<string> keys;
+    [SerializeField]
+    private List<AIContentModalContentController> modals;
     // Start is called before the first frame update
     void Start()
     {
+        Transform keyToggleManagerTf = new GameObject().transform;
+        keyToggleManagerTf.SetParent(null);
+        keyToggleManagerTf.gameObject.AddComponent<KeyToggleManager>();
+        keyToggleManager = keyToggleManagerTf.GetComponent<KeyToggleManager>();
+
         btnMainStartNew.onClick.AddListener(() =>
         {
             StartGame(true);
@@ -44,5 +54,19 @@ public class BasicEditorManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    public KeyToggleManager GetKeyToggleManager()
+    {
+        return keyToggleManager;
+    }
+
+    public void InitModals()
+    {
+        if (keys != null && keys.Count > 0)
+            GetKeyToggleManager().InitKeysAndModals(
+                keys,
+                modals
+                );
     }
 }
