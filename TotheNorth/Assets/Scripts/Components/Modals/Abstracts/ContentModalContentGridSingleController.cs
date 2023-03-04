@@ -34,7 +34,7 @@ public class ContentModalContentGridSingleController<TContent> : AContentModalCo
     {
         if (isInit) return;
         isInit = true;
-        Transform temp = base.GetContentContainer();
+        Transform temp = base.GetContentContainerTf();
         grid = temp.GetComponent<GridLayoutGroup>();
         grid.cellSize = Vector2.one * GlobalSetting.gridUnitSize;
         for (int i = 0; i < size.x; i++)
@@ -58,7 +58,7 @@ public class ContentModalContentGridSingleController<TContent> : AContentModalCo
         for (int i = 0; i < contentToInit.Count; i++)
         {
             slotsTf[i / 6][i % 6].GetComponent<IContentModalGridItem>().InitContent(contentToInit[i]);
-            slotsTf[i / 6][i % 6].GetComponent<IContentModalGridItem>().SetCallbackAfterClick(() => Toggle(2));
+            slotsTf[i / 6][i % 6].GetComponent<IContentModalGridItem>().SetCallbackAfterClick(() => ControllByKey(2));
         }
     }
 }

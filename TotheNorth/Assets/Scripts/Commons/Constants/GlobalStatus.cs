@@ -6,18 +6,11 @@ public static class GlobalStatus
     {
         public static class System
         {
-            public static bool CommonGameManager = false;
-            public static bool InfoMessageManager = false;
-            public static bool PopupModalContentControllers = false;
-            public static bool PopupModalController = false;
             public static bool MouseCursorManager = false;
 
             public static bool isSystemLoadingDone()
             {
-                return CommonGameManager &&
-                    InfoMessageManager &&
-                    PopupModalContentControllers &&
-                    PopupModalController &&
+                return
                     MouseCursorManager
                     ;
             }
@@ -54,7 +47,6 @@ public static class GlobalStatus
 
     public static void resetLoading()
     {
-        Loading.System.CommonGameManager = false;
-        Loading.System.InfoMessageManager = false;
+        Loading.System.MouseCursorManager = false;
     }
 }
