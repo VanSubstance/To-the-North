@@ -6,10 +6,12 @@ using TMPro;
 public class PopupModalContentInputTextController : MonoBehaviour, IPopupModalContentController
 {
     private TMP_InputField textInput;
+    private TextMeshProUGUI title;
     // Start is called before the first frame update
     void Start()
     {
         textInput = GetComponent<TMP_InputField>();
+        title = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -29,6 +31,16 @@ public class PopupModalContentInputTextController : MonoBehaviour, IPopupModalCo
 
     public void InitContent<T>(T contentToInit)
     {
+        return;
+    }
+    public void InitTitle<T>(T titleToInit)
+    {
+        if (title == null)
+            title = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        if (typeof(T) == typeof(string))
+        {
+            title.text = (string)(object)titleToInit;
+        }
         return;
     }
 }

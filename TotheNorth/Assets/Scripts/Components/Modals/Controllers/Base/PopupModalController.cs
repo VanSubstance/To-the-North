@@ -39,9 +39,10 @@ public class PopupModalController : MonoBehaviour
         btnConfirm.onClick.RemoveAllListeners();
         Destroy(popupContentControllerTf.gameObject);
     }
-    public void AwakeModal<TContent, TReturn>(
+    public void AwakeModal<TContent, TReturn, TTitle>(
         ModalType modalType,
         TContent contentToInit,
+        TTitle titleToInit,
         string textCancel = "취소", string textConfirm = "확인",
         System.Func<TReturn, bool> conditionConfirm = null,
         System.Action<TReturn> callbackConfirm = null
@@ -52,6 +53,7 @@ public class PopupModalController : MonoBehaviour
         this.textConfirm.text = textConfirm;
         SetContentByModalType(modalType);
         popupContentControllerTf.GetComponent<IPopupModalContentController>().InitContent(contentToInit);
+        popupContentControllerTf.GetComponent<IPopupModalContentController>().InitTitle(titleToInit);
         TReturn inputRet;
         // 만약에 해당 타입의 모달이 받아야하는 값이 있다 :
         // 값 받기 ->
