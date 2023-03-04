@@ -1,23 +1,188 @@
-<mxfile host="app.diagrams.net" modified="2023-03-01T13:12:10.160Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="w1EuBHKKP8YQGpnRH1Lk" version="20.8.23" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2023-03-04T08:48:26.733Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="aPBH17IFZwEVUduDagHD" version="21.0.2" type="github" pages="2">
   <diagram id="KOnrB99x6mcI5of-mBz-" name="ModalPopupContentManager">
-    <mxGraphModel dx="1302" dy="866" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="834" dy="1604" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="aXWP-Dral3gC8Dpvwp6L-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="aXWP-Dral3gC8Dpvwp6L-1" target="aXWP-Dral3gC8Dpvwp6L-2">
+        <mxCell id="aXWP-Dral3gC8Dpvwp6L-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" parent="1" source="aXWP-Dral3gC8Dpvwp6L-1" target="aXWP-Dral3gC8Dpvwp6L-2" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="aXWP-Dral3gC8Dpvwp6L-1" value="시스템 시작" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="aXWP-Dral3gC8Dpvwp6L-1" value="Mab Editor 시스템 시작" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="40" y="40" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="aXWP-Dral3gC8Dpvwp6L-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="aXWP-Dral3gC8Dpvwp6L-2" target="aXWP-Dral3gC8Dpvwp6L-3">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="aXWP-Dral3gC8Dpvwp6L-2" value="SerializeField&lt;br&gt;타입 별 컨텐츠 프리펩&lt;br&gt;광역 변수로 전달" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="aXWP-Dral3gC8Dpvwp6L-2" value="SerializeField&lt;br&gt;모달 컨트롤러 프리팹 및&lt;br&gt;타입 별 컨텐츠 프리펩&lt;br&gt;광역 변수로 전달" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="280" y="40" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="aXWP-Dral3gC8Dpvwp6L-3" value="시스템 시작" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="520" y="40" width="160" height="80" as="geometry" />
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-2" value="버튼 종류에 따라 BasicEditorManager의 AddListener를 통해 StartGame에 isGameNew(bool) 전달" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="280" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-4" value="AwakeModal&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;(&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;ModalType.INFO.NORMAL)&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="400" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-5" value="bool isGameNew" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="400" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;startArrow=none;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-5" target="ab__Cpm9_O1Q4AshsP_9-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="480" as="sourcePoint" />
+            <mxPoint x="210" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-2" target="ab__Cpm9_O1Q4AshsP_9-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="410" y="420" as="sourcePoint" />
+            <mxPoint x="330" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-10" value="버튼 클릭" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="aXWP-Dral3gC8Dpvwp6L-2" target="ab__Cpm9_O1Q4AshsP_9-10">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="210" y="90" as="sourcePoint" />
+            <mxPoint x="290" y="90" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-10" target="ab__Cpm9_O1Q4AshsP_9-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="130" as="sourcePoint" />
+            <mxPoint x="370" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-19" value="true" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="220" y="420" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;startArrow=none;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-5" target="ab__Cpm9_O1Q4AshsP_9-23">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="490" as="sourcePoint" />
+            <mxPoint x="510" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-23" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;AwakeModal&lt;br&gt;(&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;ModalType.INFO_TEXT)&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="400" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-24" value="false" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="440" y="420" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-25" value="모달 초기화 및&lt;br&gt;SetContentByModalType&lt;br&gt;(광역 변수 Prefab Instantiate)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="520" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-4" target="ab__Cpm9_O1Q4AshsP_9-25">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="370" as="sourcePoint" />
+            <mxPoint x="370" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-23" target="ab__Cpm9_O1Q4AshsP_9-28">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="490" as="sourcePoint" />
+            <mxPoint x="600" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-28" value="모달 초기화 및&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;SetContentByModalType&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;(광역 변수 Prefab Instantiate)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="520" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-30" value="MapEditor에서의 팝업 모달 플로우차트고&lt;br&gt;제 이해를 돕기 위한 함수명&amp;amp;클래스명 명시를 했습니다..." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="450" y="30" width="340" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-32" value="btnCancel(취소)&lt;br&gt;클릭" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="520" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-25" target="ab__Cpm9_O1Q4AshsP_9-32">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="490" as="sourcePoint" />
+            <mxPoint x="130" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-28" target="ab__Cpm9_O1Q4AshsP_9-32">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="210" y="570" as="sourcePoint" />
+            <mxPoint x="290" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-35" value="ToggleModal(false)&lt;br&gt;ClearModal();&lt;br&gt;(모달 토글 끄고&lt;br&gt;모달 컨텐츠 클리어)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="640" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-32" target="ab__Cpm9_O1Q4AshsP_9-35">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="570" as="sourcePoint" />
+            <mxPoint x="450" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-37" value="btnConfirm(확인)&lt;br&gt;클릭" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="640" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-25" target="ab__Cpm9_O1Q4AshsP_9-37">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="610" as="sourcePoint" />
+            <mxPoint x="370" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-39" value="btnConfirm(불러오기)&lt;br&gt;클릭" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="640" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-28" target="ab__Cpm9_O1Q4AshsP_9-39">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="610" as="sourcePoint" />
+            <mxPoint x="130" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-37" target="ab__Cpm9_O1Q4AshsP_9-56">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="610" as="sourcePoint" />
+            <mxPoint x="120" y="760" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-39" target="ab__Cpm9_O1Q4AshsP_9-55">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="730" as="sourcePoint" />
+            <mxPoint x="600" y="760" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-53" value="ReturnValue가 있는가?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="880" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-55" target="ab__Cpm9_O1Q4AshsP_9-53">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="840" as="sourcePoint" />
+            <mxPoint x="610" y="770" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-55" value="조건이 있으므로&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;조건 판정 (해당 경우 ReturnValue가 있는가?)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="760" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-56" value="조건이 없으므로 항상&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;콜백 함수 호출" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="875" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-57" value="콜백 함수 호출" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="880" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-56" target="ab__Cpm9_O1Q4AshsP_9-57">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="730" as="sourcePoint" />
+            <mxPoint x="130" y="770" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="120" y="920" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-53" target="ab__Cpm9_O1Q4AshsP_9-57">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="610" y="850" as="sourcePoint" />
+            <mxPoint x="610" y="890" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-60" value="true" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="460" y="900" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;" edge="1" parent="1" source="ab__Cpm9_O1Q4AshsP_9-53" target="ab__Cpm9_O1Q4AshsP_9-63">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="610" y="850" as="sourcePoint" />
+            <mxPoint x="600" y="1000" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ab__Cpm9_O1Q4AshsP_9-63" value="에러메세지 호출" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="1000" width="160" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
