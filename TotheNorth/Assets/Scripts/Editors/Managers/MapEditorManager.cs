@@ -16,7 +16,7 @@ public class MapEditorManager : BasicEditorManager
                 callbackConfirm: (allwaysTrue) =>
                 {
                     mapEditorController.TryAllocateMouseAction();
-                    ToggleMainMenuUI(true);
+                    ToggleMainMenuUI(false);
                     mapEditorController.ToggleController(true);
                     mapEditorController.TryApplyData(null);
                     mapEditorController.TryAddCustomButtons();
@@ -37,7 +37,7 @@ public class MapEditorManager : BasicEditorManager
                 callbackConfirm: (inputText) =>
                 {
                     mapEditorController.TryAllocateMouseAction();
-                    ToggleMainMenuUI(true);
+                    ToggleMainMenuUI(false);
                     mapEditorController.ToggleController(true);
                     mapEditorController.TryAddCustomButtons();
                     mapEditorController.TryApplyData(mapEditorController.TryLoadData(inputText));

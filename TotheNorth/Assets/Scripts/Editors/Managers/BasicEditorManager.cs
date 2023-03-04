@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BasicEditorManager : MonoBehaviour
+public abstract class BasicEditorManager : MonoBehaviour
 {
     [SerializeField]
     private Button btnMainStartNew, btnMainStartLoad, btnMainExit;
@@ -13,6 +13,7 @@ public class BasicEditorManager : MonoBehaviour
     [SerializeField]
     private List<string> keys;
     [SerializeField]
+    private List<AIContentModalContentController> modalPrefabs;
     private List<AIContentModalContentController> modals;
     // Start is called before the first frame update
     void Start()
@@ -42,11 +43,9 @@ public class BasicEditorManager : MonoBehaviour
     }
     public void ToggleMainMenuUI(bool isHide)
     {
-
+        TfMainMenu.gameObject.SetActive(isHide);
     }
-    public virtual void StartGame(bool isGameNew)
-    {
-    }
+    public abstract void StartGame(bool isGameNew);
     private void ExitGame()
     {
 #if UNITY_EDITOR
@@ -64,9 +63,20 @@ public class BasicEditorManager : MonoBehaviour
     public void InitModals()
     {
         if (keys != null && keys.Count > 0)
+        {
+            modals = new List<AIContentModalContentController>();
+            for (int i = 0; i < modalPrefabs.Count; i++)
+            {
+                Transform temp = Instantiate(modalPrefabs[i].transform);
+                temp.SetParent(GameObject.Find("UI").transform);
+                temp.localPosition = Vector3.zero;
+                temp.localScale = Vector3.one;
+                modals.Add(temp.GetComponent<AIContentModalContentController>());
+            }
             GetKeyToggleManager().InitKeysAndModals(
                 keys,
                 modals
                 );
+        }
     }
 }
