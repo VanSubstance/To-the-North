@@ -36,6 +36,7 @@ public class ContentModalContentGridSingleController<TContent> : AContentModalCo
         isInit = true;
         Transform temp = base.GetContentContainer();
         grid = temp.GetComponent<GridLayoutGroup>();
+        grid.cellSize = Vector2.one * GlobalSetting.gridUnitSize;
         for (int i = 0; i < size.x; i++)
         {
             slotsTf[i] = new Transform[(int)size.y];
@@ -43,6 +44,7 @@ public class ContentModalContentGridSingleController<TContent> : AContentModalCo
             {
                 Transform emptySlot = Instantiate(slotPrefab);
                 emptySlot.SetParent(grid.transform);
+                emptySlot.localPosition = new Vector3(0f, 0f, -2f);
                 emptySlot.localScale = Vector3.one;
                 slotsTf[i][j] = emptySlot;
             }

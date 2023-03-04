@@ -5,6 +5,7 @@ public class ContentModalGridMapTileController : MonoBehaviour, IContentModalGri
 {
     private MapTileVO mapTileVO;
     private Image image;
+    private bool isMouseIn = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,12 +29,32 @@ public class ContentModalGridMapTileController : MonoBehaviour, IContentModalGri
         mapTileVO = new MapTileVO((MapTileVO)(object)contentToInit);
         image.sprite = Resources.Load<Sprite>($"{PathInfo.Image.Map.tile}{mapTileVO.imagePath}");
         image.color = Color.white;
+        GetComponent<BoxCollider>().size = new Vector3(GlobalSetting.gridUnitSize, GlobalSetting.gridUnitSize, 1f);
     }
 
     public void InstallOnSlot(IContentModalGridSlot targetSlot)
     {
         // 설치 불가
         return;
+    }
+
+    private void OnMouseEnter()
+    {
+        isMouseIn = true;
+    }
+    private void OnMouseExit()
+    {
+        isMouseIn = false;
+    }
+    private void OnMouseUp()
+    {
+        if (isMouseIn)
+        {
+            Debug.Log("해당 타일 선택:: " + mapTileVO.imagePath);
+            // 해당 타일 선택
+            // = 마우스 이벤트 재정의가 필요
+            // 타일창 닫기
+        }
     }
 
     [System.Serializable]
