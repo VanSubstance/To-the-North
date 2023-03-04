@@ -15,12 +15,10 @@ public class MapEditorManager : BasicEditorManager
                 contentToInit: "새로운 맵을 생성하시겠습니까??",
                 callbackConfirm: (allwaysTrue) =>
                 {
-                    mapEditorController.TryAllocateMouseAction();
-                    ToggleMainMenuUI(false);
-                    mapEditorController.ToggleController(true);
-                    mapEditorController.TryApplyData(null);
-                    mapEditorController.TryAddCustomButtons();
+                    mapEditorController.InitEditor();
                     InitModals();
+                    ToggleMainMenuUI(false);
+                    mapEditorController.TryApplyData(null);
                 }
             );
         }
@@ -36,12 +34,10 @@ public class MapEditorManager : BasicEditorManager
                 },
                 callbackConfirm: (inputText) =>
                 {
-                    mapEditorController.TryAllocateMouseAction();
-                    ToggleMainMenuUI(false);
-                    mapEditorController.ToggleController(true);
-                    mapEditorController.TryAddCustomButtons();
-                    mapEditorController.TryApplyData(mapEditorController.TryLoadData(inputText));
+                    mapEditorController.InitEditor();
                     InitModals();
+                    ToggleMainMenuUI(false);
+                    mapEditorController.TryApplyData(mapEditorController.TryLoadData(inputText));
                 }
             );
         }

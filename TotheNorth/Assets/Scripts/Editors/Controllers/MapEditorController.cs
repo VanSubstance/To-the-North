@@ -2,50 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapEditorController : MonoBehaviour, IBasicEditorController<MapInfoVO>
+public class MapEditorController : BaseEditorController<MapInfoVO>
 {
-    private MapInfoVO mapInfoVO;
+
+    // Start is called before the first frame update
     void Start()
     {
-
+        
     }
+
+    // Update is called once per frame
     void Update()
     {
 
     }
-
-
-    // 인터페이스 구현
-    public void TryApplyData(MapInfoVO dataToApply)
+    // 기물 초기화
+    public override void InitComponents()
     {
-        if (dataToApply == null) return; // 리셋
-        // 데이터 적용
-    }
-    public MapInfoVO TryExtractData()
-    {
-        return mapInfoVO;
-    }
-    public MapInfoVO TryLoadData(string targetFilePath)
-    {
-        Debug.Log("데이터 불러오기:: " + targetFilePath);
-        MapInfoVO info;
-        if ((info = DataFunction.LoadObjectFromJson<MapInfoVO>(targetFilePath)) != null)
-        {
-            return info;
-        }
-        return null;
-    }
-    public void ToggleController(bool isOn)
-    {
-        gameObject.SetActive(isOn);
-    }
-    public void TryAddCustomButtons()
-    {
-        Debug.Log("커스텀 버튼들 추가하기");
+        Debug.Log("필요한 컴포넌트 생성 작업");
     }
 
-    public void TryAllocateMouseAction()
+    public override void TryApplyData(MapInfoVO dataToApply)
     {
-        Debug.Log("마우스 이벤트 할당!");
+        Debug.Log("데이터 적용 시도:: " + dataToApply);
+    }
+
+    public override void TryAllocateMouseAction()
+    {
+        Debug.Log("마우스 이벤트 적용");
     }
 }
