@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class ContentModalContentTestController : AContentModalController<ModalContentTestStat>
@@ -18,7 +15,7 @@ public class ContentModalContentTestController : AContentModalController<ModalCo
     public sealed override void InitCompositionByType()
     {
         if (isInit) return;
-        Transform temp = base.GetContentContainer();
+        Transform temp = base.GetContentContainerTf();
         ugui01 = temp.GetChild(0).GetComponent<TextMeshProUGUI>();
         ugui02 = temp.GetChild(1).GetComponent<TextMeshProUGUI>();
         ugui03 = temp.GetChild(2).GetComponent<TextMeshProUGUI>();

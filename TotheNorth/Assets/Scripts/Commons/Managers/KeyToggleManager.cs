@@ -1,15 +1,11 @@
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class KeyToggleManager : MonoBehaviour
 {
     [SerializeField]
-    private List<string> keysToToggle;
+    private string keyToToggle;
     [SerializeField]
-    private List<AIContentModalContentController> modalsToToggle;
+    private MonoBehaviourControllByKey modalToControll;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,20 +20,11 @@ public class KeyToggleManager : MonoBehaviour
 
     private void TrackKeys()
     {
-        if (keysToToggle != null && keysToToggle.Count > 0)
-            for (int i = 0; i < keysToToggle.Count; i++)
+        if (keyToToggle != null)
+            if (Input.GetKeyDown(keyToToggle))
             {
-                if (Input.GetKeyDown(keysToToggle[i]))
-                {
-                    modalsToToggle[i].Toggle(0);
-                    return;
-                }
+                modalToControll.ControllByKey(0);
+                return;
             }
-    }
-
-    public void InitKeysAndModals(List<string> keysToToggle, List<AIContentModalContentController> modalsToToggle)
-    {
-        this.keysToToggle = keysToToggle;
-        this.modalsToToggle = modalsToToggle;
     }
 }
