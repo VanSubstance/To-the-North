@@ -58,6 +58,7 @@ public class ContentModalContentGridSingleController<TContent> : AContentModalCo
         for (int i = 0; i < contentToInit.Count; i++)
         {
             slotsTf[i / 6][i % 6].GetComponent<IContentModalGridItem>().InitContent(contentToInit[i]);
+            slotsTf[i / 6][i % 6].GetComponent<IContentModalGridItem>().SetCallbackAfterClick(() => Toggle(2));
         }
     }
 }

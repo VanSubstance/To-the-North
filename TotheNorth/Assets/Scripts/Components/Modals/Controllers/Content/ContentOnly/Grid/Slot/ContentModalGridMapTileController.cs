@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,7 @@ public class ContentModalGridMapTileController : MonoBehaviour, IContentModalGri
     private MapTileVO mapTileVO;
     private Image image;
     private bool isMouseIn = false;
+    private System.Action actionCallback;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,10 +53,16 @@ public class ContentModalGridMapTileController : MonoBehaviour, IContentModalGri
         if (isMouseIn)
         {
             Debug.Log("해당 타일 선택:: " + mapTileVO.imagePath);
+            actionCallback();
             // 해당 타일 선택
             // = 마우스 이벤트 재정의가 필요
             // 타일창 닫기
         }
+    }
+
+    public void SetCallbackAfterClick(Action actionCallback)
+    {
+        this.actionCallback = actionCallback;
     }
 
     [System.Serializable]
