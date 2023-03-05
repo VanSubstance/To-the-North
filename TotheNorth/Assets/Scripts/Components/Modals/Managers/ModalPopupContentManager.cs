@@ -27,6 +27,5 @@ public class ModalPopupContentManager : MonoBehaviour
         popupModal.GetComponent<RectTransform>().sizeDelta = new Vector2(640f, 320f);
         GlobalComponent.Modal.Popup.contentPrefabs[ModalType.INFO_NORMAL] = popupModalContentText;
         GlobalComponent.Modal.Popup.contentPrefabs[ModalType.INPUT_TEXT] = popupModalContentInputText;
-        GlobalStatus.Loading.System.PopupModalContentControllers = true;
     }
 }
