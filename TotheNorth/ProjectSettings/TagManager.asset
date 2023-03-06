@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - UI Container
-  - BUTTON
   layers:
   - Default
   - TransparentFX
@@ -13,7 +12,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Background
   - 
   - 
   - 
@@ -42,4 +41,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Obstacle
+    uniqueID: 3087185083
     locked: 0
