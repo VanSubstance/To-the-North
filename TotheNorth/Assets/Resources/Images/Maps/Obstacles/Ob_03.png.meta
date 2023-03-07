@@ -69,7 +69,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -121,7 +121,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 50
+        y: 0
         width: 150
         height: 100
       alignment: 0
@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71e17f1089300ce4fa7ab493dadb82cf
-      internalID: -932591883
+      spriteID: a7dd2876ac6e25448bdb04d7002e7872
+      internalID: -1771841376
       vertices: []
       indices: 
       edges: []
@@ -144,27 +144,6 @@ TextureImporter:
         x: 200
         y: 0
         width: 150
-        height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 74d6727f1a2478a4e9d526fc94c54c87
-      internalID: -890743371
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ob_03_2
-      rect:
-        serializedVersion: 2
-        x: 400
-        y: 50
-        width: 150
         height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -173,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26f7a7c81016cc545a45a03a569e6b4b
-      internalID: 1611786167
+      spriteID: f5b34b5b1f671a64dbf19cc0b863ac9b
+      internalID: 416520144
       vertices: []
       indices: 
       edges: []
@@ -190,9 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ob_03_1: -890743371
-      Ob_03_0: -932591883
-      Ob_03_2: 1611786167
+      Ob_03_1: 416520144
+      Ob_03_0: -1771841376
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

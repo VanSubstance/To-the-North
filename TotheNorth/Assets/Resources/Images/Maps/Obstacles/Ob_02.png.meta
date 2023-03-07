@@ -69,7 +69,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e1ebca6dadeb9d46a9978e75225edfb
-      internalID: 624972797
+      spriteID: 6161d5e6fae38804887628802fadca4f
+      internalID: 1618629635
       vertices: []
       indices: 
       edges: []
@@ -152,29 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c5d7a5ec50e5a20449b597513ac7a0e9
-      internalID: 89343150
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ob_02_2
-      rect:
-        serializedVersion: 2
-        x: 300
-        y: 0
-        width: 100
-        height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b6339b177ab99a9448b94fc9a130282d
-      internalID: 1342079526
+      spriteID: 7c2c3bf8a8a6ff64f9fb11500e99fb2b
+      internalID: 141660218
       vertices: []
       indices: 
       edges: []
@@ -190,9 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ob_02_1: 89343150
-      Ob_02_2: 1342079526
-      Ob_02_0: 624972797
+      Ob_02_1: 141660218
+      Ob_02_0: 1618629635
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
