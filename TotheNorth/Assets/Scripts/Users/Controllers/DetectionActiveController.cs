@@ -1,20 +1,16 @@
 using System;
+using Assets.Scripts.Commons.Constants;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace Assets.Scripts.Users.Controllers
 {
     internal class DetectionActiveController : MonoBehaviour
     {
         [SerializeField]
-        private Vector2 originalCoor;
-        [SerializeField]
         private int degree;
-        [SerializeField]
-        private int radiusOfSight = 1;
         private void Start()
         {
-            transform.Rotate(new Vector3(0, 0, degree));
+            //transform.Rotate(new Vector3(0, 0, degree));
         }
         private void Update()
         {
@@ -23,11 +19,23 @@ namespace Assets.Scripts.Users.Controllers
 
         private void CalcCenterCoor()
         {
+            transform.localRotation = Quaternion.Euler(0, 0, degree);
             Vector2 correctionCoor = new Vector2(
                 (float)Math.Cos(Mathf.Deg2Rad * degree),
                 (float)Math.Sin(Mathf.Deg2Rad * degree)
-                ) * radiusOfSight / 2f;
-            transform.localPosition = originalCoor + correctionCoor;
+                ) * InGameStatus.User.Detection.Sight.range / 2f;
+            transform.localPosition = correctionCoor;
+        }
+
+        public void TrySetDegreeInForce(int degree)
+        {
+            this.degree = degree;
+        }
+
+        public void TrySetDegreeInNormal(int degree)
+        {
+            if (InGameStatus.User.Detection.Sight.isControllInRealTime) return;
+            TrySetDegreeInForce(degree);
         }
     }
 }

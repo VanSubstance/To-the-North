@@ -150,7 +150,7 @@ Transform:
   m_GameObject: {fileID: 31091610}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 183306699}
@@ -935,6 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7b08c359439c64ebc248bd05c94fd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sightDetectionController: {fileID: 1808042619}
 --- !u!58 &1082105459
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1065,6 +1066,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1424225949}
+  - component: {fileID: 1424225950}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -1080,13 +1082,25 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1424225948}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: -6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1424225950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424225948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d12402740dc2dd47a8d5a329b593df6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1489377148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1505,8 +1519,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1808042616}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 183306699}
@@ -1575,9 +1589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4992ee0e3758b34abdbcf5118af0053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalCoor: {x: 0, y: 0}
-  degree: 45
-  radiusOfSight: 2
+  degree: 180
 --- !u!1001 &2010075710
 PrefabInstance:
   m_ObjectHideFlags: 0

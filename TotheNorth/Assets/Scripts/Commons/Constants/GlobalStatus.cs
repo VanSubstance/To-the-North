@@ -28,6 +28,7 @@ public static class GlobalStatus
     {
         public static class MouseEvent
         {
+            public static System.Action<Vector3> actionSustain = null;
             public static MouseActionBundle Left = new MouseActionBundle(), Right = new MouseActionBundle(), Middle = new MouseActionBundle();
             public class MouseActionBundle
             {

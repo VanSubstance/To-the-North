@@ -23,6 +23,7 @@ public class MouseEventManager : MonoBehaviour
         {
             TrackMousePosition();
         }
+        TrackMouse();
     }
 
     private void TrackMouseEvent()
@@ -232,5 +233,11 @@ public class MouseEventManager : MonoBehaviour
         }
         GlobalComponent.Common.Event.mouseCursorManager.SetMouseCursor(MouseCursorType.NORMAL);
         return;
+    }
+
+    private void TrackMouse()
+    {
+        if (GlobalStatus.Util.MouseEvent.actionSustain == null) return;
+        GlobalStatus.Util.MouseEvent.actionSustain(mousePosition);
     }
 }

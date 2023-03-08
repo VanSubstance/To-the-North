@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Commons.Constants;
 using UnityEngine;
 
 namespace Assets.Scripts.Users.Controllers
@@ -7,10 +8,12 @@ namespace Assets.Scripts.Users.Controllers
     internal class UserMoveController : MonoBehaviour
     {
         private float mvSpd = 2f;
+        [SerializeField]
+        private DetectionActiveController sightDetectionController;
         // Start is called before the first frame update
         void Start()
         {
-
+            SetMouseEvent();
         }
 
         // Update is called once per frame
@@ -41,6 +44,29 @@ namespace Assets.Scripts.Users.Controllers
                 // 위쪽
                 transform.Translate(Vector3.up * mvSpd * Time.deltaTime);
             }
+        }
+
+        private void SetMouseEvent()
+        {
+            GlobalStatus.Util.MouseEvent.actionSustain = (mousePos) =>
+            {
+                sightDetectionController.TrySetDegreeInForce(
+                    (int)
+                    Vector3.SignedAngle(Vector3.right, new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized, transform.forward));
+            };
+            GlobalStatus.Util.MouseEvent.Right.setActions(
+                actionDrag: (tr, mousePos) =>
+                {
+                },
+                actionDown: (tr, mousePos) =>
+                {
+                    InGameStatus.User.Detection.Sight.isControllInRealTime = true;
+                },
+                actionUp: (tr, mousePos) =>
+                {
+                    InGameStatus.User.Detection.Sight.isControllInRealTime = false;
+                }
+                );
         }
     }
 
