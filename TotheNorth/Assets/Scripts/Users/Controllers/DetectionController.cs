@@ -17,7 +17,7 @@ namespace Assets.Scripts.Users.Controllers
             Color temp = collision.GetComponent<SpriteRenderer>().color;
             switch (collision.transform.name)
             {
-                case "Top":
+                case "All":
                     // 흐릿하게 만들기
                     collision.GetComponent<SpriteRenderer>().color = new Color(
                         temp.r,
@@ -35,7 +35,7 @@ namespace Assets.Scripts.Users.Controllers
             Color temp = collision.GetComponent<SpriteRenderer>().color;
             switch (collision.transform.name)
             {
-                case "Top":
+                case "All":
                     // 멀쩡하게 만들기
                     collision.GetComponent<SpriteRenderer>().color = new Color(
                         temp.r,

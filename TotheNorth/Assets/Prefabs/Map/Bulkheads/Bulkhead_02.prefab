@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6903019658522024626}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 1, z: 1}
+  m_LocalPosition: {x: 0.5, y: 4.5, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: -1487849313
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1638303031, guid: e1a79e003a577654ca7153346d63fdb7, type: 3}
+  m_Sprite: {fileID: 1906865652, guid: 4375df7725465a8499afe68fcd65b84f, type: 3}
   m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,7 +102,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3, y: 2}
+    oldSize: {x: 1, y: 9}
     newSize: {x: 1.5, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -110,12 +110,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -1.5, y: 1}
-      - {x: -1.5, y: -0.04}
-      - {x: 0.44651163, y: -0.009256005}
-      - {x: 0.44, y: -1}
-      - {x: 1.5, y: -1}
-      - {x: 1.5, y: 1}
+    - - {x: -0.5, y: -4.5}
+      - {x: 0.5, y: -4.5}
+      - {x: 0.5, y: -0.45999998}
+      - {x: -0.5, y: -0.45999998}
+    - - {x: -0.5, y: 4.5}
+      - {x: -0.5, y: 0.45999998}
+      - {x: 0.5, y: 0.45999998}
+      - {x: 0.5, y: 4.5}
 --- !u!1 &8581566272140703445
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +131,7 @@ GameObject:
   - component: {fileID: 4679024694295127035}
   - component: {fileID: 2793259744115080552}
   m_Layer: 0
-  m_Name: Obstacle_01
+  m_Name: Bulkhead_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,26 +195,32 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 4220579297049459207}
     m_ColliderPaths:
-    - - X: 0
-        Y: 20000000
+    - - X: 10000000
+        Y: 90000000
       - X: 0
-        Y: 9600000
-      - X: 19465116
-        Y: 9907440
-      - X: 19400000
+        Y: 90000000
+      - X: 0
+        Y: 49600000
+      - X: 10000000
+        Y: 49600000
+    - - X: 10000000
+        Y: 40400000
+      - X: 0
+        Y: 40400000
+      - X: 0
         Y: 0
-      - X: 30000000
+      - X: 10000000
         Y: 0
-      - X: 30000000
-        Y: 20000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 2.999971, y: 0}
-      - {x: 2.999971, y: 2}
-      - {x: 0, y: 1.9999708}
-      - {x: 0.0000298, y: 0.9600005}
-      - {x: 1.9465116, y: 0.9907139}
-      - {x: 1.9400296, y: 0}
+    - - {x: 0.99997073, y: 4.96}
+      - {x: 0.99997073, y: 9}
+      - {x: 0, y: 8.99997}
+      - {x: 0.000029300001, y: 4.96}
+    - - {x: 0.99997073, y: 0}
+      - {x: 0.99997073, y: 4.04}
+      - {x: 0, y: 4.039971}
+      - {x: 0.000029300001, y: 0}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!114 &2793259744115080552
@@ -255,7 +263,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8581566273380470946}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 2, z: -1}
+  m_LocalPosition: {x: 0.5, y: 6.5, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -303,7 +311,7 @@ SpriteRenderer:
   m_SortingLayerID: -1487849313
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 1364822451, guid: e1a79e003a577654ca7153346d63fdb7, type: 3}
+  m_Sprite: {fileID: 428165861, guid: 4375df7725465a8499afe68fcd65b84f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.29803923}
   m_FlipX: 0
   m_FlipY: 0
@@ -331,7 +339,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3, y: 4}
+    oldSize: {x: 1, y: 13}
     newSize: {x: 1.5, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -339,9 +347,7 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -1.5, y: 2}
-      - {x: -1.5, y: -1.04}
-      - {x: 0.43817532, y: -1.0420437}
-      - {x: 0.44, y: -2}
-      - {x: 1.5, y: -2}
-      - {x: 1.5, y: 2}
+    - - {x: -0.5, y: 6.5}
+      - {x: -0.5, y: -6.5}
+      - {x: 0.5, y: -6.5}
+      - {x: 0.5, y: 6.5}
