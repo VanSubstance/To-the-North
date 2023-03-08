@@ -4,12 +4,11 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal class DetectionController : MonoBehaviour
     {
-        [SerializeField]
-        private float range;
-
+        private int originalMagValue = 8;
+        private Vector3 originalPos;
         private void Start()
         {
-            GetComponent<CircleCollider2D>().radius = range;
+            originalPos = new Vector3(originalMagValue / 4, originalMagValue / 4, 0f);
         }
         //private void OnTriggerEnter2D(Collider2D collision)
         //{
