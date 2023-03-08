@@ -5,12 +5,13 @@ using UnityEngine;
 public class BaseSpriteController : MonoBehaviour
 {
     [SerializeField]
-    private SpriteRenderer frontSprite, backSprite;
+    private SpriteRenderer allForAbsoulteSprite, allForDetectionSprite, backSprite;
     // Start is called before the first frame update
     void Start()
     {
-        frontSprite.color = Color.white;
-        backSprite.color = Color.white;
+        allForAbsoulteSprite.color = Color.white;
+        allForDetectionSprite.color = new Color(1f, 1f, 1f, 0.25f);
+        backSprite.color = Color.black;
     }
 
     // Update is called once per frame
