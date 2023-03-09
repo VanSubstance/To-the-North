@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class AIContentModalContentController : MonoBehaviourControllByKey, IContentModalContentController
+public abstract class AIWindowModalContentController : MonoBehaviourControllByKey, IWindowModalContentController
 {
     [SerializeField]
     private Vector2 sizeToUnit;

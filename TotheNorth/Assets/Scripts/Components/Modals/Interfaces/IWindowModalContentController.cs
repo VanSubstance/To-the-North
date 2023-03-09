@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IContentModalContentController
+public interface IWindowModalContentController
 {
     public void ClearContent();
     public void InitComposition();

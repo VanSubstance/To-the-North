@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ContentModalGridMapTileController : MonoBehaviour, IContentModalGridSlot, IContentModalGridItem
+public class WindowModalGridMapTileController : MonoBehaviour, IWindowModalGridSlot, IWindowModalGridItem
 {
     private MapTileVO mapTileVO;
     private Image image;
@@ -34,7 +34,7 @@ public class ContentModalGridMapTileController : MonoBehaviour, IContentModalGri
         GetComponent<BoxCollider>().size = new Vector3(GlobalSetting.gridUnitSize, GlobalSetting.gridUnitSize, 1f);
     }
 
-    public void InstallOnSlot(IContentModalGridSlot targetSlot)
+    public void InstallOnSlot(IWindowModalGridSlot targetSlot)
     {
         // 설치 불가
         return;
