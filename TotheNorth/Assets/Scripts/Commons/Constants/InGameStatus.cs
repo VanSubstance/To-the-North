@@ -23,7 +23,7 @@ namespace Assets.Scripts.Commons.Constants
             {
                 public static class Sight
                 {
-                    public static float range = 3.0f;
+                    public static float range = 6.0f;
                     public static int degree = 90;
                     public static bool isControllInRealTime = false;
                 }
