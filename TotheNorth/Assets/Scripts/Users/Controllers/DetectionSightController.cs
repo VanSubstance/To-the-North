@@ -65,7 +65,7 @@ namespace Assets.Scripts.Users.Controllers
                     float dstToTarget = Vector3.Distance(transform.position, target.transform.position);
 
                     // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
-                    if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, 1 << 7))
+                    if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, 1 << 7))
                     {
                         visibleTargets.Add(target);
                     }
