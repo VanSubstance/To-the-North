@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Users.Objects;
 
 namespace Assets.Scripts.Commons.Constants
 {
@@ -10,6 +11,13 @@ namespace Assets.Scripts.Commons.Constants
     {
         public static class User
         {
+            public static class Movement
+            {
+                public static float spdWalk = 2f;
+                public static float weightRun = 1.5f;
+                public static float weightCrouch = 0.5f;
+                public static MovementType curMovement = MovementType.WALK;
+            }
             public static class Detection
             {
                 public static class Sight
