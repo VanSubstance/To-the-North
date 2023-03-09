@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 4434068868916389531}
   - component: {fileID: 4679024694295127035}
   - component: {fileID: 2793259744115080552}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bulkhead_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

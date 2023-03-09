@@ -9,7 +9,6 @@ namespace Assets.Scripts.Users.Controllers
     {
         [SerializeField]
         private DetectionActiveController sightDetectionController;
-        // Start is called before the first frame update
         void Start()
         {
             SetMouseEvent();
@@ -79,9 +78,8 @@ namespace Assets.Scripts.Users.Controllers
         {
             GlobalStatus.Util.MouseEvent.actionSustain = (mousePos) =>
             {
-                sightDetectionController.TrySetDegreeInForce(
-                    (int)
-                    Vector3.SignedAngle(Vector3.right, new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized, transform.forward));
+                InGameStatus.User.Movement.curdegree = (int)
+                Vector3.SignedAngle(Vector3.right, new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized, transform.forward);
             };
             GlobalStatus.Util.MouseEvent.Right.setActions(
                 actionDrag: (tr, mousePos) =>

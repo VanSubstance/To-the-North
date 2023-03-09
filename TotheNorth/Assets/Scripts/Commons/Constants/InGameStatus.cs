@@ -13,6 +13,7 @@ namespace Assets.Scripts.Commons.Constants
         {
             public static class Movement
             {
+                public static int curdegree = 0;
                 public static float spdWalk = 2f;
                 public static float weightRun = 1.5f;
                 public static float weightCrouch = 0.5f;
