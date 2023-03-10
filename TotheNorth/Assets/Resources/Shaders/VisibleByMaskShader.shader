@@ -15,7 +15,8 @@ Shader "Custom/VisibleByMaskShader"
 		{
 			Tags
 			{
-				"RenderType" = "Opaque"
+				"RenderType" = "Transparent"
+				"Queue" = "Transparent-2"
 			}
 			Stencil
 			{

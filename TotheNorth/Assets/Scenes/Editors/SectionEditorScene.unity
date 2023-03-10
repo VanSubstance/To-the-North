@@ -358,7 +358,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183306698}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1024,7 +1024,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 976755958}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1251,8 +1251,8 @@ Camera:
   m_GameObject: {fileID: 1375746565}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1441,10 +1441,6 @@ PrefabInstance:
       propertyPath: m_ColliderPaths.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6085483541321646721, guid: 96191583a50fe9947a219d19953c5344, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 8581566272140703444, guid: 96191583a50fe9947a219d19953c5344, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -1492,10 +1488,6 @@ PrefabInstance:
     - target: {fileID: 8581566272140703445, guid: 96191583a50fe9947a219d19953c5344, type: 3}
       propertyPath: m_Name
       value: Obstacle_01
-      objectReference: {fileID: 0}
-    - target: {fileID: 8581566273380470946, guid: 96191583a50fe9947a219d19953c5344, type: 3}
-      propertyPath: m_Layer
-      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96191583a50fe9947a219d19953c5344, type: 3}
