@@ -11,12 +11,11 @@ namespace Assets.Scripts.Users.Controllers
         {
             SetMouseEvent();
         }
-
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
             TrackDirection();
             TrackMovementType();
+            TrackSightZoom(0.01f);
         }
 
         private void TrackDirection()
@@ -45,6 +44,11 @@ namespace Assets.Scripts.Users.Controllers
 
         private float GetMovementSpd()
         {
+            if (InGameStatus.User.Detection.Sight.isControllInRealTime)
+            {
+                // 시선 집중 중일때는 무조건 잠복 속도로
+                return InGameStatus.User.Movement.spdWalk * InGameStatus.User.Movement.weightCrouch;
+            }
             switch (InGameStatus.User.Movement.curMovement)
             {
                 case Objects.MovementType.WALK:
@@ -70,6 +74,28 @@ namespace Assets.Scripts.Users.Controllers
                 return;
             }
             InGameStatus.User.Movement.curMovement = Objects.MovementType.WALK;
+        }
+
+        private void TrackSightZoom(float timePass)
+        {
+            if (InGameStatus.User.Detection.Sight.isControllInRealTime)
+            {
+                // 시야 늘어나기
+                if (InGameStatus.User.Detection.Sight.range < InGameStatus.User.Detection.Sight.rangeMax)
+                {
+                    InGameStatus.User.Detection.Sight.range += timePass;
+                    return;
+                }
+            }
+            else
+            {
+                // 시야 줄어들기: 시야 늘어나기의 2배속
+                if (InGameStatus.User.Detection.Sight.range > InGameStatus.User.Detection.Sight.rangeMin)
+                {
+                    InGameStatus.User.Detection.Sight.range -= timePass * 2;
+                    return;
+                }
+            }
         }
 
         private void SetMouseEvent()
