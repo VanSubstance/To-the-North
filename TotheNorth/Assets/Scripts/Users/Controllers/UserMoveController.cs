@@ -7,8 +7,6 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal class UserMoveController : MonoBehaviour
     {
-        [SerializeField]
-        private DetectionActiveController sightDetectionController;
         void Start()
         {
             SetMouseEvent();
