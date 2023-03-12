@@ -10,7 +10,7 @@ public class BaseSpriteController : MonoBehaviour
     void Start()
     {
         allForAbsoulteSprite.color = Color.white;
-        allForDetectionSprite.color = new Color(1f, 1f, 1f, 0.25f);
+        allForDetectionSprite.color = new Color(1f, 1f, 1f, 0.1f);
         backSprite.color = Color.black;
     }
 

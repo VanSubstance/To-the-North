@@ -81,7 +81,8 @@ namespace Assets.Scripts.Users.Controllers
             RaycastHit2D hit;
             if (hit = Physics2D.Raycast(transform.position, dir, viewRadius, obstacleMask))
             {
-                return new DetectionSightInfo(true, hit.point, hit.distance, globalAngle);
+                //return new DetectionSightInfo(true, hit.point, hit.distance, globalAngle);
+                return new DetectionSightInfo(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
             }
             else
             {
