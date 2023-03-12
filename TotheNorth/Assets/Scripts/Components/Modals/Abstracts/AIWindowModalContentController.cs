@@ -11,7 +11,7 @@ public abstract class AIWindowModalContentController : MonoBehaviourControllByKe
     private Button btnX;
     private int curStatus = 0;
     private Transform contentContainerTf, headerTf;
-    void Start()
+    public void Start()
     {
         InitComposition();
         ControllByKey(2);

@@ -12,15 +12,13 @@ public class WindowModalInventoryContentController : AWindowModalController<Inve
     {
         if (isInit) return;
         Transform temp = base.GetContentContainerTf().GetChild(0);
-        int idx = 0;
         for (int col = 0; col < 13; col++)
         {
             for (int row = 0; row < 10; row++)
             {
-                slots[row, col] = temp.GetChild(idx).GetComponent<InventorySlot>();
+                slots[row, col] = temp.GetChild((col * 10) + row).GetComponent<InventorySlot>();
                 slots[row, col].row = row;
                 slots[row, col].column = col;
-                idx++;
             }
         }
         isInit = true;
