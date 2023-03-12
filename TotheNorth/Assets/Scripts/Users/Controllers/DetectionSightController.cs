@@ -109,7 +109,7 @@ namespace Assets.Scripts.Users.Controllers
         {
             return curRotationDegree;
         }
-        
+
         /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */
         private DetectionSightInfo SightCast(float globalAngle)
         {
@@ -117,13 +117,41 @@ namespace Assets.Scripts.Users.Controllers
             RaycastHit2D hit;
             if (hit = Physics2D.Raycast(transform.position, dir, (int)InGameStatus.User.Detection.Sight.range, obstacleMask))
             {
-                return new DetectionSightInfo(true, hit.point, hit.distance, globalAngle);
+                return new DetectionSightInfo(true, DistortPoint(globalAngle, hit.point), hit.distance, globalAngle);
             }
             else
             {
                 return new DetectionSightInfo(false, transform.position + dir * InGameStatus.User.Detection.Sight.range, InGameStatus.User.Detection.Sight.range, globalAngle);
             }
         }
+
+        /** 현재 각도에 따른 충돌 포인트 왜곡 */
+        private Vector2 DistortPoint(float globalAngle, Vector2 pointOrigin, float distortRate = 0.1f)
+        {
+            globalAngle = globalAngle % 360;
+            if (globalAngle < 90)
+            {
+                pointOrigin.x += distortRate;
+                pointOrigin.y += distortRate;
+                return pointOrigin;
+            }
+            if (globalAngle < 180)
+            {
+                pointOrigin.x -= distortRate;
+                pointOrigin.y += distortRate;
+                return pointOrigin;
+            }
+            if (globalAngle < 270)
+            {
+                pointOrigin.x -= distortRate;
+                pointOrigin.y -= distortRate;
+                return pointOrigin;
+            }
+            pointOrigin.x += distortRate;
+            pointOrigin.y -= distortRate;
+            return pointOrigin;
+        }
+
         /** 시야 시각화 */
         private void DrawSightArea()
         {
