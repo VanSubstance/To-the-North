@@ -2,6 +2,12 @@ using UnityEngine;
 public static class GlobalStatus
 {
     public static string curScene = "메인메뉴씬";
+
+    public static class Constant
+    {
+        public static LayerMask obstacleMask = 1 << 7, eventMask = 1 << 9, creatureMask = 1 << 8;
+    }
+
     public static class Loading
     {
         public static class System
@@ -28,6 +34,7 @@ public static class GlobalStatus
     {
         public static class MouseEvent
         {
+            public static System.Action<Vector3> actionSustain = null;
             public static MouseActionBundle Left = new MouseActionBundle(), Right = new MouseActionBundle(), Middle = new MouseActionBundle();
             public class MouseActionBundle
             {

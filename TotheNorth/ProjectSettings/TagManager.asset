@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - UI Container
-  - BUTTON
   layers:
   - Default
   - TransparentFX
@@ -13,10 +12,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Background
+  - Obstacle
+  - Creature
+  - Event
   - 
   - 
   - 
@@ -42,4 +41,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Objects on Map
+    uniqueID: 2807117983
     locked: 0
