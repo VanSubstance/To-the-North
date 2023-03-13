@@ -13,10 +13,4 @@ public class BaseSpriteController : MonoBehaviour
         allForDetectionSprite.color = new Color(1f, 1f, 1f, 0.1f);
         backSprite.color = Color.black;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

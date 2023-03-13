@@ -24,7 +24,7 @@ namespace Assets.Scripts.Commons.Constants
             {
                 public static class Instinct
                 {
-                    public static float range = 3.0f;
+                    public static float range = 1.0f;
                 }
                 public static class Sight
                 {

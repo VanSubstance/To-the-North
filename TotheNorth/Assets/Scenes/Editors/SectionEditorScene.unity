@@ -168,8 +168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e89bff63782991946a85ce2760db1160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 1
   meshResolution: 1
+  viewMesh: {fileID: 0}
   viewMeshFilter: {fileID: 979531480}
   visibleTargets: []
 --- !u!1001 &82617110
@@ -882,8 +882,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3475a34ff6903e642bfd82f91fc0e2d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewAngle: 90
   meshResolution: 1
+  viewMesh: {fileID: 0}
   viewMeshFilter: {fileID: 2026515219}
   visibleTargets: []
 --- !u!1 &941028413
