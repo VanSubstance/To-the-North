@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Users.Objects;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -96,8 +97,7 @@ namespace Assets.Scripts.Users.Controllers
             {
                 angleDegrees += transform.eulerAngles.y;
             }
-
-            return new Vector3(Mathf.Cos((angleDegrees) * Mathf.Deg2Rad), Mathf.Sin((angleDegrees) * Mathf.Deg2Rad), 0);
+            return CalculationFunctions.DirFromAngle(angleDegrees);
         }
 
         public int GetViewAngle()

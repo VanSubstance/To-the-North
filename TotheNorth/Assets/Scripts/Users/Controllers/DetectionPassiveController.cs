@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Users.Objects;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -56,10 +57,11 @@ namespace Assets.Scripts.Users.Controllers
                 float dstToTarget = Vector3.Distance(transform.position, target.transform.position);
 
                 // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
-                if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
-                {
-                    visibleTargets.Add(target);
-                }
+                //if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+                //{
+                //    visibleTargets.Add(target);
+                //}
+                visibleTargets.Add(target);
             }
         }
 
@@ -70,8 +72,7 @@ namespace Assets.Scripts.Users.Controllers
             {
                 angleDegrees += transform.eulerAngles.y;
             }
-
-            return new Vector3(Mathf.Cos((angleDegrees) * Mathf.Deg2Rad), Mathf.Sin((angleDegrees) * Mathf.Deg2Rad), 0);
+            return CalculationFunctions.DirFromAngle(angleDegrees);
         }
 
         /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */
