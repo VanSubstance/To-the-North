@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Events.Interfaces;
 using Assets.Scripts.Users.Objects;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Users.Controllers
@@ -46,16 +44,18 @@ namespace Assets.Scripts.Users.Controllers
             viewMesh.RecalculateNormals();
         }
 
+        /// <summary>
+        /// 시야 내에서 상호작용 거리 안에 들어온 이벤트들 깨우기
+        /// </summary>
         public override void CheckSight()
         {
-            visibleTargets.Clear();
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
-            Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.Instinct.range, GlobalStatus.Constant.eventMask);
-            targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.Instinct.range, GlobalStatus.Constant.creatureMask));
+            Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask);
+            //targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.creatureMask));
             for (int i = 0; i < targetsInViewRadius.Length; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
-                visibleTargets.Add(target);
+                target.GetComponent<IEventInteraction>().StartTrackingInteraction(transform);
             }
         }
     }

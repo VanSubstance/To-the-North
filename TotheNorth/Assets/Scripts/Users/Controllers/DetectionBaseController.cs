@@ -12,7 +12,6 @@ namespace Assets.Scripts.Users.Controllers
         public float meshResolution;
         public Mesh viewMesh;
         public MeshFilter viewMeshFilter;
-        public List<Transform> visibleTargets = new List<Transform>();
 
         public void Start()
         {

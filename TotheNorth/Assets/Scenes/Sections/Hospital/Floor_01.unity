@@ -665,6 +665,7 @@ GameObject:
   - component: {fileID: 941028416}
   - component: {fileID: 941028415}
   - component: {fileID: 941028414}
+  - component: {fileID: 941028417}
   m_Layer: 9
   m_Name: Icon_Portal
   m_TagString: Untagged
@@ -708,7 +709,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 67c9f12c98c0f8a4e8f51feaef96b826, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -755,6 +756,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &941028417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941028413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 287377417497c264b884031d46f047ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1082105457 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7249881556927368018, guid: 889eabd210638ef4998344c3b01fd6ff, type: 3}
