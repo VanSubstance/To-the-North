@@ -1,15 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Users.Objects;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Assets.Scripts.Users.Controllers
 {
@@ -126,7 +121,7 @@ namespace Assets.Scripts.Users.Controllers
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
 
                 // (플레이어와 forward와 target이 이루는 각 - 마우스 회전각)이 설정한 각도 내라면
-                if (Math.Abs(Vector3.SignedAngle(transform.right, dirToTarget, Vector3.forward) - InGameStatus.User.Movement.curdegree) < InGameStatus.User.Detection.Sight.degree)
+                if (Math.Abs(Vector3.SignedAngle(transform.right, dirToTarget, Vector3.forward)) * 2 < InGameStatus.User.Detection.Sight.degree)
                 {
                     float dstToTarget = Vector3.Distance(transform.position, target.transform.position);
 
