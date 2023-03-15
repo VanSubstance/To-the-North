@@ -20,10 +20,6 @@ namespace Assets.Scripts.Users.Editors
             Handles.DrawWireArc(fow.transform.position, Vector3.back, Vector3.up, 360, InGameStatus.User.Detection.Instinct.range);
 
             Handles.color = Color.red;
-            foreach (Transform visible in fow.visibleTargets)
-            {
-                Handles.DrawLine(fow.transform.position, visible.transform.position);
-            }
         }
     }
 }

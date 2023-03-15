@@ -25,10 +25,6 @@ namespace Assets.Scripts.Users.Editors
             Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleB * InGameStatus.User.Detection.Sight.range);
 
             Handles.color = Color.red;
-            foreach (Transform visible in fow.visibleTargets)
-            {
-                Handles.DrawLine(fow.transform.position, visible.transform.position);
-            }
         }
     }
 }

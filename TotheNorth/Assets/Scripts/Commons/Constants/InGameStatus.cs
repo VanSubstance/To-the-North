@@ -22,9 +22,10 @@ namespace Assets.Scripts.Commons.Constants
             }
             public static class Detection
             {
+                public static float distanceInteraction = 2f;
                 public static class Instinct
                 {
-                    public static float range = 1.0f;
+                    public static float range = 2.0f;
                 }
                 public static class Sight
                 {

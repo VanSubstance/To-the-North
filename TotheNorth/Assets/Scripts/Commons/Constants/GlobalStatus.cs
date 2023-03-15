@@ -1,7 +1,9 @@
 using UnityEngine;
 public static class GlobalStatus
 {
-    public static string curScene = "메인메뉴씬";
+    public static string curScene = "";
+    public static string nextScene = "";
+    public static float[] userInitPosition = new float[2] { 0, 0 };
 
     public static class Constant
     {

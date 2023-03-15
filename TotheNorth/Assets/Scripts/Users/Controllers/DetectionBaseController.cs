@@ -1,13 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Users.Objects;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Users.Controllers
@@ -17,7 +12,6 @@ namespace Assets.Scripts.Users.Controllers
         public float meshResolution;
         public Mesh viewMesh;
         public MeshFilter viewMeshFilter;
-        public List<Transform> visibleTargets = new List<Transform>();
 
         public void Start()
         {

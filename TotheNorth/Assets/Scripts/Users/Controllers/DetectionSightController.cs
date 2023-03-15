@@ -1,15 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Events.Interfaces;
 using Assets.Scripts.Users.Objects;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Assets.Scripts.Users.Controllers
 {
@@ -114,26 +110,28 @@ namespace Assets.Scripts.Users.Controllers
             viewMesh.RecalculateNormals();
         }
 
+        /// <summary>
+        /// 시야 내에서 상호작용 거리 안에 들어온 이벤트들 깨우기
+        /// </summary>
         public override void CheckSight()
         {
-            visibleTargets.Clear();
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
-            Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.Sight.range, GlobalStatus.Constant.eventMask);
-            targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.Sight.range, GlobalStatus.Constant.creatureMask));
+            Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask);
+            //targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.creatureMask));
             for (int i = 0; i < targetsInViewRadius.Length; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
 
                 // (플레이어와 forward와 target이 이루는 각 - 마우스 회전각)이 설정한 각도 내라면
-                if (Math.Abs(Vector3.SignedAngle(transform.right, dirToTarget, Vector3.forward) - InGameStatus.User.Movement.curdegree) < InGameStatus.User.Detection.Sight.degree)
+                if (Math.Abs(Vector3.SignedAngle(transform.right, dirToTarget, Vector3.forward)) * 2 < InGameStatus.User.Detection.Sight.degree)
                 {
                     float dstToTarget = Vector3.Distance(transform.position, target.transform.position);
 
                     // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
                     if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
                     {
-                        visibleTargets.Add(target);
+                        target.GetComponent<IEventInteraction>().StartTrackingInteraction(transform);
                     }
                 }
             }
