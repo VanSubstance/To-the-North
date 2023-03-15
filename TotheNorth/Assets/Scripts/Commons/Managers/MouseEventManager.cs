@@ -256,6 +256,13 @@ public class MouseEventManager : MonoBehaviour
     private void TrackMouse()
     {
         if (GlobalStatus.Util.MouseEvent.actionSustain == null) return;
-        GlobalStatus.Util.MouseEvent.actionSustain(mousePosition);
+        try
+        {
+            GlobalStatus.Util.MouseEvent.actionSustain(mousePosition);
+        }
+        catch (MissingReferenceException)
+        {
+
+        }
     }
 }

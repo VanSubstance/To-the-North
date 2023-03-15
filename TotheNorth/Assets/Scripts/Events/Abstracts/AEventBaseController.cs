@@ -13,6 +13,7 @@ namespace Assets.Scripts.Events.Abstracts
     internal abstract class AEventBaseController : MonoBehaviour, IEventInteraction
     {
         public bool isOnTracking = false;
+        private bool isInteracted = false;
 
         public void StartTrackingInteraction(Transform targetTf)
         {
@@ -26,12 +27,13 @@ namespace Assets.Scripts.Events.Abstracts
             while (isOnTracking && Vector2.Distance(targetTf.position, transform.position) <= InGameStatus.User.Detection.distanceInteraction)
             {
                 yield return new WaitForSeconds(Time.deltaTime);
-                if (Input.GetKey(KeyCode.Space))
+                if (Input.GetKey(KeyCode.Space) && !isInteracted)
                 {
-                    isOnTracking = false;
+                    isInteracted = true;
                     OnInteraction();
                 }
             }
+            isInteracted = false;
             isOnTracking = false;
         }
 

@@ -15,6 +15,7 @@ public static class GlobalComponent
 
     public static class Common
     {
+        public static Transform userTf;
         public static class Info
         {
             public static InfoMessageManager controller;

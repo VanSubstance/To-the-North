@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class CameraTrackControlller : MonoBehaviour
 {
-    [SerializeField] private Transform targetTf;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,8 +15,8 @@ public class CameraTrackControlller : MonoBehaviour
     {
         Vector3 curDistortionVector = CalculationFunctions.DirFromAngle(InGameStatus.User.Movement.curdegree) * (InGameStatus.User.Detection.Sight.range - InGameStatus.User.Detection.Sight.rangeMin);
         transform.position = new Vector3(
-            targetTf.position.x,
-            targetTf.position.y,
+            GlobalComponent.Common.userTf.position.x,
+            GlobalComponent.Common.userTf.position.y,
             -20f) + curDistortionVector;
     }
 }

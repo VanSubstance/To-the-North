@@ -7,11 +7,8 @@ namespace Assets.Scripts.Commons.Managers
 {
     internal class LoadingManager : MonoBehaviour
     {
-        public string sceneName;
         [SerializeField]
         private ProgressBarController progressTf;
-
-        private float time;
 
         private void Start()
         {
@@ -20,16 +17,14 @@ namespace Assets.Scripts.Commons.Managers
 
         private IEnumerator CoroutineLoadSceneWithAsync()
         {
-            AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
-            op.allowSceneActivation = false;
+            AsyncOperation op = SceneManager.LoadSceneAsync(GlobalStatus.nextScene);
+            GlobalStatus.curScene = GlobalStatus.nextScene;
+            GlobalStatus.nextScene = string.Empty;
+            GlobalStatus.Loading.System.CommonGameManager = false;
+            op.allowSceneActivation = true;
             while (!op.isDone)
             {
-                time += Time.deltaTime;
-                progressTf.SetProgress(time / 10f);
-                if (time > 10)
-                {
-                    op.allowSceneActivation = true;
-                }
+                progressTf.SetProgress(op.progress);
                 yield return null;
             }
         }

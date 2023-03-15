@@ -7,67 +7,118 @@ using TMPro;
 public class CommonGameManager : MonoBehaviour
 {
     [SerializeField]
+    private Transform fadeImagePrefab, userPrefab;
     private Image fadeImage;
 
     private int curStatus = 0;
 
-    // Start is called before the first frame update
-    void Start()
+    // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
+    private static CommonGameManager _instance;
+    // 인스턴스에 접근하기 위한 프로퍼티
+    public static CommonGameManager Instance
     {
+        get
+        {
+            // 인스턴스가 없는 경우에 접근하려 하면 인스턴스를 할당해준다.
+            if (!_instance)
+            {
+                _instance = FindObjectOfType(typeof(CommonGameManager)) as CommonGameManager;
+
+                if (_instance == null)
+                    Debug.Log("no Singleton obj");
+            }
+            return _instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+        // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
+        else if (_instance != this)
+        {
+            Destroy(gameObject);
+        }
+        // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (curStatus)
+        if (!GlobalStatus.Loading.System.CommonGameManager)
         {
-            case 0:
-                if (fadeImage != null)
-                {
-                    FadeScreen(false, () =>
+            StartCoroutine(GenerateInitialComponents());
+        }
+        else
+        {
+            switch (curStatus)
+            {
+                case 0:
+                    FadeScreen(false);
+                    curStatus = 1;
+                    break;
+                case 1:
+                    if (GlobalStatus.Loading.System.isSystemLoadingDone())
                     {
-                        GlobalStatus.Loading.System.CommonGameManager = true;
-                    });
-                } else
-                {
-                    GlobalStatus.Loading.System.CommonGameManager = true;
-                }
-                curStatus = 1;
-                break;
-            case 1:
-                if (GlobalStatus.Loading.System.isSystemLoadingDone())
-                {
-                    GetComponent<InfoMessageManager>().AddMessageIntoQueue(new InfoStat(GlobalStatus.curScene, InfoType.ERROR));
-                    curStatus = 2;
-                }
-                break;
-            case 2:
-                break;
+                        GetComponent<InfoMessageManager>().AddMessageIntoQueue(new InfoStat(GlobalStatus.curScene, InfoType.ERROR));
+                        curStatus = 2;
+                    }
+                    break;
+                case 2:
+                    break;
+            }
         }
     }
 
-    public void MoveScene(string targetSceneName)
+    private IEnumerator GenerateInitialComponents()
     {
-        FadeScreen(true, () =>
+        if (curStatus == 10) yield break;
+        curStatus = 10;
+        while (GameObject.Find("UI") == null)
         {
-            GlobalStatus.resetLoading();
-            GlobalStatus.curScene = targetSceneName;
-            SceneManager.LoadScene(targetSceneName);
-        });
+            yield return new WaitForSeconds(0.01f);
+        }
+        // 페이드아웃 이미지 추가
+        Transform imageForFade = Instantiate(fadeImagePrefab);
+        imageForFade.SetParent(GameObject.Find("UI").transform);
+        imageForFade.localPosition = Vector3.zero;
+        imageForFade.localScale = Vector3.one;
+        fadeImage = imageForFade.GetComponent<Image>();
+
+        // 유저 위치
+        Transform userGo = Instantiate(userPrefab);
+        userGo.localScale = Vector3.one;
+        userGo.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
+        GlobalStatus.userInitPosition = new float[] { 0, 0 };
+        GlobalComponent.Common.userTf = userGo;
+
+        GlobalStatus.Loading.System.CommonGameManager = true;
+        curStatus = 0;
     }
 
-    public void FadeScreen(bool isFadein, System.Action actionAfter = null)
+    /// <summary>
+    /// 화면 페이드 인/아웃
+    /// </summary>
+    /// <param name="isFadein">true -> 화면 감추기 (페이드인); false -> 화면 나타내기 (페이드아웃)</param>
+    /// <param name="actionAfter">화면 애니메이션 이후 실행할 함수</param>
+    /// <param name="actionBefore">화면 애니메이션 이전 실행할 함수</param>
+    public void FadeScreen(bool isFadein, System.Action actionAfter = null, System.Action actionBefore = null)
     {
-        FadeObject(fadeImage.transform, isFadein, 1f, actionAfter);
+        FadeObject(fadeImage.transform, isFadein, 1f, actionAfter, actionBefore);
     }
 
-    public void FadeObject(Transform targetTf, bool isFadeIn, float accelSpeed, System.Action afterAction = null)
+    public void FadeObject(Transform targetTf, bool isFadeIn, float accelSpeed, System.Action afterAction = null, System.Action actionBefore = null)
     {
-        StartCoroutine(CoroutineFadeObject(targetTf, isFadeIn, accelSpeed, afterAction));
+        StartCoroutine(CoroutineFadeObject(targetTf, isFadeIn, accelSpeed, afterAction, actionBefore));
     }
-    private IEnumerator CoroutineFadeObject(Transform targetTf, bool isFadeIn, float accelSpeed, System.Action afterAction = null)
+    private IEnumerator CoroutineFadeObject(Transform targetTf, bool isFadeIn, float accelSpeed, System.Action afterAction = null, System.Action actionBefore = null)
     {
         float goalOpacity = isFadeIn ? 1.0f : 0.0f, curOpacity = isFadeIn ? 0.0f : 1.0f;
+        if (actionBefore != null) actionBefore();
         while (isFadeIn ? curOpacity < goalOpacity : curOpacity > goalOpacity)
         {
             yield return new WaitForSeconds(0.01f);
@@ -119,5 +170,15 @@ public class CommonGameManager : MonoBehaviour
             targetTf.Translate(dirVector * distanceToMove * 0.01f * GlobalSetting.accelSpeed * accelAmount);
         }
         if (afterAction != null) afterAction();
+    }
+
+    public void MoveScene(string targetSceneName)
+    {
+        FadeScreen(true, () =>
+        {
+            GlobalStatus.resetLoading();
+            GlobalStatus.nextScene = targetSceneName;
+            SceneManager.LoadScene("Loading");
+        });
     }
 }

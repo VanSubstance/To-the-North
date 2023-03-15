@@ -16,7 +16,7 @@ TagManager:
   - Obstacle
   - Creature
   - Event
-  - 
+  - Map
   - 
   - 
   - 
@@ -44,4 +44,7 @@ TagManager:
     locked: 0
   - name: Objects on Map
     uniqueID: 2807117983
+    locked: 0
+  - name: UI covering map
+    uniqueID: 1669334859
     locked: 0
