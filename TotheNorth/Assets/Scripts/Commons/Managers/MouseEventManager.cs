@@ -44,6 +44,9 @@ public class MouseEventManager : MonoBehaviour
         TrackMouse();
     }
 
+    /// <summary>
+    /// 마우스 이벤트 추적
+    /// </summary>
     private void TrackMouseEvent()
     {
         if (curMouseButton == MouseButton.NONE)
@@ -56,6 +59,10 @@ public class MouseEventManager : MonoBehaviour
             DragMouseButton();
         }
     }
+
+    /// <summary>
+    /// OnMouseDown 버튼 감지
+    /// </summary>
     private void DownMouseButton()
     {
         if (Input.GetMouseButton(0))
@@ -90,6 +97,9 @@ public class MouseEventManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// OnMouseDrag 버튼 감지
+    /// </summary>
     private void DragMouseButton()
     {
         if (Input.GetMouseButton((int)curMouseButton))
@@ -126,10 +136,13 @@ public class MouseEventManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// OnMouseUp 버튼 감지
+    /// </summary>
     private void UpMouseButton()
     {
         Vector3 temp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        temp.z = 0f;
+        temp.z = -20f;
         if (Vector3.Distance(mousePositionForClick, temp) < 0.1f)
         {
             // 마우스 클릭 이벤트
@@ -165,6 +178,9 @@ public class MouseEventManager : MonoBehaviour
         curMouseButton = MouseButton.NONE;
     }
 
+    /// <summary>
+    /// OnMouseClick 버튼 감지 (딸깍)
+    /// </summary>
     private void ClickMouseButton()
     {
         switch (curMouseButton)
@@ -172,6 +188,8 @@ public class MouseEventManager : MonoBehaviour
             case MouseButton.LEFT:
                 TryExecuteAction(() =>
                 {
+                    // Transform temp = GetTransformBelow();
+                    // if (temp.GetComponent<IClickable>() != null)
                     GlobalStatus.Util.MouseEvent.Left.actionClick(GetTransformBelow(), mousePosition);
                 });
                 break;
@@ -190,6 +208,12 @@ public class MouseEventManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 마우스 현재 위치 저장
+    /// </summary>
+    /// <param name="isForClick">
+    /// 클릭을 위한 저장인지 아닌지
+    /// </param>
     private void MarkMousePosition(bool isForClick = false)
     {
         if (isForClick)
@@ -204,6 +228,10 @@ public class MouseEventManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 현재 마우스 위치 아래의 transform 반환 (Physics.Raycast)
+    /// </summary>
+    /// <returns></returns>
     private Transform GetTransformBelow()
     {
         RaycastHit hit;
@@ -214,6 +242,10 @@ public class MouseEventManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// 전달받은 람다식 실행
+    /// </summary>
+    /// <param name="targetAction"></param>
     private void TryExecuteAction(System.Action targetAction)
     {
         try

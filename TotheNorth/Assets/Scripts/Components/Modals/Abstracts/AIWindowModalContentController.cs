@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class AIContentModalContentController : MonoBehaviourControllByKey, IContentModalContentController
+public abstract class AIWindowModalContentController : MonoBehaviourControllByKey, IWindowModalContentController
 {
     [SerializeField]
     private Vector2 sizeToUnit;
@@ -11,7 +11,7 @@ public abstract class AIContentModalContentController : MonoBehaviourControllByK
     private Button btnX;
     private int curStatus = 0;
     private Transform contentContainerTf, headerTf;
-    void Start()
+    public void Start()
     {
         InitComposition();
         ControllByKey(2);

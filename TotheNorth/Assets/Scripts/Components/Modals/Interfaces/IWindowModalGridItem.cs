@@ -1,7 +1,6 @@
-public interface IContentModalGridItem
+public interface IWindowModalGridItem
 {
     public void InitContent<T>(T contentToInit);
-    public void InstallOnSlot(IContentModalGridSlot targetSlot);
-
+    public void InstallOnSlot(IWindowModalGridSlot targetSlot);
     public void SetCallbackAfterClick(System.Action actionCallback);
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class ContentModalContentTestController : AContentModalController<ModalContentTestStat>
+public class WindowModalContentTestController : AWindowModalController<ModalContentTestStat>
 {
     private TextMeshProUGUI ugui01, ugui02, ugui03;
     private bool isInit = false;

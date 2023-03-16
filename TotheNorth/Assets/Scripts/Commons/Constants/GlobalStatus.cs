@@ -45,6 +45,13 @@ public static class GlobalStatus
                 {
                     setActions();
                 }
+                /// <summary>
+                /// 마우스 이벤트용 람다식 4개 선언
+                /// </summary>
+                /// <param name="actionDown"></param>
+                /// <param name="actionUp"></param>
+                /// <param name="actionDrag"></param>
+                /// <param name="actionClick"></param>
                 public void setActions(
                     System.Action<Transform, Vector3> actionDown = null,
                     System.Action<Transform, Vector3> actionUp = null,

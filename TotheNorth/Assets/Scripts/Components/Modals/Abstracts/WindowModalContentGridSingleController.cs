@@ -7,7 +7,7 @@ using TMPro;
 // TContent : contentPrefab을 초기화하기 위한 VO
 // ContentModalContentGridSingleController: 타일같이 칸에 뭔가 띄웠다 꼈다 하는 것이 아닌 고정인 경우에 사용하는 그리드 컨텐츠 모달 컨트롤러
 // ContentModalContentGridSingleController 의 컨텐츠 = slotPrefab = 반드시 IContentModalGridSlot, IContentModalGriditem을 implement 해야함
-public class ContentModalContentGridSingleController<TContent> : AContentModalController<List<TContent>>
+public class WindowModalContentGridSingleController<TContent> : AWindowModalController<List<TContent>>
 {
     // slotPrefab: 빈칸 채우기용 프리펩 = 타일같은, contentPrefab : 실제 컨텐츠용 프리펩
     // = contentPrefab이 slotPrefab에 설치되는 형태
@@ -25,7 +25,7 @@ public class ContentModalContentGridSingleController<TContent> : AContentModalCo
         {
             for (int j = 0; j < size.y; j++)
             {
-                slotsTf[i][j].GetComponent<IContentModalGridSlot>().ClearContent();
+                slotsTf[i][j].GetComponent<IWindowModalGridSlot>().ClearContent();
             }
         }
     }
@@ -57,8 +57,8 @@ public class ContentModalContentGridSingleController<TContent> : AContentModalCo
         ClearContent();
         for (int i = 0; i < contentToInit.Count; i++)
         {
-            slotsTf[i / 6][i % 6].GetComponent<IContentModalGridItem>().InitContent(contentToInit[i]);
-            slotsTf[i / 6][i % 6].GetComponent<IContentModalGridItem>().SetCallbackAfterClick(() => ControllByKey(2));
+            slotsTf[i / 6][i % 6].GetComponent<IWindowModalGridItem>().InitContent(contentToInit[i]);
+            slotsTf[i / 6][i % 6].GetComponent<IWindowModalGridItem>().SetCallbackAfterClick(() => ControllByKey(2));
         }
     }
 }

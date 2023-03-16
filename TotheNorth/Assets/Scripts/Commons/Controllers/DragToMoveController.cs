@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DragToMoveController : MonoBehaviour
 {
@@ -31,8 +33,11 @@ public class DragToMoveController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        correctionDistance = Camera.main.ScreenToWorldPoint(Input.mousePosition) - tfToMove.position;
-        z = (int)tfToMove.localPosition.z;
+        if (tfToMove.tag != "Item")
+        {
+            correctionDistance = Camera.main.ScreenToWorldPoint(Input.mousePosition) - tfToMove.position;
+            z = (int)tfToMove.localPosition.z;
+        }
     }
 
     private void OnMouseDrag()
