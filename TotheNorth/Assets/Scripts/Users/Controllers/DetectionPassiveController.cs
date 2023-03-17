@@ -8,6 +8,7 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal class DetectionPassiveController : DetectionBaseController
     {
+        public float range = 1f;
         /** 시야 시각화 */
         public override void DrawSightArea()
         {
@@ -53,6 +54,7 @@ namespace Assets.Scripts.Users.Controllers
         /// </summary>
         public override void CheckSight()
         {
+            if (isAI) return;
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
             Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask);
             //targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.creatureMask));
@@ -62,11 +64,13 @@ namespace Assets.Scripts.Users.Controllers
                 target.GetComponent<IEventInteraction>().StartTrackingInteraction(transform);
             }
         }
-
         public override DetectionSightInfo SightCast(float globalAngle)
         {
             Vector3 dir = DirFromAngle(globalAngle, true);
-            return new DetectionSightInfo(false, transform.position + dir * InGameStatus.User.Detection.Instinct.range, InGameStatus.User.Detection.Instinct.range, globalAngle);
+            return new DetectionSightInfo(false, transform.position + dir *
+                (isAI ? range : InGameStatus.User.Detection.Instinct.range),
+                (isAI ? range : InGameStatus.User.Detection.Instinct.range),
+                globalAngle);
         }
     }
 }

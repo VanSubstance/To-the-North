@@ -212,12 +212,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e89bff63782991946a85ce2760db1160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAI: 1
+  isAI: 0
   meshResolution: 1
   viewMesh: {fileID: 0}
   viewMeshForVisualization: {fileID: 0}
   viewMeshFilter: {fileID: 7249881556289987579}
   visualizationFilter: {fileID: 8602294856793120695}
+  range: 0
 --- !u!1 &7249881556030676201
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,12 +350,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3475a34ff6903e642bfd82f91fc0e2d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAI: 1
+  isAI: 0
   meshResolution: 1
   viewMesh: {fileID: 0}
   viewMeshForVisualization: {fileID: 0}
   viewMeshFilter: {fileID: 7249881557341208112}
   visualizationFilter: {fileID: 7107132291317875297}
+  range: 0
+  degree: 0
 --- !u!1 &7249881556285147605
 GameObject:
   m_ObjectHideFlags: 0
