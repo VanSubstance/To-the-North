@@ -32,7 +32,7 @@ namespace Assets.Scripts.Users.Controllers
         }
 
         /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */
-        public new DetectionSightInfo SightCast(float globalAngle)
+        public override DetectionSightInfo SightCast(float globalAngle)
         {
             Vector3 dir = DirFromAngle(globalAngle, true);
             RaycastHit2D hit;
@@ -108,6 +108,10 @@ namespace Assets.Scripts.Users.Controllers
             viewMesh.vertices = vertices;
             viewMesh.triangles = triangles;
             viewMesh.RecalculateNormals();
+            viewMeshForVisualization.Clear();
+            viewMeshForVisualization.vertices = vertices;
+            viewMeshForVisualization.triangles = triangles;
+            viewMeshForVisualization.RecalculateNormals();
         }
 
         /// <summary>

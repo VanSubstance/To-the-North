@@ -42,6 +42,10 @@ namespace Assets.Scripts.Users.Controllers
             viewMesh.vertices = vertices;
             viewMesh.triangles = triangles;
             viewMesh.RecalculateNormals();
+            viewMeshForVisualization.Clear();
+            viewMeshForVisualization.vertices = vertices;
+            viewMeshForVisualization.triangles = triangles;
+            viewMeshForVisualization.RecalculateNormals();
         }
 
         /// <summary>
@@ -57,6 +61,12 @@ namespace Assets.Scripts.Users.Controllers
                 Transform target = targetsInViewRadius[i].transform;
                 target.GetComponent<IEventInteraction>().StartTrackingInteraction(transform);
             }
+        }
+
+        public override DetectionSightInfo SightCast(float globalAngle)
+        {
+            Vector3 dir = DirFromAngle(globalAngle, true);
+            return new DetectionSightInfo(false, transform.position + dir * InGameStatus.User.Detection.Instinct.range, InGameStatus.User.Detection.Instinct.range, globalAngle);
         }
     }
 }

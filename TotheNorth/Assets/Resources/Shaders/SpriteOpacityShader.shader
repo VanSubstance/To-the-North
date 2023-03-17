@@ -1,4 +1,4 @@
-Shader "Custom/PassiveMaskShader"
+Shader "Custom/SpriteOpacityShader"
 {
 	Properties
 	{
@@ -15,20 +15,16 @@ Shader "Custom/PassiveMaskShader"
 		{
 			Tags
 			{
-				"RenderType" = "Opaque"
+				"Queue" = "Transparent"
+				"IgnoreProjector" = "True"
+				"RenderType" = "Transparent"
 				"PreviewType" = "Plane"
 				"CanUseSpriteAtlas" = "True"
 			}
 
-			Stencil 
-			{
-				Ref 2
-				Comp never
-				Fail replace
-			}
-
 			Cull Off
 			Lighting Off
+			ZWrite Off
 			Blend One OneMinusSrcAlpha
 
 			Pass

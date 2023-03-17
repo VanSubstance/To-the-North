@@ -9,15 +9,19 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal abstract class DetectionBaseController : MonoBehaviour
     {
+        public bool isAI = true;
         public float meshResolution;
-        public Mesh viewMesh;
-        public MeshFilter viewMeshFilter;
+        public Mesh viewMesh, viewMeshForVisualization;
+        public MeshFilter viewMeshFilter, visualizationFilter;
 
         public void Start()
         {
             viewMesh = new Mesh();
             viewMesh.name = "View Mesh";
             viewMeshFilter.mesh = viewMesh;
+            viewMeshForVisualization = new Mesh();
+            viewMeshForVisualization.name = "View Mesh";
+            visualizationFilter.mesh = viewMeshForVisualization;
 
             StartCoroutine(CheckSightWithDelay(0.01f));
         }
@@ -47,20 +51,7 @@ namespace Assets.Scripts.Users.Controllers
         }
 
         /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */
-        public DetectionSightInfo SightCast(float globalAngle)
-        {
-            Vector3 dir = DirFromAngle(globalAngle, true);
-            RaycastHit2D hit;
-            if (hit = Physics2D.Raycast(transform.position, dir, InGameStatus.User.Detection.Instinct.range, GlobalStatus.Constant.obstacleMask))
-            {
-                //return new DetectionSightInfo(true, hit.point, hit.distance, globalAngle);
-                return new DetectionSightInfo(false, transform.position + dir * InGameStatus.User.Detection.Instinct.range, InGameStatus.User.Detection.Instinct.range, globalAngle);
-            }
-            else
-            {
-                return new DetectionSightInfo(false, transform.position + dir * InGameStatus.User.Detection.Instinct.range, InGameStatus.User.Detection.Instinct.range, globalAngle);
-            }
-        }
+        public abstract DetectionSightInfo SightCast(float globalAngle);
         /** 시야 시각화 */
         public abstract void DrawSightArea();
 
