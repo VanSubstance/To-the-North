@@ -14,7 +14,7 @@ namespace Assets.Scripts.Creatures.Interfaces
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="info"></param>
-        public void ExecuteAct<T>(T info);
+        public void ExecuteAct(AIActInfo info);
         public void Move(AIMoveInfo info);
         public void Gaze(AIGazeInfo info);
     }

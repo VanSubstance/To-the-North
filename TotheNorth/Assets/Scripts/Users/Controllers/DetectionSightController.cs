@@ -11,11 +11,12 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal class DetectionSightController : DetectionBaseController
     {
-        public float range = 3f, degree = 60f;
+        public float range = 3f, degree = 60f, curDegree = 0;
         private new void Start()
         {
             base.Start();
-            StartCoroutine(CheckCurRotation(0.01f));
+            if (!isAI)
+                StartCoroutine(CheckCurRotation(0.01f));
         }
 
         private IEnumerator CheckCurRotation(float delay)
@@ -27,9 +28,17 @@ namespace Assets.Scripts.Users.Controllers
             }
         }
 
-        private void SetRotationDegree()
+        public void SetRotationDegree(float degree = 0)
         {
-            transform.localRotation = Quaternion.Euler(0, 0, isAI ? 0 : InGameStatus.User.Movement.curdegree);
+            if (isAI) curDegree = degree;
+            transform.localRotation = Quaternion.Euler(0, 0, isAI ? curDegree : InGameStatus.User.Movement.curdegree);
+        }
+
+        public void AddRotationDegree(float degreeToAdd)
+        {
+            if (!isAI) return;
+            curDegree += degreeToAdd;
+            transform.localRotation = Quaternion.Euler(0, 0, curDegree);
         }
 
         /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */

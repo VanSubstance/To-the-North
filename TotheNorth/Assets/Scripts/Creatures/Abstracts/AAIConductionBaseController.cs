@@ -15,20 +15,22 @@ namespace Assets.Scripts.Creatures.Abstracts
     /// </summary>
     internal abstract class AAIConductionBaseController : MonoBehaviour, IAIConduction
     {
-        protected AAIBaseController aiBase;
+        [SerializeField]
+        public AAIBaseController aiBase;
         protected AIConductionType conductionType;
 
         protected void Awake()
         {
-            aiBase = GetComponent<AAIBaseController>();
+            if (aiBase == null)
+                aiBase = GetComponent<AAIBaseController>();
         }
 
         private void Update()
         {
             // 패트롤 상태인지
-            if (aiBase.curConductionType == conductionType)
+            if (aiBase.GetCurConductionType() == conductionType)
             {
-                switch (aiBase.curStatus)
+                switch (aiBase.GetCurStatus())
                 {
                     case 0:
                         // 대기 상태
@@ -53,10 +55,10 @@ namespace Assets.Scripts.Creatures.Abstracts
         /// </summary>
         public void InitConduction()
         {
-            aiBase.curStatus = 1;
-            aiBase.curConductionType = conductionType;
+            aiBase.SetCurStatus(1); ;
+            aiBase.SetCurConductionType(conductionType);
             OnInitConduction();
-            aiBase.curStatus = 2;
+            aiBase.SetCurStatus(2);
         }
         public abstract void ActNext();
 
@@ -64,5 +66,10 @@ namespace Assets.Scripts.Creatures.Abstracts
         /// 해당 행동강령이 초기화될 때 진행되어야 할 함수
         /// </summary>
         public abstract void OnInitConduction();
+
+        public AAIBaseController GetAIBaseController()
+        {
+            return aiBase;
+        }
     }
 }

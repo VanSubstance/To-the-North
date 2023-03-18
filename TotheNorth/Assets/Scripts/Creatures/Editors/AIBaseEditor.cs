@@ -13,11 +13,11 @@ namespace Assets.Scripts.Creatures.Editors
             AAIBaseController aiBase = (AAIBaseController)target;
 
             // 목표 이동 트랙 그리기
-            Handles.color = new Color(0, 1, 0, 0.5f);
-            AIMoveInfo targetMoveInfo = aiBase.curTargetMoveInfo;
+            Handles.color = new Color(0, 1, 0, 1f);
+            Vector3 targetMoveInfo = aiBase.GetCurTargetPoint();
             if (targetMoveInfo != null)
             {
-                Handles.DrawLine(aiBase.transform.localPosition, targetMoveInfo.point(), targetMoveInfo.spdMove);
+                Handles.DrawLine(aiBase.transform.localPosition, new Vector2(targetMoveInfo.x, targetMoveInfo.y), targetMoveInfo.z);
             }
         }
     }

@@ -11,5 +11,16 @@ namespace Assets.Scripts.Creatures.Objects
     {
         public int degree;
         public float secWait, spdTurn;
+
+        public AIGazeInfo()
+        {
+        }
+
+        public AIGazeInfo(int degree, float secWait, float spdTurn)
+        {
+            this.degree = degree;
+            this.secWait = secWait;
+            this.spdTurn = spdTurn;
+        }
     }
 }

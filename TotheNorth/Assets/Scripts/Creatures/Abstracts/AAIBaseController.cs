@@ -1,22 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Creatures.Objects;
+using Assets.Scripts.Users.Controllers;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Abstracts
 {
     internal abstract class AAIBaseController : MonoBehaviour, IAIAct
     {
-        public AIConductionType curConductionType;
-        public int curStatus = 0;
-        public AIMoveInfo curTargetMoveInfo;
-        public Vector3 curTargetVector;
-        public AAIConductionBaseController defaultConduction;
+        [SerializeField]
+        private AAIConductionBaseController defaultConductionController;
+        [SerializeField]
+        private DetectionPassiveController detectionPassiveController;
+        [SerializeField]
+        private DetectionSightController detectionSightController;
+
+        protected AIConductionType curConductionType;
+        protected int curStatus = 0;
+        protected Vector3 curTargetDir, curTargetPoint;
 
         private void Update()
         {
@@ -29,17 +29,16 @@ namespace Assets.Scripts.Creatures.Abstracts
             }
         }
 
-        public void ExecuteAct<T>(T info)
+        public void ExecuteAct(AIActInfo info)
         {
-            if (typeof(T) == typeof(AIMoveInfo))
+            switch (info.type)
             {
-                Move((AIMoveInfo)(object)info);
-                return;
-            }
-            if (typeof(T) == typeof(AIGazeInfo))
-            {
-                Gaze((AIGazeInfo)(object)info);
-                return;
+                case AIActType.Move:
+                    Move(info.GetMoveInfo());
+                    break;
+                case AIActType.Gaze:
+                    Gaze(info.GetGazeInfo());
+                    break;
             }
         }
 
@@ -48,7 +47,7 @@ namespace Assets.Scripts.Creatures.Abstracts
         /// </summary>
         public void InitDefaultConduction()
         {
-            defaultConduction.InitConduction();
+            defaultConductionController.InitConduction();
         }
 
         /// <summary>
@@ -63,5 +62,40 @@ namespace Assets.Scripts.Creatures.Abstracts
         public abstract void Gaze(AIGazeInfo info);
 
         public abstract void Move(AIMoveInfo info);
+
+        public Vector3 GetCurTargetPoint()
+        {
+            return curTargetPoint;
+        }
+
+        public AIConductionType GetCurConductionType()
+        {
+            return curConductionType;
+        }
+
+        public void SetCurConductionType(AIConductionType _type)
+        {
+            curConductionType = _type;
+        }
+
+        public int GetCurStatus()
+        {
+            return curStatus;
+        }
+
+        public void SetCurStatus(int _curStatus)
+        {
+            curStatus = _curStatus;
+        }
+
+        public DetectionPassiveController GetDetectionPassiveController()
+        {
+            return detectionPassiveController;
+        }
+
+        public DetectionSightController GetDetectionSightController()
+        {
+            return detectionSightController;
+        }
     }
 }
