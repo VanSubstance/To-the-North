@@ -15,6 +15,11 @@ namespace Assets.Scripts.Creatures.Interfaces
         /// <typeparam name="T"></typeparam>
         /// <param name="info"></param>
         public void ExecuteAct(AIActInfo info);
+        /// <summary>
+        /// 현재 행동을 일시정지/재개
+        /// </summary>
+        /// <param name="isPause"></param>
+        public void PauseOrResumeAct(bool isPause);
         public void Move(AIMoveInfo info);
         public void Gaze(AIGazeInfo info);
     }

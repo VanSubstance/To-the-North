@@ -231,11 +231,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7249881556927368018, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7249881556927368018, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.49
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7249881556927368018, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: m_LocalPosition.z
@@ -279,15 +279,15 @@ PrefabInstance:
       objectReference: {fileID: 1425005246}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.size
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[0].x
-      value: 0
+      value: -120
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[0].y
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[0].z
@@ -295,11 +295,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[1].x
-      value: 180
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[1].y
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[1].z
@@ -307,19 +307,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[2].x
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
-      propertyPath: actTrack.Array.data[2].y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
-      propertyPath: actTrack.Array.data[2].z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
+      propertyPath: actTrack.Array.data[2].y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
+      propertyPath: actTrack.Array.data[2].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[3].x
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[3].y
@@ -327,35 +327,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[3].z
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[4].x
-      value: 10
+      value: -120
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[4].y
-      value: 0
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[4].z
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[5].x
-      value: 15
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[5].y
-      value: -1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[5].z
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[6].x
-      value: 0
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[6].y
@@ -367,7 +367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[7].x
-      value: 180
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[7].y
@@ -423,7 +423,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[2].type
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[3].type
@@ -431,11 +431,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[4].type
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[5].type
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.data[6].type

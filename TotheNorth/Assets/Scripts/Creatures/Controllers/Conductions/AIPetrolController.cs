@@ -15,6 +15,7 @@ namespace Assets.Scripts.Creatures.Controllers
         private Queue<AIActInfo> liveActTrack = new Queue<AIActInfo>();
         private bool isNavForward = false;
         private AIMoveInfo prevMove = null;
+        private AIActInfo curActInfo;
 
         private new void Awake()
         {
@@ -25,15 +26,14 @@ namespace Assets.Scripts.Creatures.Controllers
         public override void ActNext()
         {
             // 다음 단순 행동 유무 체크
-            AIActInfo nextAct;
-            if (liveActTrack.TryDequeue(out nextAct))
+            if (liveActTrack.TryDequeue(out curActInfo))
             {
                 // 다음 단순 행동이 남아있음
                 // 최초 단순 행동은 이동이어야 한다.
-                if (prevMove != null || nextAct.type == AIActType.Move)
+                if (prevMove != null || curActInfo.type == AIActType.Move)
                 {
-                    prevMove = nextAct.GetMoveInfo();
-                    aiBase.ExecuteAct(nextAct);
+                    prevMove = curActInfo.GetMoveInfo();
+                    aiBase.ExecuteAct(curActInfo);
                 }
                 return;
             }
@@ -41,6 +41,15 @@ namespace Assets.Scripts.Creatures.Controllers
             // = 패트롤 종료
             prevMove = null;
             aiBase.ClearConduction();
+        }
+
+        public override void RewindPrevAct()
+        {
+            if (curActInfo != null)
+            {
+                liveActTrack.Enqueue(curActInfo);
+                curActInfo = null;
+            }
         }
 
         public override void OnInitConduction()

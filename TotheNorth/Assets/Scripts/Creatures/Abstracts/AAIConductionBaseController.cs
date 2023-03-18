@@ -46,6 +46,15 @@ namespace Assets.Scripts.Creatures.Abstracts
                     case 3:
                         // 단순 행동 실행중 (방해 X)
                         break;
+                    case -1:
+                        // 일시정지 명령 진입
+                        // 직전 명령이 있다면 되감기
+                        RewindPrevAct();
+                        aiBase.SetCurStatus(-2);
+                        break;
+                    case -2:
+                        // 완전 일시 정지 상태
+                        break;
                 }
             }
         }
@@ -61,6 +70,10 @@ namespace Assets.Scripts.Creatures.Abstracts
             aiBase.SetCurStatus(2);
         }
         public abstract void ActNext();
+        /// <summary>
+        /// 직전 명령 되감기
+        /// </summary>
+        public abstract void RewindPrevAct();
 
         /// <summary>
         /// 해당 행동강령이 초기화될 때 진행되어야 할 함수

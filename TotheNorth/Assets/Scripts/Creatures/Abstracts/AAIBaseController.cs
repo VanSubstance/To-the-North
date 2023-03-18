@@ -1,3 +1,5 @@
+using System.Collections;
+using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Creatures.Objects;
 using Assets.Scripts.Users.Controllers;
@@ -5,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Abstracts
 {
-    internal abstract class AAIBaseController : MonoBehaviour, IAIAct
+    internal class AAIBaseController : MonoBehaviour, IAIAct
     {
         [SerializeField]
         private AAIConductionBaseController defaultConductionController;
@@ -25,6 +27,9 @@ namespace Assets.Scripts.Creatures.Abstracts
                 case 0:
                     // 행동강령 자유 상태
                     InitDefaultConduction();
+                    break;
+                case -1:
+                    // 행동 일시 정지
                     break;
             }
         }
@@ -58,10 +63,67 @@ namespace Assets.Scripts.Creatures.Abstracts
             curConductionType = AIConductionType.None;
             curStatus = 0;
         }
+        private IEnumerator CoroutineMove(AIMoveInfo info)
+        {
+            curStatus = 3;
+            curTargetPoint = new Vector3(info.point().x, info.point().y, info.spdMove);
+            //StartCoroutine(CoroutineGaze(
+            //    new AIGazeInfo(
+            //        (int)CalculationFunctions.AngleFromDir(info.point() - new Vector2(transform.localPosition.x, transform.localPosition.y)),
+            //        0,
+            //        0
+            //        ),
+            //    true
+            //    ));
+            while (Vector2.Distance(transform.localPosition, info.point()) > 0.2f)
+            {
+                curTargetDir = new Vector3(info.point().x, info.point().y, 0f) - transform.localPosition;
+                curTargetDir.z = info.spdMove;
+                GetDetectionSightController().SetRotationDegree((int)CalculationFunctions.AngleFromDir(info.point() - new Vector2(transform.localPosition.x, transform.localPosition.y)));
+                yield return new WaitForSeconds(Time.deltaTime);
+                transform.Translate(new Vector2(curTargetDir.x, curTargetDir.y).normalized * Time.deltaTime * curTargetDir.z);
+            }
+            curTargetPoint = Vector3.zero;
+            curStatus = 2;
+        }
 
-        public abstract void Gaze(AIGazeInfo info);
+        private IEnumerator CoroutineGaze(AIGazeInfo info, bool isAsync = false)
+        {
+            if (!isAsync)
+                curStatus = 3;
+            // 이동해야 할 각도
+            int degreeToRotate = (int)(info.degree - GetDetectionSightController().curDegree);
+            degreeToRotate += 360 * 3;
+            degreeToRotate %= 360;
+            bool isClockwise;
+            degreeToRotate = (isClockwise = degreeToRotate >= 180) ? 360 - degreeToRotate : degreeToRotate;
+            // 해당 방향으로 회전
+            while (degreeToRotate != 0)
+            {
+                yield return new WaitForSeconds(Time.deltaTime);
+                GetDetectionSightController().AddRotationDegree(isClockwise ? -1 : 1);
+                degreeToRotate -= 1;
+            }
+            // 응시
+            while (info.secWait > 0)
+            {
+                info.secWait -= Time.deltaTime;
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+            // 종료
+            if (!isAsync)
+                curStatus = 2;
+        }
 
-        public abstract void Move(AIMoveInfo info);
+        public void Gaze(AIGazeInfo info)
+        {
+            StartCoroutine(CoroutineGaze(info));
+        }
+
+        public void Move(AIMoveInfo info)
+        {
+            StartCoroutine(CoroutineMove(info));
+        }
 
         public Vector3 GetCurTargetPoint()
         {
@@ -96,6 +158,20 @@ namespace Assets.Scripts.Creatures.Abstracts
         public DetectionSightController GetDetectionSightController()
         {
             return detectionSightController;
+        }
+
+        public void PauseOrResumeAct(bool isPause)
+        {
+            if (isPause)
+            {
+                curStatus = -1;
+                // 모든 코루틴 종료
+                StopAllCoroutines();
+            }
+            else
+            {
+                curStatus = 2;
+            }
         }
     }
 }
