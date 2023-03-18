@@ -15,7 +15,7 @@ namespace Assets.Scripts.Creatures.Controllers
         private Queue<AIActInfo> liveActTrack = new Queue<AIActInfo>();
         private bool isNavForward = false;
         private AIMoveInfo prevMove = null;
-        private AIActInfo curActInfo;
+        private AIActInfo curActInfo, bumpForPause;
 
         private new void Awake()
         {
@@ -25,6 +25,12 @@ namespace Assets.Scripts.Creatures.Controllers
 
         public override void ActNext()
         {
+            if (bumpForPause != null)
+            {
+                aiBase.ExecuteAct(bumpForPause);
+                bumpForPause = null;
+                return;
+            }
             // 다음 단순 행동 유무 체크
             if (liveActTrack.TryDequeue(out curActInfo))
             {
@@ -41,15 +47,6 @@ namespace Assets.Scripts.Creatures.Controllers
             // = 패트롤 종료
             prevMove = null;
             aiBase.ClearConduction();
-        }
-
-        public override void RewindPrevAct()
-        {
-            if (curActInfo != null)
-            {
-                liveActTrack.Enqueue(curActInfo);
-                curActInfo = null;
-            }
         }
 
         public override void OnInitConduction()
@@ -75,6 +72,11 @@ namespace Assets.Scripts.Creatures.Controllers
         public AIActInfo[] GetActTrack()
         {
             return actTrack;
+        }
+
+        public override void SaveBumpForPause()
+        {
+            bumpForPause = new AIActInfo(curActInfo);
         }
     }
 }

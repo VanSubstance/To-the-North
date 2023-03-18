@@ -49,7 +49,7 @@ namespace Assets.Scripts.Creatures.Abstracts
                     case -1:
                         // 일시정지 명령 진입
                         // 직전 명령이 있다면 되감기
-                        RewindPrevAct();
+                        SaveBumpForPause();
                         aiBase.SetCurStatus(-2);
                         break;
                     case -2:
@@ -73,7 +73,7 @@ namespace Assets.Scripts.Creatures.Abstracts
         /// <summary>
         /// 직전 명령 되감기
         /// </summary>
-        public abstract void RewindPrevAct();
+        public abstract void SaveBumpForPause();
 
         /// <summary>
         /// 해당 행동강령이 초기화될 때 진행되어야 할 함수

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Controllers
 {
-    internal class AIHoboController : AAIBaseController
+    internal class AINpcController : AAIBaseController
     {
     }
 }

@@ -530,10 +530,11 @@ GameObject:
   - component: {fileID: 7249881556927368018}
   - component: {fileID: 3193563427077739803}
   - component: {fileID: 8367694764048619857}
+  - component: {fileID: -7669871793913252461}
   - component: {fileID: 7249881556927368016}
   - component: {fileID: 7249881556927368023}
-  m_Layer: 0
-  m_Name: Hobo Prefab
+  m_Layer: 8
+  m_Name: NPC Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -583,7 +584,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb91b5aa5010c1547a8f8c6b6baa9da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aiBase: {fileID: 3193563427077739803}
   actTrack: []
+--- !u!114 &-7669871793913252461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249881556927368019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a19a01b3c67f4564fb60e2a47cdc6800, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOnTracking: 0
 --- !u!58 &7249881556927368016
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -675,6 +690,7 @@ MonoBehaviour:
   visualizationFilter: {fileID: 6428050364812104054}
   range: 3
   degree: 60
+  curDegree: 0
 --- !u!1 &9128026948246235644
 GameObject:
   m_ObjectHideFlags: 0
