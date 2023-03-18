@@ -9,6 +9,12 @@ namespace Assets.Scripts.Creatures.Interfaces
 {
     internal interface IAIAct
     {
+        /// <summary>
+        /// 단순 행동 실행
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="info"></param>
+        public void ExecuteAct<T>(T info);
         public void Move(AIMoveInfo info);
         public void Gaze(AIGazeInfo info);
     }

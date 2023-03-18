@@ -533,7 +533,7 @@ GameObject:
   - component: {fileID: 7249881556927368016}
   - component: {fileID: 7249881556927368023}
   m_Layer: 0
-  m_Name: Monster Prefab
+  m_Name: Hobo Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -574,6 +574,8 @@ MonoBehaviour:
     x: 0
     y: 0
     spdMove: 0
+  curTargetVector: {x: 0, y: 0, z: 0}
+  defaultConduction: {fileID: 8367694764048619857}
 --- !u!114 &8367694764048619857
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Objects;
 using UnityEditor;
@@ -10,12 +5,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Editors
 {
-    [CustomEditor(typeof(AIPetrolBaseController))]
-    internal class AIPetrolBaseEditor : Editor
+    [CustomEditor(typeof(AIPetrolController))]
+    internal class AIPetrolEditor : Editor
     {
         private void OnSceneGUI()
         {
-            AIPetrolBaseController aiBase = (AIPetrolBaseController)target;
+            AIPetrolController aiBase = (AIPetrolController)target;
 
             // 목표 이동 트랙 그리기
             Handles.color = new Color(1, 1, 1, 0.5f);

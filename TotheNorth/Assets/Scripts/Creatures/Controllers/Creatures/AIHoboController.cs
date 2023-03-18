@@ -1,38 +1,14 @@
 using System;
 using System.Collections;
+using Assets.Scripts.Creatures.Abstracts;
 using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Creatures.Objects;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Controllers
 {
-    internal class AIBaseController : MonoBehaviour, IAIAct
+    internal class AIHoboController : AAIBaseController
     {
-        public AIConductionType curConductionType;
-        public int curStatus = 0;
-        public AIMoveInfo curTargetMoveInfo;
-        private Vector3 curTargetVector;
-
-        private void Update()
-        {
-            switch (curStatus)
-            {
-                case 0:
-                    // 행동강령 자유 상태
-                    GetComponent<AIPetrolBaseController>().InitConduction();
-                    break;
-            }
-        }
-        public void Move(AIMoveInfo info)
-        {
-            StartCoroutine(CoroutineMove(info));
-        }
-
-
-        public void Gaze(AIGazeInfo info)
-        {
-            StartCoroutine(CoroutineGaze(info));
-        }
 
         private IEnumerator CoroutineMove(AIMoveInfo info)
         {
@@ -58,10 +34,14 @@ namespace Assets.Scripts.Creatures.Controllers
             curStatus = 2;
         }
 
-        public void ClearConduction()
+        public override void Gaze(AIGazeInfo info)
         {
-            curConductionType = AIConductionType.None;
-            curStatus = 0;
+            StartCoroutine(CoroutineGaze(info));
+        }
+
+        public override void Move(AIMoveInfo info)
+        {
+            StartCoroutine(CoroutineMove(info));
         }
     }
 }

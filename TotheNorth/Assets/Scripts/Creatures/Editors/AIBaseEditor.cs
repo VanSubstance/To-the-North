@@ -1,21 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Creatures.Controllers;
+using Assets.Scripts.Creatures.Abstracts;
 using Assets.Scripts.Creatures.Objects;
 using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Editors
 {
-    [CustomEditor(typeof(AIBaseEditor))]
+    [CustomEditor(typeof(AAIBaseController))]
     internal class AIBaseEditor : Editor
     {
         private void OnSceneGUI()
         {
-            AIBaseController aiBase = (AIBaseController)target;
+            AAIBaseController aiBase = (AAIBaseController)target;
 
             // 목표 이동 트랙 그리기
             Handles.color = new Color(0, 1, 0, 0.5f);
