@@ -13,9 +13,12 @@ namespace Assets.Scripts.Users.Controllers
         }
         private void Update()
         {
-            TrackDirection();
-            TrackMovementType();
-            TrackSightZoom(0.01f);
+            if (!InGameStatus.User.isPause)
+            {
+                TrackDirection();
+                TrackMovementType();
+                TrackSightZoom(0.01f);
+            }
         }
 
         private void TrackDirection()
@@ -102,8 +105,11 @@ namespace Assets.Scripts.Users.Controllers
         {
             GlobalStatus.Util.MouseEvent.actionSustain = (mousePos) =>
             {
-                InGameStatus.User.Movement.curdegree = (int)
-                Vector3.SignedAngle(Vector3.right, new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized, transform.forward);
+                if (!InGameStatus.User.isPause)
+                {
+                    InGameStatus.User.Movement.curdegree = (int)
+                    Vector3.SignedAngle(Vector3.right, new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized, transform.forward);
+                }
             };
             GlobalStatus.Util.MouseEvent.Right.setActions(
                 actionDrag: (tr, mousePos) =>

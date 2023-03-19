@@ -11,6 +11,7 @@ namespace Assets.Scripts.Commons.Constants
     {
         public static class User
         {
+            public static bool isPause = false;
             public static class Movement
             {
                 /** 현재 바라보고 있는 시야 방향 각도 */
