@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 public class TestManager : MonoBehaviour
 {
@@ -11,15 +12,11 @@ public class TestManager : MonoBehaviour
     private WindowModalContentGridMapTileController mapTileController;
     void Start()
     {
-        // testInitContentModal();
-        // testInitMapTileController();
-        TestMouseEventSetting();
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
 
     private void testInitMapTileController()

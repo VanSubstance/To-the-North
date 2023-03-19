@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Events.Interfaces;
 using Assets.Scripts.Users.Objects;
@@ -11,10 +12,12 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal class DetectionSightController : DetectionBaseController
     {
+        public float range = 3f, degree = 60f, curDegree = 0;
         private new void Start()
         {
             base.Start();
-            StartCoroutine(CheckCurRotation(0.01f));
+            if (!isAI)
+                StartCoroutine(CheckCurRotation(0.01f));
         }
 
         private IEnumerator CheckCurRotation(float delay)
@@ -26,23 +29,36 @@ namespace Assets.Scripts.Users.Controllers
             }
         }
 
-        private void SetRotationDegree()
+        public void SetRotationDegree(float degree = 0)
         {
-            transform.localRotation = Quaternion.Euler(0, 0, InGameStatus.User.Movement.curdegree);
+            if (isAI) curDegree = degree;
+            transform.localRotation = Quaternion.Euler(0, 0, isAI ? curDegree : InGameStatus.User.Movement.curdegree);
+        }
+
+        public void AddRotationDegree(float degreeToAdd)
+        {
+            if (!isAI) return;
+            curDegree += degreeToAdd;
+            transform.localRotation = Quaternion.Euler(0, 0, curDegree);
         }
 
         /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */
-        public new DetectionSightInfo SightCast(float globalAngle)
+        public override DetectionSightInfo SightCast(float globalAngle)
         {
             Vector3 dir = DirFromAngle(globalAngle, true);
             RaycastHit2D hit;
-            if (hit = Physics2D.Raycast(transform.position, dir, (int)InGameStatus.User.Detection.Sight.range, GlobalStatus.Constant.obstacleMask))
+            if (hit = Physics2D.Raycast(transform.position, dir,
+                (isAI ? range : (int)InGameStatus.User.Detection.Sight.range),
+                GlobalStatus.Constant.obstacleMask))
             {
                 return new DetectionSightInfo(true, DistortPoint(globalAngle, hit.point), hit.distance, globalAngle);
             }
             else
             {
-                return new DetectionSightInfo(false, transform.position + dir * InGameStatus.User.Detection.Sight.range, InGameStatus.User.Detection.Sight.range, globalAngle);
+                return new DetectionSightInfo(false, transform.position + dir *
+                    (isAI ? range : InGameStatus.User.Detection.Sight.range),
+                    (isAI ? range : InGameStatus.User.Detection.Sight.range),
+                    globalAngle);
             }
         }
 
@@ -76,14 +92,13 @@ namespace Assets.Scripts.Users.Controllers
         /** 시야 시각화 */
         public override void DrawSightArea()
         {
-
-            int stepCount = Mathf.RoundToInt(InGameStatus.User.Detection.Sight.degree * meshResolution);
-            float stepAngleSize = InGameStatus.User.Detection.Sight.degree / stepCount;
+            int stepCount = Mathf.RoundToInt((isAI ? degree : InGameStatus.User.Detection.Sight.degree) * meshResolution);
+            float stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.degree) / stepCount;
             List<Vector3> viewPoints = new List<Vector3>();
 
             for (int i = 0; i <= stepCount; i++)
             {
-                float angle = transform.eulerAngles.z - (InGameStatus.User.Detection.Sight.degree / 2) + stepAngleSize * i;
+                float angle = transform.eulerAngles.z - ((isAI ? degree : InGameStatus.User.Detection.Sight.degree) / 2) + stepAngleSize * i;
 
                 DetectionSightInfo newViewCast = SightCast(angle);
                 viewPoints.Add(newViewCast.point);
@@ -108,6 +123,10 @@ namespace Assets.Scripts.Users.Controllers
             viewMesh.vertices = vertices;
             viewMesh.triangles = triangles;
             viewMesh.RecalculateNormals();
+            viewMeshForVisualization.Clear();
+            viewMeshForVisualization.vertices = vertices;
+            viewMeshForVisualization.triangles = triangles;
+            viewMeshForVisualization.RecalculateNormals();
         }
 
         /// <summary>
@@ -115,10 +134,11 @@ namespace Assets.Scripts.Users.Controllers
         /// </summary>
         public override void CheckSight()
         {
+            if (isAI) return;
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
-            Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask);
-            //targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.creatureMask));
-            for (int i = 0; i < targetsInViewRadius.Length; i++)
+            List<Collider2D> targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask).ToList();
+            targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.creatureMask));
+            for (int i = 0; i < targetsInViewRadius.Count; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
