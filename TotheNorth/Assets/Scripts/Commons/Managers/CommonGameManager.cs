@@ -83,8 +83,7 @@ public class CommonGameManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         // 페이드아웃 이미지 추가
-        Transform imageForFade = Instantiate(fadeImagePrefab);
-        imageForFade.SetParent(GameObject.Find("UI").transform);
+        Transform imageForFade = Instantiate(fadeImagePrefab, GameObject.Find("UI").transform);
         imageForFade.localPosition = Vector3.zero;
         imageForFade.localScale = Vector3.one;
         fadeImage = imageForFade.GetComponent<Image>();

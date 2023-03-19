@@ -18,6 +18,7 @@ public static class GlobalStatus
             public static bool MouseCursorManager = false;
             public static bool PopupModalController = false;
             public static bool InfoMessageManager = false;
+            public static bool ConversationManager = false;
 
             public static bool isSystemLoadingDone()
             {
@@ -26,6 +27,7 @@ public static class GlobalStatus
                     MouseCursorManager &&
                     PopupModalController &&
                     InfoMessageManager &&
+                    ConversationManager &&
                     true
                     ;
             }
@@ -74,5 +76,6 @@ public static class GlobalStatus
         Loading.System.MouseCursorManager = false;
         Loading.System.PopupModalController = false;
         Loading.System.InfoMessageManager = false;
+        Loading.System.ConversationManager = false;
     }
 }

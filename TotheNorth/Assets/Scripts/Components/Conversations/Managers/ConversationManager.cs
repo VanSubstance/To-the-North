@@ -10,16 +10,27 @@ namespace Assets.Scripts.Components.Conversations.Managers
     internal class ConversationManager : MonoBehaviour
     {
         [SerializeField]
-        private Transform UITf, conversationPrefab;
+        private Transform conversationPrefab;
         private static Transform convTf;
         public static bool isInConversation = false;
 
-        private void Awake()
+        private void Update()
         {
-            convTf = Instantiate(conversationPrefab, UITf);
-            convTf.localPosition = Vector3.zero;
-            convTf.localScale = Vector3.one;
-            convTf.gameObject.SetActive(false);
+            if (!GlobalStatus.Loading.System.ConversationManager)
+            {
+                try
+                {
+                    convTf = Instantiate(conversationPrefab, GameObject.Find("UI").transform);
+                    convTf.localPosition = Vector3.zero;
+                    convTf.localScale = Vector3.one;
+                    convTf.gameObject.SetActive(false);
+                    GlobalStatus.Loading.System.ConversationManager = true;
+                }
+                catch (NullReferenceException)
+                {
+                    // UI 오브젝트 생성 전
+                }
+            }
         }
 
         public static void StartConversation()
