@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Components.Conversations.Controllers;
+using Assets.Scripts.Components.Conversations.Objects;
 using UnityEngine;
 
 namespace Assets.Scripts.Components.Conversations.Managers
@@ -11,7 +13,7 @@ namespace Assets.Scripts.Components.Conversations.Managers
     {
         [SerializeField]
         private Transform conversationPrefab;
-        private static Transform convTf;
+        private static ConversationBaseController baseController;
         public static bool isInConversation = false;
 
         private void Update()
@@ -20,10 +22,11 @@ namespace Assets.Scripts.Components.Conversations.Managers
             {
                 try
                 {
-                    convTf = Instantiate(conversationPrefab, GameObject.Find("UI").transform);
-                    convTf.localPosition = Vector3.zero;
-                    convTf.localScale = Vector3.one;
-                    convTf.gameObject.SetActive(false);
+                    Transform tem = Instantiate(conversationPrefab, GameObject.Find("UI").transform);
+                    tem.localPosition = Vector3.zero;
+                    tem.localScale = Vector3.one;
+                    tem.gameObject.SetActive(false);
+                    baseController = tem.GetComponent<ConversationBaseController>();
                     GlobalStatus.Loading.System.ConversationManager = true;
                 }
                 catch (NullReferenceException)
@@ -33,16 +36,16 @@ namespace Assets.Scripts.Components.Conversations.Managers
             }
         }
 
-        public static void StartConversation()
+        public static void StartConversation(ConvInfo[] info)
         {
             isInConversation = true;
-            convTf.gameObject.SetActive(true);
+            baseController.StartConversation(info);
         }
 
         public static void FinishConversation()
         {
             isInConversation = false;
-            convTf.gameObject.SetActive(false);
+            baseController.FinishConversation();
         }
 
         public static bool IsInConversation()
