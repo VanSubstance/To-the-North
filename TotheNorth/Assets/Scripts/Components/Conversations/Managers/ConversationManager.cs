@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Components.Conversations.Controllers;
 using Assets.Scripts.Components.Conversations.Objects;
 using UnityEngine;
@@ -39,12 +40,14 @@ namespace Assets.Scripts.Components.Conversations.Managers
         public static void StartConversation(ConvInfo[] info)
         {
             isInConversation = true;
+            InGameStatus.User.isPause = true;
             baseController.StartConversation(info);
         }
 
         public static void FinishConversation()
         {
             isInConversation = false;
+            InGameStatus.User.isPause = false;
             baseController.FinishConversation();
         }
 
