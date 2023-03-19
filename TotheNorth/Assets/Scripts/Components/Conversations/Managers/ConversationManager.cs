@@ -50,10 +50,5 @@ namespace Assets.Scripts.Components.Conversations.Managers
             InGameStatus.User.isPause = false;
             baseController.FinishConversation();
         }
-
-        public static bool IsInConversation()
-        {
-            return isInConversation;
-        }
     }
 }

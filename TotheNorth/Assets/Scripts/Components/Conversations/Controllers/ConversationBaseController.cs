@@ -34,21 +34,6 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                 choiceBtnList[i].SetActice(false);
             }
         }
-        //private void OnEnable()
-        //{
-        //    InGameStatus.User.isPause = true;
-        //    GlobalStatus.Util.MouseEvent.Left.setActions(
-        //        actionClick: (tf, mp) =>
-        //        {
-        //            ConversationManager.FinishConversation();
-        //        });
-        //}
-        //private void OnDisable()
-        //{
-        //    InGameStatus.User.isPause = false;
-        //    GlobalStatus.Util.MouseEvent.Left.setActions(
-        //        actionClick: null);
-        //}
 
         private void InitConversation(ConvInfo info)
         {
@@ -88,7 +73,7 @@ namespace Assets.Scripts.Components.Conversations.Controllers
             }
         }
 
-        public void GoToConversation(int idx)
+        private void GoToConversation(int idx)
         {
             if (idx < 0)
             {

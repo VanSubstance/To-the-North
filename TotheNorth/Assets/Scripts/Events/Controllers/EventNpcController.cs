@@ -11,11 +11,11 @@ namespace Assets.Scripts.Events.Controllers
     internal class EventNpcController : AEventBaseController
     {
         private AAIBaseController baseController;
-        private List<ConvInfo> testInfos;
+        private List<ConvInfo> convInfos;
         private void Awake()
         {
             baseController = GetComponent<AAIBaseController>();
-            testInfos = new List<ConvInfo>() {
+            convInfos = new List<ConvInfo>() {
                     new ConvInfo(
                         "무슨일인가 애송이?",
                         new ConvChoiceInfo[] {
@@ -49,10 +49,10 @@ namespace Assets.Scripts.Events.Controllers
             StartCoroutine(StartConversation());
         }
 
-        public IEnumerator StartConversation()
+        private IEnumerator StartConversation()
         {
-            ConversationManager.StartConversation(testInfos.ToArray());
-            while (ConversationManager.IsInConversation())
+            ConversationManager.StartConversation(convInfos.ToArray());
+            while (ConversationManager.isInConversation)
             {
                 yield return new WaitForSeconds(Time.deltaTime);
             }
