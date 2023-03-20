@@ -30,31 +30,17 @@ namespace Assets.Scripts.Creatures.Abstracts
             // 패트롤 상태인지
             if (aiBase.GetCurConductionType() == conductionType)
             {
-                switch (aiBase.GetCurStatus())
+                if (aiBase.IsExecutable())
                 {
-                    case 0:
-                        // 대기 상태
-                        break;
-                    case 1:
-                        // 행동 강령 초기화중
-                        break;
-                    case 2:
-                        // 행동강령 대기상태
-                        // = 다음 행동 실행
-                        ActNext();
-                        break;
-                    case 3:
-                        // 단순 행동 실행중 (방해 X)
-                        break;
-                    case -1:
-                        // 일시정지 명령 진입
-                        // 직전 명령이 있다면 되감기
+                    ActNext();
+                }
+                else
+                {
+                    if (aiBase.GetCurStatus() == -1)
+                    {
                         SaveBumpForPause();
                         aiBase.SetCurStatus(-2);
-                        break;
-                    case -2:
-                        // 완전 일시 정지 상태
-                        break;
+                    }
                 }
             }
         }

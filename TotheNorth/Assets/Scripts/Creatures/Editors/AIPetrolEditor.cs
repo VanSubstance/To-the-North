@@ -19,21 +19,20 @@ namespace Assets.Scripts.Creatures.Editors
             AIMoveInfo prevMoveInfo = null;
             for (int i = 0; i < actTrack.Length; i++)
             {
-                switch (actTrack[i].type)
+                if (actTrack[i].moveInfo != null && actTrack[i].moveInfo.spdMove != 0)
                 {
-                    case AIActType.Move:
-                        if (prevMoveInfo != null)
-                            DrawMoveTrack(prevMoveInfo, actTrack[i].GetMoveInfo());
-                        //else
-                        //    DrawMoveTrack(new AIMoveInfo(conductionBase.transform.localPosition.x, conductionBase.transform.localPosition.y, 1), actTrack[i].GetMoveInfo());
-                        prevMoveInfo = actTrack[i].GetMoveInfo();
-                        break;
-                    case AIActType.Gaze:
-                        if (prevMoveInfo != null)
-                            DrawGazeTrack(prevMoveInfo, actTrack[i].GetGazeInfo());
-                        else
-                            DrawGazeTrack(new AIMoveInfo(conductionBase.transform.localPosition.x, conductionBase.transform.localPosition.y, 1), actTrack[i].GetGazeInfo());
-                        break;
+                    if (prevMoveInfo != null)
+                        DrawMoveTrack(prevMoveInfo, actTrack[i].GetMoveInfo());
+                    //else
+                    //    DrawMoveTrack(new AIMoveInfo(conductionBase.transform.localPosition.x, conductionBase.transform.localPosition.y, 1), actTrack[i].GetMoveInfo());
+                    prevMoveInfo = actTrack[i].GetMoveInfo();
+                }
+                if (actTrack[i].gazeInfo != null && actTrack[i].gazeInfo.secWait != 0)
+                {
+                    if (prevMoveInfo != null)
+                        DrawGazeTrack(prevMoveInfo, actTrack[i].GetGazeInfo());
+                    else
+                        DrawGazeTrack(new AIMoveInfo(conductionBase.transform.localPosition.x, conductionBase.transform.localPosition.y, 1), actTrack[i].GetGazeInfo());
                 }
             }
         }

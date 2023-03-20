@@ -9,6 +9,7 @@ namespace Assets.Scripts.Creatures.Interfaces
 {
     internal interface IAIAct
     {
+        public bool IsExecutable();
         /// <summary>
         /// 단순 행동 실행
         /// </summary>

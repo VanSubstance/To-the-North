@@ -36,7 +36,7 @@ namespace Assets.Scripts.Creatures.Controllers
             {
                 // 다음 단순 행동이 남아있음
                 // 최초 단순 행동은 이동이어야 한다.
-                if (prevMove != null || curActInfo.type == AIActType.Move)
+                if (prevMove != null || curActInfo.moveInfo.spdMove != 0)
                 {
                     prevMove = curActInfo.GetMoveInfo();
                     aiBase.ExecuteAct(curActInfo);

@@ -10,29 +10,33 @@ namespace Assets.Scripts.Creatures.Objects
     [System.Serializable]
     internal class AIActInfo
     {
-        public AIActType type;
-        public float x, y, z;
+        public AIMoveInfo moveInfo;
+        public AIGazeInfo gazeInfo;
 
         public AIActInfo()
         {
         }
 
-        public AIActInfo(AIActInfo aIActInfo)
+        public AIActInfo(AIActInfo info)
         {
-            type = aIActInfo.type;
-            x = aIActInfo.x;
-            y = aIActInfo.y;
-            z = aIActInfo.z;
+            moveInfo = info.moveInfo;
+            gazeInfo = info.gazeInfo;
+        }
+
+        public AIActInfo(AIMoveInfo moveInfo, AIGazeInfo gazeInfo)
+        {
+            this.moveInfo = moveInfo;
+            this.gazeInfo = gazeInfo;
         }
 
         public AIMoveInfo GetMoveInfo()
         {
-            return new AIMoveInfo(x, y, z);
+            return moveInfo;
         }
 
         public AIGazeInfo GetGazeInfo()
         {
-            return new AIGazeInfo((int)x, y, z);
+            return gazeInfo;
         }
     }
 }

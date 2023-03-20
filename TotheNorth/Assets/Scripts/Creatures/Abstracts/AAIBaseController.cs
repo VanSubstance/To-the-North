@@ -4,6 +4,7 @@ using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Creatures.Objects;
 using Assets.Scripts.Users.Controllers;
 using UnityEngine;
+using static GlobalComponent.Common;
 
 namespace Assets.Scripts.Creatures.Abstracts
 {
@@ -18,7 +19,10 @@ namespace Assets.Scripts.Creatures.Abstracts
 
         protected AIConductionType curConductionType;
         protected int curStatus = 0;
-        protected Vector3 curTargetDir, curTargetPoint;
+        private Vector3 targetDirection;
+        private AIMoveInfo moveTarget = null;
+        private AIGazeInfo gazeTarget = null;
+        private bool isMoveApplied = false, isGazeApplied = false;
 
         private void Update()
         {
@@ -32,18 +36,76 @@ namespace Assets.Scripts.Creatures.Abstracts
                     // 행동 일시 정지
                     break;
             }
+            if (moveTarget != null)
+            {
+                // 이동
+                if (Vector2.Distance(transform.localPosition, moveTarget.point()) <= 0.1f)
+                {
+                    //  이돌 종료
+                    //transform.GetComponent<Rigidbody2D>().AddForce(-targetDirection);
+                    transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                    targetDirection = Vector3.zero;
+                    moveTarget = null;
+                    isMoveApplied = false;
+                }
+                else
+                {
+                    if (!isMoveApplied)
+                    {
+                        isMoveApplied = true;
+                        targetDirection = new Vector3(moveTarget.point().x, moveTarget.point().y, 0f) - transform.localPosition;
+                        //transform.GetComponent<Rigidbody2D>().AddForce(targetDirection * moveTarget.spdMove);
+                        transform.GetComponent<Rigidbody2D>().velocity = targetDirection.normalized * moveTarget.spdMove;
+                        if (gazeTarget == null || gazeTarget.secWait == 0)
+                        {
+                            //Debug.Log("이동 방향으로 응시:: " + (int)CalculationFunctions.AngleFromDir(targetDirection));
+                            Gaze(new AIGazeInfo((int)CalculationFunctions.AngleFromDir(targetDirection), 0.1f, 0.5f));
+                        }
+                    }
+                }
+            }
+            if (gazeTarget != null)
+            {
+                if (!isGazeApplied)
+                {
+                    isGazeApplied = true;
+                    StartCoroutine(CoroutineGaze());
+                }
+            }
+        }
+        private IEnumerator CoroutineGaze()
+        {
+            int degreeToRotate = (int)(gazeTarget.degree - detectionSightController.curDegree);
+            degreeToRotate += 360 * 3;
+            degreeToRotate %= 360;
+            bool isClockwise;
+            degreeToRotate = (isClockwise = degreeToRotate >= 180) ? 360 - degreeToRotate : degreeToRotate;
+            // 해당 방향으로 회전
+            while (degreeToRotate != 0)
+            {
+                yield return new WaitForSeconds(Time.deltaTime);
+                detectionSightController.AddRotationDegree(isClockwise ? -1 : 1);
+                degreeToRotate -= 1;
+            }
+            // 응시
+            while (gazeTarget.secWait > 0)
+            {
+                gazeTarget.secWait -= Time.deltaTime;
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+            gazeTarget = null;
+            isGazeApplied = false;
         }
 
         public void ExecuteAct(AIActInfo info)
         {
-            switch (info.type)
+            if (info.moveInfo != null && info.moveInfo.spdMove != 0)
             {
-                case AIActType.Move:
-                    Move(info.GetMoveInfo());
-                    break;
-                case AIActType.Gaze:
-                    Gaze(info.GetGazeInfo());
-                    break;
+                Move(info.moveInfo);
+            }
+            if (info.gazeInfo != null && info.gazeInfo.secWait != 0)
+            {
+                Gaze(info.gazeInfo);
             }
         }
 
@@ -63,71 +125,25 @@ namespace Assets.Scripts.Creatures.Abstracts
             curConductionType = AIConductionType.None;
             curStatus = 0;
         }
-        private IEnumerator CoroutineMove(AIMoveInfo info)
-        {
-            curStatus = 3;
-            curTargetPoint = new Vector3(info.point().x, info.point().y, info.spdMove);
-            //StartCoroutine(CoroutineGaze(
-            //    new AIGazeInfo(
-            //        (int)CalculationFunctions.AngleFromDir(info.point() - new Vector2(transform.localPosition.x, transform.localPosition.y)),
-            //        0,
-            //        0
-            //        ),
-            //    true
-            //    ));
-            while (Vector2.Distance(transform.localPosition, info.point()) > 0.2f)
-            {
-                curTargetDir = new Vector3(info.point().x, info.point().y, 0f) - transform.localPosition;
-                curTargetDir.z = info.spdMove;
-                GetDetectionSightController().SetRotationDegree((int)CalculationFunctions.AngleFromDir(info.point() - new Vector2(transform.localPosition.x, transform.localPosition.y)));
-                yield return new WaitForSeconds(Time.deltaTime);
-                transform.Translate(new Vector2(curTargetDir.x, curTargetDir.y).normalized * Time.deltaTime * curTargetDir.z);
-            }
-            curTargetPoint = Vector3.zero;
-            curStatus = 2;
-        }
-
-        private IEnumerator CoroutineGaze(AIGazeInfo info, bool isAsync = false)
-        {
-            if (!isAsync)
-                curStatus = 3;
-            // 이동해야 할 각도
-            int degreeToRotate = (int)(info.degree - GetDetectionSightController().curDegree);
-            degreeToRotate += 360 * 3;
-            degreeToRotate %= 360;
-            bool isClockwise;
-            degreeToRotate = (isClockwise = degreeToRotate >= 180) ? 360 - degreeToRotate : degreeToRotate;
-            // 해당 방향으로 회전
-            while (degreeToRotate != 0)
-            {
-                yield return new WaitForSeconds(Time.deltaTime);
-                GetDetectionSightController().AddRotationDegree(isClockwise ? -1 : 1);
-                degreeToRotate -= 1;
-            }
-            // 응시
-            while (info.secWait > 0)
-            {
-                info.secWait -= Time.deltaTime;
-                yield return new WaitForSeconds(Time.deltaTime);
-            }
-            // 종료
-            if (!isAsync)
-                curStatus = 2;
-        }
 
         public void Gaze(AIGazeInfo info)
         {
-            StartCoroutine(CoroutineGaze(info));
+            gazeTarget = new AIGazeInfo(info);
         }
 
         public void Move(AIMoveInfo info)
         {
-            StartCoroutine(CoroutineMove(info));
+            if (moveTarget != null)
+            {
+                transform.GetComponent<Rigidbody2D>().AddForce(-targetDirection);
+                targetDirection = Vector3.zero;
+            }
+            moveTarget = info;
         }
 
-        public Vector3 GetCurTargetPoint()
+        public AIMoveInfo GetCurMoveTarget()
         {
-            return curTargetPoint;
+            return moveTarget;
         }
 
         public AIConductionType GetCurConductionType()
@@ -166,12 +182,18 @@ namespace Assets.Scripts.Creatures.Abstracts
             {
                 curStatus = -1;
                 // 모든 코루틴 종료
+                Debug.Log("일시 정지");
                 StopAllCoroutines();
             }
             else
             {
                 curStatus = 2;
             }
+        }
+
+        public bool IsExecutable()
+        {
+            return moveTarget == null && gazeTarget == null;
         }
     }
 }

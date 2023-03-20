@@ -22,5 +22,12 @@ namespace Assets.Scripts.Creatures.Objects
             this.secWait = secWait;
             this.spdTurn = spdTurn;
         }
+
+        public AIGazeInfo(AIGazeInfo info)
+        {
+            this.degree = info.degree;
+            this.secWait = info.secWait;
+            this.spdTurn = info.spdTurn;
+        }
     }
 }
