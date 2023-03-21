@@ -2,23 +2,22 @@ using System.Collections;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Creatures.Objects;
+using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Users.Controllers;
 using UnityEngine;
-using static GlobalComponent.Common;
 
 namespace Assets.Scripts.Creatures.Abstracts
 {
     internal class AAIBaseController : MonoBehaviour, IAIAct
     {
         [SerializeField]
-        private AAIConductionBaseController defaultConductionController;
-        [SerializeField]
         private DetectionPassiveController detectionPassiveController;
         [SerializeField]
         private DetectionSightController detectionSightController;
 
-        protected AIConductionType curConductionType;
-        protected int curStatus = 0;
+        private AAIConductionBaseController conductionController;
+        public AIConductionType curConductionType;
+        protected int pausePhase = 0;
         private Vector3 targetDirection;
         private AIMoveInfo moveTarget = null;
         private AIGazeInfo gazeTarget = null;
@@ -26,7 +25,7 @@ namespace Assets.Scripts.Creatures.Abstracts
 
         private void Update()
         {
-            switch (curStatus)
+            switch (pausePhase)
             {
                 case 0:
                     // 행동강령 자유 상태
@@ -35,6 +34,15 @@ namespace Assets.Scripts.Creatures.Abstracts
                 case -1:
                     // 행동 일시 정지
                     break;
+                case -2:
+                    // 범프 저장 완료
+                    break;
+                case 1:
+                    // 초기화 시작
+                    break;
+                case 2:
+                    // 행동 명령 입력 가능 상태
+                    break;
             }
             if (moveTarget != null)
             {
@@ -42,11 +50,7 @@ namespace Assets.Scripts.Creatures.Abstracts
                 if (Vector2.Distance(transform.localPosition, moveTarget.point()) <= 0.1f)
                 {
                     //  이돌 종료
-                    //transform.GetComponent<Rigidbody2D>().AddForce(-targetDirection);
-                    transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                    targetDirection = Vector3.zero;
-                    moveTarget = null;
-                    isMoveApplied = false;
+                    ClearMove();
                 }
                 else
                 {
@@ -110,11 +114,16 @@ namespace Assets.Scripts.Creatures.Abstracts
         }
 
         /// <summary>
-        /// 디폴트 행동강령 실행
+        /// 디폴트 행동강령 실행: 패트롤
         /// </summary>
         public void InitDefaultConduction()
         {
-            defaultConductionController.InitConduction();
+            conductionController = GetComponent<AIPetrolController>();
+
+            pausePhase = 1;
+            curConductionType = conductionController.GetConductionType();
+            conductionController.InitConduction();
+            pausePhase = 2;
         }
 
         /// <summary>
@@ -123,7 +132,7 @@ namespace Assets.Scripts.Creatures.Abstracts
         public void ClearConduction()
         {
             curConductionType = AIConductionType.None;
-            curStatus = 0;
+            pausePhase = 0;
         }
 
         public void Gaze(AIGazeInfo info)
@@ -141,6 +150,14 @@ namespace Assets.Scripts.Creatures.Abstracts
             moveTarget = info;
         }
 
+        private void ClearMove()
+        {
+            transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            targetDirection = Vector3.zero;
+            moveTarget = null;
+            isMoveApplied = false;
+        }
+
         public AIMoveInfo GetCurMoveTarget()
         {
             return moveTarget;
@@ -156,14 +173,14 @@ namespace Assets.Scripts.Creatures.Abstracts
             curConductionType = _type;
         }
 
-        public int GetCurStatus()
+        public int GetPausePhase()
         {
-            return curStatus;
+            return pausePhase;
         }
 
-        public void SetCurStatus(int _curStatus)
+        public void SetPausePhase(int _pausePhase)
         {
-            curStatus = _curStatus;
+            pausePhase = _pausePhase;
         }
 
         public DetectionPassiveController GetDetectionPassiveController()
@@ -180,20 +197,27 @@ namespace Assets.Scripts.Creatures.Abstracts
         {
             if (isPause)
             {
-                curStatus = -1;
-                // 모든 코루틴 종료
-                Debug.Log("일시 정지");
+                pausePhase = -1;
+                ClearMove();
                 StopAllCoroutines();
             }
             else
             {
-                curStatus = 2;
+                gazeTarget = null;
+                isGazeApplied = false;
+                moveTarget = null;
+                isMoveApplied = false;
+                pausePhase = 2;
             }
         }
 
         public bool IsExecutable()
         {
-            return moveTarget == null && gazeTarget == null;
+            return
+                moveTarget == null &&
+                gazeTarget == null &&
+                pausePhase == 2 &&
+                true;
         }
     }
 }

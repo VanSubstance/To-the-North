@@ -36,10 +36,10 @@ namespace Assets.Scripts.Creatures.Abstracts
                 }
                 else
                 {
-                    if (aiBase.GetCurStatus() == -1)
+                    if (aiBase.GetPausePhase() == -1)
                     {
                         SaveBumpForPause();
-                        aiBase.SetCurStatus(-2);
+                        aiBase.SetPausePhase(-2);
                     }
                 }
             }
@@ -50,10 +50,7 @@ namespace Assets.Scripts.Creatures.Abstracts
         /// </summary>
         public void InitConduction()
         {
-            aiBase.SetCurStatus(1); ;
-            aiBase.SetCurConductionType(conductionType);
             OnInitConduction();
-            aiBase.SetCurStatus(2);
         }
         public abstract void ActNext();
         /// <summary>
@@ -69,6 +66,11 @@ namespace Assets.Scripts.Creatures.Abstracts
         public AAIBaseController GetAIBaseController()
         {
             return aiBase;
+        }
+
+        public AIConductionType GetConductionType()
+        {
+            return conductionType;
         }
     }
 }
