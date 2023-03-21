@@ -22,6 +22,10 @@ namespace Assets.Scripts.Creatures.Abstracts
         private AIMoveInfo moveTarget = null;
         private AIGazeInfo gazeTarget = null;
         private bool isMoveApplied = false, isGazeApplied = false;
+        private void Awake()
+        {
+            curConductionType = AIConductionType.Petrol;
+        }
 
         private void Update()
         {
@@ -29,7 +33,7 @@ namespace Assets.Scripts.Creatures.Abstracts
             {
                 case 0:
                     // 행동강령 자유 상태
-                    InitDefaultConduction();
+                    InitConduction();
                     break;
                 case -1:
                     // 행동 일시 정지
@@ -116,12 +120,19 @@ namespace Assets.Scripts.Creatures.Abstracts
         /// <summary>
         /// 디폴트 행동강령 실행: 패트롤
         /// </summary>
-        public void InitDefaultConduction()
+        public void InitConduction()
         {
-            conductionController = GetComponent<AIPetrolController>();
-
             pausePhase = 1;
-            curConductionType = conductionController.GetConductionType();
+            switch (curConductionType)
+            {
+                case AIConductionType.None:
+                    break;
+                case AIConductionType.Petrol:
+                    conductionController = GetComponent<AIPetrolController>();
+                    break;
+                default:
+                    break;
+            }
             conductionController.InitConduction();
             pausePhase = 2;
         }
