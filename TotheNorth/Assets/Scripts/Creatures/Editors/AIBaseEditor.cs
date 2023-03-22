@@ -1,7 +1,5 @@
 using Assets.Scripts.Creatures.Abstracts;
-using Assets.Scripts.Creatures.Objects;
 using UnityEditor;
-using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Editors
 {

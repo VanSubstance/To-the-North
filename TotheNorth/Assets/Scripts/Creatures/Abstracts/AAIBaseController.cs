@@ -1,8 +1,4 @@
-using System.Collections;
 using Assets.Scripts.Commons.Functions;
-using Assets.Scripts.Creatures.Interfaces;
-using Assets.Scripts.Creatures.Objects;
-using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Users.Controllers;
 using UnityEngine;
 

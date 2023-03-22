@@ -1,10 +1,6 @@
 using System.Collections.Generic;
 using Assets.Scripts.Creatures.Abstracts;
-using Assets.Scripts.Creatures.Interfaces;
-using Assets.Scripts.Creatures.Objects;
-using Assets.Scripts.Users.Controllers;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Assets.Scripts.Creatures.Controllers
 {

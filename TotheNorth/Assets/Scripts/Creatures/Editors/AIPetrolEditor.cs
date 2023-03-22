@@ -1,9 +1,5 @@
-using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Controllers;
-using Assets.Scripts.Creatures.Objects;
 using UnityEditor;
-using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Editors
 {
