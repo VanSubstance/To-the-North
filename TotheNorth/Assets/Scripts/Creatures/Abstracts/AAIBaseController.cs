@@ -142,7 +142,6 @@ namespace Assets.Scripts.Creatures.Abstracts
         /// </summary>
         public void ClearConduction()
         {
-            curConductionType = AIConductionType.None;
             pausePhase = 0;
         }
 

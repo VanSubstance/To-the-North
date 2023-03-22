@@ -33,14 +33,13 @@ namespace Assets.Scripts.Creatures.Abstracts
                 if (aiBase.IsExecutable())
                 {
                     ActNext();
+                    return;
                 }
-                else
+                if (aiBase.GetPausePhase() == -1)
                 {
-                    if (aiBase.GetPausePhase() == -1)
-                    {
-                        SaveBumpForPause();
-                        aiBase.SetPausePhase(-2);
-                    }
+                    SaveBumpForPause();
+                    aiBase.SetPausePhase(-2);
+                    return;
                 }
             }
         }
