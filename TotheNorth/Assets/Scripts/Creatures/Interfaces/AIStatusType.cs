@@ -8,6 +8,6 @@ namespace Assets.Scripts.Creatures.Interfaces
 {
     internal enum AIStatusType
     {
-        Petrol, Trace
+        Petrol, Trace, None
     }
 }
