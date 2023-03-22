@@ -149,7 +149,7 @@ namespace Assets.Scripts.Users.Controllers
                     {
                         float dstToTarget = Vector3.Distance(transform.position, userTf.position);
                         // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
-                        if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask)) aIBaseController.OnDetectUser();
+                        if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask)) aIBaseController.OnDetectUser(userTf); else aIBaseController.OnDetectUser(null);
                     }
                 }
                 return;

@@ -1,12 +1,14 @@
 using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Users.Controllers;
 using UnityEngine;
 
-namespace Assets.Scripts.Creatures.Abstracts
+namespace Assets.Scripts.Creatures.Bases
 {
-    internal class AAIBaseController : MonoBehaviour
+    internal abstract class AIBaseController : MonoBehaviour
     {
-        public Transform targetToMove, targetToGaze;
+        public AIStatusType statusType = AIStatusType.Petrol;
+        public Vector3? targetToMove, targetToGaze;
         private DetectionPassiveController passiveController;
         private DetectionSightController sightController;
         private bool isPause = false;
@@ -50,7 +52,7 @@ namespace Assets.Scripts.Creatures.Abstracts
         /// </summary>
         private void GazeTarget()
         {
-            float targetDegree = CalculationFunctions.AngleFromDir(targetToGaze.position - transform.position);
+            float targetDegree = CalculationFunctions.AngleFromDir((Vector3)targetToGaze - transform.position);
             targetDegree += 360 * 3;
             targetDegree -= sightController.curDegree;
             targetDegree %= 360;
@@ -77,13 +79,13 @@ namespace Assets.Scripts.Creatures.Abstracts
         /// </summary>
         private void MoveToTarget()
         {
-            if (Vector2.Distance(transform.position, targetToMove.position) < 0.1f)
+            if (Vector2.Distance(transform.position, (Vector3)targetToMove) < 0.1f)
             {
                 GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 targetToMove = null;
                 return;
             }
-            GetComponent<Rigidbody2D>().velocity = (targetToMove.position - transform.position).normalized * 2;
+            GetComponent<Rigidbody2D>().velocity = ((Vector3)targetToMove - transform.position).normalized * 2;
         }
 
         public bool isAllActDone()
@@ -100,9 +102,6 @@ namespace Assets.Scripts.Creatures.Abstracts
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
 
-        public void OnDetectUser()
-        {
-            Debug.Log("유저 식별");
-        }
+        public abstract void OnDetectUser(Transform targetTf);
     }
 }

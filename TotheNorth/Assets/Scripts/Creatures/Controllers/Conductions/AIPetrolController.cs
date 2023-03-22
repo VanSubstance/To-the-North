@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using Assets.Scripts.Creatures.Abstracts;
+using Assets.Scripts.Creatures.Bases;
+using Assets.Scripts.Creatures.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Controllers
 {
-    internal class AIPetrolController : AAIConductionController
+    internal class AIPetrolController : AIConductionController
     {
         [SerializeField]
         private Transform[] petrolTracks;
@@ -18,17 +19,20 @@ namespace Assets.Scripts.Creatures.Controllers
 
         private void Update()
         {
-            if (baseController.isAllActDone())
+            if (baseController.statusType == AIStatusType.Petrol)
             {
-                Transform targetTf;
-                if (trackQueue.TryDequeue(out targetTf))
+                if (baseController.isAllActDone())
                 {
-                    baseController.targetToMove = targetTf;
-                    baseController.targetToGaze = targetTf;
-                }
-                else
-                {
-                    ReloadPetrolQueue();
+                    Transform targetTf;
+                    if (trackQueue.TryDequeue(out targetTf))
+                    {
+                        baseController.targetToMove = targetTf.position;
+                        baseController.targetToGaze = targetTf.position;
+                    }
+                    else
+                    {
+                        ReloadPetrolQueue();
+                    }
                 }
             }
         }

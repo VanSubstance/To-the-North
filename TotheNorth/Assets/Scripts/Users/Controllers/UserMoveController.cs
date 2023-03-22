@@ -15,6 +15,7 @@ namespace Assets.Scripts.Users.Controllers
         {
             if (!InGameStatus.User.isPause)
             {
+                GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                 TrackDirection();
                 TrackMovementType();
                 TrackSightZoom(0.01f);

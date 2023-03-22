@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Commons.Functions;
-using Assets.Scripts.Creatures.Abstracts;
+using Assets.Scripts.Creatures.Bases;
 using Assets.Scripts.Users.Objects;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal abstract class DetectionBaseController : MonoBehaviour
     {
-        protected AAIBaseController aIBaseController;
+        protected AIBaseController aIBaseController;
         public bool isAI = true;
         public float meshResolution;
         public Mesh viewMesh, viewMeshForVisualization;
@@ -42,7 +42,7 @@ namespace Assets.Scripts.Users.Controllers
             }
         }
 
-        public void SetAIBaseController(AAIBaseController aIBaseController)
+        public void SetAIBaseController(AIBaseController aIBaseController)
         {
             this.aIBaseController = aIBaseController;
         }

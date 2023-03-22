@@ -528,8 +528,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7249881556927368018}
-  - component: {fileID: 2669628636883168493}
+  - component: {fileID: 7865440330523968143}
   - component: {fileID: 8367694764048619857}
+  - component: {fileID: 8821249586427688319}
   - component: {fileID: 7249881556927368016}
   - component: {fileID: 7249881556927368023}
   m_Layer: 8
@@ -556,7 +557,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2669628636883168493
+--- !u!114 &7865440330523968143
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -565,11 +566,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7249881556927368019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7d8a127c5b1af64c9ce5dcd9e94427f, type: 3}
+  m_Script: {fileID: 11500000, guid: e5f290492c474f64faa1d04428b27f83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetToMove: {fileID: 0}
-  targetToGaze: {fileID: 0}
+  statusType: 0
 --- !u!114 &8367694764048619857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,6 +583,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   petrolTracks: []
+--- !u!114 &8821249586427688319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249881556927368019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a465200e14501346ba10262aa41939b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!58 &7249881556927368016
 CircleCollider2D:
   m_ObjectHideFlags: 0
