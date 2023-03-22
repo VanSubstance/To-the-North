@@ -40,6 +40,7 @@ namespace Assets.Scripts.Users.Controllers
         {
             if (!isAI) return;
             curDegree += degreeToAdd;
+            curDegree %= 360;
             transform.localRotation = Quaternion.Euler(0, 0, curDegree);
         }
 
@@ -169,7 +170,14 @@ namespace Assets.Scripts.Users.Controllers
                     // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
                     if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
                     {
-                        target.GetComponent<IEventInteraction>().StartTrackingInteraction(transform);
+                        try
+                        {
+                            target.GetComponent<IEventInteraction>().StartTrackingInteraction(transform);
+                        }
+                        catch (NullReferenceException)
+                        {
+
+                        }
                     }
                 }
             }

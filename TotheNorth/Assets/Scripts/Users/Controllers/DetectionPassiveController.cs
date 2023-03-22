@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Creatures.Abstracts;
 using Assets.Scripts.Events.Interfaces;
 using Assets.Scripts.Users.Objects;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Users.Controllers
@@ -69,7 +71,14 @@ namespace Assets.Scripts.Users.Controllers
             for (int i = 0; i < targetsInViewRadius.Count; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
-                target.GetComponent<IEventInteraction>().StartTrackingInteraction(transform);
+                try
+                {
+                    target.GetComponent<IEventInteraction>().StartTrackingInteraction(transform);
+                }
+                catch (NullReferenceException)
+                {
+
+                }
             }
         }
         public override DetectionSightInfo SightCast(float globalAngle)
