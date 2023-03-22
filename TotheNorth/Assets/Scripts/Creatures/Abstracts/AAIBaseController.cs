@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Abstracts
 {
-    internal class AAIBaseController : MonoBehaviour, IAIAct
+    internal abstract class AAIBaseController : MonoBehaviour, IAIAct
     {
         [SerializeField]
         private DetectionPassiveController detectionPassiveController;
@@ -22,9 +22,12 @@ namespace Assets.Scripts.Creatures.Abstracts
         private AIMoveInfo moveTarget = null;
         private AIGazeInfo gazeTarget = null;
         private bool isMoveApplied = false, isGazeApplied = false;
+
         private void Awake()
         {
             curConductionType = AIConductionType.Petrol;
+            detectionPassiveController.SetAIBaseController(this);
+            detectionSightController.SetAIBaseController(this);
         }
 
         private void Update()
@@ -66,7 +69,6 @@ namespace Assets.Scripts.Creatures.Abstracts
                         transform.GetComponent<Rigidbody2D>().velocity = targetDirection.normalized * moveTarget.spdMove;
                         if (gazeTarget == null || gazeTarget.secWait == 0)
                         {
-                            //Debug.Log("이동 방향으로 응시:: " + (int)CalculationFunctions.AngleFromDir(targetDirection));
                             Gaze(new AIGazeInfo((int)CalculationFunctions.AngleFromDir(targetDirection), 0.1f, 0.5f));
                         }
                     }
@@ -229,5 +231,9 @@ namespace Assets.Scripts.Creatures.Abstracts
                 pausePhase == 2 &&
                 true;
         }
+
+        public abstract void OnDetectSuspicious();
+
+        public abstract void OnDetectUser();
     }
 }

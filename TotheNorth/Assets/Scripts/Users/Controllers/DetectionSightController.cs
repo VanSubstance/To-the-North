@@ -7,6 +7,7 @@ using Assets.Scripts.Events.Interfaces;
 using Assets.Scripts.Users.Objects;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Assets.Scripts.Users.Controllers
 {
@@ -134,7 +135,24 @@ namespace Assets.Scripts.Users.Controllers
         /// </summary>
         public override void CheckSight()
         {
-            if (isAI) return;
+            if (isAI)
+            {
+                // AI의 경우: 유저가 있는지만 체크
+                // 유저가 있다 ? 유저 식별 시 행동 호출
+                Collider2D userCol = Physics2D.OverlapCircle(transform.position, range, GlobalStatus.Constant.userMask);
+                if (userCol != null)
+                {
+                    Transform userTf = userCol.transform;
+                    Vector3 dirToTarget = (userTf.position - transform.position).normalized;
+                    if (Math.Abs(Vector3.SignedAngle(transform.right, dirToTarget, Vector3.forward)) * 2 < degree)
+                    {
+                        float dstToTarget = Vector3.Distance(transform.position, userTf.position);
+                        // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
+                        if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask)) aIBaseController.OnDetectUser();
+                    }
+                }
+                return;
+            }
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
             List<Collider2D> targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask).ToList();
             targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.creatureMask));

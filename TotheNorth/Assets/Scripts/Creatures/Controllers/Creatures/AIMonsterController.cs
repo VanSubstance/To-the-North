@@ -6,16 +6,16 @@ using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Controllers
 {
-    internal class AINpcController : AAIBaseController
+    internal class AIMonsterController : AAIBaseController
     {
         public override void OnDetectUser()
         {
-            Debug.Log("NPC >> 유저 식별");
+            Debug.Log("몬스터 >> 유저 식별");
         }
 
         public override void OnDetectSuspicious()
         {
-            Debug.Log("NPC >> 의심 식별");
+            Debug.Log("몬스터 >> 의심 식별");
         }
     }
 }

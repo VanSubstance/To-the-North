@@ -528,7 +528,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7249881556927368018}
-  - component: {fileID: 3193563427077739803}
+  - component: {fileID: 6338509149804710784}
   - component: {fileID: 8367694764048619857}
   - component: {fileID: -7669871793913252461}
   - component: {fileID: 7249881556927368016}
@@ -557,7 +557,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3193563427077739803
+--- !u!114 &6338509149804710784
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -566,7 +566,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7249881556927368019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6873c2b8a248a5041932a7d8d20ff3b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f0afc494962b0f42aea3d8fe1c2e292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   detectionPassiveController: {fileID: 5851334093313958839}
@@ -584,7 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb91b5aa5010c1547a8f8c6b6baa9da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aiBase: {fileID: 3193563427077739803}
+  aiBase: {fileID: 6338509149804710784}
   actTrack: []
 --- !u!114 &-7669871793913252461
 MonoBehaviour:

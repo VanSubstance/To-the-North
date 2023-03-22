@@ -25,7 +25,8 @@ namespace Assets.Scripts.Commons.Functions
         /// <returns></returns>
         public static float AngleFromDir(Vector2 dir)
         {
-            return Quaternion.FromToRotation(Vector2.right, dir).eulerAngles.y;
+            if (dir.y == 0) return dir.x > 0 ? 0 : 180;
+            return Quaternion.FromToRotation(Vector2.right, dir).eulerAngles.z;
         }
     }
 }

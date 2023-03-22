@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Creatures.Abstracts;
 using Assets.Scripts.Events.Interfaces;
 using Assets.Scripts.Users.Objects;
 using UnityEngine;
@@ -55,7 +56,13 @@ namespace Assets.Scripts.Users.Controllers
         /// </summary>
         public override void CheckSight()
         {
-            if (isAI) return;
+            if (isAI)
+            {
+                // AI의 경우: 유저가 있는지만 체크
+                // 유저가 있다 ? 유저 식별 시 행동 호출
+                if (Physics2D.OverlapCircle(transform.position, range, GlobalStatus.Constant.userMask) != null) aIBaseController.OnDetectUser();
+                return;
+            }
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
             List<Collider2D> targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask).ToList();
             targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.creatureMask));

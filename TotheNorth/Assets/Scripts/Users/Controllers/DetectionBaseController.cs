@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Creatures.Abstracts;
 using Assets.Scripts.Users.Objects;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal abstract class DetectionBaseController : MonoBehaviour
     {
+        protected AAIBaseController aIBaseController;
         public bool isAI = true;
         public float meshResolution;
         public Mesh viewMesh, viewMeshForVisualization;
@@ -38,6 +40,11 @@ namespace Assets.Scripts.Users.Controllers
                 yield return new WaitForSeconds(delay);
                 CheckSight();
             }
+        }
+
+        public void SetAIBaseController(AAIBaseController aIBaseController)
+        {
+            this.aIBaseController = aIBaseController;
         }
 
         /** 0도 위치에서부터 angleDegree 기준 방향 벡터 (Vector3) */
