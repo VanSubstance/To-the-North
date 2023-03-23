@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Events.Interfaces;
 using Assets.Scripts.Users.Objects;
 using Unity.VisualScripting;
@@ -181,6 +182,15 @@ namespace Assets.Scripts.Users.Controllers
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// 현재 Transform이 바라보고 있는 방향을 기준으로 angle 방향 정규 벡터 + Transform 위치 Vector3
+        /// </summary>
+        /// <param name="angle"></param>
+        public Vector3 GetPositionOfLooking(float angle)
+        {
+            return transform.position + CalculationFunctions.DirFromAngle(curDegree + angle).normalized;
         }
     }
 }

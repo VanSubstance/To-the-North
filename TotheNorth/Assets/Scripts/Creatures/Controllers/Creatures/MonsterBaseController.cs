@@ -7,8 +7,8 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
 {
     internal class MonsterBaseController : AIBaseController
     {
-        public float timeOfMemory = 3f;
-        private float secMemory = 0f;
+        public float timeOfMemory = 1f;
+        public float secMemory = 0f;
         /// <summary>
         /// 유저를 식별하였을 때 작동하는 함수
         /// </summary>
@@ -42,6 +42,10 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
             while (secMemory > 0)
             {
                 yield return new WaitForSeconds(Time.deltaTime);
+                if (!isAllActDone())
+                {
+                    secMemory = timeOfMemory;
+                }
                 secMemory -= Time.deltaTime;
             }
             statusType = Interfaces.AIStatusType.Petrol;

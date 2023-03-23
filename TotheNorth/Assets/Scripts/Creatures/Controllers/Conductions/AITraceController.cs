@@ -6,9 +6,11 @@ namespace Assets.Scripts.Creatures.Conductions
 {
     internal class AITraceController : AIConductionController
     {
+        public int numberOfGazeAfterLost = 3;
         private Transform targetTf;
         private Vector3? lastPosition;
         private bool isNowLost = false;
+        private int afterLost = 0;
         private new void Awake()
         {
             base.Awake();
@@ -35,6 +37,17 @@ namespace Assets.Scripts.Creatures.Conductions
                         baseController.SetTargetToGaze(lastPosition, 0);
                         isNowLost = false;
                     }
+                    else
+                    {
+                        if (baseController.isAllActDone())
+                        {
+                            if (afterLost < numberOfGazeAfterLost)
+                            {
+                                baseController.SetTargetToGaze(baseController.GetDetectionSight().GetPositionOfLooking(Random.Range(-90, 90)), 2);
+                                afterLost++;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -46,6 +59,7 @@ namespace Assets.Scripts.Creatures.Conductions
             {
                 lastPosition = targetTf.position;
                 isNowLost = true;
+                afterLost = 0;
             }
         }
     }
