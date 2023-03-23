@@ -14,5 +14,11 @@ namespace Assets.Scripts.Creatures.Bases
         {
             baseController = GetComponent<AIBaseController>();
         }
+
+        public AIBaseController GetAIBase()
+        {
+            return baseController;
+        }
+
     }
 }

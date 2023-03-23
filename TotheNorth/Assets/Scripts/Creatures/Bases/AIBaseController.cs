@@ -12,6 +12,7 @@ namespace Assets.Scripts.Creatures.Bases
         private DetectionPassiveController passiveController;
         private DetectionSightController sightController;
         private bool isPause = false;
+        private float timeStayForMove = 0, timeStayForGaze = 0;
 
         private void Awake()
         {
@@ -69,7 +70,14 @@ namespace Assets.Scripts.Creatures.Bases
             }
             else
             {
-                targetToGaze = null;
+                if (timeStayForGaze > 0)
+                {
+                    timeStayForGaze -= Time.deltaTime;
+                }
+                else
+                {
+                    targetToGaze = null;
+                }
                 return;
             }
         }
@@ -82,7 +90,14 @@ namespace Assets.Scripts.Creatures.Bases
             if (Vector2.Distance(transform.position, (Vector3)targetToMove) < 0.1f)
             {
                 GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                targetToMove = null;
+                if (timeStayForMove > 0)
+                {
+                    timeStayForMove -= Time.deltaTime;
+                }
+                else
+                {
+                    targetToMove = null;
+                }
                 return;
             }
             GetComponent<Rigidbody2D>().velocity = ((Vector3)targetToMove - transform.position).normalized * 2;
@@ -92,7 +107,9 @@ namespace Assets.Scripts.Creatures.Bases
         {
             return
                 targetToMove == null &&
+                timeStayForMove <= 0 &&
                 targetToGaze == null &&
+                timeStayForGaze <= 0 &&
                 true;
         }
 
@@ -100,6 +117,28 @@ namespace Assets.Scripts.Creatures.Bases
         {
             isPause = toPause;
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+
+        public DetectionSightController GetDetectionSight()
+        {
+            return sightController;
+        }
+
+        public DetectionPassiveController GetDetectionPassive()
+        {
+            return passiveController;
+        }
+
+        public void SetTargetToMove(Vector3? target, float timeToStay)
+        {
+            targetToMove = target;
+            timeStayForMove = timeToStay;
+        }
+
+        public void SetTargetToGaze(Vector3? target, float timeToStay)
+        {
+            targetToGaze = target;
+            timeStayForGaze = timeToStay;
         }
 
         public abstract void OnDetectUser(Transform targetTf);

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Creatures.Bases;
 using Assets.Scripts.Creatures.Interfaces;
+using Assets.Scripts.Maps.Controllers;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Controllers
@@ -26,8 +27,15 @@ namespace Assets.Scripts.Creatures.Controllers
                     Transform targetTf;
                     if (trackQueue.TryDequeue(out targetTf))
                     {
-                        baseController.targetToMove = targetTf.position;
-                        baseController.targetToGaze = targetTf.position;
+                        TrackBaseController trackBase = targetTf.GetComponent<TrackBaseController>();
+                        if (trackBase.isToMove)
+                        {
+                            baseController.SetTargetToMove(targetTf.position, trackBase.timeStay);
+                        }
+                        if (trackBase.isToGaze)
+                        {
+                            baseController.SetTargetToGaze(targetTf.position, trackBase.timeStay);
+                        }
                     }
                     else
                     {
