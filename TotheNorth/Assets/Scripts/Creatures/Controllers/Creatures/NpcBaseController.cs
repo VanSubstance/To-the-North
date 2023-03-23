@@ -1,13 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Creatures.Bases;
-using Assets.Scripts.Creatures.Conductions;
 using UnityEngine;
-using static Assets.Scripts.Commons.Constants.InGameStatus;
 
 namespace Assets.Scripts.Creatures.Controllers.Creatures
 {

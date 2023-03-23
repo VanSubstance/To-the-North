@@ -22,7 +22,7 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
                 {
                     // 최초 유저 조우
                     statusType = Interfaces.AIStatusType.Trace;
-                    StartCoroutine(countMemory());
+                    StartCoroutine(CountMemory());
                 }
                 else
                 {
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
             GetComponent<AITraceController>().SetTargetTf(targetTf);
         }
 
-        private IEnumerator countMemory()
+        private IEnumerator CountMemory()
         {
             while (secMemory > 0)
             {

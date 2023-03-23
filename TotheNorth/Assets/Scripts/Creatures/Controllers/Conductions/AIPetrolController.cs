@@ -40,7 +40,7 @@ namespace Assets.Scripts.Creatures.Controllers
         /// <summary>
         /// 패트롤 큐 재장전
         /// </summary>
-        public void ReloadPetrolQueue()
+        private void ReloadPetrolQueue()
         {
             if (Vector2.Distance(transform.position, petrolTracks[0].position) < Vector2.Distance(transform.position, petrolTracks[petrolTracks.Length - 1].position))
             {
@@ -56,6 +56,11 @@ namespace Assets.Scripts.Creatures.Controllers
                     trackQueue.Enqueue(petrolTracks[i]);
                 }
             }
+        }
+
+        public Transform[] GetPetrolTracks()
+        {
+            return petrolTracks;
         }
     }
 }
