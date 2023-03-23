@@ -12,12 +12,14 @@ public class DragToMoveController : MonoBehaviour
     private Vector2 unitToBoxColliderForce = Vector2.zero;
     private Vector3 correctionDistance;
     private int z;
+    private Vector2 objSize;
     // Start is called before the first frame update
     void Start()
     {
+        objSize = GetComponent<RectTransform>().sizeDelta;
         if (unitToBoxColliderForce.Equals(Vector2.zero))
         {
-            GetComponent<BoxCollider>().size = GetComponent<RectTransform>().sizeDelta;
+            GetComponent<BoxCollider>().size = objSize;
         }
         else
         {
@@ -43,16 +45,26 @@ public class DragToMoveController : MonoBehaviour
     private void OnMouseDrag()
     {
         tfToMove.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) - correctionDistance;
-        tfToMove.localPosition = new Vector3(
-            tfToMove.localPosition.x,
-            tfToMove.localPosition.y,
-            z
-            );
+        if (tfToMove.tag == "Item")
+        {
+            tfToMove.localPosition = new Vector3(
+                tfToMove.localPosition.x - (objSize.x / 2),
+                tfToMove.localPosition.y + (objSize.y / 2),
+                z
+                );
+        }
+        else
+        {
+            tfToMove.localPosition = new Vector3(
+                tfToMove.localPosition.x,
+                tfToMove.localPosition.y,
+                z
+                );
+        }
     }
 
     private void OnMouseUp()
     {
         correctionDistance = Vector3.zero;
-        z = 0;
     }
 }

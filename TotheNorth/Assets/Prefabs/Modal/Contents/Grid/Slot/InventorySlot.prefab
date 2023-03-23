@@ -10,11 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 417850167444823768}
   - component: {fileID: 3269463243367940974}
-  - component: {fileID: 4219265994580874630}
+  - component: {fileID: 7539376738650246315}
   - component: {fileID: 1572519377907116077}
-  m_Layer: 5
+  - component: {fileID: 5231138222611705725}
+  m_Layer: 12
   m_Name: InventorySlot
-  m_TagString: Untagged
+  m_TagString: InventorySlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,11 +35,11 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 60, y: 60}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &3269463243367940974
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -47,7 +48,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8657988864342740038}
   m_CullTransparentMesh: 1
---- !u!114 &4219265994580874630
+--- !u!114 &7539376738650246315
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d37909aecea51fe49b1247682a43e647, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -92,3 +93,19 @@ MonoBehaviour:
   row: 0
   column: 0
   isAttached: 0
+  isAttachReady: 0
+  normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
+  ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
+--- !u!65 &5231138222611705725
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8657988864342740038}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 60, y: 60, z: 1}
+  m_Center: {x: 30, y: -30, z: 0}

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Assets.Scripts.Commons.Interfaces;
 
 public class MouseEventManager : MonoBehaviour
 {
@@ -65,14 +66,20 @@ public class MouseEventManager : MonoBehaviour
     /// </summary>
     private void DownMouseButton()
     {
+        Transform tf;
         if (Input.GetMouseButton(0))
         {
             // 왼쪽 버튼 감지
             curMouseButton = MouseButton.LEFT;
             MarkMousePosition(true);
+            tf = GetTransformBelow();
             TryExecuteAction(() =>
             {
-                GlobalStatus.Util.MouseEvent.Left.actionDown(GetTransformBelow(), mousePosition);
+                tf.GetComponent<IMouseInteractable>().OnLeftMouseDown(mousePosition);
+            });
+            TryExecuteAction(() =>
+            {
+                GlobalStatus.Util.MouseEvent.Left.actionDown(tf, mousePosition);
             });
         }
         else if (Input.GetMouseButton(1))
@@ -80,9 +87,14 @@ public class MouseEventManager : MonoBehaviour
             // 오른쪽 버튼 감지
             curMouseButton = MouseButton.RIGHT;
             MarkMousePosition(true);
+            tf = GetTransformBelow();
             TryExecuteAction(() =>
             {
-                GlobalStatus.Util.MouseEvent.Right.actionDown(GetTransformBelow(), mousePosition);
+                tf.GetComponent<IMouseInteractable>().OnRightMouseDown(mousePosition);
+            });
+            TryExecuteAction(() =>
+            {
+                GlobalStatus.Util.MouseEvent.Right.actionDown(tf, mousePosition);
             });
         }
         else if (Input.GetMouseButton(2))
@@ -90,9 +102,14 @@ public class MouseEventManager : MonoBehaviour
             // 가운데 버튼 감지
             curMouseButton = MouseButton.MIDDLE;
             MarkMousePosition(true);
+            tf = GetTransformBelow();
             TryExecuteAction(() =>
             {
-                GlobalStatus.Util.MouseEvent.Middle.actionDown(GetTransformBelow(), mousePosition);
+                tf.GetComponent<IMouseInteractable>().OnMiddleMouseDown(mousePosition);
+            });
+            TryExecuteAction(() =>
+            {
+                GlobalStatus.Util.MouseEvent.Middle.actionDown(tf, mousePosition);
             });
         }
     }
@@ -102,6 +119,7 @@ public class MouseEventManager : MonoBehaviour
     /// </summary>
     private void DragMouseButton()
     {
+        Transform tf;
         if (Input.GetMouseButton((int)curMouseButton))
         {
             // 드래그 이벤트 발생중
@@ -109,21 +127,36 @@ public class MouseEventManager : MonoBehaviour
             switch (curMouseButton)
             {
                 case MouseButton.LEFT:
+                    tf = GetTransformBelow();
                     TryExecuteAction(() =>
                     {
-                        GlobalStatus.Util.MouseEvent.Left.actionDrag(GetTransformBelow(), mousePosition);
+                        tf.GetComponent<IMouseInteractable>().OnLeftMouseDrag(mousePosition);
+                    });
+                    TryExecuteAction(() =>
+                    {
+                        GlobalStatus.Util.MouseEvent.Left.actionDrag(tf, mousePosition);
                     });
                     break;
                 case MouseButton.RIGHT:
+                    tf = GetTransformBelow();
                     TryExecuteAction(() =>
                     {
-                        GlobalStatus.Util.MouseEvent.Right.actionDrag(GetTransformBelow(), mousePosition);
+                        tf.GetComponent<IMouseInteractable>().OnRightMouseDrag(mousePosition);
+                    });
+                    TryExecuteAction(() =>
+                    {
+                        GlobalStatus.Util.MouseEvent.Right.actionDrag(tf, mousePosition);
                     });
                     break;
                 case MouseButton.MIDDLE:
+                    tf = GetTransformBelow();
                     TryExecuteAction(() =>
                     {
-                        GlobalStatus.Util.MouseEvent.Middle.actionDrag(GetTransformBelow(), mousePosition);
+                        tf.GetComponent<IMouseInteractable>().OnMiddleMouseDrag(mousePosition);
+                    });
+                    TryExecuteAction(() =>
+                    {
+                        GlobalStatus.Util.MouseEvent.Middle.actionDrag(tf, mousePosition);
                     });
                     break;
             }
@@ -141,6 +174,7 @@ public class MouseEventManager : MonoBehaviour
     /// </summary>
     private void UpMouseButton()
     {
+        Transform tf;
         Vector3 temp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         temp.z = -20f;
         if (Vector3.Distance(mousePositionForClick, temp) < 0.1f)
@@ -154,21 +188,36 @@ public class MouseEventManager : MonoBehaviour
             switch (curMouseButton)
             {
                 case MouseButton.LEFT:
+                    tf = GetTransformBelow();
                     TryExecuteAction(() =>
                     {
-                        GlobalStatus.Util.MouseEvent.Left.actionUp(GetTransformBelow(), mousePosition);
+                        tf.GetComponent<IMouseInteractable>().OnLeftMouseUp(mousePosition);
+                    });
+                    TryExecuteAction(() =>
+                    {
+                        GlobalStatus.Util.MouseEvent.Left.actionUp(tf, mousePosition);
                     });
                     break;
                 case MouseButton.RIGHT:
+                    tf = GetTransformBelow();
                     TryExecuteAction(() =>
                     {
-                        GlobalStatus.Util.MouseEvent.Right.actionUp(GetTransformBelow(), mousePosition);
+                        tf.GetComponent<IMouseInteractable>().OnRightMouseUp(mousePosition);
+                    });
+                    TryExecuteAction(() =>
+                    {
+                        GlobalStatus.Util.MouseEvent.Right.actionUp(tf, mousePosition);
                     });
                     break;
                 case MouseButton.MIDDLE:
+                    tf = GetTransformBelow();
                     TryExecuteAction(() =>
                     {
-                        GlobalStatus.Util.MouseEvent.Middle.actionUp(GetTransformBelow(), mousePosition);
+                        tf.GetComponent<IMouseInteractable>().OnMiddleMouseUp(mousePosition);
+                    });
+                    TryExecuteAction(() =>
+                    {
+                        GlobalStatus.Util.MouseEvent.Middle.actionUp(tf, mousePosition);
                     });
                     break;
             }
@@ -183,26 +232,42 @@ public class MouseEventManager : MonoBehaviour
     /// </summary>
     private void ClickMouseButton()
     {
+        Transform tf;
         switch (curMouseButton)
         {
             case MouseButton.LEFT:
+                tf = GetTransformBelow();
+                TryExecuteAction(() =>
+                {
+                    tf.GetComponent<IMouseInteractable>().OnLeftMouseClick(mousePosition);
+                });
                 TryExecuteAction(() =>
                 {
                     // Transform temp = GetTransformBelow();
                     // if (temp.GetComponent<IClickable>() != null)
-                    GlobalStatus.Util.MouseEvent.Left.actionClick(GetTransformBelow(), mousePosition);
+                    GlobalStatus.Util.MouseEvent.Left.actionClick(tf, mousePosition);
                 });
                 break;
             case MouseButton.RIGHT:
+                tf = GetTransformBelow();
                 TryExecuteAction(() =>
                 {
-                    GlobalStatus.Util.MouseEvent.Right.actionClick(GetTransformBelow(), mousePosition);
+                    tf.GetComponent<IMouseInteractable>().OnRightMouseClick(mousePosition);
+                });
+                TryExecuteAction(() =>
+                {
+                    GlobalStatus.Util.MouseEvent.Right.actionClick(tf, mousePosition);
                 });
                 break;
             case MouseButton.MIDDLE:
+                tf = GetTransformBelow();
                 TryExecuteAction(() =>
                 {
-                    GlobalStatus.Util.MouseEvent.Middle.actionClick(GetTransformBelow(), mousePosition);
+                    tf.GetComponent<IMouseInteractable>().OnMiddleMouseClick(mousePosition);
+                });
+                TryExecuteAction(() =>
+                {
+                    GlobalStatus.Util.MouseEvent.Middle.actionClick(tf, mousePosition);
                 });
                 break;
         }
@@ -253,6 +318,10 @@ public class MouseEventManager : MonoBehaviour
             targetAction();
         }
         catch (NullReferenceException)
+        {
+            // 해당 이벤트 정의 안됨
+        }
+        catch (NotImplementedException)
         {
             // 해당 이벤트 정의 안됨
         }
