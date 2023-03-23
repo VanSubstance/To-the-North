@@ -1,7 +1,7 @@
-using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Commons.Functions;
+using System;
+using System.Collections.Generic;
 using Assets.Scripts.Creatures.Controllers;
-using Assets.Scripts.Creatures.Objects;
+using Assets.Scripts.Maps.Controllers;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,52 +10,63 @@ namespace Assets.Scripts.Creatures.Editors
     [CustomEditor(typeof(AIPetrolController))]
     internal class AIPetrolEditor : Editor
     {
-        AIPetrolController conductionBase;
+        AIPetrolController aiBase;
         private void OnSceneGUI()
         {
-            conductionBase = (AIPetrolController)target;
-
-            AIActInfo[] actTrack = conductionBase.GetActTrack();
-            AIMoveInfo prevMoveInfo = null;
-            for (int i = 0; i < actTrack.Length; i++)
+            aiBase = (AIPetrolController)target;
+            float sightAngle, sightRange;
+            try
             {
-                switch (actTrack[i].type)
+                sightAngle = aiBase.GetAIBase().GetDetectionSight().degree;
+                sightRange = aiBase.GetAIBase().GetDetectionSight().range;
+            }
+            catch (NullReferenceException)
+            {
+                sightAngle = 45;
+                sightRange = 3;
+            }
+
+            Transform[] tracks = aiBase.GetPetrolTracks();
+            if (tracks.Length < 2) return;
+            List<TrackBaseController> bumpsForInitRotation = new List<TrackBaseController>();
+            Transform prevPoint = null;
+            for (int i = 0; i < tracks.Length; i++)
+            {
+                TrackBaseController trBase = tracks[i].GetComponent<TrackBaseController>();
+                if (prevPoint == null)
                 {
-                    case AIActType.Move:
-                        if (prevMoveInfo != null)
-                            DrawMoveTrack(prevMoveInfo, actTrack[i].GetMoveInfo());
-                        //else
-                        //    DrawMoveTrack(new AIMoveInfo(conductionBase.transform.localPosition.x, conductionBase.transform.localPosition.y, 1), actTrack[i].GetMoveInfo());
-                        prevMoveInfo = actTrack[i].GetMoveInfo();
-                        break;
-                    case AIActType.Gaze:
-                        if (prevMoveInfo != null)
-                            DrawGazeTrack(prevMoveInfo, actTrack[i].GetGazeInfo());
-                        else
-                            DrawGazeTrack(new AIMoveInfo(conductionBase.transform.localPosition.x, conductionBase.transform.localPosition.y, 1), actTrack[i].GetGazeInfo());
-                        break;
+                    if (trBase.isToMove)
+                    {
+                        prevPoint = trBase.transform;
+                        foreach (TrackBaseController t in bumpsForInitRotation)
+                        {
+                            Handles.color = Color.green;
+                            Handles.DrawWireArc(prevPoint.position, Vector3.forward, t.transform.position - prevPoint.position, sightAngle / 2, sightRange, t.timeStay);
+                            Handles.DrawWireArc(prevPoint.position, Vector3.forward, t.transform.position - prevPoint.position, sightAngle / -2, sightRange, t.timeStay);
+                        }
+                        Handles.color = Color.white;
+                    }
+                    else
+                    {
+                        bumpsForInitRotation.Add(trBase);
+                    }
+                }
+                else
+                {
+                    if (trBase.isToGaze)
+                    {
+                        Handles.color = Color.green;
+                        Handles.DrawWireArc(prevPoint.position, Vector3.forward, trBase.transform.position - prevPoint.position, sightAngle / 2, sightRange, trBase.timeStay);
+                        Handles.DrawWireArc(prevPoint.position, Vector3.forward, trBase.transform.position - prevPoint.position, sightAngle / -2, sightRange, trBase.timeStay);
+                    }
+                    if (trBase.isToMove)
+                    {
+                        Handles.color = Color.white;
+                        Handles.DrawLine(prevPoint.position, tracks[i].position);
+                        prevPoint = tracks[i];
+                    }
                 }
             }
-        }
-
-        /// <summary>
-        /// 이동 트랙 그리기
-        /// </summary>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
-        private void DrawMoveTrack(AIMoveInfo from, AIMoveInfo to)
-        {
-            Handles.color = new Color(1, 1, 1, 0.5f);
-            Handles.DrawLine(from.point(), to.point(), from.spdMove);
-        }
-
-        private void DrawGazeTrack(AIMoveInfo from, AIGazeInfo gaze)
-        {
-            Handles.color = new Color(0, 1, 0, 0.5f);
-            Handles.DrawWireArc(from.point(), Vector3.back, Vector3.up, 360, conductionBase.GetAIBaseController().GetDetectionPassiveController().range, gaze.secWait);
-            Handles.color = new Color(1, 0, 0, 0.5f);
-            Handles.DrawWireArc(from.point(), Vector3.forward, CalculationFunctions.DirFromAngle(gaze.degree), (conductionBase.GetAIBaseController().GetDetectionSightController().degree / 2), conductionBase.GetAIBaseController().GetDetectionSightController().range, gaze.secWait);
-            Handles.DrawWireArc(from.point(), Vector3.forward, CalculationFunctions.DirFromAngle(gaze.degree), -(conductionBase.GetAIBaseController().GetDetectionSightController().degree / 2), conductionBase.GetAIBaseController().GetDetectionSightController().range, gaze.secWait);
         }
     }
 }

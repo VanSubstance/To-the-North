@@ -1,24 +1,21 @@
-using Assets.Scripts.Creatures.Abstracts;
-using Assets.Scripts.Creatures.Objects;
+using Assets.Scripts.Creatures.Bases;
 using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Editors
 {
-    [CustomEditor(typeof(AAIBaseController))]
     internal class AIBaseEditor : Editor
     {
-        private void OnSceneGUI()
+        protected void OnSceneGUI()
         {
-            AAIBaseController aiBase = (AAIBaseController)target;
+            AIBaseController aiBase = (AIBaseController)target;
+            Handles.color = Color.red;
+            if (aiBase.targetToMove != null)
+                Handles.DrawLine(aiBase.transform.position, (Vector3)aiBase.targetToMove);
 
-            // 목표 이동 트랙 그리기
-            Handles.color = new Color(0, 1, 0, 1f);
-            Vector3 targetMoveInfo = aiBase.GetCurTargetPoint();
-            if (targetMoveInfo != null)
-            {
-                Handles.DrawLine(aiBase.transform.localPosition, new Vector2(targetMoveInfo.x, targetMoveInfo.y), targetMoveInfo.z);
-            }
+            Handles.color = Color.yellow;
+            if (aiBase.targetToGaze != null)
+                Handles.DrawLine(aiBase.transform.position, (Vector3)aiBase.targetToGaze);
         }
     }
 }

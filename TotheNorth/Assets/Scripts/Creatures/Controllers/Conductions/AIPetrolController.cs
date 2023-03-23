@@ -1,82 +1,74 @@
 using System.Collections.Generic;
-using Assets.Scripts.Creatures.Abstracts;
+using Assets.Scripts.Creatures.Bases;
 using Assets.Scripts.Creatures.Interfaces;
-using Assets.Scripts.Creatures.Objects;
-using Assets.Scripts.Users.Controllers;
+using Assets.Scripts.Maps.Controllers;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Controllers
 {
-    internal class AIPetrolController : AAIConductionBaseController
+    internal class AIPetrolController : AIConductionController
     {
         [SerializeField]
-        private AIActInfo[] actTrack;
-
-        private Queue<AIActInfo> liveActTrack = new Queue<AIActInfo>();
-        private bool isNavForward = false;
-        private AIMoveInfo prevMove = null;
-        private AIActInfo curActInfo, bumpForPause;
-
+        private Transform[] petrolTracks;
+        private Queue<Transform> trackQueue;
         private new void Awake()
         {
             base.Awake();
-            conductionType = AIConductionType.Petrol;
+            trackQueue = new Queue<Transform>();
+            ReloadPetrolQueue();
         }
 
-        public override void ActNext()
+        private void Update()
         {
-            if (bumpForPause != null)
+            if (baseController.statusType == AIStatusType.Petrol)
             {
-                aiBase.ExecuteAct(bumpForPause);
-                bumpForPause = null;
-                return;
-            }
-            // 다음 단순 행동 유무 체크
-            if (liveActTrack.TryDequeue(out curActInfo))
-            {
-                // 다음 단순 행동이 남아있음
-                // 최초 단순 행동은 이동이어야 한다.
-                if (prevMove != null || curActInfo.type == AIActType.Move)
+                if (baseController.isAllActDone())
                 {
-                    prevMove = curActInfo.GetMoveInfo();
-                    aiBase.ExecuteAct(curActInfo);
+                    Transform targetTf;
+                    if (trackQueue.TryDequeue(out targetTf))
+                    {
+                        TrackBaseController trackBase = targetTf.GetComponent<TrackBaseController>();
+                        if (trackBase.isToMove)
+                        {
+                            baseController.SetTargetToMove(targetTf.position, trackBase.timeStay);
+                        }
+                        if (trackBase.isToGaze)
+                        {
+                            baseController.SetTargetToGaze(targetTf.position, trackBase.timeStay);
+                        }
+                    }
+                    else
+                    {
+                        ReloadPetrolQueue();
+                    }
                 }
-                return;
             }
-            // 단순 행동 전부 종료됨
-            // = 패트롤 종료
-            prevMove = null;
-            aiBase.ClearConduction();
         }
 
-        public override void OnInitConduction()
+        /// <summary>
+        /// 패트롤 큐 재장전
+        /// </summary>
+        private void ReloadPetrolQueue()
         {
-            liveActTrack.Clear();
-            isNavForward = !isNavForward;
-            if (isNavForward)
+            if (Vector2.Distance(transform.position, petrolTracks[0].position) < Vector2.Distance(transform.position, petrolTracks[petrolTracks.Length - 1].position))
             {
-                for (int i = 0; i < actTrack.Length; i++)
+                for (int i = 0; i < petrolTracks.Length; i++)
                 {
-                    liveActTrack.Enqueue(actTrack[i]);
+                    trackQueue.Enqueue(petrolTracks[i]);
                 }
             }
             else
             {
-                for (int i = actTrack.Length - 1; i >= 0; i--)
+                for (int i = petrolTracks.Length - 1; i >= 0; i--)
                 {
-                    liveActTrack.Enqueue(actTrack[i]);
+                    trackQueue.Enqueue(petrolTracks[i]);
                 }
             }
         }
 
-        public AIActInfo[] GetActTrack()
+        public Transform[] GetPetrolTracks()
         {
-            return actTrack;
-        }
-
-        public override void SaveBumpForPause()
-        {
-            bumpForPause = new AIActInfo(curActInfo);
+            return petrolTracks;
         }
     }
 }

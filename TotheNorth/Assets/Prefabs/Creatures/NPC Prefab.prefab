@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 7249881556285147611}
   - component: {fileID: 7249881556285147610}
   m_Layer: 0
-  m_Name: User
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -460,8 +460,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1487849313
   m_SortingLayer: 1
-  m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: fbea3758f77e1564b91668eb95445e52, type: 3}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: 2cdff960adfb2794cb3d4730fa9ae645, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -528,7 +528,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7249881556927368018}
-  - component: {fileID: 3193563427077739803}
+  - component: {fileID: 7648065484994886387}
   - component: {fileID: 8367694764048619857}
   - component: {fileID: -7669871793913252461}
   - component: {fileID: 7249881556927368016}
@@ -557,7 +557,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3193563427077739803
+--- !u!114 &7648065484994886387
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -566,12 +566,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7249881556927368019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6873c2b8a248a5041932a7d8d20ff3b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a96474730583ec49b26d4f80eefff6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultConductionController: {fileID: 8367694764048619857}
-  detectionPassiveController: {fileID: 5851334093313958839}
-  detectionSightController: {fileID: 1744631242899781539}
+  targetToMove: {fileID: 0}
+  targetToGaze: {fileID: 0}
 --- !u!114 &8367694764048619857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,8 +583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb91b5aa5010c1547a8f8c6b6baa9da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aiBase: {fileID: 3193563427077739803}
-  actTrack: []
+  petrolTracks: []
 --- !u!114 &-7669871793913252461
 MonoBehaviour:
   m_ObjectHideFlags: 0

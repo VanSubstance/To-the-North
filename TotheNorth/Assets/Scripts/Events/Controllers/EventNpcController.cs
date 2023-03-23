@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Components.Conversations.Managers;
 using Assets.Scripts.Components.Conversations.Objects;
-using Assets.Scripts.Creatures.Abstracts;
+using Assets.Scripts.Creatures.Bases;
 using Assets.Scripts.Events.Abstracts;
 using UnityEngine;
 
@@ -10,11 +10,11 @@ namespace Assets.Scripts.Events.Controllers
 {
     internal class EventNpcController : AEventBaseController
     {
-        private AAIBaseController baseController;
+        private AIBaseController baseController;
         private List<ConvInfo> convInfos;
         private void Awake()
         {
-            baseController = GetComponent<AAIBaseController>();
+            baseController = GetComponent<AIBaseController>();
             convInfos = new List<ConvInfo>() {
                     new ConvInfo(
                         "무슨일인가 애송이?",
