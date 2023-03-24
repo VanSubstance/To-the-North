@@ -1,6 +1,7 @@
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Users.Controllers;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Bases
@@ -39,6 +40,10 @@ namespace Assets.Scripts.Creatures.Bases
             if (targetToMove != null)
             {
                 MoveToTarget();
+            }
+            else
+            {
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }
         }
 
@@ -159,7 +164,10 @@ namespace Assets.Scripts.Creatures.Bases
             {
                 if (isRandom)
                 {
-                    targetToGaze = target + sightController.GetPositionOfLooking(Random.Range(-30, 30));
+                    targetToGaze = new Vector3(
+                        ((Vector3)target).x + Random.Range(-2f, 2f),
+                        ((Vector3)target).y + Random.Range(-2f, 2f),
+                        0);
                 }
                 else
                 {

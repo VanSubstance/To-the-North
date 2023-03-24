@@ -10,16 +10,14 @@ namespace Assets.Scripts.Creatures.Bases
     class AISquadBaseController : MonoBehaviour
     {
         [SerializeField]
-        private MonsterBaseController[] units;
         private List<MonsterBaseController> unitsTank, unitsBruiser, unitRanger;
         [SerializeField]
         private float timeWhenDetect = 5f;
 
         public AIStatusType statusType = AIStatusType.Petrol;
-
+        private List<MonsterBaseController> units;
         private bool isDetected = false;
         private float timer = 0f;
-
         private Vector3? targetPos;
 
         private readonly Vector2[,] formationCorrectionMatrix = new Vector2[3, 5] {
@@ -48,24 +46,10 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void Awake()
         {
-            unitsTank = new List<MonsterBaseController>();
-            unitsBruiser = new List<MonsterBaseController>();
-            unitRanger = new List<MonsterBaseController>();
-            foreach (MonsterBaseController unit in units)
-            {
-                switch (unit.monsterType)
-                {
-                    case 0:
-                        unitsTank.Add(unit);
-                        break;
-                    case 1:
-                        unitsBruiser.Add(unit);
-                        break;
-                    case 2:
-                        unitRanger.Add(unit);
-                        break;
-                }
-            }
+            units = new List<MonsterBaseController>();
+            units.AddRange(unitsTank);
+            units.AddRange(unitsBruiser);
+            units.AddRange(unitRanger);
         }
 
         /// <summary>
@@ -79,7 +63,7 @@ namespace Assets.Scripts.Creatures.Bases
             return CalculationFunctions.GetRotatedVector2(
                 formationCorrectionMatrix[monsterType, idx],
                 CalculationFunctions.AngleFromDir((Vector3)targetPos - transform.position)
-                );
+                ) * 3;
         }
 
         /// <summary>
@@ -89,19 +73,22 @@ namespace Assets.Scripts.Creatures.Bases
         public void MoveToTarget(Vector3 _targetPos)
         {
             targetPos = _targetPos;
-            transform.position = _targetPos;
             for (int i = 0; i < unitsTank.Count; i++)
             {
                 unitsTank[i].SetTargetToMove(targetPos + GetCorrectionVectorDependingOnPoint(0, i), 0);
+                unitsTank[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(0, i), 0);
             }
             for (int i = 0; i < unitsBruiser.Count; i++)
             {
                 unitsBruiser[i].SetTargetToMove(targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
+                unitsBruiser[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
             }
             for (int i = 0; i < unitRanger.Count; i++)
             {
                 unitRanger[i].SetTargetToMove(targetPos + GetCorrectionVectorDependingOnPoint(2, i), 0);
+                unitRanger[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
             }
+            transform.position = _targetPos;
         }
 
         /// <summary>
@@ -110,7 +97,7 @@ namespace Assets.Scripts.Creatures.Bases
         /// <param name="isForce">아직 행동하고 있는 몬스터도 강제로 둘러보게 만들 것인가?</param>
         public void SetTargetToGaze(Vector3? _targetDir, float timeStay, bool isForce = false)
         {
-            for (int i = 0; i < units.Length; i++)
+            for (int i = 0; i < units.Count; i++)
             {
                 if (units[i].isAllActDone() || isForce)
                 {
@@ -122,7 +109,7 @@ namespace Assets.Scripts.Creatures.Bases
 
         public bool isAllActDone()
         {
-            for (int i = 0; i < units.Length; i++)
+            for (int i = 0; i < units.Count; i++)
             {
                 if (!units[i].isAllActDone()) return false;
             }
@@ -175,6 +162,24 @@ namespace Assets.Scripts.Creatures.Bases
             {
             }
             isDetected = false;
+        }
+
+        public List<MonsterBaseController> GetUnitsTank()
+        {
+
+            return unitsTank;
+        }
+
+        public List<MonsterBaseController> GetUnitsBruiser()
+        {
+
+            return unitsBruiser;
+        }
+
+        public List<MonsterBaseController> GetUnitsRanger()
+        {
+
+            return unitRanger;
         }
     }
 }
