@@ -27,11 +27,12 @@ namespace Assets.Scripts.Creatures.Editors
             }
 
             Transform[] tracks = aiBase.GetPetrolTracks();
-            if (tracks.Length < 2) return;
+            if (tracks == null || tracks.Length < 2) return;
             List<TrackBaseController> bumpsForInitRotation = new List<TrackBaseController>();
             Transform prevPoint = null;
             for (int i = 0; i < tracks.Length; i++)
             {
+                if (tracks[i] == null) continue;
                 TrackBaseController trBase = tracks[i].GetComponent<TrackBaseController>();
                 if (prevPoint == null)
                 {

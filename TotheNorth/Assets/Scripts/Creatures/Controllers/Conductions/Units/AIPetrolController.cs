@@ -13,6 +13,11 @@ namespace Assets.Scripts.Creatures.Controllers
         private Queue<Transform> trackQueue;
         private new void Awake()
         {
+            if (petrolTracks == null || petrolTracks.Length == 0)
+            {
+                Destroy(this);
+                return;
+            }
             base.Awake();
             trackQueue = new Queue<Transform>();
             ReloadPetrolQueue();
