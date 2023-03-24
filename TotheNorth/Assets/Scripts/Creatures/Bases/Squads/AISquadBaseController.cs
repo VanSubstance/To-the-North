@@ -15,7 +15,8 @@ namespace Assets.Scripts.Creatures.Bases
         public AIStatusType statusType = AIStatusType.Petrol;
         private List<AIBaseController> units;
         private bool isDetected = false;
-        private Vector3? targetPos, detectPos;
+        private Vector3? targetPos;
+        public Vector3? detectPos;
 
         private readonly Vector2[,] formationCorrectionMatrix = new Vector2[3, 5] {
             {
@@ -152,11 +153,6 @@ namespace Assets.Scripts.Creatures.Bases
         {
 
             return unitRanger;
-        }
-
-        public Vector3? GetDetectedPosition()
-        {
-            return detectPos;
         }
 
         /// <summary>

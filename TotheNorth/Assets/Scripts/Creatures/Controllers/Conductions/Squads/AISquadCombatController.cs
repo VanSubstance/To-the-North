@@ -50,6 +50,8 @@ namespace Assets.Scripts.Creatures.Controllers.Conductions.Squads
             }
             baseController.SetAllUnitsStatus(AIStatusType.None);
             baseController.statusType = AIStatusType.Petrol;
+            baseController.detectPos = null;
+            baseController.GetIsDetected();
             isTriggered = false;
             timerMemory = 0f;
         }
