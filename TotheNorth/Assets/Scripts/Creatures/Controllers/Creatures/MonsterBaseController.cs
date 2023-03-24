@@ -7,6 +7,10 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
 {
     internal class MonsterBaseController : AIBaseController
     {
+        /// <summary>
+        /// 임시 변수:: 0 = 근접, 1 = 브루저, 2 = 원거리
+        /// </summary>
+        public int monsterType = 0;
         public float timeOfMemory = 1f;
         public float secMemory = 0f;
         /// <summary>

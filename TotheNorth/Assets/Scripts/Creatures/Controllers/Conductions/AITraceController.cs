@@ -43,7 +43,7 @@ namespace Assets.Scripts.Creatures.Conductions
                         {
                             if (afterLost < numberOfGazeAfterLost)
                             {
-                                baseController.SetTargetToGaze(baseController.GetDetectionSight().GetPositionOfLooking(Random.Range(-90, 90)), 2);
+                                baseController.SetTargetToGaze(null, 2);
                                 afterLost++;
                             }
                         }
