@@ -96,6 +96,7 @@ public class CommonGameManager : MonoBehaviour
         GlobalComponent.Common.userTf = userGo;
 
         GlobalStatus.Loading.System.CommonGameManager = true;
+        imageForFade.SetAsFirstSibling();
         curStatus = 0;
     }
 
