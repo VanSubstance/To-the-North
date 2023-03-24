@@ -10,15 +10,12 @@ namespace Assets.Scripts.Creatures.Bases
     class AISquadBaseController : MonoBehaviour
     {
         [SerializeField]
-        private List<MonsterBaseController> unitsTank, unitsBruiser, unitRanger;
-        [SerializeField]
-        private float timeWhenDetect = 5f;
+        private List<AIBaseController> unitsTank, unitsBruiser, unitRanger;
 
         public AIStatusType statusType = AIStatusType.Petrol;
-        private List<MonsterBaseController> units;
+        private List<AIBaseController> units;
         private bool isDetected = false;
-        private float timer = 0f;
-        private Vector3? targetPos;
+        private Vector3? targetPos, detectPos;
 
         private readonly Vector2[,] formationCorrectionMatrix = new Vector2[3, 5] {
             {
@@ -46,10 +43,14 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void Awake()
         {
-            units = new List<MonsterBaseController>();
+            units = new List<AIBaseController>();
             units.AddRange(unitsTank);
             units.AddRange(unitsBruiser);
             units.AddRange(unitRanger);
+            foreach (AIBaseController unit in units)
+            {
+                unit.SetSquadBase(this);
+            }
         }
 
         /// <summary>
@@ -116,70 +117,58 @@ namespace Assets.Scripts.Creatures.Bases
             return true;
         }
 
-        public void DetectEnemy(bool _isDetected)
+        /// <summary>
+        /// 타겟이 식별된 위치를 인자로 받는 함수
+        /// </summary>
+        /// <param name="_detectedPos">타겟이 식별된 위치</param>
+        public void DetectEnemy(Vector3 _detectedPos)
         {
-            if (!isDetected)
-            {
-                if (_isDetected)
-                {
-                    // 최초 식별
-                    StartCoroutine(CoroutineTimer());
-                    // 부대원들 Combat 상태로 전환
-                    foreach (AIBaseController unit in units)
-                    {
-                    }
-                }
-                else
-                {
-                    // 식별 없음
-                }
-            }
-            else
-            {
-                // 이미 식별이 된 상태
-                if (_isDetected)
-                {
-                    // 추가 식별
-                    timer = timeWhenDetect;
-                }
-                else
-                {
-                    // 추가 식별 없음
-                }
-            }
+            statusType = AIStatusType.Combat;
+            isDetected = true;
+            detectPos = _detectedPos;
         }
 
-        private IEnumerator CoroutineTimer()
+        public void SetAllUnitsStatus(AIStatusType _type)
         {
-            isDetected = true;
-            while (timer > 0)
-            {
-                yield return new WaitForSeconds(Time.deltaTime);
-            }
-            // 부대원들 Combat 상태 종료
-            // = 디폴트 상태 = Petrol 상태로 전환
             foreach (AIBaseController unit in units)
             {
+                unit.statusType = _type;
             }
-            isDetected = false;
         }
 
-        public List<MonsterBaseController> GetUnitsTank()
+        public List<AIBaseController> GetUnitsTank()
         {
 
             return unitsTank;
         }
 
-        public List<MonsterBaseController> GetUnitsBruiser()
+        public List<AIBaseController> GetUnitsBruiser()
         {
 
             return unitsBruiser;
         }
 
-        public List<MonsterBaseController> GetUnitsRanger()
+        public List<AIBaseController> GetUnitsRanger()
         {
 
             return unitRanger;
+        }
+
+        public Vector3? GetDetectedPosition()
+        {
+            return detectPos;
+        }
+
+        /// <summary>
+        /// 현재 적을 식별한 상태인지 불러오는 함수
+        /// 단, 불러온 뒤 식별한 상태를 거짓으로 바꾼다
+        /// </summary>
+        /// <returns></returns>
+        public bool GetIsDetected()
+        {
+            bool res = isDetected;
+            isDetected = false;
+            return res;
         }
     }
 }

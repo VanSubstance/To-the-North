@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Conductions
 {
-    internal class AITraceController : AIConductionController
+    internal class AICombatController : AIConductionController
     {
         public int numberOfGazeAfterLost = 3;
         private Transform targetTf;
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Creatures.Conductions
 
         private void Update()
         {
-            if (baseController.statusType == Interfaces.AIStatusType.Trace)
+            if (baseController.statusType == Interfaces.AIStatusType.Combat)
             {
                 if (targetTf != null)
                 {

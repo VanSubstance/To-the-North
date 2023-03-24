@@ -1751,7 +1751,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694003744}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.45, y: -5.9, z: 0}
+  m_LocalPosition: {x: 5.74, y: -7.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1856,7 +1856,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1707486383}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.95, y: 2.82, z: 0}
+  m_LocalPosition: {x: 7.76, y: 2.87, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2079,6 +2079,7 @@ GameObject:
   - component: {fileID: 1902868195}
   - component: {fileID: 1902868197}
   - component: {fileID: 1902868198}
+  - component: {fileID: 1902868199}
   m_Layer: 0
   m_Name: Squad
   m_TagString: Untagged
@@ -2121,8 +2122,7 @@ MonoBehaviour:
   unitRanger:
   - {fileID: 1099335758}
   - {fileID: 1519280605}
-  timeWhenDetect: 5
-  statusType: 0
+  statusType: 1
 --- !u!114 &1902868198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2141,6 +2141,20 @@ MonoBehaviour:
   - {fileID: 1306259892}
   - {fileID: 1381220672}
   - {fileID: 1694003745}
+--- !u!114 &1902868199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902868194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 691b8c8f2dee4624a8f00ce01b6df07b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeOfMemory: 5
+  timerMemory: 0
 --- !u!1001 &1920879534
 PrefabInstance:
   m_ObjectHideFlags: 0

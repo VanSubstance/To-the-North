@@ -15,7 +15,7 @@ namespace Assets.Scripts.Creatures.Editors.Squads
             aiBase = (AISquadBaseController)target;
             Handles.color = Color.green;
             Handles.DrawSolidArc(aiBase.transform.position, Vector3.forward, Vector3.right, 360, 0.3f);
-            List<MonsterBaseController> tanks, bruisers, rangers;
+            List<AIBaseController> tanks, bruisers, rangers;
             tanks = aiBase.GetUnitsTank();
             bruisers = aiBase.GetUnitsBruiser();
             rangers = aiBase.GetUnitsRanger();
@@ -25,7 +25,10 @@ namespace Assets.Scripts.Creatures.Editors.Squads
                 Handles.color = Color.blue;
                 for (int i = 0; i < tanks.Count; i++)
                 {
-                    Handles.DrawSolidArc(tanks[i].transform.position, Vector3.forward, Vector3.right, 360, 0.15f);
+                    if (tanks[i])
+                    {
+                        Handles.DrawSolidArc(tanks[i].transform.position, Vector3.forward, Vector3.right, 360, 0.15f);
+                    }
                 }
             }
 
@@ -34,7 +37,10 @@ namespace Assets.Scripts.Creatures.Editors.Squads
                 Handles.color = Color.yellow;
                 for (int i = 0; i < bruisers.Count; i++)
                 {
-                    Handles.DrawSolidArc(bruisers[i].transform.position, Vector3.forward, Vector3.right, 360, 0.15f);
+                    if (bruisers[i])
+                    {
+                        Handles.DrawSolidArc(bruisers[i].transform.position, Vector3.forward, Vector3.right, 360, 0.15f);
+                    }
                 }
             }
 
@@ -43,7 +49,10 @@ namespace Assets.Scripts.Creatures.Editors.Squads
                 Handles.color = Color.red;
                 for (int i = 0; i < rangers.Count; i++)
                 {
-                    Handles.DrawSolidArc(rangers[i].transform.position, Vector3.forward, Vector3.right, 360, 0.15f);
+                    if (rangers[i])
+                    {
+                        Handles.DrawSolidArc(rangers[i].transform.position, Vector3.forward, Vector3.right, 360, 0.15f);
+                    }
                 }
             }
         }

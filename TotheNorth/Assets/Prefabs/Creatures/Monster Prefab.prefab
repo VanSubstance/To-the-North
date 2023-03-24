@@ -571,7 +571,6 @@ MonoBehaviour:
   statusType: 0
   isOrderMoveDone: 1
   isOrderGazeDone: 1
-  monsterType: 0
   timeOfMemory: 1
   secMemory: 0
 --- !u!114 &8821249586427688319

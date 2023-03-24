@@ -1,7 +1,6 @@
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Users.Controllers;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Bases
@@ -10,6 +9,7 @@ namespace Assets.Scripts.Creatures.Bases
     {
         public AIStatusType statusType = AIStatusType.Petrol;
         public Vector3? targetToMove, targetToGaze;
+        protected AISquadBaseController squadBase;
         private DetectionPassiveController passiveController;
         private DetectionSightController sightController;
         private bool isPause = false;
@@ -175,6 +175,11 @@ namespace Assets.Scripts.Creatures.Bases
                 }
             }
             timeStayForGaze = timeToStay;
+        }
+
+        public void SetSquadBase(AISquadBaseController _squadBase)
+        {
+            squadBase = _squadBase;
         }
 
         public abstract void OnDetectUser(Transform targetTf);
