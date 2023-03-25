@@ -182,6 +182,12 @@ namespace Assets.Scripts.Creatures.Bases
             squadBase = _squadBase;
         }
 
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            Debug.Log("충돌!!");
+            Debug.Log(GetComponent<Rigidbody2D>().velocity);
+        }
+
         public abstract void OnDetectUser(Transform targetTf);
     }
 }
