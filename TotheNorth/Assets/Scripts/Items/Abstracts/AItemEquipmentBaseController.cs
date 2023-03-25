@@ -20,60 +20,42 @@ namespace Assets.Scripts.Items.Abstracts
     internal abstract class AItemEquipmentBaseController<TEquipmentType> : AItemBaseController
     {
         [SerializeField]
-        InventorySlotController currentSlot;
-        Transform destSlot;
-        Transform postSlot;
-        public Vector2[] itemSizes;
+        InventorySlotController curSlot;
+        
+        public int itemSizeRow;
+        public int itemSizeCol;
+
         private Vector3 rayPos;
-        private bool isMouseIn = false;
+        private bool isMouseIn;
 
         private void Start()
         {
+            // 초기화
+            isMouseIn = false;
+            // BoxCollider에 RectTransform 사이즈 대입
             GetComponent<BoxCollider>().size = GetComponent<RectTransform>().sizeDelta;
-            RaycastHit hit;
+            // 시작 curSlot 초기화 (ray 사용, rayPos = 게임오브젝트 좌상단 기준 30f, -30f)
             rayPos = transform.TransformPoint(new Vector3(30f, -30f, 0));
+            RaycastHit hit;
             if (Physics.Raycast(rayPos, Vector3.forward, out hit, 40f, GlobalStatus.Constant.slotMask))
             {
-                postSlot = hit.transform;
-                hit.transform.GetComponent<InventorySlotController>().isAttached = true;
-                currentSlot = hit.transform.GetComponent<InventorySlotController>();
+                curSlot = hit.transform.GetComponent<InventorySlotController>();
+                ItemAttach(curSlot);
             }
         }
-        public override void OnLeftMouseDown(Vector3 mousePosition)
-        {
-        }
-        public override void OnLeftMouseClick(Vector3 mousePosition)
-        {
-        }
-        public override void OnLeftMouseDrag(Vector3 mousePosition)
-        {
-        }
-        public override void OnRightMouseClick(Vector3 mousePosition)
-        {
-        }
-        public override void OnLeftMouseUp(Vector3 mousePosition)
-        {
-        }
 
-        public bool SlotSizeCheck(Transform destSlot)
+        /// <summary>
+        ///  ItemSize만큼 destSlot 주변의 Slot들 검사
+        /// </summary>
+        public bool ItemSizeCheck(InventorySlotController destSlot)
         {
-            InventorySlotController temp = destSlot.GetComponent<InventorySlotController>();
-            int row = temp.row;
-            int col = temp.column;
-            // Debug.Log("index = " + row + "," + col);
-            // Debug.Log("itemSize = " + itemSizeRow + "," + itemSizeCol);
-            // Debug.Log("destSlot.isAttached = " + temp.isAttached);
-            /*
             for (int i = 0; i < itemSizeCol; i++)
             {
                 for (int j = 0; j < itemSizeRow; j++)
                 {
-                    // Debug.Log("checkIndex = " + (row + j) + "," + (col + i));
-                    // Debug.Log("checkSlot.isAttached = " +
-                    //     InventoryManager.inventorySlots[row + j, col + i].isAttached);
                     try
                     {
-                        if (InventoryManager.inventorySlots[row + j, col + i].isAttached == true)
+                        if (InventoryManager.inventorySlots[destSlot.row + j, destSlot.column + i].isAttached == true)
                         {
                             return false;
                         }
@@ -84,34 +66,53 @@ namespace Assets.Scripts.Items.Abstracts
                     }
                 }
             }
-            */
-            foreach (Vector2 curSlot in itemSizes)
+            return true;
+        }
+
+        /// <summary>
+        /// attachSlot에 Item 부착
+        /// </summary>
+        public void ItemAttach(InventorySlotController attachSlot)
+        {
+            Vector3 destPos = new Vector3(attachSlot.transform.position.x, attachSlot.transform.position.y, transform.position.z);
+            transform.position = destPos;
+            for (int i = 0; i < itemSizeCol; i++)
             {
-                try
+                for (int j = 0; j < itemSizeRow; j++)
                 {
-                    if (InventoryManager.inventorySlots[row + (int)curSlot.x, col + (int)curSlot.y].isAttached == true)
-                    {
-                        return false;
-                    }
-                }
-                catch (System.IndexOutOfRangeException)
-                {
-                    return false;
+                    InventoryManager.inventorySlots[attachSlot.row + j, attachSlot.column + i].isAttached = true;
                 }
             }
-            return true;
+            curSlot = attachSlot;
+        }
+
+        /// <summary>
+        /// detachSlot에서 Item 분리
+        /// </summary>
+        /// <param name="detachSlot"></param>
+        public void ItemDetach(InventorySlotController detachSlot)
+        {
+            for (int i = 0; i < itemSizeCol; i++)
+            {
+                for (int j = 0; j < itemSizeRow; j++)
+                {
+                    InventoryManager.inventorySlots[detachSlot.row + j, detachSlot.column + i].isAttached = false;
+                }
+            }
         }
 
         public void ReturnToPost()
         {
             Vector3 postPos;
-            postPos = new Vector3(postSlot.position.x, postSlot.position.y, transform.position.z);
+            postPos = new Vector3(curSlot.transform.position.x, curSlot.transform.position.y, transform.position.z);
             transform.position = postPos;
+            ItemAttach(curSlot);
         }
 
         private void OnMouseDown()
         {
             isMouseIn = true;
+            ItemDetach(curSlot);
         }
 
         private void OnMouseDrag()
@@ -131,36 +132,21 @@ namespace Assets.Scripts.Items.Abstracts
         {
             if (isMouseIn)
             {
-                Debug.Log(transform.name);
-                Debug.Log("OnMouseUp");
-                Debug.Log(postSlot.GetComponent<InventorySlotController>().row);
-                Debug.Log(postSlot.GetComponent<InventorySlotController>().column);
                 RaycastHit hit;
                 rayPos = transform.TransformPoint(new Vector3(30f, -30f, 0));
                 if (Physics.Raycast(rayPos, Vector3.forward, out hit, 40f, GlobalStatus.Constant.slotMask))
                 {
-                    Debug.Log("ray hit");
-                    destSlot = hit.transform;
-                    if (SlotSizeCheck(destSlot))
+                    if (ItemSizeCheck(hit.transform.GetComponent<InventorySlotController>()))
                     {
-                        Debug.Log("true");
-                        Vector3 destPos;
-                        destPos = new Vector3(destSlot.position.x, destSlot.position.y, transform.position.z);
-                        transform.position = destPos;
-                        destSlot.GetComponent<InventorySlotController>().isAttached = true;
-                        currentSlot = destSlot.transform.GetComponent<InventorySlotController>();
-                        postSlot.GetComponent<InventorySlotController>().isAttached = false;
-                        postSlot = destSlot;
+                        ItemAttach(hit.transform.GetComponent<InventorySlotController>());
                     }
                     else
                     {
-                        Debug.Log("false");
                         ReturnToPost();
                     }
                 }
                 else
                 {
-                    Debug.Log("false");
                     ReturnToPost();
                 }
             }
@@ -172,5 +158,21 @@ namespace Assets.Scripts.Items.Abstracts
         /// </summary>
         /// <returns>해당 장비의 정보</returns>
         public abstract TEquipmentType GetItemEquipmentInfo();
+
+        public override void OnLeftMouseDown(Vector3 mousePosition)
+        {
+        }
+        public override void OnLeftMouseClick(Vector3 mousePosition)
+        {
+        }
+        public override void OnLeftMouseDrag(Vector3 mousePosition)
+        {
+        }
+        public override void OnRightMouseClick(Vector3 mousePosition)
+        {
+        }
+        public override void OnLeftMouseUp(Vector3 mousePosition)
+        {
+        }
     }
 }

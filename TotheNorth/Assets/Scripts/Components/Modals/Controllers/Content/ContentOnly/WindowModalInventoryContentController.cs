@@ -43,6 +43,7 @@ public class WindowModalInventoryContentController : AWindowModalController<Inve
                 GameObject tempSlot = Instantiate(slotPrefab, slotParentTF);
                 RectTransform slotTransform = tempSlot.GetComponent<RectTransform>();
                 slotTransform.anchoredPosition = new Vector2(row * 60f, col * -60f);
+                tempSlot.name = "InventorySlot(" + row + "," + col + ")";
                 InventoryManager.inventorySlots[row, col] = tempSlot.GetComponent<InventorySlotController>();
                 InventoryManager.inventorySlots[row, col].row = row;
                 InventoryManager.inventorySlots[row, col].column = col;

@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSlot: {fileID: 0}
-  itemSizes:
-  - {x: 0, y: 0}
+  itemSizeRow: 1
+  itemSizeCol: 1
+  itemSize: {x: 1, y: 1}
   weaponName: 
