@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 8581566272140703444}
   - component: {fileID: 4434068868916389531}
   - component: {fileID: 4679024694295127035}
-  - component: {fileID: 2793259744115080552}
+  - component: {fileID: 6499678674468539835}
   m_Layer: 7
   m_Name: Bulkhead_02
   m_TagString: Untagged
@@ -224,7 +224,7 @@ CompositeCollider2D:
       - {x: 0.000029300001, y: 0}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
---- !u!114 &2793259744115080552
+--- !u!114 &6499678674468539835
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8581566272140703445}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58ef02b9a003f7b49ae6c17af631ac7e, type: 3}
+  m_Script: {fileID: 11500000, guid: fe3a33ac94a7caf4283c16b0836abfab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   allForAbsoulteSprite: {fileID: 8581566273380470948}

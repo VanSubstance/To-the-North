@@ -77,17 +77,17 @@ namespace Assets.Scripts.Creatures.Bases
             targetPos = _targetPos;
             for (int i = 0; i < unitsTank.Count; i++)
             {
-                unitsTank[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(0, i), 0);
+                unitsTank[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(0, i), 0, true);
                 unitsTank[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(0, i), 0);
             }
             for (int i = 0; i < unitsBruiser.Count; i++)
             {
-                unitsBruiser[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
+                unitsBruiser[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0, true);
                 unitsBruiser[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
             }
             for (int i = 0; i < unitRanger.Count; i++)
             {
-                unitRanger[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(2, i), 0);
+                unitRanger[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(2, i), 0, true);
                 unitRanger[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
             }
             transform.position = _targetPos;

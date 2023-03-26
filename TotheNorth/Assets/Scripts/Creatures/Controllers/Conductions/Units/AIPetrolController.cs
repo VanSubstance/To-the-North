@@ -35,7 +35,7 @@ namespace Assets.Scripts.Creatures.Controllers
                         TrackBaseController trackBase = targetTf.GetComponent<TrackBaseController>();
                         if (trackBase.isToMove)
                         {
-                            baseController.SetTargetToTrack(targetTf.position, trackBase.timeStay);
+                            baseController.SetTargetToTrack(targetTf.position, trackBase.timeStay, true);
                         }
                         if (trackBase.isToGaze)
                         {

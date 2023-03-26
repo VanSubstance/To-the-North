@@ -15,7 +15,7 @@ namespace Assets.Scripts.Creatures.Bases
         protected AISquadBaseController squadBase;
         private DetectionPassiveController passiveController;
         private DetectionSightController sightController;
-        private bool isPause = false;
+        private bool isPause = false, isForce = false;
         private float timeStayForMove = 0, timeStayForGaze = 0;
         public bool isOrderMoveDone = true/*, isOrderGazeDone = true*/;
 
@@ -165,11 +165,12 @@ namespace Assets.Scripts.Creatures.Bases
         /// </summary>
         /// <param name="target"></param>
         /// <param name="timeToStay"></param>
-        public void SetTargetToTrack(Vector3? target, float timeToStay)
+        public void SetTargetToTrack(Vector3? target, float timeToStay, bool _isForce)
         {
             targetPos = target;
             timeStayForMove = timeToStay;
             isOrderMoveDone = false;
+            isForce = _isForce;
         }
 
         public void SetTargetToGaze(Vector3? target, float timeToStay, bool isRandom = false)
@@ -207,8 +208,15 @@ namespace Assets.Scripts.Creatures.Bases
         {
             Vector3 _targetPos = (Vector3)targetPos;
             Vector3 originPos = transform.position;
-            if (Vector3.Distance(originPos, _targetPos) < atkRange)
+            if (Vector3.Distance(originPos, _targetPos) < (isForce ? 0.1f : atkRange))
             {
+                if (isForce)
+                {
+                    // 타겟에 도착한 것으로 본다
+                    targetPos = null;
+                    isOrderMoveDone = true;
+                    return;
+                }
                 // 현재 타겟이 사거리 내에 있다
                 //Debug.Log("사거리안에있음");
                 if (!Physics2D.Raycast(_targetPos, (originPos - _targetPos), 0.1f, GlobalStatus.Constant.obstacleMask))
@@ -225,7 +233,7 @@ namespace Assets.Scripts.Creatures.Bases
                     else
                     {
                         // 조준 불가
-                        targetToMove = FindPath(_targetPos, originPos, obsHit);
+                        targetToGaze = targetToMove = FindPath(_targetPos, originPos, obsHit);
                     }
                 }
                 else
@@ -239,7 +247,7 @@ namespace Assets.Scripts.Creatures.Bases
             else
             {
                 // 현재 타겟이 사거리 밖이다
-                targetToMove = FindPath(_targetPos, originPos);
+                targetToGaze = targetToMove = FindPath(_targetPos, originPos);
             }
         }
 
@@ -262,10 +270,7 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     // 장애물 없음
                     Vector3 dirVec = (targetPos - originPos).normalized;
-                    return targetPos - (dirVec * (atkRange - 1));
-                }
-                else
-                {
+                    return targetPos - (dirVec * (isForce ? 0 : (atkRange - 1)));
                 }
             }
             // 장애물 있음
@@ -274,7 +279,6 @@ namespace Assets.Scripts.Creatures.Bases
 
         private Vector3 FindPathWithObstacle(Vector3 targetPos, Vector3 originPos, Transform curObsTf)
         {
-            Debug.DrawLine(targetPos, originPos, Color.yellow, 1000);
             float angK = CalculationFunctions.AngleFromDir(targetPos - originPos), angR = (angK + 180) % 360, disCompare = -1;
             float[] valByOrigin = GetAnglesAndDistanceMeetsObstacle(originPos, angK, curObsTf);
             float[] valByTarget = GetAnglesAndDistanceMeetsObstacle(targetPos, angR, curObsTf);
@@ -316,10 +320,10 @@ namespace Assets.Scripts.Creatures.Bases
             // Up
             for (int i = 1; i <= 180 / unitDegree; i++)
             {
-                //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.green, 1000);
+                Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.green, 1);
                 if (!(hit = Physics2D.Raycast(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)), 100, GlobalStatus.Constant.obstacleMask)))
                 {
-                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.red, 1000);
+                    Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.red, 1);
                     // 장애물 안걸리기 시작
                     res[0] = angK + (i * unitDegree) + 1;
                     res[1] = disDump;
@@ -329,15 +333,16 @@ namespace Assets.Scripts.Creatures.Bases
                 if (hit.transform.Equals(curObsTf))
                 {
                     // 장애물에 걸리기는 했는데 중간 장애물이 아닌 경우
+                    Debug.Log("걔가 아닌데?");
                 }
             }
             // Down
             for (int i = 1; i <= 180 / unitDegree; i++)
             {
-                //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.magenta, 1000);
+                Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.magenta, 1);
                 if (!(hit = Physics2D.Raycast(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)), 100, GlobalStatus.Constant.obstacleMask)))
                 {
-                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.red, 1000);
+                    Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.red, 1);
                     res[2] = angK - (i * unitDegree) - 1;
                     res[3] = disDump;
                     break;
@@ -346,6 +351,7 @@ namespace Assets.Scripts.Creatures.Bases
                 if (hit.transform.Equals(curObsTf))
                 {
                     // 장애물에 걸리기는 했는데 중간 장애물이 아닌 경우
+                    Debug.Log("걔가 아닌데?");
                 }
             }
             return res;
@@ -354,7 +360,7 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            Debug.Log("충돌!!");
+            Debug.Log("충돌!! " + collision.contacts[0].point);
             Debug.Log(GetComponent<Rigidbody2D>().velocity);
         }
 

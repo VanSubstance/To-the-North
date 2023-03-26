@@ -24,7 +24,7 @@ namespace Assets.Scripts.Creatures.Conductions
                 {
                     // 유저가 시야에 있을 때
                     // 계속 새로고침하면서 추격
-                    baseController.SetTargetToTrack(targetTf.position, 0);
+                    baseController.SetTargetToTrack(targetTf.position, 0, false);
                     baseController.SetTargetToGaze(targetTf.position, 0);
                 }
                 else
@@ -33,7 +33,7 @@ namespace Assets.Scripts.Creatures.Conductions
                     // = 유저의 마지막 위치만 알고있을 때
                     if (isNowLost)
                     {
-                        baseController.SetTargetToTrack((Vector3)lastPosition, 0);
+                        baseController.SetTargetToTrack((Vector3)lastPosition, 0, false);
                         baseController.SetTargetToGaze(lastPosition, 0);
                         isNowLost = false;
                     }
