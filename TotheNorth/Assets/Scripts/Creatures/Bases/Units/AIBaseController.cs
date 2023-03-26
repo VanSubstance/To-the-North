@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Threading;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Users.Controllers;
@@ -16,6 +18,7 @@ namespace Assets.Scripts.Creatures.Bases
         private DetectionPassiveController passiveController;
         private DetectionSightController sightController;
         private bool isPause = false, isForce = false;
+        private bool? isUpward = null;
         private float timeStayForMove = 0, timeStayForGaze = 0;
         public bool isOrderMoveDone = true/*, isOrderGazeDone = true*/;
 
@@ -171,6 +174,7 @@ namespace Assets.Scripts.Creatures.Bases
             timeStayForMove = timeToStay;
             isOrderMoveDone = false;
             isForce = _isForce;
+            isUpward = null;
         }
 
         public void SetTargetToGaze(Vector3? target, float timeToStay, bool isRandom = false)
@@ -208,8 +212,10 @@ namespace Assets.Scripts.Creatures.Bases
         {
             Vector3 _targetPos = (Vector3)targetPos;
             Vector3 originPos = transform.position;
-            if (Vector3.Distance(originPos, _targetPos) < (isForce ? 0.1f : atkRange))
+            if (Vector3.Distance(originPos, _targetPos) < (isForce ? 3f : atkRange))
             {
+                // 현재 타겟이 사거리 내에 있다
+                //Debug.Log("사거리안에있음");
                 if (isForce)
                 {
                     // 타겟에 도착한 것으로 본다
@@ -217,8 +223,6 @@ namespace Assets.Scripts.Creatures.Bases
                     isOrderMoveDone = true;
                     return;
                 }
-                // 현재 타겟이 사거리 내에 있다
-                //Debug.Log("사거리안에있음");
                 if (!Physics2D.Raycast(_targetPos, (originPos - _targetPos), 0.1f, GlobalStatus.Constant.obstacleMask))
                 {
                     // targetPos가 이동 가능한 위치에 있음
@@ -246,7 +250,7 @@ namespace Assets.Scripts.Creatures.Bases
             }
             else
             {
-                // 현재 타겟이 사거리 밖이다
+                // 현재 타겟이 사거리 밖에 있다
                 targetToGaze = targetToMove = FindPath(_targetPos, originPos);
             }
         }
@@ -277,10 +281,51 @@ namespace Assets.Scripts.Creatures.Bases
             return FindPathWithObstacle(targetPos, originPos, obsHit.transform);
         }
 
+        /// <summary>
+        /// 장애물을 우회하는 경로를 찾는 함수
+        /// </summary>
+        /// <param name="targetPos"></param>
+        /// <param name="originPos"></param>
+        /// <param name="curObsTf"></param>
+        /// <returns></returns>
         private Vector3 FindPathWithObstacle(Vector3 targetPos, Vector3 originPos, Transform curObsTf)
         {
+            bool isTargetUnreachable = Physics2D.Raycast(targetPos, (originPos - targetPos).normalized, 0.1f, GlobalStatus.Constant.obstacleMask);
             float angK = CalculationFunctions.AngleFromDir(targetPos - originPos), angR = (angK + 180) % 360, disCompare = -1;
             float[] valByOrigin = GetAnglesAndDistanceMeetsObstacle(originPos, angK, curObsTf);
+            if (isTargetUnreachable)
+            {
+                // 타겟이 접근 불가 상태이다
+                if (valByOrigin[1] < valByOrigin[3])
+                {
+                    // 위가 더 짧다 = 위로 우회
+                    if (isUpward == null)
+                    {
+                        isUpward = true;
+                    }
+                    if ((bool)isUpward)
+                    {
+                        return CalculationFunctions.DirFromAngle(valByOrigin[0]) * (valByOrigin[1] + 0.5f) + originPos;
+                    }
+                    else
+                    {
+                        return CalculationFunctions.DirFromAngle(valByOrigin[2]) * (valByOrigin[3] + 0.5f) + originPos;
+                    }
+                }
+                // 아래가 더 짧다 = 아래로 우회
+                if (isUpward == null)
+                {
+                    isUpward = false;
+                }
+                if (!(bool)isUpward)
+                {
+                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * (valByOrigin[3] + 0.5f) + originPos;
+                }
+                else
+                {
+                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * (valByOrigin[1] + 0.5f) + originPos;
+                }
+            }
             float[] valByTarget = GetAnglesAndDistanceMeetsObstacle(targetPos, angR, curObsTf);
             if (valByOrigin[0] - angK + angR - valByTarget[2] < 180)
             {
@@ -290,19 +335,59 @@ namespace Assets.Scripts.Creatures.Bases
             {
                 if (disCompare != -1)
                 {
+                    // 둘 다 가능
                     if (disCompare < (valByOrigin[3] + valByTarget[1]))
                     {
-                        return CalculationFunctions.DirFromAngle(valByOrigin[0]) * (valByOrigin[1] + 0.5f) + originPos;
+                        if (isUpward == null)
+                        {
+                            isUpward = true;
+                        }
+                        if ((bool)isUpward)
+                        {
+                            return CalculationFunctions.DirFromAngle(valByOrigin[0]) * (valByOrigin[1] + 0.5f) + originPos;
+                        }
+                        else
+                        {
+                            return CalculationFunctions.DirFromAngle(valByOrigin[2]) * (valByOrigin[3] + 0.5f) + originPos;
+                        }
                     }
                 }
-                return CalculationFunctions.DirFromAngle(valByOrigin[2]) * (valByOrigin[3] + 0.5f) + originPos;
+                // 아래만 가능 or 아래가 위보다 짧음
+                if (isUpward == null)
+                {
+                    isUpward = false;
+                }
+                if (!(bool)isUpward)
+                {
+                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * (valByOrigin[3] + 0.5f) + originPos;
+                }
+                else
+                {
+                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * (valByOrigin[1] + 0.5f) + originPos;
+                }
             }
-            else
+            if (disCompare != -1)
             {
-                // 타겟 위치 옮겨서 다시 계산
-                targetPos += CalculationFunctions.DirFromAngle((valByTarget[0] + valByTarget[2]) / 2) * (valByTarget[1] + valByTarget[3]) / 2;
-                return FindPathWithObstacle(targetPos, originPos, curObsTf);
+                if (isUpward == null)
+                {
+                    isUpward = true;
+                }
+                if ((bool)isUpward)
+                {
+                    // 위만 가능
+                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * (valByOrigin[1] + 0.5f) + originPos;
+                }
+                else
+                {
+                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * (valByOrigin[3] + 0.5f) + originPos;
+                }
             }
+            // 타겟 위치 옮겨서 다시 계산
+            Debug.Log("각이 안나옴:: 추가 계산");
+            targetPos += CalculationFunctions.DirFromAngle((valByTarget[0] + valByTarget[2]) / 2) * (valByTarget[1] + valByTarget[3]) / 2;
+            Debug.DrawLine(originPos, targetPos, Color.black, 1);
+            //return FindPathWithObstacle(targetPos, originPos, curObsTf);
+            return Vector3.zero;
         }
 
         /// <summary>
@@ -320,39 +405,45 @@ namespace Assets.Scripts.Creatures.Bases
             // Up
             for (int i = 1; i <= 180 / unitDegree; i++)
             {
-                Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.green, 1);
+                //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.green, 0.3f);
                 if (!(hit = Physics2D.Raycast(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)), 100, GlobalStatus.Constant.obstacleMask)))
                 {
-                    Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.red, 1);
+                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.blue, 0.3f);
                     // 장애물 안걸리기 시작
                     res[0] = angK + (i * unitDegree) + 1;
                     res[1] = disDump;
                     break;
                 }
-                disDump = hit.distance;
-                if (hit.transform.Equals(curObsTf))
+                if (!hit.transform.Equals(curObsTf))
                 {
                     // 장애물에 걸리기는 했는데 중간 장애물이 아닌 경우
-                    Debug.Log("걔가 아닌데?");
+                    //Debug.Log("걔가 아닌데?");
+                    res[0] = angK + (i * unitDegree) + 1;
+                    res[1] = disDump;
+                    break;
                 }
+                disDump = hit.distance;
             }
             // Down
             for (int i = 1; i <= 180 / unitDegree; i++)
             {
-                Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.magenta, 1);
+                //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.magenta, 0.3f);
                 if (!(hit = Physics2D.Raycast(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)), 100, GlobalStatus.Constant.obstacleMask)))
                 {
-                    Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.red, 1);
+                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.red, 0.3f);
+                    res[2] = angK - (i * unitDegree) - 1;
+                    res[3] = disDump;
+                    break;
+                }
+                if (!hit.transform.Equals(curObsTf))
+                {
+                    // 장애물에 걸리기는 했는데 중간 장애물이 아닌 경우
+                    //Debug.Log("걔가 아닌데?");
                     res[2] = angK - (i * unitDegree) - 1;
                     res[3] = disDump;
                     break;
                 }
                 disDump = hit.distance;
-                if (hit.transform.Equals(curObsTf))
-                {
-                    // 장애물에 걸리기는 했는데 중간 장애물이 아닌 경우
-                    Debug.Log("걔가 아닌데?");
-                }
             }
             return res;
         }

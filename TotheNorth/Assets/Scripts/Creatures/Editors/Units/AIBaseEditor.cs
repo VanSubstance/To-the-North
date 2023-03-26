@@ -14,7 +14,11 @@ namespace Assets.Scripts.Creatures.Editors
             if (aiBase.targetToMove != null)
                 Handles.DrawLine(aiBase.transform.position, (Vector3)aiBase.targetToMove, 2.5f);
 
-            //Handles.color = Color.yellow;
+            if (aiBase.targetPos != null)
+            {
+                Handles.color = Color.yellow;
+                Handles.DrawLine(aiBase.transform.position, (Vector3)aiBase.targetPos, 2.5f);
+            }
             //if (aiBase.targetToGaze != null)
             //    Handles.DrawLine(aiBase.transform.position, (Vector3)aiBase.targetToGaze);
             MarkIndicationPosition();
