@@ -1699,6 +1699,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 871546784933313931, guid: 82f3db5dfd3cd094793ee5463c43f00f, type: 3}
+      propertyPath: itemPrefabSmall
+      value: 
+      objectReference: {fileID: 8958241393174041177, guid: 18fb5aa9ada6fdd4d803eb35856fc64d, type: 3}
+    - target: {fileID: 871546784933313931, guid: 82f3db5dfd3cd094793ee5463c43f00f, type: 3}
+      propertyPath: itemPrefabDrumTong
+      value: 
+      objectReference: {fileID: 6000595022747120599, guid: bf086c7a822fdc64db4802074d84f6c3, type: 3}
     - target: {fileID: 939263128990172196, guid: 82f3db5dfd3cd094793ee5463c43f00f, type: 3}
       propertyPath: m_Name
       value: InventoryWindowPrefab
@@ -1706,6 +1714,10 @@ PrefabInstance:
     - target: {fileID: 6742576964986920411, guid: 82f3db5dfd3cd094793ee5463c43f00f, type: 3}
       propertyPath: m_SizeDelta.y
       value: -150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6742576964986920411, guid: 82f3db5dfd3cd094793ee5463c43f00f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82f3db5dfd3cd094793ee5463c43f00f, type: 3}

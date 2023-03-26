@@ -88,6 +88,7 @@ namespace Assets.Scripts.Items.Abstracts
                 }
             }
             curSlot = attachSlot;
+            UnCheckReady(attachSlot);
         }
 
         /// <summary>
@@ -135,6 +136,9 @@ namespace Assets.Scripts.Items.Abstracts
             }
         }
 
+        /// <summary>
+        /// curSlot으로 복귀
+        /// </summary>
         public void ReturnToPost()
         {
             Vector3 postPos;
@@ -165,7 +169,7 @@ namespace Assets.Scripts.Items.Abstracts
                 {
                     InventorySlotController tempSlot;
                     tempSlot = hit.transform.GetComponent<InventorySlotController>();
-                    if (readySlot == tempSlot)
+                    if (readySlot == tempSlot && readySlot.isAttachReady == true)
                     {
                         return;
                     }
