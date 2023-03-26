@@ -60,7 +60,7 @@ namespace Assets.Scripts.Creatures.Bases
         /// <param name="monsterType">임시 변수:: 0 = 근접, 1 = 브루저, 2 = 원거리</param>
         /// <param name="idx">인덱스 번호</param>
         /// <returns></returns>
-        private Vector2 GetCorrectionVectorDependingOnPoint(int monsterType, int idx)
+        private Vector3 GetCorrectionVectorDependingOnPoint(int monsterType, int idx)
         {
             return CalculationFunctions.GetRotatedVector2(
                 formationCorrectionMatrix[monsterType, idx],
@@ -77,17 +77,17 @@ namespace Assets.Scripts.Creatures.Bases
             targetPos = _targetPos;
             for (int i = 0; i < unitsTank.Count; i++)
             {
-                unitsTank[i].SetTargetToMove(targetPos + GetCorrectionVectorDependingOnPoint(0, i), 0);
+                unitsTank[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(0, i), 0);
                 unitsTank[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(0, i), 0);
             }
             for (int i = 0; i < unitsBruiser.Count; i++)
             {
-                unitsBruiser[i].SetTargetToMove(targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
+                unitsBruiser[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
                 unitsBruiser[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
             }
             for (int i = 0; i < unitRanger.Count; i++)
             {
-                unitRanger[i].SetTargetToMove(targetPos + GetCorrectionVectorDependingOnPoint(2, i), 0);
+                unitRanger[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(2, i), 0);
                 unitRanger[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
             }
             transform.position = _targetPos;

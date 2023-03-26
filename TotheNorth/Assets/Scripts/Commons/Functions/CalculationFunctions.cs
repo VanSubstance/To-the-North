@@ -10,13 +10,13 @@ namespace Assets.Scripts.Commons.Functions
     public static class CalculationFunctions
     {
         /// <summary>
-        /// 0도 위치에서부터 angleDegree 기준 방향 벡터 (Vector3)
+        /// 0도 위치에서부터 angleDegree 기준 방향 벡터 (Vector3) (정규화 O)
         /// </summary>
         /// <param name="angleDegrees"></param>
         /// <returns></returns>
         public static Vector3 DirFromAngle(float angleDegrees)
         {
-            return new Vector3(Mathf.Cos((angleDegrees) * Mathf.Deg2Rad), Mathf.Sin((angleDegrees) * Mathf.Deg2Rad), 0);
+            return new Vector3(Mathf.Cos((angleDegrees) * Mathf.Deg2Rad), Mathf.Sin((angleDegrees) * Mathf.Deg2Rad), 0).normalized;
         }
         /// <summary>
         /// 벡터의 방향으로부터 각도 추출 (Vector3)
