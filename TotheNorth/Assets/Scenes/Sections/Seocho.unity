@@ -1703,6 +1703,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventoryWindowPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 6742576964986920411, guid: 82f3db5dfd3cd094793ee5463c43f00f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -150
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82f3db5dfd3cd094793ee5463c43f00f, type: 3}
 --- !u!224 &1234212253 stripped

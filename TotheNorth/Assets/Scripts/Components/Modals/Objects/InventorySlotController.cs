@@ -19,7 +19,7 @@ public class InventorySlotController : MonoBehaviour
     }
     private void Update()
     {
-        if (isAttached)
+        if (isAttachReady)
         {
             slotImage.sprite = ready;
         }

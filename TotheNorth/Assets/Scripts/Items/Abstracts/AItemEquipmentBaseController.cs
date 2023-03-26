@@ -21,23 +21,26 @@ namespace Assets.Scripts.Items.Abstracts
     {
         [SerializeField]
         InventorySlotController curSlot;
-        
+        InventorySlotController readySlot;
+
         public int itemSizeRow;
         public int itemSizeCol;
 
-        private Vector3 rayPos;
+        private Vector2 rayPos;
         private bool isMouseIn;
+        private RectTransform objTF;
 
         private void Start()
         {
+            objTF = GetComponent<RectTransform>();
             // 초기화
             isMouseIn = false;
-            // BoxCollider에 RectTransform 사이즈 대입
-            GetComponent<BoxCollider>().size = GetComponent<RectTransform>().sizeDelta;
+            // BoxCollider2D에 RectTransform 사이즈 대입
+            GetComponent<BoxCollider2D>().size = GetComponent<RectTransform>().sizeDelta;
             // 시작 curSlot 초기화 (ray 사용, rayPos = 게임오브젝트 좌상단 기준 30f, -30f)
-            rayPos = transform.TransformPoint(new Vector3(30f, -30f, 0));
-            RaycastHit hit;
-            if (Physics.Raycast(rayPos, Vector3.forward, out hit, 40f, GlobalStatus.Constant.slotMask))
+            rayPos = transform.TransformPoint(new Vector2(30f, -30f));
+            RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask);
+            if (hit.collider)
             {
                 curSlot = hit.transform.GetComponent<InventorySlotController>();
                 ItemAttach(curSlot);
@@ -74,8 +77,9 @@ namespace Assets.Scripts.Items.Abstracts
         /// </summary>
         public void ItemAttach(InventorySlotController attachSlot)
         {
-            Vector3 destPos = new Vector3(attachSlot.transform.position.x, attachSlot.transform.position.y, transform.position.z);
-            transform.position = destPos;
+            Vector3 destPos;
+            destPos = new Vector3(attachSlot.transform.localPosition.x, attachSlot.transform.localPosition.y, 0f);
+            objTF.localPosition = destPos;
             for (int i = 0; i < itemSizeCol; i++)
             {
                 for (int j = 0; j < itemSizeRow; j++)
@@ -101,11 +105,41 @@ namespace Assets.Scripts.Items.Abstracts
             }
         }
 
+        /// <summary>
+        /// itemSize만큼 slot들의 isAttachReady True로
+        /// </summary>
+        /// <param name="detachSlot"></param>
+        public void CheckReady(InventorySlotController readySlot)
+        {
+            for (int i = 0; i < itemSizeCol; i++)
+            {
+                for (int j = 0; j < itemSizeRow; j++)
+                {
+                    InventoryManager.inventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// itemSize만큼 slot들의 isAttachReady False로
+        /// </summary>
+        /// <param name="detachSlot"></param>
+        public void UnCheckReady(InventorySlotController readySlot)
+        {
+            for (int i = 0; i < itemSizeCol; i++)
+            {
+                for (int j = 0; j < itemSizeRow; j++)
+                {
+                    InventoryManager.inventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
+                }
+            }
+        }
+
         public void ReturnToPost()
         {
             Vector3 postPos;
-            postPos = new Vector3(curSlot.transform.position.x, curSlot.transform.position.y, transform.position.z);
-            transform.position = postPos;
+            postPos = new Vector3(curSlot.transform.localPosition.x, curSlot.transform.localPosition.y, 0f);
+            objTF.localPosition = postPos;
             ItemAttach(curSlot);
         }
 
@@ -119,12 +153,43 @@ namespace Assets.Scripts.Items.Abstracts
         {
             if (isMouseIn)
             {
-                transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                transform.localPosition = new Vector3(
-                    transform.localPosition.x - (transform.GetComponent<BoxCollider>().size.x / 2),
-                    transform.localPosition.y + (transform.GetComponent<BoxCollider>().size.y / 2),
-                    0
+                objTF.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                objTF.localPosition = new Vector3(
+                    objTF.localPosition.x - (transform.GetComponent<BoxCollider2D>().size.x / 2),
+                    objTF.localPosition.y + (transform.GetComponent<BoxCollider2D>().size.y / 2),
+                    0f
                     );
+                rayPos = transform.TransformPoint(new Vector2(30f, -30f));
+                RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask);
+                if (hit.collider)
+                {
+                    InventorySlotController tempSlot;
+                    tempSlot = hit.transform.GetComponent<InventorySlotController>();
+                    if (readySlot == tempSlot)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        if (ItemSizeCheck(tempSlot))
+                        {
+                            if (readySlot != null)
+                            {
+                                UnCheckReady(readySlot);
+                            }
+                            readySlot = tempSlot;
+                            CheckReady(readySlot);
+                        }
+                        else
+                        {
+                            UnCheckReady(readySlot);
+                        }
+                    }
+                }
+                else
+                {
+                    UnCheckReady(readySlot);
+                }
             }
         }
 
@@ -132,9 +197,9 @@ namespace Assets.Scripts.Items.Abstracts
         {
             if (isMouseIn)
             {
-                RaycastHit hit;
-                rayPos = transform.TransformPoint(new Vector3(30f, -30f, 0));
-                if (Physics.Raycast(rayPos, Vector3.forward, out hit, 40f, GlobalStatus.Constant.slotMask))
+                rayPos = transform.TransformPoint(new Vector2(30f, -30f));
+                RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask);
+                if (hit.collider)
                 {
                     if (ItemSizeCheck(hit.transform.GetComponent<InventorySlotController>()))
                     {
