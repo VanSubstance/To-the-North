@@ -6,6 +6,7 @@ public class WindowModalInventoryContentController : AWindowModalController<Inve
     public GameObject slotPrefab;
     public GameObject itemPrefabSmall;
     public GameObject itemPrefabBig;
+    public GameObject itemPrefabDrumTong;
     public Transform slotParentTF;
     public Transform itemParentTF;
     private bool isInit = false;
@@ -30,6 +31,11 @@ public class WindowModalInventoryContentController : AWindowModalController<Inve
             (InventoryManager.inventorySlots[8, 8].transform.position.x,
             InventoryManager.inventorySlots[8, 8].transform.position.y,
             itemParentTF.transform.position.z);
+        GameObject item4 = Instantiate(itemPrefabDrumTong, itemParentTF);
+        item4.transform.position = new Vector3
+            (InventoryManager.inventorySlots[0, 4].transform.position.x,
+            InventoryManager.inventorySlots[0, 4].transform.position.y,
+            itemParentTF.transform.position.z);
     }
 
     public sealed override void InitCompositionByType()
@@ -43,6 +49,7 @@ public class WindowModalInventoryContentController : AWindowModalController<Inve
                 GameObject tempSlot = Instantiate(slotPrefab, slotParentTF);
                 RectTransform slotTransform = tempSlot.GetComponent<RectTransform>();
                 slotTransform.anchoredPosition = new Vector2(row * 60f, col * -60f);
+                tempSlot.name = "InventorySlot(" + row + "," + col + ")";
                 InventoryManager.inventorySlots[row, col] = tempSlot.GetComponent<InventorySlotController>();
                 InventoryManager.inventorySlots[row, col].row = row;
                 InventoryManager.inventorySlots[row, col].column = col;
