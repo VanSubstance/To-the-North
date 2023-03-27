@@ -9,17 +9,25 @@ namespace Assets.Scripts.Maps.Controllers
 {
     internal class ObstacleController : BaseSpriteController
     {
-        private static ContactFilter2D noFilterOption = new ContactFilter2D().NoFilter();
+        private static ContactFilter2D filterOption = new ContactFilter2D();
         private void Awake()
         {
-            Collider2D[] list = new Collider2D[10];
-            Physics2D.OverlapCollider(GetComponent<CompositeCollider2D>(), noFilterOption, list);
-            foreach (Collider2D col in list)
-            {
-                //if (col != null)
-                //    Debug.Log(col);
-                // @양승혁
-            }
+            filterOption.SetLayerMask(GlobalStatus.Constant.obstacleMask);
+        }
+
+        public Collider2D[] GetContactedColliders()
+        {
+            Collider2D[] list;
+            list = new Collider2D[20];
+            Physics2D.OverlapCollider(backSprite.GetComponent<PolygonCollider2D>(), filterOption, list);
+            return list;
+        }
+
+        public void Composite(Transform parent)
+        {
+            gameObject.layer = 14;
+            backSprite.gameObject.layer = 0;
+            transform.SetParent(parent);
         }
     }
 }

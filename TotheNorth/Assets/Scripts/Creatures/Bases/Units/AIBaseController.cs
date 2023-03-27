@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Threading;
 using Assets.Scripts.Commons.Functions;
@@ -21,6 +22,8 @@ namespace Assets.Scripts.Creatures.Bases
         private bool? isUpward = null;
         private float timeStayForMove = 0, timeStayForGaze = 0;
         public bool isOrderMoveDone = true/*, isOrderGazeDone = true*/;
+
+        private readonly float forcingDis = 2f;
 
         private void Awake()
         {
@@ -134,7 +137,26 @@ namespace Assets.Scripts.Creatures.Bases
                 }
                 return;
             }
-            GetComponent<Rigidbody2D>().velocity = ((Vector3)targetToMove - transform.position).normalized * 2;
+            if (Vector2.Distance(transform.position, (Vector3)targetPos) < forcingDis)
+            {
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                if (isOrderMoveDone && timeStayForMove > 0)
+                {
+                    timeStayForMove -= Time.deltaTime;
+                }
+                else
+                {
+                    targetToMove = null;
+                }
+            }
+            try
+            {
+                GetComponent<Rigidbody2D>().velocity = ((Vector3)targetToMove - transform.position).normalized * 2;
+            }
+            catch (InvalidOperationException)
+            {
+                // 조기 도착
+            }
         }
 
         public bool isAllActDone()
@@ -181,15 +203,15 @@ namespace Assets.Scripts.Creatures.Bases
         {
             if (target == null)
             {
-                targetToGaze = sightController.GetPositionOfLooking(Random.Range(-90, 90));
+                targetToGaze = sightController.GetPositionOfLooking(UnityEngine.Random.Range(-90, 90));
             }
             else
             {
                 if (isRandom)
                 {
                     targetToGaze = new Vector3(
-                        ((Vector3)target).x + Random.Range(-2f, 2f),
-                        ((Vector3)target).y + Random.Range(-2f, 2f),
+                        ((Vector3)target).x + UnityEngine.Random.Range(-2f, 2f),
+                        ((Vector3)target).y + UnityEngine.Random.Range(-2f, 2f),
                         0);
                 }
                 else
@@ -212,7 +234,7 @@ namespace Assets.Scripts.Creatures.Bases
         {
             Vector3 _targetPos = (Vector3)targetPos;
             Vector3 originPos = transform.position;
-            if (Vector3.Distance(originPos, _targetPos) < (isForce ? 3f : atkRange))
+            if (Vector3.Distance(originPos, _targetPos) < (isForce ? forcingDis : atkRange))
             {
                 // 현재 타겟이 사거리 내에 있다
                 //Debug.Log("사거리안에있음");
@@ -223,11 +245,11 @@ namespace Assets.Scripts.Creatures.Bases
                     isOrderMoveDone = true;
                     return;
                 }
-                if (!Physics2D.Raycast(_targetPos, (originPos - _targetPos), 0.1f, GlobalStatus.Constant.obstacleMask))
+                if (!Physics2D.Raycast(_targetPos, (originPos - _targetPos), 0.1f, GlobalStatus.Constant.compositeObstacleMask))
                 {
                     // targetPos가 이동 가능한 위치에 있음
                     RaycastHit2D obsHit;
-                    if (!(obsHit = Physics2D.Raycast(originPos, (_targetPos - originPos), atkRange, GlobalStatus.Constant.obstacleMask)))
+                    if (!(obsHit = Physics2D.Raycast(originPos, (_targetPos - originPos), atkRange, GlobalStatus.Constant.compositeObstacleMask)))
                     {
                         // 조준 가능
                         targetPos = null;
@@ -270,7 +292,7 @@ namespace Assets.Scripts.Creatures.Bases
             }
             else
             {
-                if (!(obsHit = Physics2D.Raycast(originPos, (targetPos - originPos), Vector3.Distance(targetPos, originPos), GlobalStatus.Constant.obstacleMask)))
+                if (!(obsHit = Physics2D.Raycast(originPos, (targetPos - originPos), Vector3.Distance(targetPos, originPos), GlobalStatus.Constant.compositeObstacleMask)))
                 {
                     // 장애물 없음
                     Vector3 dirVec = (targetPos - originPos).normalized;
@@ -290,7 +312,7 @@ namespace Assets.Scripts.Creatures.Bases
         /// <returns></returns>
         private Vector3 FindPathWithObstacle(Vector3 targetPos, Vector3 originPos, Transform curObsTf)
         {
-            bool isTargetUnreachable = Physics2D.Raycast(targetPos, (originPos - targetPos).normalized, 0.1f, GlobalStatus.Constant.obstacleMask);
+            bool isTargetUnreachable = Physics2D.Raycast(targetPos, (originPos - targetPos).normalized, 0.1f, GlobalStatus.Constant.compositeObstacleMask);
             float angK = CalculationFunctions.AngleFromDir(targetPos - originPos), angR = (angK + 180) % 360, disCompare = -1;
             float[] valByOrigin = GetAnglesAndDistanceMeetsObstacle(originPos, angK, curObsTf);
             if (isTargetUnreachable)
@@ -398,7 +420,7 @@ namespace Assets.Scripts.Creatures.Bases
         /// <returns>[0]: Up 각도, [1]: Up 거리, [2]: Down 각도, [3]: Down 거리</returns>
         private float[] GetAnglesAndDistanceMeetsObstacle(Vector3 originPos, float angK, Transform curObsTf)
         {
-            int unitDegree = 1;
+            int unitDegree = 2;
             float[] res = new float[4];
             float disDump = 0f;
             RaycastHit2D hit;
@@ -406,9 +428,9 @@ namespace Assets.Scripts.Creatures.Bases
             for (int i = 1; i <= 180 / unitDegree; i++)
             {
                 //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.green, 0.3f);
-                if (!(hit = Physics2D.Raycast(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)), 100, GlobalStatus.Constant.obstacleMask)))
+                if (!(hit = Physics2D.Raycast(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)), 100, GlobalStatus.Constant.compositeObstacleMask)))
                 {
-                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.blue, 0.3f);
+                    Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.blue, 0.3f);
                     // 장애물 안걸리기 시작
                     res[0] = angK + (i * unitDegree) + 1;
                     res[1] = disDump;
@@ -418,6 +440,7 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     // 장애물에 걸리기는 했는데 중간 장애물이 아닌 경우
                     //Debug.Log("걔가 아닌데?");
+                    Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.blue, 0.3f);
                     res[0] = angK + (i * unitDegree) + 1;
                     res[1] = disDump;
                     break;
@@ -428,9 +451,9 @@ namespace Assets.Scripts.Creatures.Bases
             for (int i = 1; i <= 180 / unitDegree; i++)
             {
                 //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.magenta, 0.3f);
-                if (!(hit = Physics2D.Raycast(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)), 100, GlobalStatus.Constant.obstacleMask)))
+                if (!(hit = Physics2D.Raycast(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)), 100, GlobalStatus.Constant.compositeObstacleMask)))
                 {
-                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.red, 0.3f);
+                    Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.red, 0.3f);
                     res[2] = angK - (i * unitDegree) - 1;
                     res[3] = disDump;
                     break;
@@ -439,6 +462,7 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     // 장애물에 걸리기는 했는데 중간 장애물이 아닌 경우
                     //Debug.Log("걔가 아닌데?");
+                    Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.red, 0.3f);
                     res[2] = angK - (i * unitDegree) - 1;
                     res[3] = disDump;
                     break;
