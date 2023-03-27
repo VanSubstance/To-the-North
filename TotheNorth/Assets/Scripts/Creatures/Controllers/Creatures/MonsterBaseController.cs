@@ -15,26 +15,40 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
         /// <param name="targetTf">Null이 아니다 = 유저가 눈에 보인다, Null이다 = 유저가 안보인다</param>
         public override void OnDetectUser(Transform targetTf)
         {
-            if (statusType != Interfaces.AIStatusType.Trace)
+            if (squadBase != null)
             {
-                // 최초일 경우
+                // 부대 소속 유닛
                 if (targetTf != null)
                 {
-                    // 최초 유저 조우
-                    statusType = Interfaces.AIStatusType.Trace;
-                    StartCoroutine(CountMemory());
-                }
-                else
-                {
-                    // 무시
-                    return;
+                    // 유저 식별 시에만 전달
+                    squadBase.DetectEnemy(targetTf.position);
+                    statusType = Interfaces.AIStatusType.Combat;
                 }
             }
-            if (targetTf != null)
+            else
             {
-                secMemory = timeOfMemory;
+                // 단독 유닛
+                if (statusType != Interfaces.AIStatusType.Combat)
+                {
+                    // 최초일 경우
+                    if (targetTf != null)
+                    {
+                        // 최초 유저 조우
+                        statusType = Interfaces.AIStatusType.Combat;
+                        StartCoroutine(CountMemory());
+                    }
+                    else
+                    {
+                        // 무시
+                        return;
+                    }
+                }
+                if (targetTf != null)
+                {
+                    secMemory = timeOfMemory;
+                }
             }
-            GetComponent<AITraceController>().SetTargetTf(targetTf);
+            GetComponent<AICombatController>().SetTargetTf(targetTf);
         }
 
         private IEnumerator CountMemory()

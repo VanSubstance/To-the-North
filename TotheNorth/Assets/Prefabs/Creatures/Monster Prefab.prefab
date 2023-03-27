@@ -529,7 +529,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7249881556927368018}
   - component: {fileID: 7865440330523968143}
-  - component: {fileID: 8367694764048619857}
+  - component: {fileID: 2844125861306491779}
   - component: {fileID: 8821249586427688319}
   - component: {fileID: 7249881556927368016}
   - component: {fileID: 7249881556927368023}
@@ -570,7 +570,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statusType: 0
---- !u!114 &8367694764048619857
+  isOrderMoveDone: 1
+  isOrderGazeDone: 1
+  timeOfMemory: 1
+  secMemory: 0
+--- !u!114 &2844125861306491779
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -595,6 +599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a465200e14501346ba10262aa41939b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfGazeAfterLost: 3
 --- !u!58 &7249881556927368016
 CircleCollider2D:
   m_ObjectHideFlags: 0

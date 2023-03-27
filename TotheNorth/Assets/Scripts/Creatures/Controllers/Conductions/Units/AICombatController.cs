@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Conductions
 {
-    internal class AITraceController : AIConductionController
+    internal class AICombatController : AIConductionController
     {
         public int numberOfGazeAfterLost = 3;
         private Transform targetTf;
@@ -18,13 +18,13 @@ namespace Assets.Scripts.Creatures.Conductions
 
         private void Update()
         {
-            if (baseController.statusType == Interfaces.AIStatusType.Trace)
+            if (baseController.statusType == Interfaces.AIStatusType.Combat)
             {
                 if (targetTf != null)
                 {
                     // 유저가 시야에 있을 때
                     // 계속 새로고침하면서 추격
-                    baseController.SetTargetToMove(targetTf.position, 0);
+                    baseController.SetTargetToTrack(targetTf.position, 0, false);
                     baseController.SetTargetToGaze(targetTf.position, 0);
                 }
                 else
@@ -33,7 +33,7 @@ namespace Assets.Scripts.Creatures.Conductions
                     // = 유저의 마지막 위치만 알고있을 때
                     if (isNowLost)
                     {
-                        baseController.SetTargetToMove(lastPosition, 0);
+                        baseController.SetTargetToTrack((Vector3)lastPosition, 0, false);
                         baseController.SetTargetToGaze(lastPosition, 0);
                         isNowLost = false;
                     }
@@ -43,7 +43,7 @@ namespace Assets.Scripts.Creatures.Conductions
                         {
                             if (afterLost < numberOfGazeAfterLost)
                             {
-                                baseController.SetTargetToGaze(baseController.GetDetectionSight().GetPositionOfLooking(Random.Range(-90, 90)), 2);
+                                baseController.SetTargetToGaze(null, 2);
                                 afterLost++;
                             }
                         }

@@ -27,23 +27,24 @@ namespace Assets.Scripts.Creatures.Editors
             }
 
             Transform[] tracks = aiBase.GetPetrolTracks();
-            if (tracks.Length < 2) return;
+            if (tracks == null || tracks.Length < 2) return;
             List<TrackBaseController> bumpsForInitRotation = new List<TrackBaseController>();
             Transform prevPoint = null;
             for (int i = 0; i < tracks.Length; i++)
             {
+                if (tracks[i] == null) continue;
                 TrackBaseController trBase = tracks[i].GetComponent<TrackBaseController>();
                 if (prevPoint == null)
                 {
                     if (trBase.isToMove)
                     {
                         prevPoint = trBase.transform;
-                        foreach (TrackBaseController t in bumpsForInitRotation)
-                        {
-                            Handles.color = Color.green;
-                            Handles.DrawWireArc(prevPoint.position, Vector3.forward, t.transform.position - prevPoint.position, sightAngle / 2, sightRange, t.timeStay);
-                            Handles.DrawWireArc(prevPoint.position, Vector3.forward, t.transform.position - prevPoint.position, sightAngle / -2, sightRange, t.timeStay);
-                        }
+                        //foreach (TrackBaseController t in bumpsForInitRotation)
+                        //{
+                        //    Handles.color = Color.green;
+                        //    Handles.DrawWireArc(prevPoint.position, Vector3.forward, t.transform.position - prevPoint.position, sightAngle / 2, sightRange, t.timeStay);
+                        //    Handles.DrawWireArc(prevPoint.position, Vector3.forward, t.transform.position - prevPoint.position, sightAngle / -2, sightRange, t.timeStay);
+                        //}
                         Handles.color = Color.white;
                     }
                     else
@@ -53,17 +54,17 @@ namespace Assets.Scripts.Creatures.Editors
                 }
                 else
                 {
-                    if (trBase.isToGaze)
-                    {
-                        Handles.color = Color.green;
-                        Handles.DrawWireArc(prevPoint.position, Vector3.forward, trBase.transform.position - prevPoint.position, sightAngle / 2, sightRange, trBase.timeStay);
-                        Handles.DrawWireArc(prevPoint.position, Vector3.forward, trBase.transform.position - prevPoint.position, sightAngle / -2, sightRange, trBase.timeStay);
-                    }
                     if (trBase.isToMove)
                     {
                         Handles.color = Color.white;
                         Handles.DrawLine(prevPoint.position, tracks[i].position);
                         prevPoint = tracks[i];
+                    }
+                    if (trBase.isToGaze && !trBase.isToMove)
+                    {
+                        Handles.color = Color.green;
+                        Handles.DrawWireArc(prevPoint.position, Vector3.forward, trBase.transform.position - prevPoint.position, sightAngle / 2, sightRange, trBase.timeStay);
+                        Handles.DrawWireArc(prevPoint.position, Vector3.forward, trBase.transform.position - prevPoint.position, sightAngle / -2, sightRange, trBase.timeStay);
                     }
                 }
             }
