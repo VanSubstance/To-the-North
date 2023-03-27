@@ -10,7 +10,7 @@ namespace Assets.Scripts.Creatures.Bases
 {
     internal abstract class AIBaseController : MonoBehaviour
     {
-        public float atkRange = 5f;
+        public float atkRange = 5f, moveDis = 3f;
 
         public AIStatusType statusType = AIStatusType.Petrol;
         public Vector3? targetToMove, targetToGaze;
@@ -296,7 +296,7 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     // 장애물 없음
                     Vector3 dirVec = (targetPos - originPos).normalized;
-                    return targetPos - (dirVec * (isForce ? 0 : (atkRange - 1)));
+                    return targetPos - (dirVec * (isForce ? 0 : moveDis));
                 }
             }
             // 장애물 있음
@@ -327,11 +327,11 @@ namespace Assets.Scripts.Creatures.Bases
                     }
                     if ((bool)isUpward)
                     {
-                        return CalculationFunctions.DirFromAngle(valByOrigin[0]) * (valByOrigin[1] + 0.5f) + originPos;
+                        return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), moveDis) + originPos;
                     }
                     else
                     {
-                        return CalculationFunctions.DirFromAngle(valByOrigin[2]) * (valByOrigin[3] + 0.5f) + originPos;
+                        return CalculationFunctions.DirFromAngle(valByOrigin[2]) *Math.Min( (valByOrigin[3] + 0.5f), moveDis) + originPos;
                     }
                 }
                 // 아래가 더 짧다 = 아래로 우회
@@ -341,11 +341,11 @@ namespace Assets.Scripts.Creatures.Bases
                 }
                 if (!(bool)isUpward)
                 {
-                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * (valByOrigin[3] + 0.5f) + originPos;
+                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), moveDis) + originPos;
                 }
                 else
                 {
-                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * (valByOrigin[1] + 0.5f) + originPos;
+                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), moveDis) + originPos;
                 }
             }
             float[] valByTarget = GetAnglesAndDistanceMeetsObstacle(targetPos, angR, curObsTf);
@@ -366,11 +366,11 @@ namespace Assets.Scripts.Creatures.Bases
                         }
                         if ((bool)isUpward)
                         {
-                            return CalculationFunctions.DirFromAngle(valByOrigin[0]) * (valByOrigin[1] + 0.5f) + originPos;
+                            return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), moveDis) + originPos;
                         }
                         else
                         {
-                            return CalculationFunctions.DirFromAngle(valByOrigin[2]) * (valByOrigin[3] + 0.5f) + originPos;
+                            return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), moveDis) + originPos;
                         }
                     }
                 }
@@ -381,11 +381,11 @@ namespace Assets.Scripts.Creatures.Bases
                 }
                 if (!(bool)isUpward)
                 {
-                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * (valByOrigin[3] + 0.5f) + originPos;
+                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), moveDis) + originPos;
                 }
                 else
                 {
-                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * (valByOrigin[1] + 0.5f) + originPos;
+                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), moveDis) + originPos;
                 }
             }
             if (disCompare != -1)
@@ -397,19 +397,18 @@ namespace Assets.Scripts.Creatures.Bases
                 if ((bool)isUpward)
                 {
                     // 위만 가능
-                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * (valByOrigin[1] + 0.5f) + originPos;
+                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), moveDis) + originPos;
                 }
                 else
                 {
-                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * (valByOrigin[3] + 0.5f) + originPos;
+                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), moveDis) + originPos;
                 }
             }
             // 타겟 위치 옮겨서 다시 계산
-            Debug.Log("각이 안나옴:: 추가 계산");
-            targetPos += CalculationFunctions.DirFromAngle((valByTarget[0] + valByTarget[2]) / 2) * (valByTarget[1] + valByTarget[3]) / 2;
-            Debug.DrawLine(originPos, targetPos, Color.black, 1);
-            //return FindPathWithObstacle(targetPos, originPos, curObsTf);
-            return Vector3.zero;
+            //Debug.Log("각이 안나옴:: 추가 계산");
+            targetPos -= CalculationFunctions.DirFromAngle((valByTarget[0] + valByTarget[2]) / 2) * (valByTarget[1] + valByTarget[3]) / 2;
+            Debug.DrawLine(originPos, targetPos, Color.green, 1);
+            return FindPathWithObstacle(targetPos, originPos, curObsTf);
         }
 
         /// <summary>
