@@ -39,5 +39,22 @@ namespace Assets.Scripts.Commons.Functions
         {
             return DirFromAngle(AngleFromDir(dirVector) + degreeToRotate);
         }
+
+        /// <summary>
+        /// 대상 위치가 이동 불가한 위치인지 = 장애물 내부에 존재하는지 판단 후, 이동 가능한 위치로 보정하여 반환하는 함수
+        /// </summary>
+        /// <param name="originPos">테스트 위치</param>
+        /// <returns></returns>
+        public static Vector2 GetDetouredPositionIfInCollider(Vector2 originPos)
+        {
+            Collider2D obsCol;
+            if (obsCol = Physics2D.OverlapPoint(originPos, GlobalStatus.Constant.compositeObstacleMask))
+            {
+                // 이동 불가 위치
+                Debug.DrawLine(obsCol.bounds.center, originPos, Color.green, 3);
+                return Physics2D.Raycast(obsCol.bounds.center, originPos - (Vector2)obsCol.bounds.center, 100).point;
+            }
+            return originPos;
+        }
     }
 }

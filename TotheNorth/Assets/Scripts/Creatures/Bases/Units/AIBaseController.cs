@@ -10,20 +10,34 @@ namespace Assets.Scripts.Creatures.Bases
 {
     internal abstract class AIBaseController : MonoBehaviour
     {
-        public float atkRange = 5f, moveDis = 3f;
+        private float atkRange = 5f, moveDis = 3f, moveSpd = 3;
 
         public AIStatusType statusType = AIStatusType.Petrol;
-        public Vector3? targetToMove, targetToGaze;
-        public Vector3? targetPos;
+        public Vector3? targetToMove, targetToGaze, targetPos, vectorToMove;
         protected AISquadBaseController squadBase;
         private DetectionPassiveController passiveController;
         private DetectionSightController sightController;
         private bool isPause = false, isForce = false;
         private bool? isUpward = null;
         private float timeStayForMove = 0, timeStayForGaze = 0;
-        public bool isOrderMoveDone = true/*, isOrderGazeDone = true*/;
+        private bool isOrderMoveDone = true, isCollided = false;
 
         private readonly float forcingDis = 2f;
+
+        /// <summary>
+        /// 현재 목표 타겟 좌표 설정
+        /// 이동 종료 후 대기 시간 설정
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="timeToStay"></param>
+        public void SetTargetToTrack(Vector3? target, float timeToStay, bool _isForce)
+        {
+            targetPos = CalculationFunctions.GetDetouredPositionIfInCollider((Vector3)target);
+            timeStayForMove = timeToStay;
+            isOrderMoveDone = false;
+            isForce = _isForce;
+            isUpward = null;
+        }
 
         private void Awake()
         {
@@ -61,11 +75,43 @@ namespace Assets.Scripts.Creatures.Bases
         {
             if (targetToMove != null)
             {
+                // 현재 이동 목표에 도달했는지
+                if (Vector2.Distance(transform.position, (Vector3)targetToMove) < 0.25f)
+                {
+                    vectorToMove = null;
+                    if (isOrderMoveDone && timeStayForMove > 0)
+                    {
+                        timeStayForMove -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        targetToMove = null;
+                    }
+                    return;
+                }
+                // 도달 목표에 도달했는지
+                if (Vector2.Distance(transform.position, (Vector3)targetPos) < (isForce ? forcingDis : atkRange))
+                {
+                    vectorToMove = null;
+                    if (isOrderMoveDone && timeStayForMove > 0)
+                    {
+                        timeStayForMove -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        targetToMove = null;
+                    }
+                }
+                // 이동 방향 계산
                 MoveToTarget();
             }
             else
             {
                 GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
+            if (vectorToMove != null)
+            {
+                transform.Translate(((Vector3)vectorToMove).normalized * moveSpd * Time.deltaTime);
             }
         }
 
@@ -124,34 +170,12 @@ namespace Assets.Scripts.Creatures.Bases
         /// </summary>
         private void MoveToTarget()
         {
-            if (Vector2.Distance(transform.position, (Vector3)targetToMove) < 0.1f)
-            {
-                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                if (isOrderMoveDone && timeStayForMove > 0)
-                {
-                    timeStayForMove -= Time.deltaTime;
-                }
-                else
-                {
-                    targetToMove = null;
-                }
-                return;
-            }
-            if (Vector2.Distance(transform.position, (Vector3)targetPos) < forcingDis)
-            {
-                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                if (isOrderMoveDone && timeStayForMove > 0)
-                {
-                    timeStayForMove -= Time.deltaTime;
-                }
-                else
-                {
-                    targetToMove = null;
-                }
-            }
             try
             {
-                GetComponent<Rigidbody2D>().velocity = ((Vector3)targetToMove - transform.position).normalized * 2;
+                if (!isCollided)
+                {
+                    vectorToMove = ((Vector3)targetToMove - transform.position).normalized;
+                }
             }
             catch (InvalidOperationException)
             {
@@ -171,7 +195,7 @@ namespace Assets.Scripts.Creatures.Bases
         public void PauseOrResumeAct(bool toPause)
         {
             isPause = toPause;
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            vectorToMove = null;
         }
 
         public DetectionSightController GetDetectionSight()
@@ -182,21 +206,6 @@ namespace Assets.Scripts.Creatures.Bases
         public DetectionPassiveController GetDetectionPassive()
         {
             return passiveController;
-        }
-
-        /// <summary>
-        /// 현재 목표 타겟 좌표 설정
-        /// 이동 종료 후 대기 시간 설정
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="timeToStay"></param>
-        public void SetTargetToTrack(Vector3? target, float timeToStay, bool _isForce)
-        {
-            targetPos = target;
-            timeStayForMove = timeToStay;
-            isOrderMoveDone = false;
-            isForce = _isForce;
-            isUpward = null;
         }
 
         public void SetTargetToGaze(Vector3? target, float timeToStay, bool isRandom = false)
@@ -232,6 +241,7 @@ namespace Assets.Scripts.Creatures.Bases
         /// </summary>
         private void SetTargetToTrack()
         {
+            if (targetPos == null) return;
             Vector3 _targetPos = (Vector3)targetPos;
             Vector3 originPos = transform.position;
             if (Vector3.Distance(originPos, _targetPos) < (isForce ? forcingDis : atkRange))
@@ -245,29 +255,19 @@ namespace Assets.Scripts.Creatures.Bases
                     isOrderMoveDone = true;
                     return;
                 }
-                if (!Physics2D.Raycast(_targetPos, (originPos - _targetPos), 0.1f, GlobalStatus.Constant.compositeObstacleMask))
+                // targetPos가 이동 가능한 위치에 있음
+                RaycastHit2D obsHit;
+                if (!(obsHit = Physics2D.Raycast(originPos, (_targetPos - originPos), atkRange, GlobalStatus.Constant.compositeObstacleMask)))
                 {
-                    // targetPos가 이동 가능한 위치에 있음
-                    RaycastHit2D obsHit;
-                    if (!(obsHit = Physics2D.Raycast(originPos, (_targetPos - originPos), atkRange, GlobalStatus.Constant.compositeObstacleMask)))
-                    {
-                        // 조준 가능
-                        targetPos = null;
-                        isOrderMoveDone = true;
-                        return;
-                    }
-                    else
-                    {
-                        // 조준 불가
-                        targetToGaze = targetToMove = FindPath(_targetPos, originPos, obsHit);
-                    }
-                }
-                else
-                {
-                    // targetPos가 이동불가 위치에 있음
+                    // 조준 가능
                     targetPos = null;
                     isOrderMoveDone = true;
                     return;
+                }
+                else
+                {
+                    // 조준 불가
+                    targetToGaze = targetToMove = FindPath(_targetPos, originPos, obsHit);
                 }
             }
             else
@@ -331,7 +331,7 @@ namespace Assets.Scripts.Creatures.Bases
                     }
                     else
                     {
-                        return CalculationFunctions.DirFromAngle(valByOrigin[2]) *Math.Min( (valByOrigin[3] + 0.5f), moveDis) + originPos;
+                        return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), moveDis) + originPos;
                     }
                 }
                 // 아래가 더 짧다 = 아래로 우회
@@ -419,7 +419,7 @@ namespace Assets.Scripts.Creatures.Bases
         /// <returns>[0]: Up 각도, [1]: Up 거리, [2]: Down 각도, [3]: Down 거리</returns>
         private float[] GetAnglesAndDistanceMeetsObstacle(Vector3 originPos, float angK, Transform curObsTf)
         {
-            int unitDegree = 2;
+            int unitDegree = 3;
             float[] res = new float[4];
             float disDump = 0f;
             RaycastHit2D hit;
@@ -429,7 +429,7 @@ namespace Assets.Scripts.Creatures.Bases
                 //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.green, 0.3f);
                 if (!(hit = Physics2D.Raycast(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)), 100, GlobalStatus.Constant.compositeObstacleMask)))
                 {
-                    Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.blue, 0.3f);
+                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.blue, 0.3f);
                     // 장애물 안걸리기 시작
                     res[0] = angK + (i * unitDegree) + 1;
                     res[1] = disDump;
@@ -439,7 +439,7 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     // 장애물에 걸리기는 했는데 중간 장애물이 아닌 경우
                     //Debug.Log("걔가 아닌데?");
-                    Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.blue, 0.3f);
+                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.blue, 0.3f);
                     res[0] = angK + (i * unitDegree) + 1;
                     res[1] = disDump;
                     break;
@@ -452,7 +452,7 @@ namespace Assets.Scripts.Creatures.Bases
                 //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.magenta, 0.3f);
                 if (!(hit = Physics2D.Raycast(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)), 100, GlobalStatus.Constant.compositeObstacleMask)))
                 {
-                    Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.red, 0.3f);
+                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.red, 0.3f);
                     res[2] = angK - (i * unitDegree) - 1;
                     res[3] = disDump;
                     break;
@@ -461,7 +461,7 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     // 장애물에 걸리기는 했는데 중간 장애물이 아닌 경우
                     //Debug.Log("걔가 아닌데?");
-                    Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.red, 0.3f);
+                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.red, 0.3f);
                     res[2] = angK - (i * unitDegree) - 1;
                     res[3] = disDump;
                     break;
@@ -474,10 +474,25 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            Debug.Log("충돌!! " + collision.contacts[0].point);
-            Debug.Log(GetComponent<Rigidbody2D>().velocity);
+            if (vectorToMove != null && targetPos != null)
+            {
+                //Debug.Log("충돌 시작!");
+                isCollided = true;
+                Vector2 temp = Vector2.Reflect((Vector3)vectorToMove, collision.contacts[0].normal);
+                vectorToMove += CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(temp) + UnityEngine.Random.Range(-30, 30));
+                StartCoroutine(forcingReTrackAfterSec(0.5f));
+            }
+        }
+
+        private IEnumerator forcingReTrackAfterSec(float t)
+        {
+            yield return new WaitForSeconds(t);
+            SetTargetToTrack();
+            isCollided = false;
+            //Debug.Log("충돌 종료!");
         }
 
         public abstract void OnDetectUser(Transform targetTf);
     }
 }
+

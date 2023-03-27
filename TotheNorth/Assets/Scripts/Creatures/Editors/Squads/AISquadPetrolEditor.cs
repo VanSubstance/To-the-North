@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Assets.Scripts.Creatures.Bases;
 using Assets.Scripts.Creatures.Controllers.Conductions;
 using Assets.Scripts.Maps.Controllers;
 using UnityEditor;
@@ -10,11 +12,12 @@ namespace Assets.Scripts.Creatures.Editors
     internal class AISquadPetrolEditor : Editor
     {
         AISquadPetrolController aiBase;
+        AISquadBaseController squadBase;
         private void OnSceneGUI()
         {
             float sightAngle = 45, sightRange = 3;
             aiBase = (AISquadPetrolController)target;
-
+            squadBase = aiBase.GetAIBase();
             Transform[] tracks = aiBase.GetPetrolTracks();
             if (tracks.Length < 2) return;
             List<TrackBaseController> bumpsForInitRotation = new List<TrackBaseController>();
@@ -55,6 +58,23 @@ namespace Assets.Scripts.Creatures.Editors
                         prevPoint = tracks[i];
                     }
                 }
+            }
+            try
+            {
+                foreach (AIBaseController unitBase in squadBase.GetUnitsAll())
+                {
+                    Vector3? detectPos;
+                    if ((detectPos = unitBase.targetPos) != null)
+                    {
+                        Handles.color = Color.red;
+                        Handles.DrawLine((Vector3)detectPos + new Vector3(-.5f, -.5f, 0f), (Vector3)detectPos + new Vector3(.5f, .5f, 0f), 2.5f);
+                        Handles.DrawLine((Vector3)detectPos + new Vector3(-.5f, .5f, 0f), (Vector3)detectPos + new Vector3(.5f, -.5f, 0f), 2.5f);
+                    }
+                }
+            }
+            catch (NullReferenceException)
+            {
+
             }
         }
     }
