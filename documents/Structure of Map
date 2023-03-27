@@ -1,0 +1,339 @@
+<mxfile host="app.diagrams.net" modified="2023-03-27T11:10:09.621Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="Ip_pl1eYexaDGP2YoGig" version="21.1.1" type="device" pages="5">
+  <diagram id="lHYta_eNfihPcuNXMGih" name="Overall System">
+    <mxGraphModel dx="1038" dy="778" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="PX-hjLEKOWUreszGLCFq-1" value="에디터쪽 과업" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="200" width="1400" height="840" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-2" value="타일 프리펩" style="swimlane;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-1" vertex="1">
+          <mxGeometry x="40" y="40" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-3" value="Sprite" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-2" vertex="1">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-4" value="장애물 프리펩" style="swimlane;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-1" vertex="1">
+          <mxGeometry x="40" y="200" width="520" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-5" value="Sprite" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-4" vertex="1">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-6" value="충돌 감지" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-4" vertex="1">
+          <mxGeometry x="360" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-7" value="Animation" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-4" vertex="1">
+          <mxGeometry x="200" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-8" value="루팅 프리펩" style="swimlane;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-1" vertex="1">
+          <mxGeometry x="280" y="40" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-9" value="아이템 획득 시스템" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-8" vertex="1">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-10" value="이벤트 프리펩" style="swimlane;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-1" vertex="1">
+          <mxGeometry x="520" y="40" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-11" value="이벤트 트리거" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-10" vertex="1">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-12" value="적 프리펩" style="swimlane;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-1" vertex="1">
+          <mxGeometry x="40" y="360" width="1320" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-13" value="Sprite" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-12" vertex="1">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-14" value="이동 AI" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-12" vertex="1">
+          <mxGeometry x="360" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-15" value="Animation" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-12" vertex="1">
+          <mxGeometry x="200" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-16" value="감지 AI" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-12" vertex="1">
+          <mxGeometry x="520" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-17" value="전투 AI" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-12" vertex="1">
+          <mxGeometry x="680" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-18" value="루팅 프리펩" style="swimlane;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-12" vertex="1">
+          <mxGeometry x="840" y="40" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-19" value="아이템 획득 시스템" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-18" vertex="1">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-20" value="이벤트 프리펩" style="swimlane;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-12" vertex="1">
+          <mxGeometry x="1080" y="40" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-21" value="이벤트 트리거" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-20" vertex="1">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-22" value="NPC 프리펩" style="swimlane;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-1" vertex="1">
+          <mxGeometry x="40" y="600" width="1080" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-23" value="Sprite" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-22" vertex="1">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-24" value="이동 AI" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-22" vertex="1">
+          <mxGeometry x="360" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-25" value="Animation" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-22" vertex="1">
+          <mxGeometry x="200" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-26" value="감지 AI" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-22" vertex="1">
+          <mxGeometry x="520" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-27" value="전투 AI" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-22" vertex="1">
+          <mxGeometry x="680" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-28" value="이벤트 프리펩" style="swimlane;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-22" vertex="1">
+          <mxGeometry x="840" y="40" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-29" value="이벤트 트리거" style="rounded=0;whiteSpace=wrap;html=1;" parent="PX-hjLEKOWUreszGLCFq-28" vertex="1">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PX-hjLEKOWUreszGLCFq-30" value="기본적으로 해당 프리펩들은 실제 인게임에서 그대로 생성이 되어서 사용될 것&lt;br&gt;= 게임 로직을 가지고 있어야 함&lt;br&gt;물론 에디터 작업하는 시점에 그 로직 또는 AI들이 전부 구현될 필요는 없고, 다만 구현을 위한 구조 ex) interface, abstart class, generic T 등 은 고안되어있어야 함&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=24;" parent="1" vertex="1">
+          <mxGeometry x="40" y="40" width="1180" height="160" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="8poDKGxZYwyIsuMvK_Eu" name="Definition of Words">
+    <mxGraphModel dx="1024" dy="649" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="BCH48PMvtgCkRuuNcG7t-1" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fillStyle=dashed;fillColor=#19FF66;" vertex="1" parent="1">
+          <mxGeometry x="520" y="40" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BCH48PMvtgCkRuuNcG7t-2" value="타일: 배경 타일 한 칸을 의미;&lt;br&gt;기본적으로 1 유니티 m^2이다" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="400" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BCH48PMvtgCkRuuNcG7t-3" value="스퀘어: c1 X c2 개의 타일 모음을 의미;&lt;br&gt;c1 * c2 유니티 m^2이다" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="160" width="400" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BCH48PMvtgCkRuuNcG7t-4" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="520" y="160" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BCH48PMvtgCkRuuNcG7t-8" value="구역: i X j 개의 스퀘어 모음을 의미;&lt;br&gt;i * j * c^2 유니티 m^2이다." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="320" width="400" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BCH48PMvtgCkRuuNcG7t-9" value="c1, c2 : 한 스퀘어의 행, 렬에 들어가는 타일의 개수이며, 상수이다." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontColor=#FF0000;" vertex="1" parent="1">
+          <mxGeometry x="80" y="200" width="360" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BCH48PMvtgCkRuuNcG7t-10" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=cross-hatch;fillColor=#CF0FFF;" vertex="1" parent="1">
+          <mxGeometry x="520" y="320" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="qTCQK6q_GmulYDqZ3FLR-2" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="520" y="440" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qTCQK6q_GmulYDqZ3FLR-3" value="유저: 유저의 현 위치를 나타낸다" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="440" width="400" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tv3eQXLVcOSqBnEcztSk-1" value="1920 * 1080 스크린 기준, 스크린은 18 * 10 유니티 m^2 이다." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontColor=#FF0000;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="360" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="tv3eQXLVcOSqBnEcztSk-2" value="스크린 사이즈를 생각해본다면 18, 10이지만&lt;br&gt;오히려 자잘한 리프레시를 야기할 가능성이 있다&lt;br&gt;3 * 3 을 감안하여 54 * 30으로 디자인 하는 것이 나을 것 같다" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontColor=#FF0000;" vertex="1" parent="1">
+          <mxGeometry x="80" y="240" width="360" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="wpZZeZMBWm7NvthePXgi" name="Map Loading System">
+    <mxGraphModel dx="1103" dy="698" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="181xVip70bLE-ntFzNet-24" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="140" width="80" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-25" value="삭제" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="355" y="110" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-22" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="140" width="80" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="jJToVIjViWnpl9GWU6iH-1" value="시스템 부담 줄이는 방법 사고" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="340" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="AMNhNXgZ32G--XMb7qtL-1" value="유저의 현재 위치 기준 근접 8개의 스케어만 생성한다?" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="340" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="trRoB0YxNII3xO38UO1E-1" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="120" y="240" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="trRoB0YxNII3xO38UO1E-2" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="200" y="240" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="trRoB0YxNII3xO38UO1E-3" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="40" y="240" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="trRoB0YxNII3xO38UO1E-4" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="40" y="160" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="trRoB0YxNII3xO38UO1E-5" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="120" y="160" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="trRoB0YxNII3xO38UO1E-6" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="200" y="160" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="trRoB0YxNII3xO38UO1E-7" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="40" y="320" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="trRoB0YxNII3xO38UO1E-8" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="120" y="320" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="trRoB0YxNII3xO38UO1E-9" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="200" y="320" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=16;strokeColor=#000000;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="181xVip70bLE-ntFzNet-1" target="trRoB0YxNII3xO38UO1E-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="260" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-1" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="130" y="250" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-6" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="440" y="240" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-7" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="520" y="240" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-8" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="360" y="240" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-9" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="360" y="160" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-10" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="440" y="160" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-11" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="520" y="160" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-12" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="360" y="320" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-13" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="440" y="320" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-14" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="520" y="320" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-16" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="530" y="250" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-17" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="259.55" as="sourcePoint" />
+            <mxPoint x="320" y="259.55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-18" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="600" y="240" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-19" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="600" y="160" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-20" value="" style="whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=1;fillStyle=dots;fillColor=#0000FF;" vertex="1" parent="1">
+          <mxGeometry x="600" y="320" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="181xVip70bLE-ntFzNet-23" value="생성" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="595" y="110" width="50" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="TileBackgroundPrefab">
+    <mxGraphModel dx="1793" dy="1135" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="J1mh2zGUhuUxL_patcdi-1" value="구성요소" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="40" y="40" width="240" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="J1mh2zGUhuUxL_patcdi-2" value="Sprite" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="J1mh2zGUhuUxL_patcdi-1">
+          <mxGeometry x="40" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="u67Jo2OoMf0n_hrQR6Eu-1" value="종류별로 프리펩이 만들어져있어야 함&lt;br&gt;프리펩 -&amp;gt; 에셋으로 만들어져야 함" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="320" y="40" width="240" height="160" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="KPiN12xT0zumLN3wZPBK" name="ObstaclePrefab">
+    <mxGraphModel dx="989" dy="741" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="XgYoidyKVPQJO1BJaspY-1" value="장애물 프리펩" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="530" y="500" width="520" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="XgYoidyKVPQJO1BJaspY-2" value="Sprite" style="rounded=0;whiteSpace=wrap;html=1;" parent="XgYoidyKVPQJO1BJaspY-1" vertex="1">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XgYoidyKVPQJO1BJaspY-3" value="충돌 감지" style="rounded=0;whiteSpace=wrap;html=1;" parent="XgYoidyKVPQJO1BJaspY-1" vertex="1">
+          <mxGeometry x="360" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XgYoidyKVPQJO1BJaspY-4" value="Animation" style="rounded=0;whiteSpace=wrap;html=1;" parent="XgYoidyKVPQJO1BJaspY-1" vertex="1">
+          <mxGeometry x="200" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="mBPBb52i-fAt0UGIqkpw-1" value="구성요소" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="40" width="240" height="750" as="geometry" />
+        </mxCell>
+        <mxCell id="mBPBb52i-fAt0UGIqkpw-2" value="Sprite" style="rounded=0;whiteSpace=wrap;html=1;" parent="mBPBb52i-fAt0UGIqkpw-1" vertex="1">
+          <mxGeometry x="40" y="40" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="mBPBb52i-fAt0UGIqkpw-4" value="Animation?" style="rounded=0;whiteSpace=wrap;html=1;" parent="mBPBb52i-fAt0UGIqkpw-1" vertex="1">
+          <mxGeometry x="40" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="mBPBb52i-fAt0UGIqkpw-5" value="Box Collider" style="rounded=0;whiteSpace=wrap;html=1;" parent="mBPBb52i-fAt0UGIqkpw-1" vertex="1">
+          <mxGeometry x="40" y="280" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="mBPBb52i-fAt0UGIqkpw-6" value="장애물 정보:&lt;br&gt;반대투시인가 아닌가?" style="rounded=0;whiteSpace=wrap;html=1;" parent="mBPBb52i-fAt0UGIqkpw-1" vertex="1">
+          <mxGeometry x="40" y="400" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="mBPBb52i-fAt0UGIqkpw-3" value="종류별로 프리펩이 만들어져있어야 함&lt;br&gt;프리펩 -&amp;gt; 에셋으로 만들어져야 함" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="320" y="40" width="240" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ElvCo8HyWR85JmN7DIxF-1" value="&lt;b&gt;기본적으로 장애물은 에디팅 과정에서 설치하게 된다.&lt;br&gt;설치 후, 실제 인게임으로 넘어가기 전 닿아있는 장애물끼리 병합 과정이 필요하다&lt;br&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="880" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ElvCo8HyWR85JmN7DIxF-2" value="&lt;b&gt;서로 닿아있는 장애물들은 하나의 장애물로써 처리되어야 한다.&lt;br&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="960" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ElvCo8HyWR85JmN7DIxF-3" value="1" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="1160" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ElvCo8HyWR85JmN7DIxF-4" value="&lt;b&gt;우리가 설치했을 때:&lt;br&gt;여러개 따로따로&lt;br&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1080" width="280" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ElvCo8HyWR85JmN7DIxF-5" value="2" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="1200" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ElvCo8HyWR85JmN7DIxF-6" value="3" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="1240" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ElvCo8HyWR85JmN7DIxF-7" value="4" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="1280" width="40" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ElvCo8HyWR85JmN7DIxF-8" value="&lt;b&gt;실제 게임에서 처리될 때:&lt;br&gt;하나로 처리&lt;br&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1080" width="280" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ElvCo8HyWR85JmN7DIxF-9" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=none;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1160" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ElvCo8HyWR85JmN7DIxF-10" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=none;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="520" y="1200" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ElvCo8HyWR85JmN7DIxF-11" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=none;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="520" y="1240" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ElvCo8HyWR85JmN7DIxF-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=none;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="520" y="1280" width="40" height="160" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
