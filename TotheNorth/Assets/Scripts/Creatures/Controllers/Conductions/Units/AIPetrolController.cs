@@ -13,6 +13,11 @@ namespace Assets.Scripts.Creatures.Controllers
         private Queue<Transform> trackQueue;
         private new void Awake()
         {
+            if (petrolTracks == null || petrolTracks.Length == 0)
+            {
+                Destroy(this);
+                return;
+            }
             base.Awake();
             trackQueue = new Queue<Transform>();
             ReloadPetrolQueue();
@@ -30,7 +35,7 @@ namespace Assets.Scripts.Creatures.Controllers
                         TrackBaseController trackBase = targetTf.GetComponent<TrackBaseController>();
                         if (trackBase.isToMove)
                         {
-                            baseController.SetTargetToMove(targetTf.position, trackBase.timeStay);
+                            baseController.SetTargetToTrack(targetTf.position, trackBase.timeStay, true);
                         }
                         if (trackBase.isToGaze)
                         {

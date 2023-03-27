@@ -5,7 +5,7 @@ using UnityEngine;
 public class BaseSpriteController : MonoBehaviour
 {
     [SerializeField]
-    private SpriteRenderer allForAbsoulteSprite, allForDetectionSprite, backSprite;
+    protected SpriteRenderer allForAbsoulteSprite, allForDetectionSprite, backSprite;
     // Start is called before the first frame update
     void Start()
     {
