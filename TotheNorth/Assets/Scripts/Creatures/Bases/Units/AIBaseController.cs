@@ -32,7 +32,7 @@ namespace Assets.Scripts.Creatures.Bases
         /// <param name="timeToStay"></param>
         public void SetTargetToTrack(Vector3? target, float timeToStay, bool _isForce)
         {
-            targetPos = CalculationFunctions.GetDetouredPositionIfInCollider((Vector3)target);
+            targetPos = CalculationFunctions.GetDetouredPositionIfInCollider(transform.position, (Vector3)target);
             timeStayForMove = timeToStay;
             isOrderMoveDone = false;
             isForce = _isForce;
@@ -123,12 +123,24 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
+        private float timerIdle = -1f;
         /// <summary>
-        /// 모든 행동이 끝나고 0.5초동안 아무런 명령을 받지 않았을 경우 자율 행동 제어
+        /// 모든 행동이 끝나고 2초마다 아무런 명령을 받지 않았을 경우 자율 행동 제어
         /// </summary>
         private void ControllIdle()
         {
-
+            if (targetPos == null)
+            {
+                // 타겟 소실
+                timerIdle -= Time.deltaTime;
+                if (timerIdle < 0)
+                {
+                    // 주변 랜덤 응시
+                    SetTargetToGaze(null, 0, true);
+                    timerIdle = 2f;
+                    return;
+                }
+            }
         }
 
         /// <summary>
@@ -480,7 +492,7 @@ namespace Assets.Scripts.Creatures.Bases
                 isCollided = true;
                 Vector2 temp = Vector2.Reflect((Vector3)vectorToMove, collision.contacts[0].normal);
                 vectorToMove += CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(temp) + UnityEngine.Random.Range(-30, 30));
-                StartCoroutine(forcingReTrackAfterSec(0.5f));
+                StartCoroutine(forcingReTrackAfterSec(0.25f));
             }
         }
 

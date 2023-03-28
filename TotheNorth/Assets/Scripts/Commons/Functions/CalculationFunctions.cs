@@ -43,16 +43,24 @@ namespace Assets.Scripts.Commons.Functions
         /// <summary>
         /// 대상 위치가 이동 불가한 위치인지 = 장애물 내부에 존재하는지 판단 후, 이동 가능한 위치로 보정하여 반환하는 함수
         /// </summary>
+        /// <param name="moverPos">움직일 대상의 현재 위치</param>
         /// <param name="originPos">테스트 위치</param>
         /// <returns></returns>
-        public static Vector2 GetDetouredPositionIfInCollider(Vector2 originPos)
+        public static Vector2 GetDetouredPositionIfInCollider(Vector2 moverPos, Vector2 originPos)
         {
             Collider2D obsCol;
             if (obsCol = Physics2D.OverlapPoint(originPos, GlobalStatus.Constant.compositeObstacleMask))
             {
+                RaycastHit2D[] hits = Physics2D.RaycastAll(moverPos, originPos - moverPos, 20, GlobalStatus.Constant.compositeObstacleMask);
+                foreach (RaycastHit2D hit in hits)
+                {
+                    if (hit.collider.Equals(obsCol))
+                    {
+                        Debug.DrawLine(obsCol.bounds.center, hit.point, Color.green, 1f);
+                        return hit.point;
+                    }
+                }
                 // 이동 불가 위치
-                Debug.DrawLine(obsCol.bounds.center, originPos, Color.green, 3);
-                return Physics2D.Raycast(obsCol.bounds.center, originPos - (Vector2)obsCol.bounds.center, 100).point;
             }
             return originPos;
         }
