@@ -10,9 +10,9 @@ namespace Assets.Scripts.Creatures.Editors
         protected void OnSceneGUI()
         {
             aiBase = (AIBaseController)target;
-            Handles.color = Color.red;
-            if (aiBase.targetToMove != null)
-                Handles.DrawLine(aiBase.transform.position, (Vector3)aiBase.targetToMove, 2.5f);
+            Handles.color = Color.cyan;
+            if (aiBase.vectorToMove != null)
+                Handles.DrawLine(aiBase.transform.position, (Vector3)aiBase.vectorToMove + aiBase.transform.position, 1f);
 
             if (aiBase.targetPos != null)
             {
@@ -27,11 +27,11 @@ namespace Assets.Scripts.Creatures.Editors
         private void MarkIndicationPosition()
         {
             Vector3? detectPos;
-            if ((detectPos = aiBase.targetPos) != null)
+            if ((detectPos = aiBase.targetToMove) != null)
             {
                 Handles.color = Color.red;
-                Handles.DrawLine((Vector3)detectPos + new Vector3(-.5f, -.5f, 0f), (Vector3)detectPos + new Vector3(.5f, .5f, 0f), 2.5f);
-                Handles.DrawLine((Vector3)detectPos + new Vector3(-.5f, .5f, 0f), (Vector3)detectPos + new Vector3(.5f, -.5f, 0f), 2.5f);
+                Handles.DrawLine((Vector3)detectPos + new Vector3(-.25f, -.25f, 0f), (Vector3)detectPos + new Vector3(.25f, .25f, 0f), 1f);
+                Handles.DrawLine((Vector3)detectPos + new Vector3(-.25f, .25f, 0f), (Vector3)detectPos + new Vector3(.25f, -.25f, 0f), 1f);
             }
         }
     }
