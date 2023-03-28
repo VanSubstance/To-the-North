@@ -139,20 +139,22 @@ namespace Assets.Scripts.Creatures.Bases
 
         public List<AIBaseController> GetUnitsTank()
         {
-
             return unitsTank;
         }
 
         public List<AIBaseController> GetUnitsBruiser()
         {
-
             return unitsBruiser;
         }
 
         public List<AIBaseController> GetUnitsRanger()
         {
-
             return unitRanger;
+        }
+
+        public List<AIBaseController> GetUnitsAll()
+        {
+            return units;
         }
 
         /// <summary>

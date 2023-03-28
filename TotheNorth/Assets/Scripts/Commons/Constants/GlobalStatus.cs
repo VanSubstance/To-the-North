@@ -7,7 +7,15 @@ public static class GlobalStatus
 
     public static class Constant
     {
-        public static LayerMask obstacleMask = 1 << 7, eventMask = 1 << 9, creatureMask = 1 << 8, itemMask = 1 << 11, slotMask = 1 << 12, userMask = 1 << 13;
+        public static LayerMask
+            obstacleMask = 1 << 7,
+            compositeObstacleMask = 1 << 14,
+            eventMask = 1 << 9,
+            creatureMask = 1 << 8,
+            itemMask = 1 << 11,
+            slotMask = 1 << 12,
+            userMask = 1 << 13
+            ;
     }
 
     public static class Loading
