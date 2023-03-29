@@ -72,7 +72,7 @@ namespace Assets.Scripts.Creatures.Bases
         /// 부대를 해당 위치로 이동
         /// </summary>
         /// <param name="_targetPos"></param>
-        public void MoveToTarget(Vector3 _targetPos)
+        public void SetTargetToTrack(Vector3 _targetPos)
         {
             targetPos = _targetPos;
             for (int i = 0; i < unitsTank.Count; i++)

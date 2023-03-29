@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Threading;
 using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Creatures.Conductions;
+using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Users.Controllers;
 using UnityEngine;
@@ -10,7 +12,8 @@ namespace Assets.Scripts.Creatures.Bases
 {
     internal abstract class AIBaseController : MonoBehaviour
     {
-        private float atkRange = 5f, moveDis = 3f, moveSpd = 3;
+        public float atkRange = 5f, moveSpd = 3;
+        private float moveDis = 3f;
 
         public AIStatusType statusType = AIStatusType.Petrol;
         public Vector3? targetToMove, targetToGaze, targetPos, vectorToMove;
@@ -254,6 +257,8 @@ namespace Assets.Scripts.Creatures.Bases
         public void SetSquadBase(AISquadBaseController _squadBase)
         {
             squadBase = _squadBase;
+            Destroy(GetComponent<AIPetrolController>());
+            Destroy(GetComponent<AICombatController>());
         }
 
         /// <summary>

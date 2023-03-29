@@ -9,10 +9,6 @@ public class BaseSpriteController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GlobalSetting.isDev)
-        {
-            allForAbsoulteSprite.gameObject.SetActive(false);
-        }
         allForAbsoulteSprite.color = Color.white;
         allForDetectionSprite.color =
             Color.white;
