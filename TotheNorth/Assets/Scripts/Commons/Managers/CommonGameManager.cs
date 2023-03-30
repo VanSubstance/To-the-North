@@ -3,11 +3,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class CommonGameManager : MonoBehaviour
 {
     [SerializeField]
-    private Transform fadeImagePrefab, userPrefab, smogForScreenPrefab;
+    private Transform fadeImagePrefab, userPrefab, smogForScreenPrefab, 
+        pauseWindowPrefab, inventoryWindowPrefab;
     private Image fadeImage;
     private int curStatus = 0;
 
@@ -81,8 +83,9 @@ public class CommonGameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.01f);
         }
+        Transform uiTf = GameObject.Find("UI").transform;
         // 페이드아웃 이미지 추가
-        Transform imageForFade = Instantiate(fadeImagePrefab, GameObject.Find("UI").transform);
+        Transform imageForFade = Instantiate(fadeImagePrefab, uiTf);
         imageForFade.localPosition = Vector3.zero;
         imageForFade.localScale = Vector3.one;
         fadeImage = imageForFade.GetComponent<Image>();
@@ -91,8 +94,20 @@ public class CommonGameManager : MonoBehaviour
         {
             // 필드 있음 = 유저가 있어야 함
 
+            // esc 모달 추가
+            Transform windowForPause = Instantiate(pauseWindowPrefab, uiTf);
+            windowForPause.localPosition = Vector3.zero;
+            KeyToggleManager keyAdded = uiTf.AddComponent<KeyToggleManager>();
+            keyAdded.InitContent(KeyCode.Escape, windowForPause.GetComponent<MonoBehaviourControllByKey>());
+
+            // 인벤토리 모달 추가
+            Transform windowForInventory = Instantiate(inventoryWindowPrefab, uiTf);
+            windowForPause.localPosition = Vector3.zero;
+            keyAdded = uiTf.AddComponent<KeyToggleManager>();
+            keyAdded.InitContent(KeyCode.I, windowForInventory.GetComponent<MonoBehaviourControllByKey>());
+
             // 화면 필터 이미지 추가
-            Transform imageForSmog = Instantiate(smogForScreenPrefab, GameObject.Find("UI").transform);
+            Transform imageForSmog = Instantiate(smogForScreenPrefab, uiTf);
             imageForFade.localPosition = Vector3.zero;
             imageForSmog.SetAsLastSibling();
 
@@ -193,12 +208,17 @@ public class CommonGameManager : MonoBehaviour
         });
     }
 
-    public static void ExitGame()
+    public void ExitGame()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
+    }
+
+    public void SaveGame()
+    {
+
     }
 }

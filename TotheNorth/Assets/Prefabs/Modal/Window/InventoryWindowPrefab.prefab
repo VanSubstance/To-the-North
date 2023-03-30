@@ -247,8 +247,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sizeToUnit: {x: 15, y: 8}
   slotPrefab: {fileID: 8657988864342740038, guid: b04dc1605717f984791213898143b703, type: 3}
-  itemPrefabSmall: {fileID: 8958241393174041177, guid: bf086c7a822fdc64db4802074d84f6c3, type: 3}
+  itemPrefabSmall: {fileID: 8958241393174041177, guid: 18fb5aa9ada6fdd4d803eb35856fc64d, type: 3}
   itemPrefabBig: {fileID: 8958241393174041177, guid: 8c2663289246dac4fba1879ef4bcb6db, type: 3}
+  itemPrefabDrumTong: {fileID: 6000595022747120599, guid: bf086c7a822fdc64db4802074d84f6c3, type: 3}
   slotParentTF: {fileID: 5934109794292726169}
   itemParentTF: {fileID: 6742576964986920411}
 --- !u!1 &939263129122703428
