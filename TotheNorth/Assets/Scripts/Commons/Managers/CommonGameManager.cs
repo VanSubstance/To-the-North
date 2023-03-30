@@ -7,7 +7,7 @@ using TMPro;
 public class CommonGameManager : MonoBehaviour
 {
     [SerializeField]
-    private Transform fadeImagePrefab, userPrefab;
+    private Transform fadeImagePrefab, userPrefab, smogForScreenPrefab;
     private Image fadeImage;
 
     private int curStatus = 0;
@@ -87,6 +87,10 @@ public class CommonGameManager : MonoBehaviour
         imageForFade.localPosition = Vector3.zero;
         imageForFade.localScale = Vector3.one;
         fadeImage = imageForFade.GetComponent<Image>();
+
+        // 화면 필터 이미지 추가
+        Transform imageForSmog = Instantiate(smogForScreenPrefab, GameObject.Find("UI").transform);
+        imageForFade.localPosition = Vector3.zero;
 
         // 유저 위치
         Transform userGo = Instantiate(userPrefab);
