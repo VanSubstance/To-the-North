@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class WindowModalInventoryContentController : AWindowModalController<InventorySlotController>
+public class WindowModalInventoryContentController : AWindowBaseContentController
 {
     public GameObject slotPrefab;
     public GameObject itemPrefabSmall;
@@ -10,11 +10,8 @@ public class WindowModalInventoryContentController : AWindowModalController<Inve
     public Transform slotParentTF;
     public Transform itemParentTF;
     private bool isInit = false;
-    public sealed override void ClearContent()
-    {
-    }
 
-    public void testItemInit()
+    private void testItemInit()
     {
         GameObject item1 = Instantiate(itemPrefabSmall, itemParentTF);
         item1.transform.position = new Vector3
@@ -38,7 +35,11 @@ public class WindowModalInventoryContentController : AWindowModalController<Inve
             itemParentTF.transform.position.z);
     }
 
-    public sealed override void InitCompositionByType()
+    public override void ClearContent()
+    {
+    }
+
+    protected override void InitComposition()
     {
         if (isInit) return;
         // Transform temp = base.GetContentContainerTf().GetChild(0);
@@ -57,11 +58,5 @@ public class WindowModalInventoryContentController : AWindowModalController<Inve
         }
         testItemInit();
         isInit = true;
-    }
-
-    public sealed override void InitContentByType(InventorySlotController contentToInit)
-    {
-        if (isInit == false) InitCompositionByType();
-        ClearContent();
     }
 }

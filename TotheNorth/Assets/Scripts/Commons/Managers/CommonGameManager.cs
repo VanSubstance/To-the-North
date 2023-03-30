@@ -3,13 +3,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class CommonGameManager : MonoBehaviour
 {
     [SerializeField]
-    private Transform fadeImagePrefab, userPrefab;
+    private Transform fadeImagePrefab, userPrefab, smogForScreenPrefab, 
+        pauseWindowPrefab, inventoryWindowPrefab;
     private Image fadeImage;
-
     private int curStatus = 0;
 
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
@@ -82,18 +83,41 @@ public class CommonGameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.01f);
         }
+        Transform uiTf = GameObject.Find("UI").transform;
         // 페이드아웃 이미지 추가
-        Transform imageForFade = Instantiate(fadeImagePrefab, GameObject.Find("UI").transform);
+        Transform imageForFade = Instantiate(fadeImagePrefab, uiTf);
         imageForFade.localPosition = Vector3.zero;
         imageForFade.localScale = Vector3.one;
         fadeImage = imageForFade.GetComponent<Image>();
 
-        // 유저 위치
-        Transform userGo = Instantiate(userPrefab);
-        userGo.localScale = Vector3.one;
-        userGo.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
-        GlobalStatus.userInitPosition = new float[] { 0, 0 };
-        GlobalComponent.Common.userTf = userGo;
+        if (GameObject.Find("Field") != null)
+        {
+            // 필드 있음 = 유저가 있어야 함
+
+            // esc 모달 추가
+            Transform windowForPause = Instantiate(pauseWindowPrefab, uiTf);
+            windowForPause.localPosition = Vector3.zero;
+            KeyToggleManager keyAdded = uiTf.AddComponent<KeyToggleManager>();
+            keyAdded.InitContent(KeyCode.Escape, windowForPause.GetComponent<MonoBehaviourControllByKey>());
+
+            // 인벤토리 모달 추가
+            Transform windowForInventory = Instantiate(inventoryWindowPrefab, uiTf);
+            windowForPause.localPosition = Vector3.zero;
+            keyAdded = uiTf.AddComponent<KeyToggleManager>();
+            keyAdded.InitContent(KeyCode.I, windowForInventory.GetComponent<MonoBehaviourControllByKey>());
+
+            // 화면 필터 이미지 추가
+            Transform imageForSmog = Instantiate(smogForScreenPrefab, uiTf);
+            imageForFade.localPosition = Vector3.zero;
+            imageForSmog.SetAsLastSibling();
+
+            // 유저 위치
+            Transform userGo = Instantiate(userPrefab);
+            userGo.localScale = Vector3.one;
+            userGo.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
+            GlobalStatus.userInitPosition = new float[] { 0, 0 };
+            GlobalComponent.Common.userTf = userGo;
+        }
 
         GlobalStatus.Loading.System.CommonGameManager = true;
         imageForFade.SetAsFirstSibling();
@@ -119,6 +143,7 @@ public class CommonGameManager : MonoBehaviour
     {
         float goalOpacity = isFadeIn ? 1.0f : 0.0f, curOpacity = isFadeIn ? 0.0f : 1.0f;
         if (actionBefore != null) actionBefore();
+        targetTf.SetAsLastSibling();
         while (isFadeIn ? curOpacity < goalOpacity : curOpacity > goalOpacity)
         {
             yield return new WaitForSeconds(0.01f);
@@ -136,6 +161,7 @@ public class CommonGameManager : MonoBehaviour
                 targetTf.GetComponent<TextMeshProUGUI>().color.b,
                 curOpacity);
         }
+        targetTf.SetAsFirstSibling();
         if (afterAction != null) afterAction();
     }
 
@@ -180,5 +206,19 @@ public class CommonGameManager : MonoBehaviour
             GlobalStatus.nextScene = targetSceneName;
             SceneManager.LoadScene("Loading");
         });
+    }
+
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    public void SaveGame()
+    {
+
     }
 }
