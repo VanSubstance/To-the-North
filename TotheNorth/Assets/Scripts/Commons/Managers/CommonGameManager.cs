@@ -9,7 +9,6 @@ public class CommonGameManager : MonoBehaviour
     [SerializeField]
     private Transform fadeImagePrefab, userPrefab, smogForScreenPrefab;
     private Image fadeImage;
-
     private int curStatus = 0;
 
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
@@ -88,16 +87,22 @@ public class CommonGameManager : MonoBehaviour
         imageForFade.localScale = Vector3.one;
         fadeImage = imageForFade.GetComponent<Image>();
 
-        // 화면 필터 이미지 추가
-        Transform imageForSmog = Instantiate(smogForScreenPrefab, GameObject.Find("UI").transform);
-        imageForFade.localPosition = Vector3.zero;
+        if (GameObject.Find("Field") != null)
+        {
+            // 필드 있음 = 유저가 있어야 함
 
-        // 유저 위치
-        Transform userGo = Instantiate(userPrefab);
-        userGo.localScale = Vector3.one;
-        userGo.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
-        GlobalStatus.userInitPosition = new float[] { 0, 0 };
-        GlobalComponent.Common.userTf = userGo;
+            // 화면 필터 이미지 추가
+            Transform imageForSmog = Instantiate(smogForScreenPrefab, GameObject.Find("UI").transform);
+            imageForFade.localPosition = Vector3.zero;
+            imageForSmog.SetAsLastSibling();
+
+            // 유저 위치
+            Transform userGo = Instantiate(userPrefab);
+            userGo.localScale = Vector3.one;
+            userGo.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
+            GlobalStatus.userInitPosition = new float[] { 0, 0 };
+            GlobalComponent.Common.userTf = userGo;
+        }
 
         GlobalStatus.Loading.System.CommonGameManager = true;
         imageForFade.SetAsFirstSibling();
@@ -184,5 +189,14 @@ public class CommonGameManager : MonoBehaviour
             GlobalStatus.nextScene = targetSceneName;
             SceneManager.LoadScene("Loading");
         });
+    }
+
+    public static void ExitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
