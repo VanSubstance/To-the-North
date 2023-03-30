@@ -3,7 +3,7 @@ using UnityEngine;
 public class KeyToggleManager : MonoBehaviour
 {
     [SerializeField]
-    private string keyToToggle;
+    private KeyCode keyToToggle;
     [SerializeField]
     private MonoBehaviourControllByKey modalToControll;
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class KeyToggleManager : MonoBehaviour
 
     private void TrackKeys()
     {
-        if (keyToToggle != null)
+        if (keyToToggle != KeyCode.None)
             if (Input.GetKeyDown(keyToToggle))
             {
                 modalToControll.ControllByKey(0);
