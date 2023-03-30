@@ -47,8 +47,8 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
                 {
                     secMemory = timeOfMemory;
                 }
+                GetComponent<AICombatController>().SetTargetTf(targetTf);
             }
-            GetComponent<AICombatController>().SetTargetTf(targetTf);
         }
 
         private IEnumerator CountMemory()

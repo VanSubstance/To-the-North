@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Editors
 {
+
+    [CustomEditor(typeof(AIBaseController))]
     internal class AIBaseEditor : Editor
     {
         AIBaseController aiBase;
@@ -12,7 +14,9 @@ namespace Assets.Scripts.Creatures.Editors
             aiBase = (AIBaseController)target;
             Handles.color = Color.cyan;
             if (aiBase.vectorToMove != null)
+            {
                 Handles.DrawLine(aiBase.transform.position, (Vector3)aiBase.vectorToMove + aiBase.transform.position, 1f);
+            }
 
             if (aiBase.targetPos != null)
             {

@@ -24,7 +24,6 @@ namespace Assets.Scripts.Users.Controllers
             viewMeshForVisualization = new Mesh();
             viewMeshForVisualization.name = "View Mesh";
             visualizationFilter.mesh = viewMeshForVisualization;
-
             StartCoroutine(CheckSightWithDelay(0.01f));
         }
 

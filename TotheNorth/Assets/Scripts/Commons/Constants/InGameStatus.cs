@@ -17,8 +17,8 @@ namespace Assets.Scripts.Commons.Constants
                 /** 현재 바라보고 있는 시야 방향 각도 */
                 public static int curdegree = 0;
                 public static float spdWalk = 2f;
-                public static float weightRun = 2f;
-                public static float weightCrouch = 0.33f;
+                public static float weightRun = 3.5f;
+                public static float weightCrouch = 0.5f;
                 public static MovementType curMovement = MovementType.WALK;
             }
             public static class Detection

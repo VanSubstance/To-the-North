@@ -1,4 +1,4 @@
-Shader "Custom/InvisibleByMaskShader"
+Shader "Custom/EnemyDetectionShader"
 {
 	Properties
 	{
@@ -16,16 +16,15 @@ Shader "Custom/InvisibleByMaskShader"
 			Tags
 			{
 				"RenderType" = "Transparent"
-				"Queue" = "Transparent-1"
+				"Queue" = "Transparent-2"
 			}
 			Stencil
 			{
 				Ref 2
-				Comp notequal
+				Comp equal
 			}
 			Cull Off
 			Lighting Off
-			ZWrite Off
 			Blend One OneMinusSrcAlpha
 
 			Pass
