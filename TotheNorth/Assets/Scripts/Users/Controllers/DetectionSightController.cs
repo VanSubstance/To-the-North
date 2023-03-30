@@ -52,7 +52,7 @@ namespace Assets.Scripts.Users.Controllers
             RaycastHit2D hit;
             if (hit = Physics2D.Raycast(transform.position, dir,
                 (isAI ? range : (int)InGameStatus.User.Detection.Sight.range),
-                GlobalStatus.Constant.obstacleMask))
+                GlobalStatus.Constant.compositeObstacleMask))
             {
                 return new DetectionSightInfo(true, DistortPoint(globalAngle, hit.point), hit.distance, globalAngle);
             }

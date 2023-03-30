@@ -29,7 +29,7 @@ namespace Assets.Scripts.Creatures.Controllers.Conductions
                         TrackBaseController trackBase = targetTf.GetComponent<TrackBaseController>();
                         if (trackBase.isToMove)
                         {
-                            baseController.MoveToTarget(targetTf.position);
+                            baseController.SetTargetToTrack(targetTf.position);
                         }
                         if (trackBase.isToGaze)
                         {

@@ -35,7 +35,7 @@ namespace Assets.Scripts.Creatures.Controllers.Conductions.Squads
                 if (baseController.GetIsDetected())
                 {
                     // 부대원들에게 타겟 위치 전달
-                    baseController.MoveToTarget((Vector3)baseController.detectPos);
+                    baseController.SetTargetToTrack((Vector3)baseController.detectPos);
                     // 추가로 식별됨
                     timerMemory = timeOfMemory;
                 }
