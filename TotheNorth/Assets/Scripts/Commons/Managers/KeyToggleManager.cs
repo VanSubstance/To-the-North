@@ -1,16 +1,12 @@
+using System;
 using UnityEngine;
 
 public class KeyToggleManager : MonoBehaviour
 {
     [SerializeField]
-    private string keyToToggle;
+    private KeyCode keyToToggle;
     [SerializeField]
     private MonoBehaviourControllByKey modalToControll;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -20,11 +16,23 @@ public class KeyToggleManager : MonoBehaviour
 
     private void TrackKeys()
     {
-        if (keyToToggle != null)
+        try
+        {
             if (Input.GetKeyDown(keyToToggle))
             {
                 modalToControll.ControllByKey(0);
                 return;
             }
+        }
+        catch (NullReferenceException)
+        {
+            // 키 할당 안됨
+        }
+    }
+
+    public void InitContent(KeyCode _keyToToggle, MonoBehaviourControllByKey objectToControll)
+    {
+        keyToToggle = _keyToToggle;
+        modalToControll = objectToControll;
     }
 }

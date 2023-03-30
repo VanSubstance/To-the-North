@@ -1,8 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
-public abstract class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
+public class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
 {
-    public abstract void ControllByKey(int purpose);
+    /// <summary>
+    /// 열기
+    /// </summary>
+    public void Open()
+    {
+        gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// 닫기
+    /// </summary>
+    public void Close()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void ControllByKey(int purpose)
+    {
+        bool toOpen = purpose == 1 ? true : purpose == 2 ? false :
+            gameObject.activeSelf ? false : true;
+        ;
+        gameObject.SetActive(toOpen);
+    }
 }

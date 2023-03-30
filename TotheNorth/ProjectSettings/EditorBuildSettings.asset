@@ -27,6 +27,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Sections/Hospital/Floor_01.unity
     guid: e555c332efa476845968f78f73f0a793
   - enabled: 1
-    path: Assets/Scenes/Editors/SectionEditorScene.unity
-    guid: 4df4a19375617904fa1fbb2492c8a882
+    path: Assets/Scenes/Sections/Home.unity
+    guid: 2b35e32f6350a2d4ea5f9107a25c55ac
   m_configObjects: {}
