@@ -128,6 +128,7 @@ public class CommonGameManager : MonoBehaviour
     {
         float goalOpacity = isFadeIn ? 1.0f : 0.0f, curOpacity = isFadeIn ? 0.0f : 1.0f;
         if (actionBefore != null) actionBefore();
+        targetTf.SetAsLastSibling();
         while (isFadeIn ? curOpacity < goalOpacity : curOpacity > goalOpacity)
         {
             yield return new WaitForSeconds(0.01f);
@@ -145,6 +146,7 @@ public class CommonGameManager : MonoBehaviour
                 targetTf.GetComponent<TextMeshProUGUI>().color.b,
                 curOpacity);
         }
+        targetTf.SetAsFirstSibling();
         if (afterAction != null) afterAction();
     }
 
