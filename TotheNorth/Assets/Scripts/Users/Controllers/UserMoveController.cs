@@ -18,7 +18,6 @@ namespace Assets.Scripts.Users.Controllers
                 GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                 TrackDirection();
                 TrackMovementType();
-                TrackSightZoom(0.01f);
             }
         }
 
@@ -80,28 +79,6 @@ namespace Assets.Scripts.Users.Controllers
             InGameStatus.User.Movement.curMovement = Objects.MovementType.WALK;
         }
 
-        private void TrackSightZoom(float timePass)
-        {
-            if (InGameStatus.User.Detection.Sight.isControllInRealTime)
-            {
-                // 시야 늘어나기
-                if (InGameStatus.User.Detection.Sight.range < InGameStatus.User.Detection.Sight.rangeMax)
-                {
-                    InGameStatus.User.Detection.Sight.range += timePass;
-                    return;
-                }
-            }
-            else
-            {
-                // 시야 줄어들기: 시야 늘어나기의 2배속
-                if (InGameStatus.User.Detection.Sight.range > InGameStatus.User.Detection.Sight.rangeMin)
-                {
-                    InGameStatus.User.Detection.Sight.range -= timePass * 2;
-                    return;
-                }
-            }
-        }
-
         private void SetMouseEvent()
         {
             GlobalStatus.Util.MouseEvent.actionSustain = (mousePos) =>
@@ -115,14 +92,24 @@ namespace Assets.Scripts.Users.Controllers
             GlobalStatus.Util.MouseEvent.Right.setActions(
                 actionDrag: (tr, mousePos) =>
                 {
+                    //CameraTrackControlller.pointDistort +=
+                    //    (mousePos -
+                    //    (CameraTrackControlller.pointDistort * 2)
+                    //    );
                 },
                 actionDown: (tr, mousePos) =>
                 {
                     InGameStatus.User.Detection.Sight.isControllInRealTime = true;
+                    if (CameraTrackControlller.pointDistort.magnitude < 0.1f)
+                    {
+                        CameraTrackControlller.pointDistort =
+                            mousePos - GlobalComponent.Common.userTf.position;
+                    }
                 },
                 actionUp: (tr, mousePos) =>
                 {
                     InGameStatus.User.Detection.Sight.isControllInRealTime = false;
+                    //pointOnFocus = GlobalComponent.Common.userTf.position;
                 }
                 );
         }
