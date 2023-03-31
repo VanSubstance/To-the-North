@@ -7,6 +7,7 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal class UserMoveController : MonoBehaviour
     {
+        private Vector3 pointInitialDown = Vector3.zero;
         void Start()
         {
             SetMouseEvent();
@@ -92,24 +93,20 @@ namespace Assets.Scripts.Users.Controllers
             GlobalStatus.Util.MouseEvent.Right.setActions(
                 actionDrag: (tr, mousePos) =>
                 {
-                    //CameraTrackControlller.pointDistort +=
-                    //    (mousePos -
-                    //    (CameraTrackControlller.pointDistort * 2)
-                    //    );
+                    CameraTrackControlller.targetDir =
+                        (
+                        mousePos - GlobalComponent.Common.userTf.position
+                        )
+                        * 2 / 3f;
                 },
                 actionDown: (tr, mousePos) =>
                 {
                     InGameStatus.User.Detection.Sight.isControllInRealTime = true;
-                    if (CameraTrackControlller.pointDistort.magnitude < 0.1f)
-                    {
-                        CameraTrackControlller.pointDistort =
-                            mousePos - GlobalComponent.Common.userTf.position;
-                    }
                 },
                 actionUp: (tr, mousePos) =>
                 {
                     InGameStatus.User.Detection.Sight.isControllInRealTime = false;
-                    //pointOnFocus = GlobalComponent.Common.userTf.position;
+                    CameraTrackControlller.targetDir = Vector3.zero;
                 }
                 );
         }

@@ -18,7 +18,7 @@ namespace Assets.Scripts.Commons.Constants
                 public static int curdegree = 0;
                 public static float spdWalk = 2f;
                 public static float weightRun = 3.5f;
-                public static float weightCrouch = 0.5f;
+                public static float weightCrouch = 1.5f;
                 public static MovementType curMovement = MovementType.WALK;
             }
             public static class Detection
