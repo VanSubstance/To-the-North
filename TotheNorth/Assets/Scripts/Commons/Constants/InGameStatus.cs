@@ -18,7 +18,7 @@ namespace Assets.Scripts.Commons.Constants
                 public static int curdegree = 0;
                 public static float spdWalk = 2f;
                 public static float weightRun = 3.5f;
-                public static float weightCrouch = 0.5f;
+                public static float weightCrouch = 1.5f;
                 public static MovementType curMovement = MovementType.WALK;
             }
             public static class Detection
@@ -30,9 +30,9 @@ namespace Assets.Scripts.Commons.Constants
                 }
                 public static class Sight
                 {
-                    public static float rangeMin = 6.0f;
-                    public static float rangeMax = 10.0f;
-                    public static float range = 6.0f;
+                    public static float rangeMin = 45.0f;
+                    public static float rangeMax = 60.0f;
+                    public static float range = 45.0f;
                     public static int degree = 90;
                     public static bool isControllInRealTime = false;
                 }
