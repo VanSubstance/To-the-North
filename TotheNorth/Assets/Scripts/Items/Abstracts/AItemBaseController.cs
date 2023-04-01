@@ -38,6 +38,7 @@ namespace Assets.Scripts.Items.Abstracts
             isMouseIn = false;
             // BoxCollider2D에 RectTransform 사이즈 대입
             objCollider.size = objTF.sizeDelta;
+            objCollider.offset = new Vector2(objTF.sizeDelta.x / 2f, objTF.sizeDelta.y / -2f);
             // 시작 curSlot 초기화 (ray 사용, rayPos = 게임오브젝트 좌상단 기준 30f, -30f)
             rayPos = transform.TransformPoint(new Vector2(30f, -30f));
             RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask);
@@ -174,14 +175,17 @@ namespace Assets.Scripts.Items.Abstracts
                 image.rectTransform.rotation = Quaternion.Euler(0, 0, 0);
             else
                 image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f);
-            // recttransform.size 변경
+            // itemsize 변경
             int tempSize;
             tempSize = itemSizeCol;
             itemSizeCol = itemSizeRow;
             itemSizeRow = tempSize;
-            // BoxCollider2D.size 변경
+            // recttransform.sizeDelta 변경
             objTF.sizeDelta = new Vector2(objTF.sizeDelta.y, objTF.sizeDelta.x);
+            // BoxCollider2D.size 변경
             objCollider.size = objTF.sizeDelta;
+            // BoxCollider2D.offset 변경
+            objCollider.offset = new Vector2(objTF.sizeDelta.x / 2f, objTF.sizeDelta.y / -2f);
             // isRotate 변경
             isRotate = !isRotate;
         }
@@ -272,7 +276,7 @@ namespace Assets.Scripts.Items.Abstracts
             isMouseIn = false;
             if (false)
             {
-                ExecuteDoubleClick();
+                // ExecuteDoubleClick();
             }
             // 뭐가 되었던 조건을 만족해서 더블클릭 이벤트가 실행되어야됨
         }
