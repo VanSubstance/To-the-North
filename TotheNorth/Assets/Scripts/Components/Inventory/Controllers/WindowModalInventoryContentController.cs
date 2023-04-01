@@ -7,6 +7,7 @@ public class WindowModalInventoryContentController : AWindowBaseContentControlle
     public GameObject itemPrefabSmall;
     public GameObject itemPrefabBig;
     public GameObject itemPrefabDrumTong;
+    public GameObject itemPrefabGarodeung;
     public Transform slotParentTF;
     public Transform itemParentTF;
     private bool isInit = false;
@@ -32,6 +33,11 @@ public class WindowModalInventoryContentController : AWindowBaseContentControlle
         item4.transform.position = new Vector3
             (InventoryManager.inventorySlots[0, 4].transform.position.x,
             InventoryManager.inventorySlots[0, 4].transform.position.y,
+            itemParentTF.transform.position.z);
+        GameObject item5 = Instantiate(itemPrefabGarodeung, itemParentTF);
+        item5.transform.position = new Vector3
+            (InventoryManager.inventorySlots[0, 1].transform.position.x,
+            InventoryManager.inventorySlots[0, 1].transform.position.y,
             itemParentTF.transform.position.z);
     }
 
