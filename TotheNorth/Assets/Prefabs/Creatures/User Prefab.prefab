@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2578153080461871935}
   - component: {fileID: 4988645447277394040}
   - component: {fileID: 5485055777210235424}
+  - component: {fileID: 4542317681260671757}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -114,6 +115,19 @@ PolygonCollider2D:
       - {x: -0.14999999, y: -0.074999996}
       - {x: 0.14999999, y: -0.074999996}
       - {x: 0.14999999, y: 0.074999996}
+--- !u!114 &4542317681260671757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926616948561113492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f0db985a4706545a119d69ea87b8e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partType: 3
 --- !u!1 &1133155643983624260
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,6 +222,7 @@ GameObject:
   - component: {fileID: 4809824345933771060}
   - component: {fileID: 1893838643336545808}
   - component: {fileID: 2374051839105540126}
+  - component: {fileID: 4448029350648950634}
   m_Layer: 0
   m_Name: Leg
   m_TagString: Untagged
@@ -311,6 +326,19 @@ PolygonCollider2D:
       - {x: -0.14999999, y: -0.074999996}
       - {x: 0.14999999, y: -0.074999996}
       - {x: 0.14999999, y: 0.074999996}
+--- !u!114 &4448029350648950634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2962276437040195034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f0db985a4706545a119d69ea87b8e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partType: 4
 --- !u!1 &6306668364247234776
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,6 +350,7 @@ GameObject:
   - component: {fileID: 1313630112235600832}
   - component: {fileID: 8590788976076704649}
   - component: {fileID: 8333635298822063324}
+  - component: {fileID: 6518751263811543322}
   m_Layer: 0
   m_Name: Mask
   m_TagString: Untagged
@@ -425,6 +454,19 @@ PolygonCollider2D:
       - {x: -0.19999999, y: -0.125}
       - {x: 0.19999999, y: -0.125}
       - {x: 0.19999999, y: 0.125}
+--- !u!114 &6518751263811543322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6306668364247234776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f0db985a4706545a119d69ea87b8e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partType: 1
 --- !u!1 &6429554904387979475
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,6 +561,7 @@ GameObject:
   - component: {fileID: 166081704741057991}
   - component: {fileID: 7381122677259776154}
   - component: {fileID: 6427295596033457877}
+  - component: {fileID: 2458660985210682592}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -622,6 +665,19 @@ PolygonCollider2D:
       - {x: -0.25, y: -0.225}
       - {x: 0.25, y: -0.225}
       - {x: 0.25, y: 0.225}
+--- !u!114 &2458660985210682592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6764490162082341485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f0db985a4706545a119d69ea87b8e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partType: 2
 --- !u!1 &7249881555880525497
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,8 +880,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7249881556285147604}
+  - component: {fileID: 2257120907246108541}
   m_Layer: 0
-  m_Name: Body
+  m_Name: Hits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -851,6 +908,18 @@ Transform:
   m_Father: {fileID: 7249881556927368018}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2257120907246108541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249881556285147605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fae608f49bc4a2743a5c33337e67d6bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7249881556289987574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1113,8 +1182,9 @@ GameObject:
   - component: {fileID: 2458711080911195292}
   - component: {fileID: 224589011866948135}
   - component: {fileID: 4733588073593473125}
+  - component: {fileID: 5314353772199047631}
   m_Layer: 0
-  m_Name: Helmat
+  m_Name: Helmet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1218,3 +1288,16 @@ PolygonCollider2D:
       - {x: -0.14540318, y: -0.07343498}
       - {x: 0.29999998, y: -0.07620907}
       - {x: 0.29999998, y: 0.225}
+--- !u!114 &5314353772199047631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7366838254005230403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f0db985a4706545a119d69ea87b8e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partType: 0
