@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Items.Abstracts
 {
@@ -9,7 +11,7 @@ namespace Assets.Scripts.Items.Abstracts
     /// 마우스 위에서 유지: 정보 뜨기
     /// 더블클릭: 추후 추상 구현
     /// </summary>
-    public abstract class AItemBaseController : MonoBehaviour
+    public abstract class AItemBaseController<TContent> : MonoBehaviour
     {
         [SerializeField]
         InventorySlotController curSlot;
@@ -17,18 +19,25 @@ namespace Assets.Scripts.Items.Abstracts
 
         public int itemSizeRow;
         public int itemSizeCol;
+        public bool isRotate;
 
         private Vector2 rayPos;
         private bool isMouseIn;
         private RectTransform objTF;
+        private BoxCollider2D objCollider;
+        private Image image;
+
+        public TContent content;
 
         private void Start()
         {
+            image = GetComponentInChildren<Image>();
             objTF = GetComponent<RectTransform>();
+            objCollider = GetComponent<BoxCollider2D>();
             // 초기화
             isMouseIn = false;
             // BoxCollider2D에 RectTransform 사이즈 대입
-            GetComponent<BoxCollider2D>().size = GetComponent<RectTransform>().sizeDelta;
+            objCollider.size = objTF.sizeDelta;
             // 시작 curSlot 초기화 (ray 사용, rayPos = 게임오브젝트 좌상단 기준 30f, -30f)
             rayPos = transform.TransformPoint(new Vector2(30f, -30f));
             RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask);
@@ -123,7 +132,18 @@ namespace Assets.Scripts.Items.Abstracts
             {
                 for (int j = 0; j < itemSizeRow; j++)
                 {
-                    InventoryManager.inventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
+                    try
+                    {
+                        InventoryManager.inventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
+                    }
+                    catch (System.NullReferenceException)
+                    {
+                        return;
+                    }
+                    catch (System.IndexOutOfRangeException)
+                    {
+                        return;
+                    }
                 }
             }
         }
@@ -139,16 +159,48 @@ namespace Assets.Scripts.Items.Abstracts
             ItemAttach(curSlot);
         }
 
+        /// <summary>
+        /// 아이템 회전
+        /// </summary>
+        public void ItemRotate()
+        {
+            // 돌리는 의미가 없는 아이템이면 return
+            if (itemSizeRow == itemSizeCol)
+                return;
+            // 아이템 하단의 흰색 칸 헤제
+            UnCheckReady(readySlot);
+            // 현재 돌아가 있는지 확인해서 방향 결정
+            if (isRotate)
+                image.rectTransform.rotation = Quaternion.Euler(0, 0, 0);
+            else
+                image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f);
+            // recttransform.size 변경
+            int tempSize;
+            tempSize = itemSizeCol;
+            itemSizeCol = itemSizeRow;
+            itemSizeRow = tempSize;
+            // BoxCollider2D.size 변경
+            objTF.sizeDelta = new Vector2(objTF.sizeDelta.y, objTF.sizeDelta.x);
+            objCollider.size = objTF.sizeDelta;
+            // isRotate 변경
+            isRotate = !isRotate;
+        }
+
         private void OnMouseDown()
         {
             isMouseIn = true;
             ItemDetach(curSlot);
+            objTF.SetAsLastSibling();
         }
 
         private void OnMouseDrag()
         {
             if (isMouseIn)
             {
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    ItemRotate();
+                }
                 objTF.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 objTF.localPosition = new Vector3(
                     objTF.localPosition.x - (transform.GetComponent<BoxCollider2D>().size.x / 2),
@@ -185,6 +237,7 @@ namespace Assets.Scripts.Items.Abstracts
                 else
                 {
                     UnCheckReady(readySlot);
+                    readySlot = null;
                 }
             }
         }
@@ -197,9 +250,10 @@ namespace Assets.Scripts.Items.Abstracts
                 RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask);
                 if (hit.collider)
                 {
+                    // 아이템 사이즈 체크
                     if (ItemSizeCheck(hit.transform.GetComponent<InventorySlotController>()))
                     {
-                        // 칸 조건은 만족
+                        // 아이템 태그 체크
                         if (CheckItemTag())
                         {
                             ItemAttach(hit.transform.GetComponent<InventorySlotController>());
@@ -222,6 +276,23 @@ namespace Assets.Scripts.Items.Abstracts
             }
             // 뭐가 되었던 조건을 만족해서 더블클릭 이벤트가 실행되어야됨
         }
+        public void InitContent(TContent content)
+        {
+            try
+            {
+                SetImage(((ItemBaseInfo)(object)content).imagePath);
+                InitExtraContent(content);
+            }
+            catch (InvalidCastException)
+            {
+                // 들어온 TContent가 안맞음
+            }
+        }
+
+        private void SetImage(string imagePath)
+        {
+            image.sprite = Resources.Load<Sprite>(imagePath);
+        }
 
         /// <summary>
         /// 아이템을 사용하는 함수
@@ -233,5 +304,8 @@ namespace Assets.Scripts.Items.Abstracts
         /// </summary>
         /// <returns></returns>
         protected abstract bool CheckItemTag();
+
+
+        protected abstract void InitExtraContent(TContent content);
     }
 }
