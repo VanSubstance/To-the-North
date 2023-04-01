@@ -7,7 +7,6 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal class UserMoveController : MonoBehaviour
     {
-        private Vector3 pointInitialDown = Vector3.zero;
         void Start()
         {
             SetMouseEvent();
@@ -24,26 +23,34 @@ namespace Assets.Scripts.Users.Controllers
 
         private void TrackDirection()
         {
+            float spdW = GetMovementSpd();
+            Vector3 vecHor = Vector3.zero, vecVer = Vector3.zero;
             if (Input.GetKey(KeyCode.A))
             {
                 // 왼쪽
-                transform.Translate(Vector3.left * GetMovementSpd() * Time.deltaTime);
+                transform.Translate(Vector3.left * spdW * Time.deltaTime);
+                vecHor += Vector3.left;
             }
             if (Input.GetKey(KeyCode.S))
             {
                 // 아래쪽
-                transform.Translate(Vector3.down * GetMovementSpd() * Time.deltaTime);
+                transform.Translate(Vector3.down * spdW * Time.deltaTime);
+                vecVer += Vector3.down;
             }
             if (Input.GetKey(KeyCode.D))
             {
                 // 오른쪽
-                transform.Translate(Vector3.right * GetMovementSpd() * Time.deltaTime);
+                transform.Translate(Vector3.right * spdW * Time.deltaTime);
+                vecVer += Vector3.right;
             }
             if (Input.GetKey(KeyCode.W))
             {
                 // 위쪽
-                transform.Translate(Vector3.up * GetMovementSpd() * Time.deltaTime);
+                transform.Translate(Vector3.up * spdW * Time.deltaTime);
+                vecVer += Vector3.up;
             }
+            CameraTrackControlller.headHorPos = vecHor * spdW;
+            CameraTrackControlller.headVerPos = vecVer * spdW;
         }
 
         private float GetMovementSpd()
@@ -93,7 +100,7 @@ namespace Assets.Scripts.Users.Controllers
             GlobalStatus.Util.MouseEvent.Right.setActions(
                 actionDrag: (tr, mousePos) =>
                 {
-                    CameraTrackControlller.targetDir =
+                    CameraTrackControlller.targetPos =
                         (
                         mousePos - GlobalComponent.Common.userTf.position
                         )
@@ -106,7 +113,7 @@ namespace Assets.Scripts.Users.Controllers
                 actionUp: (tr, mousePos) =>
                 {
                     InGameStatus.User.Detection.Sight.isControllInRealTime = false;
-                    CameraTrackControlller.targetDir = Vector3.zero;
+                    CameraTrackControlller.targetPos = Vector3.zero;
                 }
                 );
         }
