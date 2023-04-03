@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 953080142591831872}
   - component: {fileID: 953080142591831879}
-  - component: {fileID: 953080142591831878}
   - component: {fileID: 953080142591831877}
   m_Layer: 0
   m_Name: Static Game Manager
@@ -52,18 +51,6 @@ MonoBehaviour:
   pauseWindowPrefab: {fileID: 7281323908136239569, guid: f194450c91ac440429601d268bfc8acf, type: 3}
   inventoryWindowPrefab: {fileID: 871546784933313922, guid: 82f3db5dfd3cd094793ee5463c43f00f, type: 3}
   panelForLeftTop: {fileID: 3041732497763416503, guid: f2a42ee29987fc24885b1c99d9609683, type: 3}
---- !u!114 &953080142591831878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953080142591831897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d12402740dc2dd47a8d5a329b593df6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &953080142591831877
 MonoBehaviour:
   m_ObjectHideFlags: 0

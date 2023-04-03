@@ -8,10 +8,6 @@ namespace Assets.Scripts.Users.Controllers
         [SerializeField]
         Transform body;
         private float secForRecoverStamina = 0;
-        void Start()
-        {
-            SetMouseEvent();
-        }
         private void Update()
         {
             if (!InGameStatus.User.isPause)
@@ -130,37 +126,6 @@ namespace Assets.Scripts.Users.Controllers
                 return;
             }
             secForRecoverStamina += Time.deltaTime;
-        }
-
-        private void SetMouseEvent()
-        {
-            GlobalStatus.Util.MouseEvent.actionSustain = (mousePos) =>
-            {
-                if (!InGameStatus.User.isPause)
-                {
-                    InGameStatus.User.Movement.curdegree = (int)
-                    Vector3.SignedAngle(Vector3.right, new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized, transform.forward);
-                }
-            };
-            GlobalStatus.Util.MouseEvent.Right.setActions(
-                actionDrag: (tr, mousePos) =>
-                {
-                    CameraTrackControlller.targetPos =
-                        (
-                        mousePos - GlobalComponent.Common.userTf.position
-                        )
-                        * 2 / 3f;
-                },
-                actionDown: (tr, mousePos) =>
-                {
-                    InGameStatus.User.Detection.Sight.isControllInRealTime = true;
-                },
-                actionUp: (tr, mousePos) =>
-                {
-                    InGameStatus.User.Detection.Sight.isControllInRealTime = false;
-                    CameraTrackControlller.targetPos = Vector3.zero;
-                }
-                );
         }
     }
 
