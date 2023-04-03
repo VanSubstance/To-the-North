@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Components.Progress.Interfaces;
 using UnityEngine;
 
-namespace Assets.Scripts.Components.Progress.Controllers
+namespace Assets.Scripts.Components.Progress
 {
     internal class ProgressBarController : MonoBehaviour, IProgress
     {

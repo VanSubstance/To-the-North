@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Assets.Scripts.Components.Progress;
 using Assets.Scripts.Users.Objects;
 
 namespace Assets.Scripts.Commons.Constants
@@ -12,6 +8,12 @@ namespace Assets.Scripts.Commons.Constants
         public static class User
         {
             public static bool isPause = false;
+
+            public static class status
+            {
+                public static BarBaseController hp;
+                public static BarBaseController stamina;
+            }
             public static class Movement
             {
                 /** 현재 바라보고 있는 시야 방향 각도 */

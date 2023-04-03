@@ -1,37 +1,31 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Components
+namespace Assets.Scripts.Components.Progress
 {
-    class BarBaseController : MonoBehaviour
+    public class BarBaseController : MonoBehaviour
     {
         [SerializeField]
         private RectTransform currentTf;
         [SerializeField]
-        [Range(0, 1)]
-        private float test;
-        [SerializeField]
         private Color barColor;
+
+        private ProgressInfo info;
 
         private void Awake()
         {
             currentTf.GetComponent<Image>().color = barColor;
+            info = new ProgressInfo(100);
         }
-
         private void Update()
         {
-            SetCurrent(test);
+            currentTf.anchorMax = new Vector2(info.GetCurrentPercent(), 1);
+            currentTf.offsetMax = Vector2.zero;
         }
 
-        public void SetCurrent(float current)
+        public void AddCurrent(int value)
         {
-            currentTf.anchorMax = new Vector2(current, 1);
-            currentTf.offsetMax = Vector2.zero;
+            info.curValue += value;
         }
     }
 }
