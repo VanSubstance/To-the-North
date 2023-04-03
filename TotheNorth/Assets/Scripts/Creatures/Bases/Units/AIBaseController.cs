@@ -163,7 +163,13 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void ControllHpBar()
         {
-            hpBarTf.position = transform.position + (Vector3.up * 2);
+            try
+            {
+                hpBarTf.position = transform.position + (Vector3.up * 2);
+            } catch (NullReferenceException)
+            {
+                // 체력바 없음
+            }
         }
 
         /// <summary>

@@ -68,7 +68,7 @@ namespace Assets.Scripts.Users.Controllers
             }
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
             List<Collider2D> targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask).ToList();
-            targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.creatureMask));
+            //targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.creatureMask));
             for (int i = 0; i < targetsInViewRadius.Count; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
