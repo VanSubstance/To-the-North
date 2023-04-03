@@ -7,8 +7,9 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
 {
     internal class MonsterBaseController : AIBaseController
     {
-        public float timeOfMemory = 1f;
-        public float secMemory = 0f;
+        private float timeOfMemory = 1f;
+        private float secMemory = 0f;
+
         /// <summary>
         /// 유저를 식별하였을 때 작동하는 함수
         /// </summary>

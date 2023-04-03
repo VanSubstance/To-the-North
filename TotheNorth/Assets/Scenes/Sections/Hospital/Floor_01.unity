@@ -1630,6 +1630,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7865440330523968143, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
+      propertyPath: info
+      value: 
+      objectReference: {fileID: 11400000, guid: abe18b6cfa722824ba68ab9ac5ff7750, type: 2}
+    - target: {fileID: 7865440330523968143, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
       propertyPath: atkRange
       value: 5
       objectReference: {fileID: 0}

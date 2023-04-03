@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Threading;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Conductions;
 using Assets.Scripts.Creatures.Controllers;
@@ -12,8 +11,8 @@ namespace Assets.Scripts.Creatures.Bases
 {
     internal abstract class AIBaseController : MonoBehaviour
     {
-        public float atkRange = 5f, moveSpd = 3;
-        private float moveDis = 3f;
+        [SerializeField]
+        private CreatureInfo info;
 
         public AIStatusType statusType = AIStatusType.Petrol;
         public Vector3? targetToMove, targetToGaze, targetPos, vectorToMove;
@@ -45,12 +44,14 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void Awake()
         {
+            if (info == null) Destroy(gameObject);
+            info = new CreatureInfo(info);
             Transform temp = transform.Find("Detection Controller");
             passiveController = temp.Find("Passive").GetComponent<DetectionPassiveController>();
             sightController = temp.Find("Sight").GetComponent<DetectionSightController>();
             passiveController.SetAIBaseController(this);
             sightController.SetAIBaseController(this);
-            sightController.range = atkRange;
+            sightController.range = info.atkRange;
         }
 
         private void Update()
@@ -94,7 +95,7 @@ namespace Assets.Scripts.Creatures.Bases
                     return;
                 }
                 // 도달 목표에 도달했는지
-                if (Vector2.Distance(transform.position, (Vector3)targetPos) < (isForce ? forcingDis : atkRange))
+                if (Vector2.Distance(transform.position, (Vector3)targetPos) < (isForce ? forcingDis : info.atkRange))
                 {
                     vectorToMove = null;
                     if (isOrderMoveDone && timeStayForMove > 0)
@@ -125,7 +126,7 @@ namespace Assets.Scripts.Creatures.Bases
                 }
                 transform.Translate(
                     (((Vector3)vectorToMove).normalized + vectorToDistort)
-                    * moveSpd * Time.deltaTime);
+                    * info.moveSpd * Time.deltaTime);
             }
         }
 
@@ -269,7 +270,7 @@ namespace Assets.Scripts.Creatures.Bases
             if (targetPos == null) return;
             Vector3 _targetPos = (Vector3)targetPos;
             Vector3 originPos = transform.position;
-            if (Vector3.Distance(originPos, _targetPos) < (isForce ? forcingDis : atkRange))
+            if (Vector3.Distance(originPos, _targetPos) < (isForce ? forcingDis : info.atkRange))
             {
                 // 현재 타겟이 사거리 내에 있다
                 //Debug.Log("사거리안에있음");
@@ -282,7 +283,7 @@ namespace Assets.Scripts.Creatures.Bases
                 }
                 // targetPos가 이동 가능한 위치에 있음
                 RaycastHit2D obsHit;
-                if (!(obsHit = Physics2D.Raycast(originPos, (_targetPos - originPos), atkRange, GlobalStatus.Constant.compositeObstacleMask)))
+                if (!(obsHit = Physics2D.Raycast(originPos, (_targetPos - originPos), info.atkRange, GlobalStatus.Constant.compositeObstacleMask)))
                 {
                     // 조준 가능
                     targetPos = null;
@@ -321,7 +322,7 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     // 장애물 없음
                     Vector3 dirVec = (targetPos - originPos).normalized;
-                    return targetPos - (dirVec * (isForce ? 0 : moveDis));
+                    return targetPos - (dirVec * (isForce ? 0 : info.moveDis));
                 }
             }
             // 장애물 있음
@@ -352,11 +353,11 @@ namespace Assets.Scripts.Creatures.Bases
                     }
                     if ((bool)isUpward)
                     {
-                        return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), moveDis) + originPos;
+                        return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), info.moveDis) + originPos;
                     }
                     else
                     {
-                        return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), moveDis) + originPos;
+                        return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), info.moveDis) + originPos;
                     }
                 }
                 // 아래가 더 짧다 = 아래로 우회
@@ -366,11 +367,11 @@ namespace Assets.Scripts.Creatures.Bases
                 }
                 if (!(bool)isUpward)
                 {
-                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), moveDis) + originPos;
+                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), info.moveDis) + originPos;
                 }
                 else
                 {
-                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), moveDis) + originPos;
+                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), info.moveDis) + originPos;
                 }
             }
             float[] valByTarget = GetAnglesAndDistanceMeetsObstacle(targetPos, angR, curObsTf);
@@ -391,11 +392,11 @@ namespace Assets.Scripts.Creatures.Bases
                         }
                         if ((bool)isUpward)
                         {
-                            return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), moveDis) + originPos;
+                            return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), info.moveDis) + originPos;
                         }
                         else
                         {
-                            return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), moveDis) + originPos;
+                            return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), info.moveDis) + originPos;
                         }
                     }
                 }
@@ -406,11 +407,11 @@ namespace Assets.Scripts.Creatures.Bases
                 }
                 if (!(bool)isUpward)
                 {
-                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), moveDis) + originPos;
+                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), info.moveDis) + originPos;
                 }
                 else
                 {
-                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), moveDis) + originPos;
+                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), info.moveDis) + originPos;
                 }
             }
             if (disCompare != -1)
@@ -422,11 +423,11 @@ namespace Assets.Scripts.Creatures.Bases
                 if ((bool)isUpward)
                 {
                     // 위만 가능
-                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), moveDis) + originPos;
+                    return CalculationFunctions.DirFromAngle(valByOrigin[0]) * Math.Min((valByOrigin[1] + 0.5f), info.moveDis) + originPos;
                 }
                 else
                 {
-                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), moveDis) + originPos;
+                    return CalculationFunctions.DirFromAngle(valByOrigin[2]) * Math.Min((valByOrigin[3] + 0.5f), info.moveDis) + originPos;
                 }
             }
             // 타겟 위치 옮겨서 다시 계산
