@@ -7,6 +7,7 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal class UserMoveController : MonoBehaviour
     {
+        private float secForRecoverStamina = 0;
         void Start()
         {
             SetMouseEvent();
@@ -18,6 +19,7 @@ namespace Assets.Scripts.Users.Controllers
                 GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                 TrackDirection();
                 TrackMovementType();
+                TrackStamina();
             }
         }
 
@@ -65,7 +67,14 @@ namespace Assets.Scripts.Users.Controllers
                 case Objects.MovementType.WALK:
                     return InGameStatus.User.Movement.spdWalk;
                 case Objects.MovementType.RUN:
-                    return InGameStatus.User.Movement.spdWalk * InGameStatus.User.Movement.weightRun;
+                    if (InGameStatus.User.status.stamina.GetCurrent() > 0)
+                    {
+                        return InGameStatus.User.Movement.spdWalk * InGameStatus.User.Movement.weightRun;
+                    }
+                    else
+                    {
+                        return InGameStatus.User.Movement.spdWalk;
+                    }
                 case Objects.MovementType.CROUCH:
                     return InGameStatus.User.Movement.spdWalk * InGameStatus.User.Movement.weightCrouch;
             }
@@ -85,6 +94,24 @@ namespace Assets.Scripts.Users.Controllers
                 return;
             }
             InGameStatus.User.Movement.curMovement = Objects.MovementType.WALK;
+        }
+
+        private void TrackStamina()
+        {
+            if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
+            {
+                secForRecoverStamina = 0;
+                InGameStatus.User.status.stamina.AddCurrent(-Time.deltaTime * 20);
+                return;
+            }
+            if (secForRecoverStamina > 2)
+            {
+                // 마지막으로 뛴 순간으로부터 2초 후
+                // = 스테미나 회복 시작
+                InGameStatus.User.status.stamina.AddCurrent(Time.deltaTime * 10);
+                return;
+            }
+            secForRecoverStamina += Time.deltaTime;
         }
 
         private void SetMouseEvent()

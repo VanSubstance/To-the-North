@@ -2,8 +2,8 @@ namespace Assets.Scripts.Components.Progress
 {
     public class ProgressInfo
     {
-        public int maxValue, curValue;
-        public ProgressInfo(int _maxValue)
+        public float maxValue, curValue;
+        public ProgressInfo(float _maxValue)
         {
             maxValue = _maxValue;
             curValue = _maxValue;
@@ -11,7 +11,7 @@ namespace Assets.Scripts.Components.Progress
 
         public float GetCurrentPercent()
         {
-            return curValue / (float)maxValue;
+            return curValue / maxValue;
         }
     }
 }

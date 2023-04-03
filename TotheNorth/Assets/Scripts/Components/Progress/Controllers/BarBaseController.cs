@@ -23,9 +23,26 @@ namespace Assets.Scripts.Components.Progress
             currentTf.offsetMax = Vector2.zero;
         }
 
-        public void AddCurrent(int value)
+        /// <summary>
+        /// 수치 변화
+        /// </summary>
+        /// <param name="value">더할 값</param>
+        public void AddCurrent(float value)
         {
             info.curValue += value;
+            if (info.curValue < 0)
+            {
+                info.curValue = 0;
+            }
+        }
+
+        /// <summary>
+        /// 현재 값 반환
+        /// </summary>
+        /// <returns></returns>
+        public float GetCurrent()
+        {
+            return info.curValue;
         }
     }
 }
