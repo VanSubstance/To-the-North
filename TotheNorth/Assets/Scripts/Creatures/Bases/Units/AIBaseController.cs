@@ -13,6 +13,7 @@ namespace Assets.Scripts.Creatures.Bases
     {
         [SerializeField]
         private CreatureInfo info;
+        private bool isInit = false;
 
         public AIStatusType statusType = AIStatusType.Petrol;
         public Vector3? targetToMove, targetToGaze, targetPos, vectorToMove;
@@ -44,16 +45,40 @@ namespace Assets.Scripts.Creatures.Bases
             isUpward = null;
         }
 
+        /// <summary>
+        /// 오브젝트 풀링 = 재활용을 위한 함수
+        /// </summary>
+        /// <param name="_info"></param>
+        public void InitCreature(CreatureInfo _info)
+        {
+            info = CreatureInfo.GetClone(_info);
+            gameObject.SetActive(true);
+        }
+
         private void Awake()
         {
-            if (info == null) Destroy(gameObject);
-            info = CreatureInfo.GetClone(info);
             Transform temp = transform.Find("Detection Controller");
             passiveController = temp.Find("Passive").GetComponent<DetectionPassiveController>();
             sightController = temp.Find("Sight").GetComponent<DetectionSightController>();
             passiveController.SetAIBaseController(this);
             sightController.SetAIBaseController(this);
+            if (info == null) OnDisable();
+            else OnEnable();
+        }
+
+        private void OnEnable()
+        {
+            if (isInit) return;
+            info = CreatureInfo.GetClone(info);
             sightController.range = info.atkRange;
+            isInit = true;
+        }
+
+        private void OnDisable()
+        {
+            sightController.range = 0;
+            info = null;
+            isInit = false;
         }
 
         private void Update()
@@ -166,7 +191,8 @@ namespace Assets.Scripts.Creatures.Bases
             try
             {
                 hpBarTf.position = transform.position + (Vector3.up * 2);
-            } catch (NullReferenceException)
+            }
+            catch (NullReferenceException)
             {
                 // 체력바 없음
             }

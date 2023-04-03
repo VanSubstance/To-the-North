@@ -9,8 +9,8 @@ namespace Assets.Scripts.Creatures
         [SerializeField]
         private int maxHp;
 
-        public ProgressInfo hp;
         public float atkRange = 5f, moveSpd = 3f, moveDis = 3f;
+        public ProgressInfo hp = null;
 
         public static CreatureInfo GetClone(CreatureInfo _data)
         {
