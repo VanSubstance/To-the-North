@@ -33,6 +33,12 @@ namespace Assets.Scripts.Components.Progress
             if (info.curValue < 0)
             {
                 info.curValue = 0;
+                return;
+            }
+            if (info.curValue > info.maxValue)
+            {
+                info.curValue = info.maxValue;
+                return;
             }
         }
 

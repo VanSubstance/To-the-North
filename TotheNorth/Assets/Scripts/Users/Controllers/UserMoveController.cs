@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Assets.Scripts.Commons.Constants;
 using UnityEngine;
 
@@ -7,6 +5,8 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal class UserMoveController : MonoBehaviour
     {
+        [SerializeField]
+        Transform body;
         private float secForRecoverStamina = 0;
         void Start()
         {
@@ -17,9 +17,27 @@ namespace Assets.Scripts.Users.Controllers
             if (!InGameStatus.User.isPause)
             {
                 GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                TrackCursor();
                 TrackDirection();
                 TrackMovementType();
                 TrackStamina();
+            }
+        }
+
+        private void TrackCursor()
+        {
+            if (
+                -90 < InGameStatus.User.Movement.curdegree &&
+                InGameStatus.User.Movement.curdegree <= 90
+                )
+            {
+                // 오른쪽
+                body.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            else
+            {
+                // 왼쪽
+                body.rotation = Quaternion.Euler(0, 180, 0);
             }
         }
 
