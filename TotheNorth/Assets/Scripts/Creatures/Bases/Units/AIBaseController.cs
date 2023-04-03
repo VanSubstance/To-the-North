@@ -27,6 +27,8 @@ namespace Assets.Scripts.Creatures.Bases
 
         private readonly float forcingDis = 2f;
 
+        private Transform hpBarTf;
+
         /// <summary>
         /// 현재 목표 타겟 좌표 설정
         /// 이동 종료 후 대기 시간 설정
@@ -45,7 +47,7 @@ namespace Assets.Scripts.Creatures.Bases
         private void Awake()
         {
             if (info == null) Destroy(gameObject);
-            info = new CreatureInfo(info);
+            info = CreatureInfo.GetClone(info);
             Transform temp = transform.Find("Detection Controller");
             passiveController = temp.Find("Passive").GetComponent<DetectionPassiveController>();
             sightController = temp.Find("Sight").GetComponent<DetectionSightController>();
@@ -62,6 +64,7 @@ namespace Assets.Scripts.Creatures.Bases
                 ControllMovement();
                 ControllGaze();
                 ControllIdle();
+                ControllHpBar();
             }
         }
 
@@ -156,6 +159,11 @@ namespace Assets.Scripts.Creatures.Bases
                     return;
                 }
             }
+        }
+
+        private void ControllHpBar()
+        {
+            hpBarTf.position = transform.position + (Vector3.up * 2);
         }
 
         /// <summary>
@@ -528,6 +536,11 @@ namespace Assets.Scripts.Creatures.Bases
                 SetTargetToTrack();
                 yield return new WaitForSeconds(1f);
             }
+        }
+
+        public void SetHpBar(Transform _hpBarTf)
+        {
+            hpBarTf = _hpBarTf;
         }
 
         public abstract void OnDetectUser(Transform targetTf);

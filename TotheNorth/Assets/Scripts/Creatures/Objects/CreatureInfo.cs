@@ -12,15 +12,14 @@ namespace Assets.Scripts.Creatures
         public ProgressInfo hp;
         public float atkRange = 5f, moveSpd = 3f, moveDis = 3f;
 
-        public CreatureInfo()
+        public static CreatureInfo GetClone(CreatureInfo _data)
         {
-        }
-        public CreatureInfo(CreatureInfo _data)
-        {
-            hp = new ProgressInfo(_data.maxHp);
-            atkRange = _data.atkRange;
-            moveSpd = _data.moveSpd;
-            moveDis = _data.moveDis;
+            CreatureInfo res = CreateInstance<CreatureInfo>();
+            res.hp = new ProgressInfo(_data.maxHp);
+            res.atkRange = _data.atkRange;
+            res.moveSpd = _data.moveSpd;
+            res.moveDis = _data.moveDis;
+            return res;
         }
     }
 }
