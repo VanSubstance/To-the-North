@@ -4,7 +4,8 @@ namespace Assets.Scripts.Battles.Managers
 {
     internal class ProjectileManager : MonoBehaviour
     {
-
+        [SerializeField]
+        private Transform projectilePrefab;
 
         // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
         private static ProjectileManager _instance;
@@ -38,6 +39,13 @@ namespace Assets.Scripts.Battles.Managers
             }
             // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
             DontDestroyOnLoad(gameObject);
+            if (transform.childCount == 0)
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    Instantiate(projectilePrefab, transform);
+                }
+            }
         }
     }
 }

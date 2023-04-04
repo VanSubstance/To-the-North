@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0bc2ebbcf019a0b46a20d120382042fb, type: 3}
-  m_Name: Projectile Info
+  m_Name: Shot Slowly
   m_EditorClassIdentifier: 
-  startPos: {x: 1, y: 1, z: 0}
-  endPos: {x: 1, y: -1, z: 0}
-  spd: 10
+  startPos: {x: 1, y: 0, z: 0}
+  endPos: {x: 100, y: 0, z: 0}
+  spd: 3

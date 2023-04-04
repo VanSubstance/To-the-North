@@ -14,7 +14,7 @@ namespace Assets.Scripts.Battles
         [SerializeField]
         private ProjectileInfo info;
 
-        private float prevDis = 100f;
+        private float prevDis = float.MaxValue;
         private Vector3 targetPos;
         private LineRenderer line;
         private List<Vector3> positions;
@@ -23,20 +23,16 @@ namespace Assets.Scripts.Battles
             info = ProjectileInfo.GetClone(_info);
             transform.position = startPos + LocalPostionToWorld(info.StartPos, targetDir);
             GetComponent<Rigidbody2D>().velocity = (targetPos = LocalPostionToWorld(info.EndPos - info.StartPos, targetDir)).normalized * info.Spd;
+            targetPos *= (info.EndPos - info.StartPos).magnitude;
             targetPos += transform.position;
-            prevDis = 100f;
+            prevDis = float.MaxValue;
             gameObject.SetActive(true);
         }
         private void Awake()
         {
             line = GetComponent<LineRenderer>();
             positions = new List<Vector3>();
-            //gameObject.SetActive(false);
-        }
-
-        private void Start()
-        {
-            Fire(info, Vector3.right * 10, Vector3.right);
+            gameObject.SetActive(false);
         }
 
         private void Update()
@@ -47,7 +43,10 @@ namespace Assets.Scripts.Battles
             {
                 return;
             }
-            if (Vector3.Distance(transform.position, targetPos) >= prevDis) gameObject.SetActive(false);
+            if (Vector3.Distance(transform.position, targetPos) >= prevDis)
+            {
+                gameObject.SetActive(false);
+            }
             else prevDis = Vector3.Distance(transform.position, targetPos);
             positions.Add(transform.position);
             if (positions.Count > 10)
