@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Battles.Managers
@@ -6,6 +7,7 @@ namespace Assets.Scripts.Battles.Managers
     {
         [SerializeField]
         private Transform projectilePrefab;
+        private List<ProjectileController> projectiles;
 
         // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
         private static ProjectileManager _instance;
@@ -41,11 +43,24 @@ namespace Assets.Scripts.Battles.Managers
             DontDestroyOnLoad(gameObject);
             if (transform.childCount == 0)
             {
+                projectiles = new List<ProjectileController>();
                 for (int i = 0; i < 100; i++)
                 {
-                    Instantiate(projectilePrefab, transform);
+                    projectiles.Add(Instantiate(projectilePrefab, transform).GetComponent<ProjectileController>());
                 }
             }
+        }
+
+        public ProjectileController GetNewProjectile()
+        {
+            for (int i = 0; i < projectiles.Count; i++)
+            {
+                if (!projectiles[i].gameObject.activeSelf)
+                {
+                    return projectiles[i];
+                }
+            }
+            return null;
         }
     }
 }

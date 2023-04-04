@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Items;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -41,13 +37,13 @@ namespace Assets.Scripts.Users.Controllers
                     * 2 / 3f;
                 if (handL.childCount > 0)
                 {
-                    Debug.Log("왼손 장비 집중");
-                    //handL.GetChild(0).GetComponent<IItem>().Aim();
+                    handL.GetChild(0).GetComponent<IItemHandable>().Aim(
+                    mousePos - GlobalComponent.Common.userTf.position);
                 }
                 if (handR.childCount > 0)
                 {
-                    Debug.Log("왼손 장비 집중");
-                    //handR.GetChild(0).GetComponent<IItem>().Aim();
+                    handR.GetChild(0).GetComponent<IItemHandable>().Aim(
+                    mousePos - GlobalComponent.Common.userTf.position);
                 }
                 InGameStatus.User.Detection.Sight.isControllInRealTime = true;
             }
@@ -64,13 +60,13 @@ namespace Assets.Scripts.Users.Controllers
             {
                 if (handL.childCount > 0)
                 {
-                    Debug.Log("왼손 장비 사용");
-                    //handL.GetChild(0).GetComponent<IItem>().Use();
+                    handL.GetChild(0).GetComponent<IItemHandable>().Use(
+                    mousePos - GlobalComponent.Common.userTf.position);
                 }
                 if (handR.childCount > 0)
                 {
-                    Debug.Log("왼손 장비 사용");
-                    //handR.GetChild(0).GetComponent<IItem>().Use();
+                    handR.GetChild(0).GetComponent<IItemHandable>().Use(
+                    mousePos - GlobalComponent.Common.userTf.position);
                 }
             }
         }

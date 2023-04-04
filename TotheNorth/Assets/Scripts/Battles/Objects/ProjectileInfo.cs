@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Assets.Scripts.Battles
 {
     [CreateAssetMenu(fileName = "Projectile Info", menuName = "Data Objects/Projectile Info", order = int.MaxValue)]
-    internal class ProjectileInfo : ScriptableObject
+    public class ProjectileInfo : ScriptableObject
     {
         [SerializeField]
         private Vector3 startPos, endPos;

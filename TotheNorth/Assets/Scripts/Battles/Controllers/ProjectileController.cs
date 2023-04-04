@@ -15,18 +15,26 @@ namespace Assets.Scripts.Battles
         private ProjectileInfo info;
 
         private float prevDis = float.MaxValue;
-        private Vector3 targetPos;
+        //private Vector3 targetPos;
         private LineRenderer line;
         private List<Vector3> positions;
+
+        public Vector3 startPos, targetPos;
+
         public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir)
         {
+            targetDir.z = 0f;
+
+            this.startPos = startPos;
+
             info = ProjectileInfo.GetClone(_info);
             transform.position = startPos + LocalPostionToWorld(info.StartPos, targetDir);
-            GetComponent<Rigidbody2D>().velocity = (targetPos = LocalPostionToWorld(info.EndPos - info.StartPos, targetDir)).normalized * info.Spd;
-            targetPos *= (info.EndPos - info.StartPos).magnitude;
-            targetPos += transform.position;
+            targetPos = LocalPostionToWorld(info.EndPos - info.StartPos, targetDir);
             prevDis = float.MaxValue;
             gameObject.SetActive(true);
+            GetComponent<Rigidbody2D>().velocity = targetPos.normalized * info.Spd;
+            targetPos *= (info.EndPos - info.StartPos).magnitude;
+            targetPos += transform.position;
         }
         private void Awake()
         {
@@ -43,6 +51,7 @@ namespace Assets.Scripts.Battles
             {
                 return;
             }
+            if (transform.position == Vector3.zero) return;
             if (Vector3.Distance(transform.position, targetPos) >= prevDis)
             {
                 gameObject.SetActive(false);
@@ -83,6 +92,7 @@ namespace Assets.Scripts.Battles
         {
             transform.position = Vector3.zero;
             line.positionCount = 0;
+            positions = new List<Vector3>();
         }
 
         private Vector3 LocalPostionToWorld(Vector3 targetPos, Vector3 targetDir)
