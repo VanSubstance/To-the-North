@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Commons.Functions;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,21 +11,32 @@ namespace Assets.Scripts.Battles
 {
     internal class ProjectileController : MonoBehaviour
     {
+        [SerializeField]
         private ProjectileInfo info;
+
+        private float prevDis = 100f;
+        private Vector3 targetPos;
         private LineRenderer line;
         private List<Vector3> positions;
-        public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 _directionTarget)
+        public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir)
         {
             info = ProjectileInfo.GetClone(_info);
-            transform.position = startPos;
-            GetComponent<Rigidbody2D>().velocity = _directionTarget;
+            transform.position = startPos + LocalPostionToWorld(info.StartPos, targetDir);
+            GetComponent<Rigidbody2D>().velocity = (targetPos = LocalPostionToWorld(info.EndPos - info.StartPos, targetDir)).normalized * info.Spd;
+            targetPos += transform.position;
+            prevDis = 100f;
             gameObject.SetActive(true);
         }
         private void Awake()
         {
             line = GetComponent<LineRenderer>();
             positions = new List<Vector3>();
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
+        }
+
+        private void Start()
+        {
+            Fire(info, Vector3.right * 10, Vector3.right);
         }
 
         private void Update()
@@ -35,6 +47,8 @@ namespace Assets.Scripts.Battles
             {
                 return;
             }
+            if (Vector3.Distance(transform.position, targetPos) >= prevDis) gameObject.SetActive(false);
+            else prevDis = Vector3.Distance(transform.position, targetPos);
             positions.Add(transform.position);
             if (positions.Count > 10)
             {
@@ -70,6 +84,16 @@ namespace Assets.Scripts.Battles
         {
             transform.position = Vector3.zero;
             line.positionCount = 0;
+        }
+
+        private Vector3 LocalPostionToWorld(Vector3 targetPos, Vector3 targetDir)
+        {
+            return 2 * CalculationFunctions.GetRotatedVector2(
+                targetPos.magnitude * targetDir.normalized,
+                CalculationFunctions.AngleFromDir(
+                    targetPos.normalized
+                    )
+                );
         }
     }
 }

@@ -10,9 +10,52 @@ namespace Assets.Scripts.Battles
     [CreateAssetMenu(fileName = "Projectile Info", menuName = "Data Objects/Projectile Info", order = int.MaxValue)]
     internal class ProjectileInfo : ScriptableObject
     {
+        [SerializeField]
+        private Vector3 startPos, endPos;
+        [SerializeField]
+        private float spd;
+
+        public Vector3 StartPos
+        {
+            get
+            {
+                return startPos;
+            }
+            set
+            {
+                startPos = value;
+            }
+        }
+
+        public Vector3 EndPos
+        {
+            get
+            {
+                return endPos;
+            }
+            set
+            {
+                endPos = value;
+            }
+        }
+
+        public float Spd
+        {
+            get
+            {
+                return spd;
+            }
+            set
+            {
+                spd = value;
+            }
+        }
         public static ProjectileInfo GetClone(ProjectileInfo _info)
         {
             ProjectileInfo res = CreateInstance<ProjectileInfo>();
+            res.startPos = _info.startPos;
+            res.endPos = _info.endPos;
+            res.spd = _info.spd;
             return res;
         }
 
