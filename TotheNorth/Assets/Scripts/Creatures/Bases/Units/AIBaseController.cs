@@ -562,10 +562,8 @@ namespace Assets.Scripts.Creatures.Bases
             // Up
             for (int i = 1; i <= 180 / unitDegree; i++)
             {
-                //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.green, 0.3f);
                 if (!(hit = Physics2D.Raycast(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)), 100, GlobalStatus.Constant.compositeObstacleMask)))
                 {
-                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.blue, 0.3f);
                     // 장애물 안걸리기 시작
                     res[0] = angK + (i * unitDegree) + unitDegree;
                     res[1] = disDump;
@@ -574,8 +572,6 @@ namespace Assets.Scripts.Creatures.Bases
                 if (!hit.transform.Equals(curObsTf))
                 {
                     // 장애물에 걸리기는 했는데 중간 장애물이 아닌 경우
-                    //Debug.Log("걔가 아닌데?");
-                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK + (i * unitDegree)) * 100, Color.blue, 0.3f);
                     res[0] = angK + (i * unitDegree) + unitDegree;
                     res[1] = disDump;
                     break;
@@ -585,10 +581,9 @@ namespace Assets.Scripts.Creatures.Bases
             // Down
             for (int i = 1; i <= 180 / unitDegree; i++)
             {
-                //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.magenta, 0.3f);
                 if (!(hit = Physics2D.Raycast(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)), 100, GlobalStatus.Constant.compositeObstacleMask)))
                 {
-                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.red, 0.3f);
+                    // 장애물 안걸리기 시작
                     res[2] = angK - (i * unitDegree) - unitDegree;
                     res[3] = disDump;
                     break;
@@ -596,8 +591,6 @@ namespace Assets.Scripts.Creatures.Bases
                 if (!hit.transform.Equals(curObsTf))
                 {
                     // 장애물에 걸리기는 했는데 중간 장애물이 아닌 경우
-                    //Debug.Log("걔가 아닌데?");
-                    //Debug.DrawRay(originPos, CalculationFunctions.DirFromAngle(angK - (i * unitDegree)) * 100, Color.red, 0.3f);
                     res[2] = angK - (i * unitDegree) - unitDegree;
                     res[3] = disDump;
                     break;

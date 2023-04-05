@@ -24,24 +24,44 @@ namespace Assets.Scripts.Users.Controllers
             if (Input.GetKey(KeyCode.A))
             {
                 // 왼쪽
+                if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
+                {
+                    secForRecoverStamina = 0;
+                    InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
+                }
                 transform.Translate(Vector3.left * spdW * Time.deltaTime);
                 vecHor += Vector3.left;
             }
             if (Input.GetKey(KeyCode.S))
             {
                 // 아래쪽
+                if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
+                {
+                    secForRecoverStamina = 0;
+                    InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
+                }
                 transform.Translate(Vector3.down * spdW * Time.deltaTime);
                 vecVer += Vector3.down;
             }
             if (Input.GetKey(KeyCode.D))
             {
                 // 오른쪽
+                if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
+                {
+                    secForRecoverStamina = 0;
+                    InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
+                }
                 transform.Translate(Vector3.right * spdW * Time.deltaTime);
                 vecVer += Vector3.right;
             }
             if (Input.GetKey(KeyCode.W))
             {
                 // 위쪽
+                if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
+                {
+                    secForRecoverStamina = 0;
+                    InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
+                }
                 transform.Translate(Vector3.up * spdW * Time.deltaTime);
                 vecVer += Vector3.up;
             }
@@ -92,12 +112,6 @@ namespace Assets.Scripts.Users.Controllers
 
         private void TrackStamina()
         {
-            if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
-            {
-                secForRecoverStamina = 0;
-                InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
-                return;
-            }
             if (secForRecoverStamina > 2)
             {
                 // 마지막으로 뛴 순간으로부터 2초 후
