@@ -30,7 +30,7 @@ namespace Assets.Scripts.Commons.Functions
         }
 
         /// <summary>
-        /// 방향 벡터를 특정 각도만큼 회전한 방향벡터 반환
+        /// 방향 벡터를 특정 각도만큼 회전한 방향벡터 반환 (정규화 O)
         /// </summary>
         /// <param name="dirVector">방향 벡터</param>
         /// <param name="degreeToRotate">회적할 각도</param>

@@ -26,8 +26,8 @@ TagManager:
   - User
   - Composite Obstacle
   - Npc
-  - 
-  - 
+  - Projectile
+  - Hit
   - 
   - 
   - 
@@ -55,6 +55,6 @@ TagManager:
   - name: UI
     uniqueID: 3300573435
     locked: 0
-  - name: Item
+  - name: Projectile
     uniqueID: 529751051
     locked: 0

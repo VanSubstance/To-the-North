@@ -16,18 +16,6 @@ namespace Assets.Scripts.Creatures.Editors.Squads
             Handles.color = Color.green;
             Handles.DrawSolidArc(aiBase.transform.position, Vector3.forward, Vector3.right, 360, 0.3f);
             MarkUnits();
-            MarkDetectedPosition();
-        }
-
-        private void MarkDetectedPosition()
-        {
-            Vector3? detectPos;
-            if ((detectPos = aiBase.detectPos) != null)
-            {
-                Handles.color = Color.red;
-                Handles.DrawLine((Vector3)detectPos + new Vector3(-.5f, -.5f, 0f), (Vector3)detectPos + new Vector3(.5f, .5f, 0f), 2.5f);
-                Handles.DrawLine((Vector3)detectPos + new Vector3(-.5f, .5f, 0f), (Vector3)detectPos + new Vector3(.5f, -.5f, 0f), 2.5f);
-            }
         }
 
         private void MarkUnits()

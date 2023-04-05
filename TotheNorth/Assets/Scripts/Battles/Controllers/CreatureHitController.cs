@@ -1,12 +1,15 @@
-using System;
+using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Creatures;
 using UnityEngine;
 
 namespace Assets.Scripts.Battles
 {
     class CreatureHitController : MonoBehaviour
     {
+        private ICreatureBattle battleFunction;
         private void Awake()
         {
+            battleFunction = transform.parent.GetComponent<ICreatureBattle>();
             for (int i = 0; i < transform.childCount; i++)
             {
                 transform.GetChild(i).GetComponent<PartHitController>().SetHitController(this);
@@ -17,26 +20,9 @@ namespace Assets.Scripts.Battles
         /// 피격당했을 때 작동하는 함수
         /// </summary>
         /// <param name="partType">피격당한 부위</param>
-        public void OnHit(PartType partType)
+        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitPos)
         {
-            switch (partType)
-            {
-                case PartType.Helmat:
-                    Debug.Log("헬멧 맞음!");
-                    break;
-                case PartType.Mask:
-                    Debug.Log("마스크 맞음!");
-                    break;
-                case PartType.Head:
-                    Debug.Log("머리 맞음!");
-                    break;
-                case PartType.Body:
-                    Debug.Log("몸텅 맞음!");
-                    break;
-                case PartType.Leg:
-                    Debug.Log("다리 맞음!");
-                    break;
-            }
+            battleFunction.OnHit(partType, _info, hitPos);
         }
     }
 }

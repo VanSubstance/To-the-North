@@ -9,9 +9,12 @@ namespace Assets.Scripts.Battles
         private CreatureHitController hitController;
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.tag.Equals("Attack"))
+            if (collision.CompareTag("Attack"))
             {
-                hitController.OnHit(partType);
+                ProjectileController prj = collision.GetComponent<ProjectileController>();
+                if (prj.isAffected) return;
+                prj.Arrive();
+                hitController.OnHit(partType, prj.Info, collision.transform.position);
             }
         }
 
