@@ -5,8 +5,11 @@ using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Conductions;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Detections;
+using Assets.Scripts.Creatures.Detections.Controllers;
 using Assets.Scripts.Creatures.Interfaces;
+using Assets.Scripts.Items;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Assets.Scripts.Creatures.Bases
 {
@@ -14,6 +17,10 @@ namespace Assets.Scripts.Creatures.Bases
     {
         [SerializeField]
         private CreatureInfo info;
+        [SerializeField]
+        Transform handL, handR;
+        private DetectionCompositeController detectionBase;
+
         private bool isInit = false;
 
         public AIStatusType statusType = AIStatusType.Petrol;
@@ -59,6 +66,31 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
+        private void Awake()
+        {
+            Transform temp = transform.Find("Detection Controller");
+            detectionBase = GetComponent<DetectionCompositeController>();
+            passiveController = temp.Find("Passive").GetComponent<DetectionPassiveController>();
+            sightController = temp.Find("Sight").GetComponent<DetectionSightController>();
+            passiveController.SetAIBaseController(this);
+            sightController.SetAIBaseController(this);
+            if (info == null) OnDisable();
+            else OnEnable();
+        }
+
+        private void Update()
+        {
+            if (!isPause)
+            {
+                ControllAttack();
+                ControllTracking();
+                ControllMovement();
+                ControllGaze();
+                ControllIdle();
+                ControllHpBar();
+            }
+        }
+
         /// <summary>
         /// 현재 목표 타겟 좌표 설정
         /// 이동 종료 후 대기 시간 설정
@@ -85,17 +117,6 @@ namespace Assets.Scripts.Creatures.Bases
             gameObject.SetActive(true);
         }
 
-        private void Awake()
-        {
-            Transform temp = transform.Find("Detection Controller");
-            passiveController = temp.Find("Passive").GetComponent<DetectionPassiveController>();
-            sightController = temp.Find("Sight").GetComponent<DetectionSightController>();
-            passiveController.SetAIBaseController(this);
-            sightController.SetAIBaseController(this);
-            if (info == null) OnDisable();
-            else OnEnable();
-        }
-
         private void OnEnable()
         {
             if (isInit) return;
@@ -112,15 +133,24 @@ namespace Assets.Scripts.Creatures.Bases
             isInit = false;
         }
 
-        private void Update()
+        private void ControllAttack()
         {
-            if (!isPause)
+            if (!detectionBase.targetTf) return;
+            Vector3 _targetPos = detectionBase.targetTf.position;
+            Vector3 originPos = transform.position;
+            RaycastHit2D obsHit;
+            if (!(obsHit = Physics2D.Raycast(originPos, (_targetPos - originPos), info.atkRange, GlobalStatus.Constant.compositeObstacleMask)))
             {
-                ControllTracking();
-                ControllMovement();
-                ControllGaze();
-                ControllIdle();
-                ControllHpBar();
+                if (handL.childCount > 0)
+                {
+                    handL.GetChild(0).GetComponent<IItemHandable>().Use(_targetPos - originPos);
+                }
+                if (handR.childCount > 0)
+                {
+                    handR.GetChild(0).GetComponent<IItemHandable>().Use(_targetPos - originPos);
+                }
+                targetPos = null;
+                isOrderMoveDone = true;
             }
         }
 
@@ -339,6 +369,7 @@ namespace Assets.Scripts.Creatures.Bases
         private void SetTargetToTrack()
         {
             if (targetPos == null) return;
+            Debug.Log("좌표 재계산");
             Vector3 _targetPos = (Vector3)targetPos;
             Vector3 originPos = transform.position;
             if (Vector3.Distance(originPos, _targetPos) < (isForce ? forcingDis : info.atkRange))
@@ -357,6 +388,14 @@ namespace Assets.Scripts.Creatures.Bases
                 if (!(obsHit = Physics2D.Raycast(originPos, (_targetPos - originPos), info.atkRange, GlobalStatus.Constant.compositeObstacleMask)))
                 {
                     // 조준 가능
+                    if (handL.childCount > 0)
+                    {
+                        handL.GetChild(0).GetComponent<IItemHandable>().Use(_targetPos - originPos);
+                    }
+                    if (handR.childCount > 0)
+                    {
+                        handR.GetChild(0).GetComponent<IItemHandable>().Use(_targetPos - originPos);
+                    }
                     targetPos = null;
                     isOrderMoveDone = true;
                     return;

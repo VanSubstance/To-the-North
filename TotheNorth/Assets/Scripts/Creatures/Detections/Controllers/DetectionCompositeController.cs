@@ -12,6 +12,7 @@ namespace Assets.Scripts.Creatures.Detections.Controllers
     {
         [SerializeField]
         private DetectionBaseController[] detections;
+        public Transform targetTf;
 
         private void Update()
         {
@@ -25,7 +26,7 @@ namespace Assets.Scripts.Creatures.Detections.Controllers
                 yield return new WaitForSeconds(delay);
                 foreach (DetectionBaseController detection in detections)
                 {
-                    detection.CheckSight();
+                    targetTf = detection.CheckSight();
                 }
             }
         }

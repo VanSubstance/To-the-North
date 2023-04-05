@@ -131,7 +131,7 @@ namespace Assets.Scripts.Creatures.Detections
         /// <summary>
         /// 시야 내에서 상호작용 거리 안에 들어온 이벤트들 깨우기
         /// </summary>
-        public override void CheckSight()
+        public override Transform CheckSight()
         {
             if (aIBaseController)
             {
@@ -149,14 +149,15 @@ namespace Assets.Scripts.Creatures.Detections
                         if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
                         {
                             aIBaseController.OnDetectUser(userTf);
+                            return userTf;
                         }
                         else
                         {
                             aIBaseController.OnDetectUser(null);
+                            return null;
                         }
                     }
                 }
-                return;
             }
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
             List<Collider2D> targetsInViewRadius = new List<Collider2D>();
@@ -185,6 +186,7 @@ namespace Assets.Scripts.Creatures.Detections
                     }
                 }
             }
+            return null;
         }
 
         /// <summary>

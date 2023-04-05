@@ -56,6 +56,6 @@ namespace Assets.Scripts.Creatures.Detections
         public abstract void DrawSightArea();
 
         /** 시야 체크 */
-        public abstract void CheckSight();
+        public abstract Transform CheckSight();
     }
 }

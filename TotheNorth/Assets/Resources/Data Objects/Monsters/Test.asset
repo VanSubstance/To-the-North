@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   maxHp: 100
-  atkRange: 5
+  atkRange: 20
   moveSpd: 3
   moveDis: 3
