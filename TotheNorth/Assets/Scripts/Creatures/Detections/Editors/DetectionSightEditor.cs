@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Users.Controllers;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Scripts.Users.Editors
+namespace Assets.Scripts.Creatures.Detections
 {
     [CustomEditor(typeof(DetectionSightController))]
     internal class DetectionSightEditor : Editor

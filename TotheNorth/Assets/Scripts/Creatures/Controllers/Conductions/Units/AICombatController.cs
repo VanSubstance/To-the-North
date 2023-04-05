@@ -11,6 +11,8 @@ namespace Assets.Scripts.Creatures.Conductions
         private Vector3? lastPosition;
         private bool isNowLost = false;
         private int afterLost = 0;
+
+        public bool isActive = true;
         private new void Awake()
         {
             base.Awake();
@@ -18,14 +20,16 @@ namespace Assets.Scripts.Creatures.Conductions
 
         private void Update()
         {
+            if (!isActive) return;
             if (baseController.statusType == Interfaces.AIStatusType.Combat)
             {
+                //Debug.Log("자가 판단");
                 if (targetTf != null)
                 {
                     // 유저가 시야에 있을 때
                     // 계속 새로고침하면서 추격
                     Debug.Log("시야에 있음");
-                    baseController.SetTargetToTrack(targetTf.position, 0, false);
+                    baseController.SetTargetToTrack(targetTf.position, 0, true);
                     //baseController.SetTargetToGaze(targetTf.position, 0);
                 }
                 else

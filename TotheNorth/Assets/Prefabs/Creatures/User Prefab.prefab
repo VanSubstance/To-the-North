@@ -882,7 +882,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7249881555880525497}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e89bff63782991946a85ce2760db1160, type: 3}
+  m_Script: {fileID: 11500000, guid: 05de53f3476845b4fafbbcff83399de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAI: 0
@@ -891,7 +891,7 @@ MonoBehaviour:
   viewMeshForVisualization: {fileID: 0}
   viewMeshFilter: {fileID: 7249881556289987579}
   visualizationFilter: {fileID: 8602294856793120695}
-  range: 0
+  range: 1
 --- !u!1 &7249881556030676201
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,7 +1020,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7249881556233970597}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3475a34ff6903e642bfd82f91fc0e2d7, type: 3}
+  m_Script: {fileID: 11500000, guid: f42e5165a7c3441409ece1fbaeafdd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAI: 0
@@ -1029,8 +1029,8 @@ MonoBehaviour:
   viewMeshForVisualization: {fileID: 0}
   viewMeshFilter: {fileID: 7249881557341208112}
   visualizationFilter: {fileID: 7107132291317875297}
-  range: 0
-  degree: 0
+  range: 3
+  degree: 60
   curDegree: 0
 --- !u!1 &7249881556285147605
 GameObject:
@@ -1176,6 +1176,7 @@ GameObject:
   - component: {fileID: 7249881556927368017}
   - component: {fileID: 3251740218194836106}
   - component: {fileID: 2575853989354701783}
+  - component: {fileID: 2420854514163520099}
   - component: {fileID: 7249881556927368016}
   - component: {fileID: 7249881556927368023}
   m_Layer: 13
@@ -1245,6 +1246,21 @@ MonoBehaviour:
   body: {fileID: 7249881556285147604}
   handL: {fileID: 8728397256870694550}
   handR: {fileID: 8427379005130797500}
+--- !u!114 &2420854514163520099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249881556927368019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d0f8569ac21494ea9482a55c1122ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detections:
+  - {fileID: 7249881555880525503}
+  - {fileID: 7249881556233970603}
 --- !u!58 &7249881556927368016
 CircleCollider2D:
   m_ObjectHideFlags: 0

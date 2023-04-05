@@ -6,7 +6,7 @@ using Assets.Scripts.Creatures.Bases;
 using Assets.Scripts.Users.Objects;
 using UnityEngine;
 
-namespace Assets.Scripts.Users.Controllers
+namespace Assets.Scripts.Creatures.Detections
 {
     internal abstract class DetectionBaseController : MonoBehaviour
     {
@@ -15,6 +15,10 @@ namespace Assets.Scripts.Users.Controllers
         public float meshResolution;
         public Mesh viewMesh, viewMeshForVisualization;
         public MeshFilter viewMeshFilter, visualizationFilter;
+        private void Awake()
+        {
+            meshResolution = 1;
+        }
 
         public void Start()
         {
@@ -24,21 +28,11 @@ namespace Assets.Scripts.Users.Controllers
             viewMeshForVisualization = new Mesh();
             viewMeshForVisualization.name = "View Mesh";
             visualizationFilter.mesh = viewMeshForVisualization;
-            StartCoroutine(CheckSightWithDelay(0.01f));
         }
 
         public void LateUpdate()
         {
             DrawSightArea();
-        }
-
-        private IEnumerator CheckSightWithDelay(float delay)
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(delay);
-                CheckSight();
-            }
         }
 
         public void SetAIBaseController(AIBaseController aIBaseController)

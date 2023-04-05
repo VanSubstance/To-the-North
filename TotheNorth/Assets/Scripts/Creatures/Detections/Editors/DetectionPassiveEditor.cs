@@ -3,7 +3,7 @@ using Assets.Scripts.Users.Controllers;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Scripts.Users.Editors
+namespace Assets.Scripts.Creatures.Detections
 {
     [CustomEditor(typeof(DetectionPassiveController))]
     internal class DetectionPassiveEditor : Editor

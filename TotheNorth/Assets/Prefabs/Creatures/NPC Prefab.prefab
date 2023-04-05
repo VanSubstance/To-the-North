@@ -649,11 +649,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3546361992032316393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e89bff63782991946a85ce2760db1160, type: 3}
+  m_Script: {fileID: 11500000, guid: 05de53f3476845b4fafbbcff83399de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAI: 1
-  meshResolution: 1
+  meshResolution: 0
   viewMesh: {fileID: 0}
   viewMeshForVisualization: {fileID: 0}
   viewMeshFilter: {fileID: 1014371165798791684}
@@ -1156,9 +1156,10 @@ GameObject:
   - component: {fileID: 7648065484994886387}
   - component: {fileID: 8367694764048619857}
   - component: {fileID: -7669871793913252461}
+  - component: {fileID: -249415447031064214}
+  - component: {fileID: 6600913326927396640}
   - component: {fileID: 7249881556927368016}
   - component: {fileID: 7249881556927368023}
-  - component: {fileID: -249415447031064214}
   m_Layer: 8
   m_Name: NPC Prefab
   m_TagString: Untagged
@@ -1226,6 +1227,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOnTracking: 0
+--- !u!114 &-249415447031064214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249881556927368019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fb5d9f6dacbba64684ba7e8b48007a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 3370237216167702908}
+  handL: {fileID: 7235001616942782391}
+  handR: {fileID: 899519162574432714}
+--- !u!114 &6600913326927396640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249881556927368019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d0f8569ac21494ea9482a55c1122ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detections:
+  - {fileID: 5851334093313958839}
+  - {fileID: 1744631242899781539}
 --- !u!58 &7249881556927368016
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1263,21 +1294,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-249415447031064214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7249881556927368019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fb5d9f6dacbba64684ba7e8b48007a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  body: {fileID: 3370237216167702908}
-  handL: {fileID: 7235001616942782391}
-  handR: {fileID: 899519162574432714}
 --- !u!1 &7263401451680683381
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,11 +1465,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8840287234537607475}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3475a34ff6903e642bfd82f91fc0e2d7, type: 3}
+  m_Script: {fileID: 11500000, guid: f42e5165a7c3441409ece1fbaeafdd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAI: 1
-  meshResolution: 1
+  meshResolution: 0
   viewMesh: {fileID: 0}
   viewMeshForVisualization: {fileID: 0}
   viewMeshFilter: {fileID: 8042433636936461710}

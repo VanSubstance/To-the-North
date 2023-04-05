@@ -3,8 +3,8 @@ using System.Collections;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Conductions;
 using Assets.Scripts.Creatures.Controllers;
+using Assets.Scripts.Creatures.Detections;
 using Assets.Scripts.Creatures.Interfaces;
-using Assets.Scripts.Users.Controllers;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Bases
@@ -29,6 +29,18 @@ namespace Assets.Scripts.Creatures.Bases
         private readonly float forcingDis = 2f;
 
         private Transform hpBarTf;
+
+        public bool isControllableBySquad
+        {
+            get
+            {
+                return !GetComponent<AICombatController>().isActive;
+            }
+            set
+            {
+                GetComponent<AICombatController>().isActive = !value;
+            }
+        }
 
         public float curDegree
         {
@@ -307,7 +319,7 @@ namespace Assets.Scripts.Creatures.Bases
         {
             squadBase = _squadBase;
             Destroy(GetComponent<AIPetrolController>());
-            Destroy(GetComponent<AICombatController>());
+            GetComponent<AICombatController>().isActive = false;
         }
 
         /// <summary>

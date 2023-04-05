@@ -1,16 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Events.Interfaces;
-using Assets.Scripts.Users.Objects;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-namespace Assets.Scripts.Users.Controllers
+namespace Assets.Scripts.Creatures.Detections
 {
     internal class DetectionSightController : DetectionBaseController
     {
@@ -137,7 +133,7 @@ namespace Assets.Scripts.Users.Controllers
         /// </summary>
         public override void CheckSight()
         {
-            if (isAI)
+            if (aIBaseController)
             {
                 // AI의 경우: 유저가 있는지만 체크
                 // 유저가 있다 ? 유저 식별 시 행동 호출
@@ -150,7 +146,14 @@ namespace Assets.Scripts.Users.Controllers
                     {
                         float dstToTarget = Vector3.Distance(transform.position, userTf.position);
                         // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
-                        if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask)) aIBaseController.OnDetectUser(userTf); else aIBaseController.OnDetectUser(null);
+                        if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
+                        {
+                            aIBaseController.OnDetectUser(userTf);
+                        }
+                        else
+                        {
+                            aIBaseController.OnDetectUser(null);
+                        }
                     }
                 }
                 return;

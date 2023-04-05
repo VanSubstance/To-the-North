@@ -613,7 +613,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4214616716461746099}
-  - component: {fileID: 5851334093313958839}
+  - component: {fileID: 1337744587576277201}
   m_Layer: 0
   m_Name: Passive
   m_TagString: Untagged
@@ -638,7 +638,7 @@ Transform:
   m_Father: {fileID: 2653556367817440977}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5851334093313958839
+--- !u!114 &1337744587576277201
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -647,7 +647,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3546361992032316393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e89bff63782991946a85ce2760db1160, type: 3}
+  m_Script: {fileID: 11500000, guid: 05de53f3476845b4fafbbcff83399de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAI: 1
@@ -899,6 +899,7 @@ GameObject:
   - component: {fileID: 2844125861306491779}
   - component: {fileID: 8821249586427688319}
   - component: {fileID: 1070078780410703675}
+  - component: {fileID: 5930805339340001714}
   - component: {fileID: 7249881556927368016}
   - component: {fileID: 7249881556927368023}
   m_Layer: 8
@@ -968,6 +969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfGazeAfterLost: 3
+  isActive: 1
 --- !u!114 &1070078780410703675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -983,6 +985,21 @@ MonoBehaviour:
   body: {fileID: 6056135308860740506}
   handL: {fileID: 4369439108139679983}
   handR: {fileID: 5308816341078689095}
+--- !u!114 &5930805339340001714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249881556927368019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d0f8569ac21494ea9482a55c1122ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detections:
+  - {fileID: 1337744587576277201}
+  - {fileID: 9214550898711274295}
 --- !u!58 &7249881556927368016
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1415,7 +1432,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5843387241699258842}
-  - component: {fileID: 1744631242899781539}
+  - component: {fileID: 9214550898711274295}
   m_Layer: 0
   m_Name: Sight
   m_TagString: Untagged
@@ -1440,7 +1457,7 @@ Transform:
   m_Father: {fileID: 2653556367817440977}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1744631242899781539
+--- !u!114 &9214550898711274295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1449,7 +1466,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8840287234537607475}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3475a34ff6903e642bfd82f91fc0e2d7, type: 3}
+  m_Script: {fileID: 11500000, guid: f42e5165a7c3441409ece1fbaeafdd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAI: 1

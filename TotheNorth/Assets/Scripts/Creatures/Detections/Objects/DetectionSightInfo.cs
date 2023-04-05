@@ -1,7 +1,6 @@
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
-namespace Assets.Scripts.Users.Objects
+namespace Assets.Scripts.Creatures.Detections
 {
     internal struct DetectionSightInfo
     {

@@ -21,9 +21,20 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
                 // 부대 소속 유닛
                 if (targetTf != null)
                 {
-                    // 유저 식별 시에만 전달
+                    // 유저 식별함
+                    // 유저 식별 전달
                     squadBase.DetectEnemy(targetTf.position);
+
+                    // 자가 판단 실행
+                    isControllableBySquad = false;
                     statusType = Interfaces.AIStatusType.Combat;
+                    GetComponent<AICombatController>().SetTargetTf(targetTf);
+                }
+                else
+                {
+                    // 부대 명령 하달 실행
+                    GetComponent<AICombatController>().SetTargetTf(null);
+                    isControllableBySquad = true;
                 }
             }
             else
