@@ -11,7 +11,7 @@ namespace Assets.Scripts.Creatures
         [SerializeField]
         private bool isAttackFirst;
 
-        public float atkRange = 5f, moveSpd = 3f, moveDis = 3f;
+        public float sightRange = 5f, moveSpd = 3f, moveDis = 3f;
         public ProgressInfo hp = null;
 
         public int LiveHp
@@ -38,7 +38,7 @@ namespace Assets.Scripts.Creatures
         {
             CreatureInfo res = CreateInstance<CreatureInfo>();
             res.hp = new ProgressInfo(_data.maxHp);
-            res.atkRange = _data.atkRange;
+            res.sightRange = _data.sightRange;
             res.moveSpd = _data.moveSpd;
             res.moveDis = _data.moveDis;
             res.isAttackFirst = _data.isAttackFirst;

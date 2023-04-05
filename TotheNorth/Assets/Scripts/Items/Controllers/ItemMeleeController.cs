@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static GlobalComponent.Common;
 
 namespace Assets.Scripts.Items
 {
@@ -20,6 +21,11 @@ namespace Assets.Scripts.Items
         public void Use(Vector3 targetDir)
         {
             Debug.Log("근거리 사용중 ...");
+        }
+
+        public float Range()
+        {
+            return 0f;
         }
     }
 }

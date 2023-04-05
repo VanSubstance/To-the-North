@@ -9,6 +9,7 @@ using Assets.Scripts.Creatures.Detections.Controllers;
 using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Items;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 namespace Assets.Scripts.Creatures.Bases
 {
@@ -17,7 +18,7 @@ namespace Assets.Scripts.Creatures.Bases
         [SerializeField]
         private CreatureInfo info;
         [SerializeField]
-        Transform handL, handR;
+        private Transform handL, handR;
         private DetectionCompositeController detectionBase;
 
         private bool isInit = false;
@@ -36,6 +37,8 @@ namespace Assets.Scripts.Creatures.Bases
         private readonly float forcingDis = 2f;
 
         private Transform hpBarTf;
+        private IItemHandable itemL, itemR;
+        private float weaponRange = 0f;
 
         public CreatureInfo Info
         {
@@ -67,6 +70,15 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void Awake()
         {
+            if (handL.childCount > 0)
+            {
+                itemL = handL.GetChild(0).GetComponent<IItemHandable>();
+            }
+            if (handR.childCount > 0)
+            {
+                itemR = handR.GetChild(0).GetComponent<IItemHandable>();
+            }
+            weaponRange = Mathf.Max(itemL != null ? itemL.Range() : 0, itemR != null ? itemR.Range() : 0);
             Transform temp = transform.Find("Detection Controller");
             detectionBase = GetComponent<DetectionCompositeController>();
             passiveController = temp.Find("Passive").GetComponent<DetectionPassiveController>();
@@ -119,7 +131,7 @@ namespace Assets.Scripts.Creatures.Bases
         {
             if (isInit) return;
             info = CreatureInfo.GetClone(info);
-            sightController.range = info.atkRange;
+            sightController.range = info.sightRange;
             isInit = true;
         }
 
@@ -136,15 +148,15 @@ namespace Assets.Scripts.Creatures.Bases
             if (!detectionBase.targetTf) return;
             Vector3 _targetPos = detectionBase.targetTf.position;
             Vector3 originPos = transform.position;
-            if (!IsAttackable())
+            if (IsAttackable())
             {
-                if (handL.childCount > 0)
+                if (itemL != null)
                 {
-                    handL.GetChild(0).GetComponent<IItemHandable>().Use(_targetPos - originPos);
+                    itemL.Use(_targetPos - originPos);
                 }
-                if (handR.childCount > 0)
+                if (itemR != null)
                 {
-                    handR.GetChild(0).GetComponent<IItemHandable>().Use(_targetPos - originPos);
+                    itemR.Use(_targetPos - originPos);
                 }
             }
         }
@@ -178,14 +190,8 @@ namespace Assets.Scripts.Creatures.Bases
                     }
                     return;
                 }
-                // 모굪가 있는데 공격 가능 위치인지
-                if (detectionBase.targetTf && !IsAttackable())
-                {
-                    MoveToTarget();
-                    return;
-                }
                 // 도달 목표에 도달했는지
-                if (Vector2.Distance(transform.position, (Vector3)targetPos) < 0.25f)
+                if (Vector2.Distance(transform.position, (Vector3)targetPos) < 0.5f)
                 {
                     vectorToMove = null;
                     if (isOrderMoveDone && timeStayForMove > 0)
@@ -196,6 +202,7 @@ namespace Assets.Scripts.Creatures.Bases
                     {
                         targetToMove = null;
                     }
+                    return;
                 }
                 // 이동 방향 계산
                 MoveToTarget();
@@ -269,15 +276,15 @@ namespace Assets.Scripts.Creatures.Bases
             targetDegree += 360 * 3;
             targetDegree -= sightController.curDegree;
             targetDegree %= 360;
-            if (targetDegree > 2)
+            if (targetDegree > 3)
             {
                 if (targetDegree < 180)
                 {
-                    sightController.AddRotationDegree(2);
+                    sightController.AddRotationDegree(3);
                 }
                 else
                 {
-                    sightController.AddRotationDegree(-2);
+                    sightController.AddRotationDegree(-3);
                 }
             }
             else
@@ -373,7 +380,7 @@ namespace Assets.Scripts.Creatures.Bases
             Vector3 _targetPos = (Vector3)targetPos;
             Vector3 originPos = transform.position;
             float dis;
-            if ((dis = Vector3.Distance(originPos, _targetPos)) < (isForce ? forcingDis : info.atkRange))
+            if ((dis = Vector3.Distance(originPos, _targetPos)) < (isForce ? forcingDis : weaponRange))
             {
                 // 현재 타겟이 사거리 내에 있다
                 if (isForce)
@@ -394,14 +401,6 @@ namespace Assets.Scripts.Creatures.Bases
                 else
                 {
                     // 조준 가능
-                    //if (handL.childCount > 0)
-                    //{
-                    //    handL.GetChild(0).GetComponent<IItemHandable>().Use(_targetPos - originPos);
-                    //}
-                    //if (handR.childCount > 0)
-                    //{
-                    //    handR.GetChild(0).GetComponent<IItemHandable>().Use(_targetPos - originPos);
-                    //}
                     targetPos = null;
                     isOrderMoveDone = true;
                     return;
@@ -433,7 +432,7 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     // 장애물 없음
                     Vector3 dirVec = (targetPos - originPos).normalized;
-                    return targetPos - (dirVec * (isForce ? 0 : info.moveDis));
+                    return targetPos - (dirVec * (isForce ? 0 : (weaponRange - 0.3f)));
                 }
             }
             // 장애물 있음
@@ -639,11 +638,17 @@ namespace Assets.Scripts.Creatures.Bases
             hpBarTf = _hpBarTf;
         }
 
+        /// <summary>
+        /// 현재 타겟이 사거리 내에 있는가?
+        /// </summary>
+        /// <returns></returns>
         private bool IsAttackable()
         {
             Vector3 _targetPos = detectionBase.targetTf.position;
             Vector3 originPos = transform.position;
-            return Physics2D.Raycast(originPos, (_targetPos - originPos), Vector3.Distance(_targetPos, originPos), GlobalStatus.Constant.compositeObstacleMask);
+            float dis = Vector3.Distance(_targetPos, originPos);
+            if (dis > weaponRange) return false;
+            return !Physics2D.Raycast(originPos, (_targetPos - originPos).normalized, dis, GlobalStatus.Constant.compositeObstacleMask);
         }
 
         public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitPos)

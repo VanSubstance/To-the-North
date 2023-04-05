@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 100
   isAttackFirst: 1
-  atkRange: 20
+  sightRange: 20
   moveSpd: 3
   moveDis: 3

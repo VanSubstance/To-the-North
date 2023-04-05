@@ -42,5 +42,10 @@ namespace Assets.Scripts.Items
                 delayAmongFire = 0f;
             }
         }
+
+        public float Range()
+        {
+            return info.range;
+        }
     }
 }

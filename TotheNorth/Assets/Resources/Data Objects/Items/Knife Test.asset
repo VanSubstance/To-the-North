@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb73a8b42ff575a498a2547e994a098e, type: 3}
-  m_Name: Gun Test
+  m_Name: Knife Test
   m_EditorClassIdentifier: 
   itemType: 1
   imagePath: Images/Items/Equipments/Weapons/Gun Test
   itemName: "\uD14C\uC2A4\uD2B8\uC6A9 \uCD1D"
   description: "\uD14C\uC2A4\uD2B8\uC6A9 \uCD1D\uC785\uB2C8\uB2E4."
   price: 100
-  range: 20
-  projectileInfo: {fileID: 11400000, guid: 779ac09a961884c47b4ec979f0ca3589, type: 2}
+  range: 1
+  projectileInfo: {fileID: 11400000, guid: 5f8672ead68523a4fa4ffc4e78f0a6b1, type: 2}
   delayAmongFire: 0.5

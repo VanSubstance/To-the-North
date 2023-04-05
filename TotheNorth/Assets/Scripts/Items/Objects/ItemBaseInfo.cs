@@ -8,7 +8,7 @@ public class ItemBaseInfo : ScriptableObject
     public string imagePath;
     public string itemName;
     public string description;
-    public int price;
+    public int price, range;
 
     // 아래 코드는 예시용임!
     // 리팩토링이 반드시 필요함!!
