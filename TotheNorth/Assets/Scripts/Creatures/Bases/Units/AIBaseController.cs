@@ -30,6 +30,14 @@ namespace Assets.Scripts.Creatures.Bases
 
         private Transform hpBarTf;
 
+        public float curDegree
+        {
+            get
+            {
+                return sightController.curDegree;
+            }
+        }
+
         /// <summary>
         /// 현재 목표 타겟 좌표 설정
         /// 이동 종료 후 대기 시간 설정
