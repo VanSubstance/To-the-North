@@ -10,6 +10,7 @@ public class InventorySlotController : MonoBehaviour
     public int column;
     public bool isAttached = false;
     public bool isAttachReady = false;
+    public string slotType;
     public Sprite normal;
     public Sprite ready;
     private Image slotImage;
