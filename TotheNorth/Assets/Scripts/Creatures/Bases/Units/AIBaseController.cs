@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Bases
 {
-    internal abstract class AIBaseController : MonoBehaviour
+    internal abstract class AIBaseController : MonoBehaviour, ICreatureBattle
     {
         [SerializeField]
         private CreatureInfo info;
@@ -112,7 +112,6 @@ namespace Assets.Scripts.Creatures.Bases
         public void InitCreature(CreatureInfo _info)
         {
             info = CreatureInfo.GetClone(_info);
-            transform.Find("Hits").GetComponent<CreatureHitController>().Info = info;
             gameObject.SetActive(true);
         }
 
@@ -120,7 +119,6 @@ namespace Assets.Scripts.Creatures.Bases
         {
             if (isInit) return;
             info = CreatureInfo.GetClone(info);
-            transform.Find("Hits").GetComponent<CreatureHitController>().Info = info;
             sightController.range = info.atkRange;
             isInit = true;
         }
@@ -646,6 +644,35 @@ namespace Assets.Scripts.Creatures.Bases
             Vector3 _targetPos = detectionBase.targetTf.position;
             Vector3 originPos = transform.position;
             return Physics2D.Raycast(originPos, (_targetPos - originPos), Vector3.Distance(_targetPos, originPos), GlobalStatus.Constant.compositeObstacleMask);
+        }
+
+        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitPos)
+        {
+            // 피격 당한쪽 바라보기
+            SetTargetToGaze(hitPos, 3, false);
+            switch (partType)
+            {
+                case PartType.Helmat:
+                    break;
+                case PartType.Mask:
+                    break;
+                case PartType.Head:
+                    break;
+                case PartType.Body:
+                    break;
+                case PartType.Leg:
+                    break;
+            }
+            if (info)
+            {
+                // AI 기준
+                info.LiveHp = -10;
+                if (info.LiveHp <= 0)
+                {
+                    gameObject.SetActive(false);
+                }
+                return;
+            }
         }
 
         public abstract void OnDetectUser(Transform targetTf);

@@ -1173,6 +1173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7249881556927368018}
+  - component: {fileID: 9111994198625077826}
   - component: {fileID: 7249881556927368017}
   - component: {fileID: 3251740218194836106}
   - component: {fileID: 2575853989354701783}
@@ -1204,6 +1205,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9111994198625077826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249881556927368019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd2b115a845a374cad906043c6b1d27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7249881556927368017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1216,7 +1229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7b08c359439c64ebc248bd05c94fd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 7249881556285147604}
 --- !u!114 &3251740218194836106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1261,6 +1273,7 @@ MonoBehaviour:
   detections:
   - {fileID: 7249881555880525503}
   - {fileID: 7249881556233970603}
+  targetTf: {fileID: 0}
 --- !u!58 &7249881556927368016
 CircleCollider2D:
   m_ObjectHideFlags: 0

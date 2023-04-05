@@ -1,6 +1,6 @@
 namespace Assets.Scripts.Battles
 {
-    internal enum PartType
+    public enum PartType
     {
         Helmat, Mask,
         Head, Body, Leg,
