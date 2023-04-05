@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bc2ebbcf019a0b46a20d120382042fb, type: 3}
   m_Name: Shot Slowly
   m_EditorClassIdentifier: 
-  startPos: {x: 0.25, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
   endPos: {x: 100, y: 0, z: 0}
   spd: 30

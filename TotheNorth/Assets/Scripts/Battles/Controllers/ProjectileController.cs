@@ -15,9 +15,9 @@ namespace Assets.Scripts.Battles
         private ProjectileInfo info;
 
         private float prevDis = float.MaxValue;
-        //private Vector3 targetPos;
         private LineRenderer line;
         private List<Vector3> positions;
+        private bool isReady;
 
         public Vector3 startPos, targetPos;
         public ProjectileInfo Info
@@ -42,6 +42,7 @@ namespace Assets.Scripts.Battles
             GetComponent<Rigidbody2D>().velocity = targetPos.normalized * info.Spd;
             targetPos *= (info.EndPos - info.StartPos).magnitude;
             targetPos += transform.position;
+            isReady = true;
         }
         private void Awake()
         {
@@ -52,6 +53,7 @@ namespace Assets.Scripts.Battles
 
         private void Update()
         {
+            if (!isReady) return;
             if (
                 positions.Count > 0 &&
                 Vector3.Distance(positions[positions.Count - 1], transform.position) < .1f)
@@ -91,6 +93,7 @@ namespace Assets.Scripts.Battles
 
         private void OnDisable()
         {
+            isReady = false;
             transform.position = Vector3.zero;
             line.positionCount = 0;
             positions = new List<Vector3>();
@@ -98,12 +101,12 @@ namespace Assets.Scripts.Battles
 
         private Vector3 LocalPostionToWorld(Vector3 targetPos, Vector3 targetDir)
         {
-            return 2 * CalculationFunctions.GetRotatedVector2(
+            return CalculationFunctions.GetRotatedVector2(
                 targetPos.magnitude * targetDir.normalized,
                 CalculationFunctions.AngleFromDir(
                     targetPos.normalized
                     )
-                );
+                ) * (1f + targetPos.magnitude);
         }
     }
 }
