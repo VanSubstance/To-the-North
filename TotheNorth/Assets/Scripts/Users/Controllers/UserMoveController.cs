@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Assets.Scripts.Commons.Constants;
 using UnityEngine;
 
@@ -7,11 +5,7 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal class UserMoveController : MonoBehaviour
     {
-        private Vector3 pointInitialDown = Vector3.zero;
-        void Start()
-        {
-            SetMouseEvent();
-        }
+        private float secForRecoverStamina = 0;
         private void Update()
         {
             if (!InGameStatus.User.isPause)
@@ -19,31 +13,60 @@ namespace Assets.Scripts.Users.Controllers
                 GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                 TrackDirection();
                 TrackMovementType();
+                TrackStamina();
             }
         }
 
         private void TrackDirection()
         {
+            float spdW = GetMovementSpd();
+            Vector3 vecHor = Vector3.zero, vecVer = Vector3.zero;
             if (Input.GetKey(KeyCode.A))
             {
                 // 왼쪽
-                transform.Translate(Vector3.left * GetMovementSpd() * Time.deltaTime);
+                if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
+                {
+                    secForRecoverStamina = 0;
+                    InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
+                }
+                transform.Translate(Vector3.left * spdW * Time.deltaTime);
+                vecHor += Vector3.left;
             }
             if (Input.GetKey(KeyCode.S))
             {
                 // 아래쪽
-                transform.Translate(Vector3.down * GetMovementSpd() * Time.deltaTime);
+                if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
+                {
+                    secForRecoverStamina = 0;
+                    InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
+                }
+                transform.Translate(Vector3.down * spdW * Time.deltaTime);
+                vecVer += Vector3.down;
             }
             if (Input.GetKey(KeyCode.D))
             {
                 // 오른쪽
-                transform.Translate(Vector3.right * GetMovementSpd() * Time.deltaTime);
+                if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
+                {
+                    secForRecoverStamina = 0;
+                    InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
+                }
+                transform.Translate(Vector3.right * spdW * Time.deltaTime);
+                vecVer += Vector3.right;
             }
             if (Input.GetKey(KeyCode.W))
             {
                 // 위쪽
-                transform.Translate(Vector3.up * GetMovementSpd() * Time.deltaTime);
+                if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
+                {
+                    secForRecoverStamina = 0;
+                    InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
+                }
+                transform.Translate(Vector3.up * spdW * Time.deltaTime);
+                vecVer += Vector3.up;
             }
+            CameraTrackControlller.headHorPos = vecHor * spdW;
+            CameraTrackControlller.headVerPos = vecVer * spdW;
         }
 
         private float GetMovementSpd()
@@ -58,7 +81,14 @@ namespace Assets.Scripts.Users.Controllers
                 case Objects.MovementType.WALK:
                     return InGameStatus.User.Movement.spdWalk;
                 case Objects.MovementType.RUN:
-                    return InGameStatus.User.Movement.spdWalk * InGameStatus.User.Movement.weightRun;
+                    if (InGameStatus.User.status.staminaBar.GetCurrent() > 0)
+                    {
+                        return InGameStatus.User.Movement.spdWalk * InGameStatus.User.Movement.weightRun;
+                    }
+                    else
+                    {
+                        return InGameStatus.User.Movement.spdWalk;
+                    }
                 case Objects.MovementType.CROUCH:
                     return InGameStatus.User.Movement.spdWalk * InGameStatus.User.Movement.weightCrouch;
             }
@@ -80,35 +110,16 @@ namespace Assets.Scripts.Users.Controllers
             InGameStatus.User.Movement.curMovement = Objects.MovementType.WALK;
         }
 
-        private void SetMouseEvent()
+        private void TrackStamina()
         {
-            GlobalStatus.Util.MouseEvent.actionSustain = (mousePos) =>
+            if (secForRecoverStamina > 2)
             {
-                if (!InGameStatus.User.isPause)
-                {
-                    InGameStatus.User.Movement.curdegree = (int)
-                    Vector3.SignedAngle(Vector3.right, new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized, transform.forward);
-                }
-            };
-            GlobalStatus.Util.MouseEvent.Right.setActions(
-                actionDrag: (tr, mousePos) =>
-                {
-                    CameraTrackControlller.targetDir =
-                        (
-                        mousePos - GlobalComponent.Common.userTf.position
-                        )
-                        * 2 / 3f;
-                },
-                actionDown: (tr, mousePos) =>
-                {
-                    InGameStatus.User.Detection.Sight.isControllInRealTime = true;
-                },
-                actionUp: (tr, mousePos) =>
-                {
-                    InGameStatus.User.Detection.Sight.isControllInRealTime = false;
-                    CameraTrackControlller.targetDir = Vector3.zero;
-                }
-                );
+                // 마지막으로 뛴 순간으로부터 2초 후
+                // = 스테미나 회복 시작
+                InGameStatus.User.status.staminaBar.AddCurrent(Time.deltaTime * 10);
+                return;
+            }
+            secForRecoverStamina += Time.deltaTime;
         }
     }
 

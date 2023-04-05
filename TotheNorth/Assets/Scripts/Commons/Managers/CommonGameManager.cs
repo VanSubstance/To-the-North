@@ -4,12 +4,18 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Components.Infos;
+using Assets.Scripts.Creatures;
 
 public class CommonGameManager : MonoBehaviour
 {
     [SerializeField]
-    private Transform fadeImagePrefab, userPrefab, smogForScreenPrefab, 
-        pauseWindowPrefab, inventoryWindowPrefab;
+    private Transform fadeImagePrefab, userPrefab, smogForScreenPrefab,
+        pauseWindowPrefab, inventoryWindowPrefab,
+        panelForLeftTop
+        ;
+
     private Image fadeImage;
     private int curStatus = 0;
 
@@ -117,6 +123,13 @@ public class CommonGameManager : MonoBehaviour
             userGo.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
             GlobalStatus.userInitPosition = new float[] { 0, 0 };
             GlobalComponent.Common.userTf = userGo;
+
+            // 필요한 UI
+            Transform panelLeftTop = Instantiate(panelForLeftTop, uiTf);
+            panelLeftTop.localScale = Vector3.one;
+            panelLeftTop.localPosition = new Vector3(-960, 540, 0);
+            InGameStatus.User.status.hpBar = panelLeftTop.GetComponent<UINumericController>().barForHp;
+            InGameStatus.User.status.staminaBar = panelLeftTop.GetComponent<UINumericController>().barForStamina;
         }
 
         GlobalStatus.Loading.System.CommonGameManager = true;

@@ -7,7 +7,8 @@ using UnityEngine;
 public class CameraTrackControlller : MonoBehaviour
 {
     public static Vector3
-        targetDir = Vector3.zero;
+        targetPos = Vector3.zero,
+        headHorPos = Vector3.zero, headVerPos = Vector3.zero;
 
     void Start()
     {
@@ -17,8 +18,8 @@ public class CameraTrackControlller : MonoBehaviour
     {
         transform.Translate(
             new Vector2(
-                GlobalComponent.Common.userTf.position.x - transform.position.x + targetDir.x,
-                GlobalComponent.Common.userTf.position.y - transform.position.y + targetDir.y
+                GlobalComponent.Common.userTf.position.x - transform.position.x + targetPos.x + headHorPos.x + headVerPos.x,
+                GlobalComponent.Common.userTf.position.y - transform.position.y + targetPos.y + headHorPos.y + headVerPos.y
                 )
                 * Time.deltaTime * 2
             );

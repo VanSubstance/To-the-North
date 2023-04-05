@@ -77,16 +77,19 @@ namespace Assets.Scripts.Creatures.Bases
             targetPos = _targetPos;
             for (int i = 0; i < unitsTank.Count; i++)
             {
+                if (unitsTank[i].isInSelfControl) continue;
                 unitsTank[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(0, i), 0, true);
                 unitsTank[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(0, i), 0);
             }
             for (int i = 0; i < unitsBruiser.Count; i++)
             {
+                if (unitsBruiser[i].isInSelfControl) continue;
                 unitsBruiser[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0, true);
                 unitsBruiser[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
             }
             for (int i = 0; i < unitRanger.Count; i++)
             {
+                if (unitRanger[i].isInSelfControl) continue;
                 unitRanger[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(2, i), 0, true);
                 unitRanger[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
             }
@@ -113,7 +116,8 @@ namespace Assets.Scripts.Creatures.Bases
         {
             for (int i = 0; i < units.Count; i++)
             {
-                if (!units[i].isAllActDone()) return false;
+                if (!units[i].isAllActDone() ||
+                    units[i].isInSelfControl) return false;
             }
             return true;
         }

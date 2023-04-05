@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Creatures.Bases;
+using Assets.Scripts.Creatures.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Conductions
@@ -9,8 +11,11 @@ namespace Assets.Scripts.Creatures.Conductions
         public int numberOfGazeAfterLost = 3;
         private Transform targetTf;
         private Vector3? lastPosition;
-        private bool isNowLost = false;
+        private bool isNowLost = false, isTimerOn = false;
         private int afterLost = 0;
+        private float timerSelfControl = 0f;
+
+        public bool isInSelfControl = false;
         private new void Awake()
         {
             base.Awake();
@@ -18,15 +23,23 @@ namespace Assets.Scripts.Creatures.Conductions
 
         private void Update()
         {
-            if (baseController.statusType == Interfaces.AIStatusType.Combat)
+            if (!isInSelfControl)
+            {
+                return;
+            }
+            if (baseController.statusType == AIStatusType.Combat)
             {
                 if (targetTf != null)
                 {
                     // 유저가 시야에 있을 때
                     // 계속 새로고침하면서 추격
-                    Debug.Log("시야에 있음");
+                    if (!isTimerOn)
+                    {
+                        StartCoroutine(CoroutineSelfControll());
+                    }
+                    timerSelfControl = 5f;
                     baseController.SetTargetToTrack(targetTf.position, 0, false);
-                    //baseController.SetTargetToGaze(targetTf.position, 0);
+                    baseController.SetTargetToGaze(targetTf.position, 0);
                 }
                 else
                 {
@@ -34,8 +47,7 @@ namespace Assets.Scripts.Creatures.Conductions
                     // = 유저의 마지막 위치만 알고있을 때
                     if (isNowLost)
                     {
-                        Debug.Log("시야에서 사라짐");
-                        baseController.SetTargetToTrack((Vector3)lastPosition, 0, false);
+                        baseController.SetTargetToTrack((Vector3)lastPosition, 0, true);
                         //baseController.SetTargetToGaze(lastPosition, 0);
                         isNowLost = false;
                     }
@@ -51,6 +63,7 @@ namespace Assets.Scripts.Creatures.Conductions
                         }
                     }
                 }
+                return;
             }
         }
 
@@ -63,6 +76,18 @@ namespace Assets.Scripts.Creatures.Conductions
                 isNowLost = true;
                 afterLost = 0;
             }
+        }
+
+        private IEnumerator CoroutineSelfControll()
+        {
+            isTimerOn = true;
+            while (timerSelfControl > 0)
+            {
+                yield return new WaitForSeconds(Time.deltaTime);
+                timerSelfControl -= Time.deltaTime;
+            }
+            isInSelfControl = false;
+            isTimerOn = false;
         }
     }
 }

@@ -1,5 +1,5 @@
 using System.Collections;
-using Assets.Scripts.Components.Progress.Controllers;
+using Assets.Scripts.Components.Progress;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
