@@ -17,7 +17,7 @@ namespace Assets.Scripts.Battles
         /// 피격당했을 때 작동하는 함수
         /// </summary>
         /// <param name="partType">피격당한 부위</param>
-        public void OnHit(PartType partType)
+        public void OnHit(PartType partType, ProjectileInfo _info)
         {
             switch (partType)
             {

@@ -11,7 +11,9 @@ namespace Assets.Scripts.Battles
         {
             if (collision.tag.Equals("Attack"))
             {
-                hitController.OnHit(partType);
+                ProjectileController projectile = collision.GetComponent<ProjectileController>();
+                hitController.OnHit(partType, projectile.Info);
+                projectile.gameObject.SetActive(false);
             }
         }
 

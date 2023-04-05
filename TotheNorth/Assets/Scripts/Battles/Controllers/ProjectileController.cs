@@ -20,6 +20,13 @@ namespace Assets.Scripts.Battles
         private List<Vector3> positions;
 
         public Vector3 startPos, targetPos;
+        public ProjectileInfo Info
+        {
+            get
+            {
+                return info;
+            }
+        }
 
         public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir)
         {
@@ -75,17 +82,11 @@ namespace Assets.Scripts.Battles
         {
             switch (collision.gameObject.layer)
             {
-                case 8:
-                case 13:
-                case 15:
-                    Debug.Log("크리쳐와 충돌");
-                    //collision.transform.GetComponent<ICreatureBattle>().Hit(info);
-                    break;
                 case 14:
                     Debug.Log("장애물과 충돌");
+                    gameObject.SetActive(false);
                     break;
             }
-            gameObject.SetActive(false);
         }
 
         private void OnDisable()
