@@ -11,10 +11,11 @@ namespace Assets.Scripts.Creatures.Conductions
         public int numberOfGazeAfterLost = 3;
         private Transform targetTf;
         private Vector3? lastPosition;
-        private bool isNowLost = false;
+        private bool isNowLost = false, isTimerOn = false;
         private int afterLost = 0;
+        private float timerSelfControl = 0f;
 
-        public bool isActive = true;
+        public bool isInSelfControl = false;
         private new void Awake()
         {
             base.Awake();
@@ -22,14 +23,21 @@ namespace Assets.Scripts.Creatures.Conductions
 
         private void Update()
         {
-            if (!isActive) return;
+            if (!isInSelfControl)
+            {
+                return;
+            }
             if (baseController.statusType == AIStatusType.Combat)
             {
-                //Debug.Log("자가 판단");
                 if (targetTf != null)
                 {
                     // 유저가 시야에 있을 때
                     // 계속 새로고침하면서 추격
+                    if (!isTimerOn)
+                    {
+                        StartCoroutine(CoroutineSelfControll());
+                    }
+                    timerSelfControl = 5f;
                     baseController.SetTargetToTrack(targetTf.position, 0, false);
                     baseController.SetTargetToGaze(targetTf.position, 0);
                 }
@@ -55,6 +63,7 @@ namespace Assets.Scripts.Creatures.Conductions
                         }
                     }
                 }
+                return;
             }
         }
 
@@ -67,6 +76,18 @@ namespace Assets.Scripts.Creatures.Conductions
                 isNowLost = true;
                 afterLost = 0;
             }
+        }
+
+        private IEnumerator CoroutineSelfControll()
+        {
+            isTimerOn = true;
+            while (timerSelfControl > 0)
+            {
+                yield return new WaitForSeconds(Time.deltaTime);
+                timerSelfControl -= Time.deltaTime;
+            }
+            isInSelfControl = false;
+            isTimerOn = false;
         }
     }
 }

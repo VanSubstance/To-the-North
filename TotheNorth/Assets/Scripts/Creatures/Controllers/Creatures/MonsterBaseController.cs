@@ -26,7 +26,7 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
                     squadBase.DetectEnemy(targetTf.position);
 
                     // 자가 판단 실행
-                    isControllableBySquad = false;
+                    isInSelfControl = true;
                     statusType = Interfaces.AIStatusType.Combat;
                     GetComponent<AICombatController>().SetTargetTf(targetTf);
                 }
@@ -34,7 +34,6 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
                 {
                     // 부대 명령 하달 실행
                     GetComponent<AICombatController>().SetTargetTf(null);
-                    isControllableBySquad = true;
                 }
             }
             else

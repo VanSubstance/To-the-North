@@ -50,6 +50,10 @@ namespace Assets.Scripts.Creatures.Controllers.Conductions.Squads
                 yield return new WaitForSeconds(Time.deltaTime);
                 timerMemory -= Time.deltaTime;
             }
+            while (!baseController.isAllActDone())
+            {
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
             baseController.SetAllUnitsStatus(AIStatusType.None);
             baseController.statusType = AIStatusType.Petrol;
             baseController.detectPos = null;

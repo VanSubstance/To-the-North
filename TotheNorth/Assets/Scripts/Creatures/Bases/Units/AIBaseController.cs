@@ -45,15 +45,15 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
-        public bool isControllableBySquad
+        public bool isInSelfControl
         {
             get
             {
-                return !GetComponent<AICombatController>().isActive;
+                return GetComponent<AICombatController>().isInSelfControl;
             }
             set
             {
-                GetComponent<AICombatController>().isActive = !value;
+                GetComponent<AICombatController>().isInSelfControl = value;
             }
         }
 
@@ -361,7 +361,7 @@ namespace Assets.Scripts.Creatures.Bases
         {
             squadBase = _squadBase;
             Destroy(GetComponent<AIPetrolController>());
-            GetComponent<AICombatController>().isActive = false;
+            GetComponent<AICombatController>().isInSelfControl = false;
         }
 
         /// <summary>
