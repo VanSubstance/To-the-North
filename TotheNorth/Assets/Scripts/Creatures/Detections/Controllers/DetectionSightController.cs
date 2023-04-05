@@ -146,7 +146,7 @@ namespace Assets.Scripts.Creatures.Detections
                     {
                         float dstToTarget = Vector3.Distance(transform.position, userTf.position);
                         // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
-                        if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
+                        if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.compositeObstacleMask))
                         {
                             aIBaseController.OnDetectUser(userTf);
                             return userTf;
@@ -158,6 +158,7 @@ namespace Assets.Scripts.Creatures.Detections
                         }
                     }
                 }
+                return null;
             }
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
             List<Collider2D> targetsInViewRadius = new List<Collider2D>();
@@ -174,7 +175,7 @@ namespace Assets.Scripts.Creatures.Detections
                     float dstToTarget = Vector3.Distance(transform.position, target.transform.position);
 
                     // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
-                    if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
+                    if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.compositeObstacleMask))
                     {
                         try
                         {

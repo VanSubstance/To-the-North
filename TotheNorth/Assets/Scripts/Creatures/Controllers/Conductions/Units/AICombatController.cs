@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Creatures.Bases;
+using Assets.Scripts.Creatures.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Conductions
@@ -21,7 +23,7 @@ namespace Assets.Scripts.Creatures.Conductions
         private void Update()
         {
             if (!isActive) return;
-            if (baseController.statusType == Interfaces.AIStatusType.Combat)
+            if (baseController.statusType == AIStatusType.Combat)
             {
                 //Debug.Log("자가 판단");
                 if (targetTf != null)
@@ -37,7 +39,7 @@ namespace Assets.Scripts.Creatures.Conductions
                     // = 유저의 마지막 위치만 알고있을 때
                     if (isNowLost)
                     {
-                        baseController.SetTargetToTrack((Vector3)lastPosition, 0, false);
+                        baseController.SetTargetToTrack((Vector3)lastPosition, 0, true);
                         //baseController.SetTargetToGaze(lastPosition, 0);
                         isNowLost = false;
                     }

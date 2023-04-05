@@ -8,6 +8,8 @@ namespace Assets.Scripts.Creatures
     {
         [SerializeField]
         private int maxHp;
+        [SerializeField]
+        private bool isAttackFirst;
 
         public float atkRange = 5f, moveSpd = 3f, moveDis = 3f;
         public ProgressInfo hp = null;
@@ -24,6 +26,14 @@ namespace Assets.Scripts.Creatures
             }
         }
 
+        public bool IsAttackFirst
+        {
+            get
+            {
+                return isAttackFirst;
+            }
+        }
+
         public static CreatureInfo GetClone(CreatureInfo _data)
         {
             CreatureInfo res = CreateInstance<CreatureInfo>();
@@ -31,6 +41,7 @@ namespace Assets.Scripts.Creatures
             res.atkRange = _data.atkRange;
             res.moveSpd = _data.moveSpd;
             res.moveDis = _data.moveDis;
+            res.isAttackFirst = _data.isAttackFirst;
             return res;
         }
     }

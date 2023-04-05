@@ -33,26 +33,20 @@ namespace Assets.Scripts.Battles
             switch (partType)
             {
                 case PartType.Helmat:
-                    Debug.Log("헬멧 맞음!");
                     break;
                 case PartType.Mask:
-                    Debug.Log("마스크 맞음!");
                     break;
                 case PartType.Head:
-                    Debug.Log("머리 맞음!");
                     break;
                 case PartType.Body:
-                    Debug.Log("몸텅 맞음!");
                     break;
                 case PartType.Leg:
-                    Debug.Log("다리 맞음!");
                     break;
             }
             if (info)
             {
                 // AI 기준
                 info.LiveHp = -10;
-                Debug.Log("현재 체력:: " + info.LiveHp);
                 if (info.LiveHp <= 0)
                 {
                     transform.parent.gameObject.SetActive(false);
@@ -61,11 +55,9 @@ namespace Assets.Scripts.Battles
             }
             // 유저
             InGameStatus.User.status.hpBar.LiveInfo = -10;
-            Debug.Log("유저 체력:: " + InGameStatus.User.status.hpBar.LiveInfo);
             if (InGameStatus.User.status.hpBar.LiveInfo <= 0)
             {
-                InGameStatus.User.isPause = true;
-                Debug.Log("죽음!");
+                //InGameStatus.User.isPause = true;
             }
             return;
         }

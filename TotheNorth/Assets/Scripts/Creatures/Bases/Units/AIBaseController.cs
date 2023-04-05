@@ -9,7 +9,6 @@ using Assets.Scripts.Creatures.Detections.Controllers;
 using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Items;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Assets.Scripts.Creatures.Bases
 {
@@ -135,11 +134,11 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void ControllAttack()
         {
+            if (!info.IsAttackFirst) return;
             if (!detectionBase.targetTf) return;
             Vector3 _targetPos = detectionBase.targetTf.position;
             Vector3 originPos = transform.position;
-            RaycastHit2D obsHit;
-            if (!(obsHit = Physics2D.Raycast(originPos, (_targetPos - originPos), info.atkRange, GlobalStatus.Constant.compositeObstacleMask)))
+            if (!IsAttackable())
             {
                 if (handL.childCount > 0)
                 {
@@ -149,8 +148,6 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     handR.GetChild(0).GetComponent<IItemHandable>().Use(_targetPos - originPos);
                 }
-                targetPos = null;
-                isOrderMoveDone = true;
             }
         }
 
@@ -183,8 +180,14 @@ namespace Assets.Scripts.Creatures.Bases
                     }
                     return;
                 }
+                // 모굪가 있는데 공격 가능 위치인지
+                if (detectionBase.targetTf && !IsAttackable())
+                {
+                    MoveToTarget();
+                    return;
+                }
                 // 도달 목표에 도달했는지
-                if (Vector2.Distance(transform.position, (Vector3)targetPos) < (isForce ? forcingDis : info.atkRange))
+                if (Vector2.Distance(transform.position, (Vector3)targetPos) < 0.25f)
                 {
                     vectorToMove = null;
                     if (isOrderMoveDone && timeStayForMove > 0)
@@ -268,15 +271,15 @@ namespace Assets.Scripts.Creatures.Bases
             targetDegree += 360 * 3;
             targetDegree -= sightController.curDegree;
             targetDegree %= 360;
-            if (targetDegree > 1)
+            if (targetDegree > 2)
             {
                 if (targetDegree < 180)
                 {
-                    sightController.AddRotationDegree(1);
+                    sightController.AddRotationDegree(2);
                 }
                 else
                 {
-                    sightController.AddRotationDegree(-1);
+                    sightController.AddRotationDegree(-2);
                 }
             }
             else
@@ -369,13 +372,12 @@ namespace Assets.Scripts.Creatures.Bases
         private void SetTargetToTrack()
         {
             if (targetPos == null) return;
-            Debug.Log("좌표 재계산");
             Vector3 _targetPos = (Vector3)targetPos;
             Vector3 originPos = transform.position;
-            if (Vector3.Distance(originPos, _targetPos) < (isForce ? forcingDis : info.atkRange))
+            float dis;
+            if ((dis = Vector3.Distance(originPos, _targetPos)) < (isForce ? forcingDis : info.atkRange))
             {
                 // 현재 타겟이 사거리 내에 있다
-                //Debug.Log("사거리안에있음");
                 if (isForce)
                 {
                     // 타겟에 도착한 것으로 본다
@@ -385,25 +387,26 @@ namespace Assets.Scripts.Creatures.Bases
                 }
                 // targetPos가 이동 가능한 위치에 있음
                 RaycastHit2D obsHit;
-                if (!(obsHit = Physics2D.Raycast(originPos, (_targetPos - originPos), info.atkRange, GlobalStatus.Constant.compositeObstacleMask)))
+                if ((obsHit = Physics2D.Raycast(originPos, (_targetPos - originPos), dis, GlobalStatus.Constant.compositeObstacleMask)))
                 {
-                    // 조준 가능
-                    if (handL.childCount > 0)
-                    {
-                        handL.GetChild(0).GetComponent<IItemHandable>().Use(_targetPos - originPos);
-                    }
-                    if (handR.childCount > 0)
-                    {
-                        handR.GetChild(0).GetComponent<IItemHandable>().Use(_targetPos - originPos);
-                    }
-                    targetPos = null;
-                    isOrderMoveDone = true;
+                    // 조준 불가
+                    targetToGaze = targetToMove = FindPath(_targetPos, originPos, obsHit);
                     return;
                 }
                 else
                 {
-                    // 조준 불가
-                    targetToGaze = targetToMove = FindPath(_targetPos, originPos, obsHit);
+                    // 조준 가능
+                    //if (handL.childCount > 0)
+                    //{
+                    //    handL.GetChild(0).GetComponent<IItemHandable>().Use(_targetPos - originPos);
+                    //}
+                    //if (handR.childCount > 0)
+                    //{
+                    //    handR.GetChild(0).GetComponent<IItemHandable>().Use(_targetPos - originPos);
+                    //}
+                    targetPos = null;
+                    isOrderMoveDone = true;
+                    return;
                 }
             }
             else
@@ -448,7 +451,7 @@ namespace Assets.Scripts.Creatures.Bases
         /// <returns></returns>
         private Vector3 FindPathWithObstacle(Vector3 targetPos, Vector3 originPos, Transform curObsTf)
         {
-            bool isTargetUnreachable = Physics2D.Raycast(targetPos, (originPos - targetPos).normalized, 0.1f, GlobalStatus.Constant.compositeObstacleMask);
+            bool isTargetUnreachable = Physics2D.OverlapPoint(targetPos, GlobalStatus.Constant.compositeObstacleMask);
             float angK = CalculationFunctions.AngleFromDir(targetPos - originPos), angR = (angK + 180) % 360, disCompare = -1;
             float[] valByOrigin = GetAnglesAndDistanceMeetsObstacle(originPos, angK, curObsTf);
             if (isTargetUnreachable)
@@ -636,6 +639,13 @@ namespace Assets.Scripts.Creatures.Bases
         public void SetHpBar(Transform _hpBarTf)
         {
             hpBarTf = _hpBarTf;
+        }
+
+        private bool IsAttackable()
+        {
+            Vector3 _targetPos = detectionBase.targetTf.position;
+            Vector3 originPos = transform.position;
+            return Physics2D.Raycast(originPos, (_targetPos - originPos), Vector3.Distance(_targetPos, originPos), GlobalStatus.Constant.compositeObstacleMask);
         }
 
         public abstract void OnDetectUser(Transform targetTf);

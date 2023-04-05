@@ -95,7 +95,6 @@ namespace Assets.Scripts.Battles
             switch (collision.gameObject.layer)
             {
                 case 14:
-                    Debug.Log("장애물과 충돌");
                     Arrive();
                     break;
             }
