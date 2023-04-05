@@ -1,4 +1,5 @@
 using Assets.Scripts.Components.Progress;
+using Assets.Scripts.Creatures;
 using Assets.Scripts.Users.Objects;
 
 namespace Assets.Scripts.Commons.Constants
@@ -11,8 +12,8 @@ namespace Assets.Scripts.Commons.Constants
 
             public static class status
             {
-                public static BarBaseController hp;
-                public static BarBaseController stamina;
+                public static BarBaseController hpBar;
+                public static BarBaseController staminaBar;
             }
             public static class Movement
             {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Assets.Scripts.Battles;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Conductions;
 using Assets.Scripts.Creatures.Controllers;
@@ -29,6 +30,14 @@ namespace Assets.Scripts.Creatures.Bases
         private readonly float forcingDis = 2f;
 
         private Transform hpBarTf;
+
+        public CreatureInfo Info
+        {
+            get
+            {
+                return info;
+            }
+        }
 
         public bool isControllableBySquad
         {
@@ -72,6 +81,7 @@ namespace Assets.Scripts.Creatures.Bases
         public void InitCreature(CreatureInfo _info)
         {
             info = CreatureInfo.GetClone(_info);
+            transform.Find("Hits").GetComponent<CreatureHitController>().Info = info;
             gameObject.SetActive(true);
         }
 
@@ -90,6 +100,7 @@ namespace Assets.Scripts.Creatures.Bases
         {
             if (isInit) return;
             info = CreatureInfo.GetClone(info);
+            transform.Find("Hits").GetComponent<CreatureHitController>().Info = info;
             sightController.range = info.atkRange;
             isInit = true;
         }

@@ -4,13 +4,25 @@ using UnityEngine;
 namespace Assets.Scripts.Creatures
 {
     [CreateAssetMenu(fileName = "Creature Info", menuName = "Data Objects/Creature Info", order = int.MaxValue)]
-    internal class CreatureInfo : ScriptableObject
+    public class CreatureInfo : ScriptableObject
     {
         [SerializeField]
         private int maxHp;
 
         public float atkRange = 5f, moveSpd = 3f, moveDis = 3f;
         public ProgressInfo hp = null;
+
+        public int LiveHp
+        {
+            set
+            {
+                hp.curValue += value;
+            }
+            get
+            {
+                return (int)hp.curValue;
+            }
+        }
 
         public static CreatureInfo GetClone(CreatureInfo _data)
         {

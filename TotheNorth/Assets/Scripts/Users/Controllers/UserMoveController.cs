@@ -5,8 +5,6 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal class UserMoveController : MonoBehaviour
     {
-        [SerializeField]
-        Transform body;
         private float secForRecoverStamina = 0;
         private void Update()
         {
@@ -63,7 +61,7 @@ namespace Assets.Scripts.Users.Controllers
                 case Objects.MovementType.WALK:
                     return InGameStatus.User.Movement.spdWalk;
                 case Objects.MovementType.RUN:
-                    if (InGameStatus.User.status.stamina.GetCurrent() > 0)
+                    if (InGameStatus.User.status.staminaBar.GetCurrent() > 0)
                     {
                         return InGameStatus.User.Movement.spdWalk * InGameStatus.User.Movement.weightRun;
                     }
@@ -97,14 +95,14 @@ namespace Assets.Scripts.Users.Controllers
             if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
             {
                 secForRecoverStamina = 0;
-                InGameStatus.User.status.stamina.AddCurrent(-Time.deltaTime * 20);
+                InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
                 return;
             }
             if (secForRecoverStamina > 2)
             {
                 // 마지막으로 뛴 순간으로부터 2초 후
                 // = 스테미나 회복 시작
-                InGameStatus.User.status.stamina.AddCurrent(Time.deltaTime * 10);
+                InGameStatus.User.status.staminaBar.AddCurrent(Time.deltaTime * 10);
                 return;
             }
             secForRecoverStamina += Time.deltaTime;

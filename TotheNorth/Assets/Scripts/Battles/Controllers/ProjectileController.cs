@@ -19,6 +19,8 @@ namespace Assets.Scripts.Battles
         private List<Vector3> positions;
         private bool isReady;
 
+        public bool isAffected = false;
+
         public Vector3 startPos, targetPos;
         public ProjectileInfo Info
         {
@@ -42,8 +44,16 @@ namespace Assets.Scripts.Battles
             GetComponent<Rigidbody2D>().velocity = targetPos.normalized * info.Spd;
             targetPos *= (info.EndPos - info.StartPos).magnitude;
             targetPos += transform.position;
+            isAffected = false;
             isReady = true;
         }
+
+        public void Arrive()
+        {
+            isAffected = true;
+            gameObject.SetActive(false);
+        }
+
         private void Awake()
         {
             line = GetComponent<LineRenderer>();
@@ -86,7 +96,7 @@ namespace Assets.Scripts.Battles
             {
                 case 14:
                     Debug.Log("장애물과 충돌");
-                    gameObject.SetActive(false);
+                    Arrive();
                     break;
             }
         }

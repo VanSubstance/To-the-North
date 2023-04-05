@@ -11,6 +11,17 @@ namespace Assets.Scripts.Components.Progress
         private Color barColor;
 
         private ProgressInfo info;
+        public int LiveInfo
+        {
+            set
+            {
+                info.curValue += value;
+            }
+            get
+            {
+                return (int)info.curValue;
+            }
+        }
 
         private void Awake()
         {
