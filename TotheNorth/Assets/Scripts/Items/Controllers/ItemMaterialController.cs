@@ -14,10 +14,13 @@ namespace Assets.Scripts.Items.Controllers
             Debug.Log("재료 아이템 더블클릭!");
         }
 
-        protected override bool CheckItemTag()
+        protected override bool CheckItemTag(string slotType)
         {
-            Debug.Log("재료 아이템 이동:: 칸에 놓을 수 있는지 체크!");
-            return true;
+            if (slotType == "Inventory" || slotType == "Rooting")
+            {
+                return true;
+            }
+            return false;
         }
 
         protected override void InitExtraContent(ItemMaterialInfo content)
