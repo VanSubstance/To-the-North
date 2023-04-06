@@ -10,6 +10,9 @@ public class WindowModalInventoryContentController : AWindowBaseContentControlle
     public GameObject itemPrefabGarodeung;
     public Transform slotParentTF;
     public Transform itemParentTF;
+    public Transform rootParentTF;
+    public Transform rtemParentTF;
+    public Transform movingSpaceTF;
     private bool isInit = false;
 
     private void testItemInit()
@@ -60,8 +63,27 @@ public class WindowModalInventoryContentController : AWindowBaseContentControlle
                 InventoryManager.inventorySlots[row, col] = tempSlot.GetComponent<InventorySlotController>();
                 InventoryManager.inventorySlots[row, col].row = row;
                 InventoryManager.inventorySlots[row, col].column = col;
+                InventoryManager.inventorySlots[row, col].slotType = "Inventory";
             }
         }
+        for (int col = 0; col < 13; col++)
+        {
+            for (int row = 0; row < 10; row++)
+            {
+                GameObject tempSlot = Instantiate(slotPrefab, rootParentTF);
+                RectTransform slotTransform = tempSlot.GetComponent<RectTransform>();
+                slotTransform.anchoredPosition = new Vector2(row * 60f, col * -60f);
+                tempSlot.name = "rootSlot(" + row + "," + col + ")";
+                InventoryManager.rootSlots[row, col] = tempSlot.GetComponent<InventorySlotController>();
+                InventoryManager.rootSlots[row, col].row = row;
+                InventoryManager.rootSlots[row, col].column = col;
+                InventoryManager.rootSlots[row, col].slotType = "Rooting";
+            }
+        }
+        // 아이템들의 TF를 넣어주고, 이후 아이템 이동 시 사용
+        InventoryManager.leftInventoryTF = rtemParentTF;
+        InventoryManager.rightInventoryTF = itemParentTF;
+        InventoryManager.movingSpaeceTF = movingSpaceTF;
         testItemInit();
         isInit = true;
     }

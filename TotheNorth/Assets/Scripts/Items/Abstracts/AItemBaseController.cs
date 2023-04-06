@@ -41,8 +41,8 @@ namespace Assets.Scripts.Items.Abstracts
             objCollider.offset = new Vector2(objTF.sizeDelta.x / 2f, objTF.sizeDelta.y / -2f);
             // 시작 curSlot 초기화 (ray 사용, rayPos = 게임오브젝트 좌상단 기준 30f, -30f)
             rayPos = transform.TransformPoint(new Vector2(30f, -30f));
-            RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask);
-            if (hit.collider)
+            RaycastHit2D hit;
+            if ((hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask)) && hit.collider)
             {
                 curSlot = hit.transform.GetComponent<InventorySlotController>();
                 ItemAttach(curSlot);
@@ -60,9 +60,19 @@ namespace Assets.Scripts.Items.Abstracts
                 {
                     try
                     {
-                        if (InventoryManager.inventorySlots[destSlot.row + j, destSlot.column + i].isAttached == true)
+                        if (destSlot.slotType == "Inventory")
                         {
-                            return false;
+                            if (InventoryManager.inventorySlots[destSlot.row + j, destSlot.column + i].isAttached == true)
+                            {
+                                return false;
+                            }
+                        }
+                        else if (destSlot.slotType == "Rooting")
+                        {
+                            if (InventoryManager.rootSlots[destSlot.row + j, destSlot.column + i].isAttached == true)
+                            {
+                                return false;
+                            }
                         }
                     }
                     catch (System.IndexOutOfRangeException)
@@ -79,6 +89,10 @@ namespace Assets.Scripts.Items.Abstracts
         /// </summary>
         public void ItemAttach(InventorySlotController attachSlot)
         {
+            if (attachSlot.slotType == "Inventory")
+                transform.SetParent(InventoryManager.rightInventoryTF);
+            if (attachSlot.slotType == "Shop" || attachSlot.slotType == "Rooting")
+                transform.SetParent(InventoryManager.leftInventoryTF);
             Vector3 destPos;
             destPos = new Vector3(attachSlot.transform.localPosition.x, attachSlot.transform.localPosition.y, 0f);
             objTF.localPosition = destPos;
@@ -86,7 +100,14 @@ namespace Assets.Scripts.Items.Abstracts
             {
                 for (int j = 0; j < itemSizeRow; j++)
                 {
-                    InventoryManager.inventorySlots[attachSlot.row + j, attachSlot.column + i].isAttached = true;
+                    if (attachSlot.slotType == "Inventory")
+                    {
+                        InventoryManager.inventorySlots[attachSlot.row + j, attachSlot.column + i].isAttached = true;
+                    }
+                    else if (attachSlot.slotType == "Rooting")
+                    {
+                        InventoryManager.rootSlots[attachSlot.row + j, attachSlot.column + i].isAttached = true;
+                    }
                 }
             }
             curSlot = attachSlot;
@@ -99,11 +120,19 @@ namespace Assets.Scripts.Items.Abstracts
         /// <param name="detachSlot"></param>
         public void ItemDetach(InventorySlotController detachSlot)
         {
+            transform.SetParent(InventoryManager.movingSpaeceTF);
             for (int i = 0; i < itemSizeCol; i++)
             {
                 for (int j = 0; j < itemSizeRow; j++)
                 {
-                    InventoryManager.inventorySlots[detachSlot.row + j, detachSlot.column + i].isAttached = false;
+                    if (detachSlot.slotType == "Inventory")
+                    {
+                        InventoryManager.inventorySlots[detachSlot.row + j, detachSlot.column + i].isAttached = false;
+                    }
+                    else if (detachSlot.slotType == "Rooting")
+                    {
+                        InventoryManager.rootSlots[detachSlot.row + j, detachSlot.column + i].isAttached = false;
+                    }
                 }
             }
         }
@@ -118,7 +147,14 @@ namespace Assets.Scripts.Items.Abstracts
             {
                 for (int j = 0; j < itemSizeRow; j++)
                 {
-                    InventoryManager.inventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
+                    if (readySlot.slotType == "Inventory")
+                    {
+                        InventoryManager.inventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
+                    }
+                    if (readySlot.slotType == "Rooting")
+                    {
+                        InventoryManager.rootSlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
+                    }
                 }
             }
         }
@@ -135,7 +171,15 @@ namespace Assets.Scripts.Items.Abstracts
                 {
                     try
                     {
-                        InventoryManager.inventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
+                        if (readySlot.slotType == "Inventory")
+                        {
+                            InventoryManager.inventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
+
+                        }
+                        else if (readySlot.slotType == "Rooting")
+                        {
+                            InventoryManager.rootSlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
+                        }
                     }
                     catch (System.NullReferenceException)
                     {
@@ -258,7 +302,7 @@ namespace Assets.Scripts.Items.Abstracts
                     if (ItemSizeCheck(hit.transform.GetComponent<InventorySlotController>()))
                     {
                         // 아이템 태그 체크
-                        if (CheckItemTag())
+                        if (CheckItemTag(hit.transform.GetComponent< InventorySlotController>().slotType))
                         {
                             ItemAttach(hit.transform.GetComponent<InventorySlotController>());
                         }
@@ -307,7 +351,7 @@ namespace Assets.Scripts.Items.Abstracts
         /// 아이템이 해당 칸에 설치될 수 있는지 체크하는 함수
         /// </summary>
         /// <returns></returns>
-        protected abstract bool CheckItemTag();
+        protected abstract bool CheckItemTag(string slotType);
 
 
         protected abstract void InitExtraContent(TContent content);

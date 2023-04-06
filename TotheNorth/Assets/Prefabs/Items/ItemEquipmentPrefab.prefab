@@ -165,3 +165,4 @@ MonoBehaviour:
   curSlot: {fileID: 0}
   itemSizeRow: 3
   itemSizeCol: 4
+  isRotate: 0
