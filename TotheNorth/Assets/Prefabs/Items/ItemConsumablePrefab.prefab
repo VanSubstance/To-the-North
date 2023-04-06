@@ -85,9 +85,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8958241393174041182}
+  - component: {fileID: 1101359941208890790}
   - component: {fileID: 8958241393174041170}
   - component: {fileID: 3586876189708073804}
-  - component: {fileID: 1101359941208890790}
   m_Layer: 11
   m_Name: ItemConsumablePrefab
   m_TagString: Item
@@ -116,6 +116,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &1101359941208890790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8958241393174041177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b412efd720a0a498d02daa9550da13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curSlot: {fileID: 0}
+  itemSizeRow: 1
+  itemSizeCol: 1
+  isRotate: 0
+  info: {fileID: 11400000, guid: cf3c89fd83c24254cbae0c16f6bbbac9, type: 2}
 --- !u!222 &8958241393174041170
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -150,19 +167,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 60, y: 60}
   m_EdgeRadius: 0
---- !u!114 &1101359941208890790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8958241393174041177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9b412efd720a0a498d02daa9550da13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curSlot: {fileID: 0}
-  itemSizeRow: 1
-  itemSizeCol: 1
-  isRotate: 0
