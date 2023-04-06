@@ -2,9 +2,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.Items
 {
-    class ItemConsumableController : AItemBaseController<ItemConsumableInfo>
+    public class ItemConsumableController : AItemBaseController
     {
         private readonly string TAG = "소모성 아이템:\n";
+
+        [SerializeField]
+        private ItemConsumableInfo info;
         protected override bool CheckItemTag(string slotType)
         {
             if (slotType == "Inventory" || slotType == "QuickSlot" || slotType == "Rooting")
@@ -14,9 +17,9 @@ namespace Assets.Scripts.Items
             return false;
         }
 
-        protected override void InitExtraContent(ItemConsumableInfo content)
+        protected override ItemBaseInfo GetBaseInfo()
         {
-            throw new System.NotImplementedException();
+            return info.GetClone();
         }
 
         protected override void OnDoubleClick()

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Battles.Managers;
 using UnityEngine;
 
@@ -14,7 +9,7 @@ namespace Assets.Scripts.Items
     internal class ItemRangeController : MonoBehaviour, IItemHandable
     {
         [SerializeField]
-        private ItemBaseInfo info;
+        private ItemWeaponInfo info;
 
         private float delayAmongFire = 0f;
         private void Awake()

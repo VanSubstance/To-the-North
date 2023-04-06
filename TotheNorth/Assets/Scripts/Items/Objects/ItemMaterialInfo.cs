@@ -1,4 +1,11 @@
-public class ItemMaterialInfo : ItemBaseInfo
+
+using UnityEngine;
+
+namespace Assets.Scripts.Items
 {
-    // 재료 아이템 필요 인포
+    [CreateAssetMenu(fileName = "Material Info", menuName = "Data Objects/Items/Material", order = int.MaxValue)]
+    public class ItemMaterialInfo : ItemBaseInfo
+    {
+        // 재료 아이템 필요 인포
+    }
 }

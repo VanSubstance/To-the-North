@@ -1,10 +1,12 @@
 using UnityEngine;
 
-namespace Assets.Scripts.Items.Controllers
+namespace Assets.Scripts.Items
 {
-    class ItemMaterialController : AItemBaseController<ItemMaterialInfo>
+    public class ItemMaterialController : AItemBaseController
     {
         private readonly string TAG = "재료 아이템:\n";
+        [SerializeField]
+        private ItemMaterialInfo info;
 
         protected override bool CheckItemTag(string slotType)
         {
@@ -15,9 +17,9 @@ namespace Assets.Scripts.Items.Controllers
             return false;
         }
 
-        protected override void InitExtraContent(ItemMaterialInfo content)
+        protected override ItemBaseInfo GetBaseInfo()
         {
-            throw new System.NotImplementedException();
+            return info.GetClone();
         }
 
         protected override void OnDoubleClick()

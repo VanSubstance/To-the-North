@@ -11,7 +11,7 @@ namespace Assets.Scripts.Items
     /// 마우스 위에서 유지: 정보 뜨기
     /// 더블클릭: 추후 추상 구현
     /// </summary>
-    public abstract class AItemBaseController<TContent> : AbsItemController
+    public abstract class AItemBaseController : AbsItemController
     {
         [SerializeField]
         InventorySlotController curSlot;
@@ -26,13 +26,18 @@ namespace Assets.Scripts.Items
         private BoxCollider2D objCollider;
         private Image image;
 
-        public TContent content;
-
-        private void Start()
+        private ItemBaseInfo baseInfo;
+        private void Awake()
         {
             image = GetComponentInChildren<Image>();
             objTF = GetComponent<RectTransform>();
             objCollider = GetComponent<BoxCollider2D>();
+            baseInfo = GetBaseInfo();
+            SetImage(baseInfo.imagePath);
+        }
+
+        private void Start()
+        {
             // BoxCollider2D에 RectTransform 사이즈 대입
             objCollider.size = objTF.sizeDelta;
             objCollider.offset = new Vector2(objTF.sizeDelta.x / 2f, objTF.sizeDelta.y / -2f);
@@ -309,19 +314,6 @@ namespace Assets.Scripts.Items
             }
         }
 
-        public void InitContent(TContent content)
-        {
-            try
-            {
-                SetImage(((ItemBaseInfo)(object)content).imagePath);
-                InitExtraContent(content);
-            }
-            catch (InvalidCastException)
-            {
-                // 들어온 TContent가 안맞음
-            }
-        }
-
         private void SetImage(string imagePath)
         {
             image.sprite = Resources.Load<Sprite>(imagePath);
@@ -333,7 +325,10 @@ namespace Assets.Scripts.Items
         /// <returns></returns>
         protected abstract bool CheckItemTag(string slotType);
 
-
-        protected abstract void InitExtraContent(TContent content);
+        /// <summary>
+        /// 자식의 데이터에서 공통된 아이템 처리에 필요한 데이터 추출하는 함수
+        /// </summary>
+        /// <returns></returns>
+        protected abstract ItemBaseInfo GetBaseInfo();
     }
 }
