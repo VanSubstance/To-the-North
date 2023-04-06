@@ -779,7 +779,7 @@ PrefabInstance:
     - target: {fileID: 7648065484994886387, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: info
       value: 
-      objectReference: {fileID: 11400000, guid: abe18b6cfa722824ba68ab9ac5ff7750, type: 2}
+      objectReference: {fileID: 11400000, guid: f340af5fd0f67ae4b890f1d032a273f9, type: 2}
     - target: {fileID: 8367694764048619857, guid: 52347861bb659694a8aaefd18d0cdd46, type: 3}
       propertyPath: actTrack.Array.size
       value: 6

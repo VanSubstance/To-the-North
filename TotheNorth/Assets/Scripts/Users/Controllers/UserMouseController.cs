@@ -11,19 +11,19 @@ namespace Assets.Scripts.Users.Controllers
         Transform handL, handR;
         private void Update()
         {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            TrackMousePosition(mousePos);
-            TrackAim(mousePos);
-            TrackAttack(mousePos);
+            if (!InGameStatus.User.isPause)
+            {
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                TrackMousePosition(mousePos);
+                TrackAim(mousePos);
+                TrackAttack(mousePos);
+            }
         }
 
         private void TrackMousePosition(Vector3 mousePos)
         {
-            if (!InGameStatus.User.isPause)
-            {
-                InGameStatus.User.Movement.curdegree = (int)
-                Vector3.SignedAngle(Vector3.right, new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized, transform.forward);
-            }
+            InGameStatus.User.Movement.curdegree = (int)
+            Vector3.SignedAngle(Vector3.right, new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized, transform.forward);
         }
 
         private void TrackAim(Vector3 mousePos)
