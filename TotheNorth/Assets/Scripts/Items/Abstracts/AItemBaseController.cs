@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Items.Abstracts
+namespace Assets.Scripts.Items
 {
     /// <summary>
     /// 아이템 베이스 컨트롤러
@@ -11,7 +11,7 @@ namespace Assets.Scripts.Items.Abstracts
     /// 마우스 위에서 유지: 정보 뜨기
     /// 더블클릭: 추후 추상 구현
     /// </summary>
-    public abstract class AItemBaseController<TContent> : MonoBehaviour
+    public abstract class AItemBaseController : AbsItemController
     {
         [SerializeField]
         InventorySlotController curSlot;
@@ -22,20 +22,22 @@ namespace Assets.Scripts.Items.Abstracts
         public bool isRotate;
 
         private Vector2 rayPos;
-        private bool isMouseIn;
         private RectTransform objTF;
         private BoxCollider2D objCollider;
         private Image image;
 
-        public TContent content;
-
-        private void Start()
+        private ItemBaseInfo baseInfo;
+        private void Awake()
         {
             image = GetComponentInChildren<Image>();
             objTF = GetComponent<RectTransform>();
             objCollider = GetComponent<BoxCollider2D>();
-            // 초기화
-            isMouseIn = false;
+            baseInfo = GetBaseInfo();
+            SetImage(baseInfo.imagePath);
+        }
+
+        private void Start()
+        {
             // BoxCollider2D에 RectTransform 사이즈 대입
             objCollider.size = objTF.sizeDelta;
             objCollider.offset = new Vector2(objTF.sizeDelta.x / 2f, objTF.sizeDelta.y / -2f);
@@ -234,82 +236,71 @@ namespace Assets.Scripts.Items.Abstracts
             isRotate = !isRotate;
         }
 
-        private void OnMouseDown()
+        protected override void OnDown()
         {
-            isMouseIn = true;
             ItemDetach(curSlot);
             objTF.SetAsLastSibling();
         }
 
-        private void OnMouseDrag()
+        protected override void OnDraging()
         {
-            if (isMouseIn)
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                if (Input.GetKeyDown(KeyCode.R))
+                ItemRotate();
+            }
+            objTF.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            objTF.localPosition = new Vector3(
+                objTF.localPosition.x - (transform.GetComponent<BoxCollider2D>().size.x / 2),
+                objTF.localPosition.y + (transform.GetComponent<BoxCollider2D>().size.y / 2),
+                0f
+                );
+            rayPos = transform.TransformPoint(new Vector2(30f, -30f));
+            RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask);
+            if (hit.collider)
+            {
+                InventorySlotController tempSlot;
+                tempSlot = hit.transform.GetComponent<InventorySlotController>();
+                if (readySlot == tempSlot && readySlot.isAttachReady == true)
                 {
-                    ItemRotate();
-                }
-                objTF.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                objTF.localPosition = new Vector3(
-                    objTF.localPosition.x - (transform.GetComponent<BoxCollider2D>().size.x / 2),
-                    objTF.localPosition.y + (transform.GetComponent<BoxCollider2D>().size.y / 2),
-                    0f
-                    );
-                rayPos = transform.TransformPoint(new Vector2(30f, -30f));
-                RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask);
-                if (hit.collider)
-                {
-                    InventorySlotController tempSlot;
-                    tempSlot = hit.transform.GetComponent<InventorySlotController>();
-                    if (readySlot == tempSlot && readySlot.isAttachReady == true)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        if (ItemSizeCheck(tempSlot))
-                        {
-                            if (readySlot != null)
-                            {
-                                UnCheckReady(readySlot);
-                            }
-                            readySlot = tempSlot;
-                            CheckReady(readySlot);
-                        }
-                        else
-                        {
-                            UnCheckReady(readySlot);
-                        }
-                    }
+                    return;
                 }
                 else
                 {
-                    UnCheckReady(readySlot);
-                    readySlot = null;
-                }
-            }
-        }
-
-        private void OnMouseUp()
-        {
-            if (isMouseIn)
-            {
-                rayPos = transform.TransformPoint(new Vector2(30f, -30f));
-                RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask);
-                if (hit.collider)
-                {
-                    // 아이템 사이즈 체크
-                    if (ItemSizeCheck(hit.transform.GetComponent<InventorySlotController>()))
+                    if (ItemSizeCheck(tempSlot))
                     {
-                        // 아이템 태그 체크
-                        if (CheckItemTag(hit.transform.GetComponent< InventorySlotController>().slotType))
+                        if (readySlot != null)
                         {
-                            ItemAttach(hit.transform.GetComponent<InventorySlotController>());
+                            UnCheckReady(readySlot);
                         }
+                        readySlot = tempSlot;
+                        CheckReady(readySlot);
                     }
                     else
                     {
-                        ReturnToPost();
+                        UnCheckReady(readySlot);
+                    }
+                }
+            }
+            else
+            {
+                UnCheckReady(readySlot);
+                readySlot = null;
+            }
+        }
+
+        protected override void OnUp()
+        {
+            rayPos = transform.TransformPoint(new Vector2(30f, -30f));
+            RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask);
+            if (hit.collider)
+            {
+                // 아이템 사이즈 체크
+                if (ItemSizeCheck(hit.transform.GetComponent<InventorySlotController>()))
+                {
+                    // 아이템 태그 체크
+                    if (CheckItemTag(hit.transform.GetComponent<InventorySlotController>().slotType))
+                    {
+                        ItemAttach(hit.transform.GetComponent<InventorySlotController>());
                     }
                 }
                 else
@@ -317,23 +308,9 @@ namespace Assets.Scripts.Items.Abstracts
                     ReturnToPost();
                 }
             }
-            isMouseIn = false;
-            if (false)
+            else
             {
-                // ExecuteDoubleClick();
-            }
-            // 뭐가 되었던 조건을 만족해서 더블클릭 이벤트가 실행되어야됨
-        }
-        public void InitContent(TContent content)
-        {
-            try
-            {
-                SetImage(((ItemBaseInfo)(object)content).imagePath);
-                InitExtraContent(content);
-            }
-            catch (InvalidCastException)
-            {
-                // 들어온 TContent가 안맞음
+                ReturnToPost();
             }
         }
 
@@ -343,17 +320,15 @@ namespace Assets.Scripts.Items.Abstracts
         }
 
         /// <summary>
-        /// 아이템을 사용하는 함수
-        /// </summary>
-        public abstract void ExecuteDoubleClick();
-
-        /// <summary>
         /// 아이템이 해당 칸에 설치될 수 있는지 체크하는 함수
         /// </summary>
         /// <returns></returns>
         protected abstract bool CheckItemTag(string slotType);
 
-
-        protected abstract void InitExtraContent(TContent content);
+        /// <summary>
+        /// 자식의 데이터에서 공통된 아이템 처리에 필요한 데이터 추출하는 함수
+        /// </summary>
+        /// <returns></returns>
+        protected abstract ItemBaseInfo GetBaseInfo();
     }
 }

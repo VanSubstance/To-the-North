@@ -1,3 +1,4 @@
+using Assets.Scripts.Commons.Constants;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -86,5 +87,14 @@ public class WindowModalInventoryContentController : AWindowBaseContentControlle
         InventoryManager.movingSpaeceTF = movingSpaceTF;
         testItemInit();
         isInit = true;
+    }
+
+    private void OnEnable()
+    {
+        InGameStatus.User.isPause = true;
+    }
+    private void OnDisable()
+    {
+        InGameStatus.User.isPause = false;
     }
 }
