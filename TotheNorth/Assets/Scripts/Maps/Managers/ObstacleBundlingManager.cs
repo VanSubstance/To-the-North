@@ -36,6 +36,7 @@ namespace Assets.Scripts.Maps.Managers
                 compositeObstacle.GetComponent<CompositeCollider2D>().geometryType = CompositeCollider2D.GeometryType.Polygons;
             }
             obsQueue.Clear();
+            //Destroy(obstacleParent.gameObject);
         }
 
         private void DetectAndHandOver(ObstacleController curObs, Transform compositeObstacle)

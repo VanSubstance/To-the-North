@@ -1,16 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseSpriteController : MonoBehaviour
 {
-    [SerializeField]
-    protected SpriteRenderer allForAbsoulteSprite, allForDetectionSprite, backSprite;
+    protected SpriteRenderer spriteOutSight, spriteInSight, spriteBottom;
     // Start is called before the first frame update
     protected void Awake()
     {
-        allForAbsoulteSprite.color = Color.white;
-        allForDetectionSprite.color = new Color(1, 1, 1, 1 / 10f);
-        backSprite.color = Color.black;
+        Transform temp;
+        if (temp = transform.Find("InSight"))
+            spriteInSight = temp.GetComponent<SpriteRenderer>();
+        if (temp = transform.Find("OutSight"))
+            spriteOutSight = temp.GetComponent<SpriteRenderer>();
+        if (temp = transform.Find("Bottom"))
+            spriteBottom = temp.GetComponent<SpriteRenderer>();
+        if (spriteOutSight) spriteOutSight.color = Color.white;
+        if (spriteInSight) spriteInSight.color = new Color(1, 1, 1, 1 / 10f);
+        if (spriteBottom) spriteBottom.color = Color.black;
     }
 }

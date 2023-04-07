@@ -24,7 +24,7 @@ namespace Assets.Scripts.Maps
         private new void Awake()
         {
             base.Awake();
-            if (isDig) backSprite.color = new Color(0, 0, 0, 0.5f);
+            if (isDig) spriteBottom.color = new Color(.2f, .2f, .2f, .5f);
             filterOption.SetLayerMask(GlobalStatus.Constant.obstacleMask);
         }
 
@@ -32,14 +32,14 @@ namespace Assets.Scripts.Maps
         {
             Collider2D[] list;
             list = new Collider2D[20];
-            Physics2D.OverlapCollider(backSprite.GetComponent<PolygonCollider2D>(), filterOption, list);
+            Physics2D.OverlapCollider(spriteBottom.GetComponent<PolygonCollider2D>(), filterOption, list);
             return list;
         }
 
         public void Composite(Transform parent)
         {
             gameObject.layer = 14;
-            backSprite.gameObject.layer = 0;
+            spriteBottom.gameObject.layer = 0;
             transform.SetParent(parent);
         }
     }

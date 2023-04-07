@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e1a79e003a577654ca7153346d63fdb7
+guid: c1e72c3aa0da1334583d16e8de47aa22
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -102,7 +102,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: WebGL
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ob01_0
+      name: Dig_Side_Front
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 150
-        height: 200
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 87e9e62c8a8b9df47bbcdcfd8acf1349
-      internalID: 1364822451
+      spriteID: d68e5451648c8a44fa5b71c68cdc223e
+      internalID: 2047405044
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ob01_1
+      name: Dig_Side_Bottom
       rect:
         serializedVersion: 2
-        x: 200
-        y: 100
-        width: 150
-        height: 100
+        x: 100
+        y: 0
+        width: 50
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03ea2063f42b61a46a717b2285631d68
-      internalID: -1638303031
+      spriteID: bee27aff5c43321498ad2de36460932a
+      internalID: 244749289
       vertices: []
       indices: 
       edges: []
@@ -169,8 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ob01_0: 1364822451
-      Ob01_1: -1638303031
+      Dig_Side_Front: 2047405044
+      Dig_Side_Bottom: 244749289
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

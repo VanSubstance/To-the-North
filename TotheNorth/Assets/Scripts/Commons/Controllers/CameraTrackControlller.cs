@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Commons.Functions;
 using UnityEngine;
 
 public class CameraTrackControlller : MonoBehaviour
@@ -17,11 +13,10 @@ public class CameraTrackControlller : MonoBehaviour
     private void LateUpdate()
     {
         transform.Translate(
-            new Vector2(
+            2 * Time.deltaTime * new Vector2(
                 GlobalComponent.Common.userTf.position.x - transform.position.x + targetPos.x + headHorPos.x + headVerPos.x,
                 GlobalComponent.Common.userTf.position.y - transform.position.y + targetPos.y + headHorPos.y + headVerPos.y
                 )
-                * Time.deltaTime * 2
             );
     }
 }
