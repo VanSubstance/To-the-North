@@ -25,6 +25,7 @@ namespace Assets.Scripts.Creatures.Detections
             viewMesh = new Mesh();
             viewMesh.name = "View Mesh";
             viewMeshFilter.mesh = viewMesh;
+            viewMeshFilter.GetComponent<Renderer>().sortingLayerName = "Detection";
             viewMeshForVisualization = new Mesh();
             viewMeshForVisualization.name = "View Mesh";
             visualizationFilter.mesh = viewMeshForVisualization;
