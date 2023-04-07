@@ -1,14 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Scripts.Maps.Controllers
+namespace Assets.Scripts.Maps
 {
     internal class ObstacleController : BaseSpriteController
     {
+        [SerializeField]
+        private bool isDig = false;
+        public bool IsDig
+        {
+            get
+            {
+                return isDig;
+            }
+        }
+        public int CurrentLayer
+        {
+            get
+            {
+                return gameObject.layer;
+            }
+        }
         private static ContactFilter2D filterOption = new ContactFilter2D();
         private void Awake()
         {

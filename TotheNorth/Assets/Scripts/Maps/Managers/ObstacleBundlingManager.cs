@@ -52,6 +52,7 @@ namespace Assets.Scripts.Maps.Managers
             // 4. 식별된 애들 2번부터 반복
             while (obsQueue.TryDequeue(out curObs))
             {
+                if (curObs.CurrentLayer == 14) continue;
                 DetectAndHandOver(curObs, compositeObstacle);
             }
         }
