@@ -7,7 +7,7 @@ public class BaseSpriteController : MonoBehaviour
     [SerializeField]
     protected SpriteRenderer allForAbsoulteSprite, allForDetectionSprite, backSprite;
     // Start is called before the first frame update
-    void Start()
+    protected void Awake()
     {
         allForAbsoulteSprite.color = Color.white;
         allForDetectionSprite.color = new Color(1, 1, 1, 1 / 10f);

@@ -21,8 +21,10 @@ namespace Assets.Scripts.Maps
             }
         }
         private static ContactFilter2D filterOption = new ContactFilter2D();
-        private void Awake()
+        private new void Awake()
         {
+            base.Awake();
+            if (isDig) backSprite.color = new Color(0, 0, 0, 0.5f);
             filterOption.SetLayerMask(GlobalStatus.Constant.obstacleMask);
         }
 
