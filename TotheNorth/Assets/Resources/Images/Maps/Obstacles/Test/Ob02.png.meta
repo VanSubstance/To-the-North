@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4375df7725465a8499afe68fcd65b84f
+guid: d2e9a79ecc2bf0a4b9ec8a93afcec8fa
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -113,17 +113,29 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Bulkhead02_0
+      name: Ob02_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 50
-        height: 650
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 702aef1b1fe9fc94c89937ae3350c510
-      internalID: 428165861
+      spriteID: 7976478e18f2ee349ab209aedfaf54ac
+      internalID: -636734990
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Bulkhead02_1
+      name: Ob02_1
       rect:
         serializedVersion: 2
         x: 100
-        y: 200
+        y: 50
         width: 50
-        height: 450
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,8 +164,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 283858a245e7f734bb2100bbd1d8ceee
-      internalID: 1906865652
+      spriteID: 580582ab4fa05e94aa60ba085eb50109
+      internalID: -1436852166
       vertices: []
       indices: 
       edges: []
@@ -169,9 +181,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Bulkhead02_1: 1906865652
-      Bulkhead02_0: 428165861
-      Bulkhead02_2: -527998301
+      Ob02_1: -1436852166
+      Ob02_0: -636734990
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
