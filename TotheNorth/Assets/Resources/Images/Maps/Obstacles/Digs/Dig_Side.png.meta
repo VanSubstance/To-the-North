@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d2e9a79ecc2bf0a4b9ec8a93afcec8fa
+guid: c1e72c3aa0da1334583d16e8de47aa22
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -102,7 +102,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: WebGL
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -117,32 +117,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ob02_0
+      name: Dig_Side_Front
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 50
-        height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7976478e18f2ee349ab209aedfaf54ac
-      internalID: -636734990
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ob02_1
-      rect:
-        serializedVersion: 2
-        x: 100
-        y: 50
         width: 50
         height: 50
       alignment: 0
@@ -152,8 +131,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 580582ab4fa05e94aa60ba085eb50109
-      internalID: -1436852166
+      spriteID: d68e5451648c8a44fa5b71c68cdc223e
+      internalID: 2047405044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dig_Side_Bottom
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bee27aff5c43321498ad2de36460932a
+      internalID: 244749289
       vertices: []
       indices: 
       edges: []
@@ -169,8 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ob02_1: -1436852166
-      Ob02_0: -636734990
+      Dig_Side_Front: 2047405044
+      Dig_Side_Bottom: 244749289
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

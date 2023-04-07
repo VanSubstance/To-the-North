@@ -28,7 +28,7 @@ TagManager:
   - Npc
   - Projectile
   - Hit
-  - 
+  - Blocking Sight
   - 
   - 
   - 
@@ -57,4 +57,7 @@ TagManager:
     locked: 0
   - name: Projectile
     uniqueID: 529751051
+    locked: 0
+  - name: Detection
+    uniqueID: 1963262453
     locked: 0
