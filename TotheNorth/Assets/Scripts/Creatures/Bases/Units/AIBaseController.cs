@@ -614,7 +614,7 @@ namespace Assets.Scripts.Creatures.Bases
             if (vectorToMove != null && targetPos != null)
             {
                 isCollided = true;
-                vectorToDistort += CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(collision.contacts[0].normal) + UnityEngine.Random.Range(-30, 30)) * 2;
+                vectorToDistort += CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(collision.contacts[0].normal) + UnityEngine.Random.Range(-30, 30));
             }
         }
 
@@ -648,7 +648,7 @@ namespace Assets.Scripts.Creatures.Bases
             Vector3 originPos = transform.position;
             float dis = Vector3.Distance(_targetPos, originPos);
             if (dis > weaponRange) return false;
-            return !Physics2D.Raycast(originPos, (_targetPos - originPos).normalized, dis, GlobalStatus.Constant.compositeObstacleMask);
+            return !Physics2D.Raycast(originPos, (_targetPos - originPos).normalized, dis, GlobalStatus.Constant.blockingSightMask);
         }
 
         public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitPos)
