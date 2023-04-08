@@ -62,14 +62,14 @@ namespace Assets.Scripts.Items
                 {
                     try
                     {
-                        if (destSlot.slotType == "Inventory")
+                        if (destSlot.slotType == SlotType.Inventory)
                         {
                             if (InventoryManager.inventorySlots[destSlot.row + j, destSlot.column + i].isAttached == true)
                             {
                                 return false;
                             }
                         }
-                        else if (destSlot.slotType == "Rooting")
+                        else if (destSlot.slotType == SlotType.Rooting)
                         {
                             if (InventoryManager.rootSlots[destSlot.row + j, destSlot.column + i].isAttached == true)
                             {
@@ -91,9 +91,9 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void ItemAttach(InventorySlotController attachSlot)
         {
-            if (attachSlot.slotType == "Inventory")
+            if (attachSlot.slotType == SlotType.Inventory)
                 transform.SetParent(InventoryManager.rightInventoryTF);
-            if (attachSlot.slotType == "Shop" || attachSlot.slotType == "Rooting")
+            if (attachSlot.slotType == SlotType.Shop || attachSlot.slotType == SlotType.Rooting)
                 transform.SetParent(InventoryManager.leftInventoryTF);
             Vector3 destPos;
             destPos = new Vector3(attachSlot.transform.localPosition.x, attachSlot.transform.localPosition.y, 0f);
@@ -102,11 +102,11 @@ namespace Assets.Scripts.Items
             {
                 for (int j = 0; j < itemSizeRow; j++)
                 {
-                    if (attachSlot.slotType == "Inventory")
+                    if (attachSlot.slotType == SlotType.Inventory)
                     {
                         InventoryManager.inventorySlots[attachSlot.row + j, attachSlot.column + i].isAttached = true;
                     }
-                    else if (attachSlot.slotType == "Rooting")
+                    else if (attachSlot.slotType == SlotType.Rooting)
                     {
                         InventoryManager.rootSlots[attachSlot.row + j, attachSlot.column + i].isAttached = true;
                     }
@@ -127,11 +127,11 @@ namespace Assets.Scripts.Items
             {
                 for (int j = 0; j < itemSizeRow; j++)
                 {
-                    if (detachSlot.slotType == "Inventory")
+                    if (detachSlot.slotType == SlotType.Inventory)
                     {
                         InventoryManager.inventorySlots[detachSlot.row + j, detachSlot.column + i].isAttached = false;
                     }
-                    else if (detachSlot.slotType == "Rooting")
+                    else if (detachSlot.slotType == SlotType.Rooting)
                     {
                         InventoryManager.rootSlots[detachSlot.row + j, detachSlot.column + i].isAttached = false;
                     }
@@ -149,11 +149,11 @@ namespace Assets.Scripts.Items
             {
                 for (int j = 0; j < itemSizeRow; j++)
                 {
-                    if (readySlot.slotType == "Inventory")
+                    if (readySlot.slotType == SlotType.Inventory)
                     {
                         InventoryManager.inventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
                     }
-                    if (readySlot.slotType == "Rooting")
+                    if (readySlot.slotType == SlotType.Rooting)
                     {
                         InventoryManager.rootSlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
                     }
@@ -173,12 +173,12 @@ namespace Assets.Scripts.Items
                 {
                     try
                     {
-                        if (readySlot.slotType == "Inventory")
+                        if (readySlot.slotType == SlotType.Inventory)
                         {
                             InventoryManager.inventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
 
                         }
-                        else if (readySlot.slotType == "Rooting")
+                        else if (readySlot.slotType == SlotType.Rooting)
                         {
                             InventoryManager.rootSlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
                         }
@@ -297,7 +297,7 @@ namespace Assets.Scripts.Items
                 // 아이템 사이즈 체크
                 if (ItemSizeCheck(hit.transform.GetComponent<InventorySlotController>()))
                 {
-                    // 아이템 태그 체크
+                    // 슬롯 타입 체크
                     if (CheckItemTag(hit.transform.GetComponent<InventorySlotController>().slotType))
                     {
                         ItemAttach(hit.transform.GetComponent<InventorySlotController>());
@@ -323,7 +323,7 @@ namespace Assets.Scripts.Items
         /// 아이템이 해당 칸에 설치될 수 있는지 체크하는 함수
         /// </summary>
         /// <returns></returns>
-        protected abstract bool CheckItemTag(string slotType);
+        protected abstract bool CheckItemTag(SlotType slotType);
 
         /// <summary>
         /// 자식의 데이터에서 공통된 아이템 처리에 필요한 데이터 추출하는 함수

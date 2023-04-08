@@ -10,7 +10,8 @@ public class InventorySlotController : MonoBehaviour
     public int column;
     public bool isAttached = false;
     public bool isAttachReady = false;
-    public string slotType;
+    public SlotType slotType;
+    public EquipType equipType;
     public Sprite normal;
     public Sprite ready;
     private Image slotImage;
@@ -29,4 +30,25 @@ public class InventorySlotController : MonoBehaviour
             slotImage.sprite = normal;
         }
     }
+}
+
+public enum SlotType
+{
+    Inventory,
+    Rooting,
+    Equipment,
+    Shop,
+    Quick,
+    Ground
+}
+
+public enum EquipType
+{
+    Head,
+    Mask,
+    Body,
+    Leg,
+    Right,
+    Left,
+    Back,
 }

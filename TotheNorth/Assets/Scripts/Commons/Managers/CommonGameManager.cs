@@ -130,6 +130,7 @@ public class CommonGameManager : MonoBehaviour
             panelLeftTop.localPosition = new Vector3(-960, 540, 0);
             InGameStatus.User.status.hpBar = panelLeftTop.GetComponent<UINumericController>().barForHp;
             InGameStatus.User.status.staminaBar = panelLeftTop.GetComponent<UINumericController>().barForStamina;
+            panelLeftTop.SetAsFirstSibling();
         }
 
         GlobalStatus.Loading.System.CommonGameManager = true;
