@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0bc2ebbcf019a0b46a20d120382042fb, type: 3}
-  m_Name: Close Swing
+  m_Name: Step
   m_EditorClassIdentifier: 
-  startPos: {x: 0.5, y: 0.5, z: 0}
-  endPos: {x: 0.5, y: -0.5, z: 0}
-  spd: 50
+  endPos: {x: 0.4, y: 0, z: 0}
+  spd: 5
+  heightCollider: 1
+  powerKnockback: 3

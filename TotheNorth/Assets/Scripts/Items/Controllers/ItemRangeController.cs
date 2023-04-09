@@ -1,4 +1,4 @@
-using Assets.Scripts.Battles.Managers;
+using Assets.Scripts.Battles;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -10,10 +10,12 @@ namespace Assets.Scripts.Items
     {
         [SerializeField]
         private ItemWeaponInfo info;
+        private Transform owner;
 
         private float delayAmongFire = 0f;
         private void Awake()
         {
+            owner = transform.parent.parent.parent;
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(info.imagePath);
             delayAmongFire = info.delayAmongFire;
         }
@@ -33,7 +35,7 @@ namespace Assets.Scripts.Items
             // 투사체 발사
             if (delayAmongFire >= info.delayAmongFire)
             {
-                ProjectileManager.Instance.GetNewProjectile().Fire(info.projectileInfo, transform.position, targetDir);
+                ProjectileManager.Instance.GetNewProjectile().Fire(info.projectileInfo, transform.position, targetDir, owner);
                 delayAmongFire = 0f;
             }
         }

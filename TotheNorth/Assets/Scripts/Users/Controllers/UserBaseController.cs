@@ -1,5 +1,6 @@
 using Assets.Scripts.Battles;
 using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Commons.Functions;
 using UnityEngine;
 
 namespace Assets.Scripts.Users
@@ -21,6 +22,8 @@ namespace Assets.Scripts.Users
                 case PartType.Leg:
                     break;
             }
+
+            // 계산 처리
             InGameStatus.User.status.hpBar.LiveInfo = -10;
             if (InGameStatus.User.status.hpBar.LiveInfo <= 0)
             {

@@ -13,7 +13,8 @@ public class CommonGameManager : MonoBehaviour
     [SerializeField]
     private Transform fadeImagePrefab, userPrefab, smogForScreenPrefab,
         pauseWindowPrefab, inventoryWindowPrefab,
-        panelForLeftTop
+        panelForLeftTop,
+        projectileManager, trajectoryManager
         ;
 
     private Image fadeImage;
@@ -130,6 +131,18 @@ public class CommonGameManager : MonoBehaviour
             panelLeftTop.localPosition = new Vector3(-960, 540, 0);
             InGameStatus.User.status.hpBar = panelLeftTop.GetComponent<UINumericController>().barForHp;
             InGameStatus.User.status.staminaBar = panelLeftTop.GetComponent<UINumericController>().barForStamina;
+
+            if (GameObject.Find("Projectiles") == null)
+            {
+                Transform temp = Instantiate(projectileManager);
+                temp.name = "Projectiles";
+            }
+
+            if (GameObject.Find("Trajectories") == null)
+            {
+                Transform temp = Instantiate(trajectoryManager);
+                temp.name = "Trajectories";
+            }
         }
 
         GlobalStatus.Loading.System.CommonGameManager = true;

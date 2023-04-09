@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Battles
@@ -11,19 +6,17 @@ namespace Assets.Scripts.Battles
     public class ProjectileInfo : ScriptableObject
     {
         [SerializeField]
-        private Vector3 startPos, endPos;
+        private Vector3 endPos;
         [SerializeField]
         private float spd;
+        [SerializeField]
+        private float heightCollider, powerKnockback;
 
-        public Vector3 StartPos
+        public float PowerKnockback
         {
             get
             {
-                return startPos;
-            }
-            set
-            {
-                startPos = value;
+                return powerKnockback;
             }
         }
 
@@ -50,12 +43,21 @@ namespace Assets.Scripts.Battles
                 spd = value;
             }
         }
+
+        public float Height
+        {
+            get
+            {
+                return heightCollider;
+            }
+        }
         public static ProjectileInfo GetClone(ProjectileInfo _info)
         {
             ProjectileInfo res = CreateInstance<ProjectileInfo>();
-            res.startPos = _info.startPos;
             res.endPos = _info.endPos;
             res.spd = _info.spd;
+            res.heightCollider = _info.heightCollider;
+            res.powerKnockback = _info.powerKnockback;
             return res;
         }
 
