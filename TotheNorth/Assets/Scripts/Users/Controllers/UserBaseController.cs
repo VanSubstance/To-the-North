@@ -21,6 +21,10 @@ namespace Assets.Scripts.Users
                 case PartType.Leg:
                     break;
             }
+            // 넉백 처리
+            GetComponent<UserMoveController>().vectorToKnock += -(hitPos - transform.position).normalized * Time.deltaTime * 10 * _info.PowerKnockback;
+
+            // 계산 처리
             InGameStatus.User.status.hpBar.LiveInfo = -10;
             if (InGameStatus.User.status.hpBar.LiveInfo <= 0)
             {

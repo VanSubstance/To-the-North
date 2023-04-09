@@ -1,10 +1,11 @@
 using Assets.Scripts.Commons.Constants;
 using UnityEngine;
 
-namespace Assets.Scripts.Users.Controllers
+namespace Assets.Scripts.Users
 {
     internal class UserMoveController : MonoBehaviour
     {
+        public Vector3 vectorToKnock = Vector3.zero;
         private float secForRecoverStamina = 0;
         private void Update()
         {
@@ -20,7 +21,7 @@ namespace Assets.Scripts.Users.Controllers
         private void TrackDirection()
         {
             float spdW = GetMovementSpd();
-            Vector3 vecHor = Vector3.zero, vecVer = Vector3.zero;
+            Vector3 vecHor = Vector3.zero, vecVer = Vector3.zero, vecToMove = Vector3.zero;
             if (Input.GetKey(KeyCode.A))
             {
                 // 왼쪽
@@ -29,7 +30,7 @@ namespace Assets.Scripts.Users.Controllers
                     secForRecoverStamina = 0;
                     InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
                 }
-                transform.Translate(Vector3.left * spdW * Time.deltaTime);
+                vecToMove += Vector3.left * spdW * Time.deltaTime;
                 vecHor += Vector3.left;
             }
             if (Input.GetKey(KeyCode.S))
@@ -40,7 +41,7 @@ namespace Assets.Scripts.Users.Controllers
                     secForRecoverStamina = 0;
                     InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
                 }
-                transform.Translate(Vector3.down * spdW * Time.deltaTime);
+                vecToMove += Vector3.down * spdW * Time.deltaTime;
                 vecVer += Vector3.down;
             }
             if (Input.GetKey(KeyCode.D))
@@ -51,7 +52,7 @@ namespace Assets.Scripts.Users.Controllers
                     secForRecoverStamina = 0;
                     InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
                 }
-                transform.Translate(Vector3.right * spdW * Time.deltaTime);
+                vecToMove += Vector3.right * spdW * Time.deltaTime;
                 vecVer += Vector3.right;
             }
             if (Input.GetKey(KeyCode.W))
@@ -62,9 +63,11 @@ namespace Assets.Scripts.Users.Controllers
                     secForRecoverStamina = 0;
                     InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20);
                 }
-                transform.Translate(Vector3.up * spdW * Time.deltaTime);
+                vecToMove += Vector3.up * spdW * Time.deltaTime;
                 vecVer += Vector3.up;
             }
+            transform.Translate(vecToMove + vectorToKnock);
+            vectorToKnock *= 7 / 8;
             CameraTrackControlller.headHorPos = vecHor * spdW;
             CameraTrackControlller.headVerPos = vecVer * spdW;
         }
