@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Battles
@@ -14,6 +9,8 @@ namespace Assets.Scripts.Battles
         private Vector3 endPos;
         [SerializeField]
         private float spd;
+        [SerializeField]
+        private float heightCollider;
 
         public Vector3 EndPos
         {
@@ -38,11 +35,20 @@ namespace Assets.Scripts.Battles
                 spd = value;
             }
         }
+
+        public float Height
+        {
+            get
+            {
+                return heightCollider;
+            }
+        }
         public static ProjectileInfo GetClone(ProjectileInfo _info)
         {
             ProjectileInfo res = CreateInstance<ProjectileInfo>();
             res.endPos = _info.endPos;
             res.spd = _info.spd;
+            res.heightCollider = _info.heightCollider;
             return res;
         }
 

@@ -40,6 +40,8 @@ namespace Assets.Scripts.Battles
             this.startPos = startPos;
 
             info = ProjectileInfo.GetClone(_info);
+            GetComponent<BoxCollider2D>().size = new Vector2(0.2f, info.Height);
+            transform.localRotation = Quaternion.Euler(0f, 0f, CalculationFunctions.AngleFromDir(targetDir));
             transform.position = startPos;
             targetPos = LocalPostionToWorld(info.EndPos, targetDir);
             gameObject.SetActive(true);

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bc2ebbcf019a0b46a20d120382042fb, type: 3}
   m_Name: Step
   m_EditorClassIdentifier: 
-  endPos: {x: 0.2, y: 0, z: 0}
-  spd: 30
+  endPos: {x: 0.4, y: 0, z: 0}
+  spd: 10
+  heightCollider: 1

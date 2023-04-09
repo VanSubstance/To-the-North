@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Shot Slowly
   m_EditorClassIdentifier: 
   endPos: {x: 10, y: 0, z: 0}
-  spd: 30
+  spd: 50
+  heightCollider: 0.25

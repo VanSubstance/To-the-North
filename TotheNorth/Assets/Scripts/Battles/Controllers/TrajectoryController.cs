@@ -16,17 +16,30 @@ namespace Assets.Scripts.Battles
                 return isPossessed;
             }
         }
+        private float timerAfterStart;
         private void Awake()
         {
             line = GetComponent<LineRenderer>();
             positions = new List<Vector3>();
             isFinish = false;
             isPossessed = false;
+            timerAfterStart = 0f;
             gameObject.SetActive(false);
         }
 
         private void Update()
         {
+            if (timerAfterStart < 0.2f)
+            {
+                timerAfterStart += Time.deltaTime;
+            }
+            else
+            {
+                if (positions.Count > 0)
+                {
+                    positions.RemoveAt(0);
+                }
+            }
             DrawTail();
             if (!isFinish) return;
             if (positions.Count > 0)
@@ -45,13 +58,15 @@ namespace Assets.Scripts.Battles
         {
             if (!gameObject.activeSelf)
             {
-                gameObject.SetActive(true);
+                timerAfterStart = 0f;
+                isPossessed = true;
                 isFinish = false;
+                gameObject.SetActive(true);
             }
-            if (positions.Count > 10)
-            {
-                positions.RemoveAt(0);
-            }
+            //if (positions.Count > 10)
+            //{
+            //    positions.RemoveAt(0);
+            //}
             positions.Add(pointToAdd);
         }
 
@@ -70,7 +85,7 @@ namespace Assets.Scripts.Battles
         {
             yield return new WaitForSeconds(3f);
             positions.Clear();
-            isPossessed = true;
+            isPossessed = false;
             gameObject.SetActive(false);
         }
     }
