@@ -55,7 +55,7 @@ namespace Assets.Scripts.Battles
         {
             for (int i = 0; i < trajectories.Count; i++)
             {
-                if (!trajectories[i].gameObject.activeSelf)
+                if (!trajectories[i].IsPossessed && !trajectories[i].gameObject.activeSelf)
                 {
                     return trajectories[i];
                 }

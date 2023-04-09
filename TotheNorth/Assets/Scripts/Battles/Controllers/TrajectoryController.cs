@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,53 +8,70 @@ namespace Assets.Scripts.Battles
     {
         private LineRenderer line;
         private List<Vector3> positions;
-        private float timerToRemove;
+        private bool isFinish, isPossessed;
+        public bool IsPossessed
+        {
+            get
+            {
+                return isPossessed;
+            }
+        }
         private void Awake()
         {
             line = GetComponent<LineRenderer>();
             positions = new List<Vector3>();
-            timerToRemove = 0f;
+            isFinish = false;
+            isPossessed = false;
             gameObject.SetActive(false);
         }
 
         private void Update()
         {
             DrawTail();
-            timerToRemove += Time.deltaTime;
-            if (timerToRemove > .2f)
+            if (!isFinish) return;
+            if (positions.Count > 0)
             {
-                OnDisable();
-                gameObject.SetActive(false);
+                positions.RemoveAt(0);
                 return;
+            }
+            if (positions.Count == 0)
+            {
+                StartCoroutine(CoroutineKill());
+                return;
+            }
+        }
+
+        public void AddPoint(Vector3 pointToAdd)
+        {
+            if (!gameObject.activeSelf)
+            {
+                gameObject.SetActive(true);
+                isFinish = false;
             }
             if (positions.Count > 10)
             {
                 positions.RemoveAt(0);
             }
-            //if (positions.Count > 0)
-            //{
-            //    // 가장 마지막 점 지우기
-            //    positions.RemoveAt(0);
-            //}
-        }
-
-        private void OnDisable()
-        {
-            positions.Clear();
-            timerToRemove = 0f;
-        }
-
-        public void AddPoint(Vector3 pointToAdd)
-        {
-            if (!gameObject.activeSelf) gameObject.SetActive(true);
             positions.Add(pointToAdd);
-            timerToRemove = 0f;
+        }
+
+        public void Finish()
+        {
+            isFinish = true;
         }
 
         private void DrawTail()
         {
             line.positionCount = positions.Count;
             line.SetPositions(positions.ToArray());
+        }
+
+        private IEnumerator CoroutineKill()
+        {
+            yield return new WaitForSeconds(3f);
+            positions.Clear();
+            isPossessed = true;
+            gameObject.SetActive(false);
         }
     }
 }

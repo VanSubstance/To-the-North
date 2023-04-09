@@ -52,7 +52,9 @@ namespace Assets.Scripts.Battles
 
         public void Arrive()
         {
+            if (isAffected) return;
             isAffected = true;
+            trajectory.Finish();
             gameObject.SetActive(false);
         }
 
@@ -70,7 +72,7 @@ namespace Assets.Scripts.Battles
             }
             if (Vector3.Distance(transform.position, startPos) >= Vector3.Distance(targetPos, startPos))
             {
-                gameObject.SetActive(false);
+                Arrive();
             }
         }
 
@@ -86,6 +88,8 @@ namespace Assets.Scripts.Battles
 
         private void OnDisable()
         {
+            startPos = Vector3.zero;
+            targetPos = Vector3.zero;
             isReady = false;
             transform.position = Vector3.zero;
             trajectory = null;
