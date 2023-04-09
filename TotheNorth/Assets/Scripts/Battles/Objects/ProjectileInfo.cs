@@ -11,21 +11,9 @@ namespace Assets.Scripts.Battles
     public class ProjectileInfo : ScriptableObject
     {
         [SerializeField]
-        private Vector3 startPos, endPos;
+        private Vector3 endPos;
         [SerializeField]
         private float spd;
-
-        public Vector3 StartPos
-        {
-            get
-            {
-                return startPos;
-            }
-            set
-            {
-                startPos = value;
-            }
-        }
 
         public Vector3 EndPos
         {
@@ -53,7 +41,6 @@ namespace Assets.Scripts.Battles
         public static ProjectileInfo GetClone(ProjectileInfo _info)
         {
             ProjectileInfo res = CreateInstance<ProjectileInfo>();
-            res.startPos = _info.startPos;
             res.endPos = _info.endPos;
             res.spd = _info.spd;
             return res;

@@ -30,19 +30,29 @@ namespace Assets.Scripts.Battles
             }
         }
 
-        public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir)
+        private Transform owner;
+        public Transform Owner
         {
+            get
+            {
+                return owner;
+            }
+        }
+
+        public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner)
+        {
+            owner = _owner;
             targetDir.z = 0f;
 
             this.startPos = startPos;
 
             info = ProjectileInfo.GetClone(_info);
-            transform.position = startPos + LocalPostionToWorld(info.StartPos, targetDir);
-            targetPos = LocalPostionToWorld(info.EndPos - info.StartPos, targetDir);
+            transform.position = startPos;
+            targetPos = LocalPostionToWorld(info.EndPos, targetDir);
             prevDis = float.MaxValue;
             gameObject.SetActive(true);
             GetComponent<Rigidbody2D>().velocity = targetPos.normalized * info.Spd;
-            targetPos *= (info.EndPos - info.StartPos).magnitude;
+            targetPos *= (info.EndPos).magnitude;
             targetPos += transform.position;
             isAffected = false;
             isReady = true;
