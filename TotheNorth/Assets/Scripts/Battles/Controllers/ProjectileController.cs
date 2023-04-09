@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Commons.Functions;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Assets.Scripts.Battles
 {
@@ -13,10 +7,6 @@ namespace Assets.Scripts.Battles
     {
         [SerializeField]
         private ProjectileInfo info;
-
-        private float prevDis = float.MaxValue;
-        private LineRenderer line;
-        private List<Vector3> positions;
         private bool isReady;
 
         public bool isAffected = false;
@@ -39,8 +29,11 @@ namespace Assets.Scripts.Battles
             }
         }
 
+        private TrajectoryController trajectory;
+
         public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner)
         {
+            trajectory = TrajectoryManager.Instance.GetNewTrajectory();
             owner = _owner;
             targetDir.z = 0f;
 
@@ -49,7 +42,6 @@ namespace Assets.Scripts.Battles
             info = ProjectileInfo.GetClone(_info);
             transform.position = startPos;
             targetPos = LocalPostionToWorld(info.EndPos, targetDir);
-            prevDis = float.MaxValue;
             gameObject.SetActive(true);
             GetComponent<Rigidbody2D>().velocity = targetPos.normalized * info.Spd;
             targetPos *= (info.EndPos).magnitude;
@@ -66,38 +58,20 @@ namespace Assets.Scripts.Battles
 
         private void Awake()
         {
-            line = GetComponent<LineRenderer>();
-            positions = new List<Vector3>();
             gameObject.SetActive(false);
         }
 
         private void Update()
         {
             if (!isReady) return;
-            if (
-                positions.Count > 0 &&
-                Vector3.Distance(positions[positions.Count - 1], transform.position) < .1f)
+            if (trajectory)
             {
-                return;
+                trajectory.AddPoint(transform.position);
             }
-            if (transform.position == Vector3.zero) return;
-            if (Vector3.Distance(transform.position, targetPos) >= prevDis)
+            if (Vector3.Distance(transform.position, startPos) >= Vector3.Distance(targetPos, startPos))
             {
                 gameObject.SetActive(false);
             }
-            else prevDis = Vector3.Distance(transform.position, targetPos);
-            positions.Add(transform.position);
-            if (positions.Count > 10)
-            {
-                positions.RemoveAt(0);
-            }
-            DrawTail();
-        }
-
-        private void DrawTail()
-        {
-            line.positionCount = positions.Count;
-            line.SetPositions(positions.ToArray());
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -114,8 +88,7 @@ namespace Assets.Scripts.Battles
         {
             isReady = false;
             transform.position = Vector3.zero;
-            line.positionCount = 0;
-            positions = new List<Vector3>();
+            trajectory = null;
         }
 
         private Vector3 LocalPostionToWorld(Vector3 targetPos, Vector3 targetDir)

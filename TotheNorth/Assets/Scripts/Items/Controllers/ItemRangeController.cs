@@ -1,4 +1,4 @@
-using Assets.Scripts.Battles.Managers;
+using Assets.Scripts.Battles;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
