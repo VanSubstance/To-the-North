@@ -298,7 +298,7 @@ namespace Assets.Scripts.Items
                 if (ItemSizeCheck(hit.transform.GetComponent<InventorySlotController>()))
                 {
                     // 슬롯 타입 체크
-                    if (CheckItemTag(hit.transform.GetComponent<InventorySlotController>().slotType))
+                    if (CheckItemTag(hit.transform.GetComponent<InventorySlotController>()))
                     {
                         ItemAttach(hit.transform.GetComponent<InventorySlotController>());
                     }
@@ -323,7 +323,7 @@ namespace Assets.Scripts.Items
         /// 아이템이 해당 칸에 설치될 수 있는지 체크하는 함수
         /// </summary>
         /// <returns></returns>
-        protected abstract bool CheckItemTag(SlotType slotType);
+        protected abstract bool CheckItemTag(InventorySlotController slot);
 
         /// <summary>
         /// 자식의 데이터에서 공통된 아이템 처리에 필요한 데이터 추출하는 함수

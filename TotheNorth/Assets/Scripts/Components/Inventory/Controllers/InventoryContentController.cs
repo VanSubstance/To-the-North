@@ -2,7 +2,7 @@ using Assets.Scripts.Commons.Constants;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class WindowModalInventoryContentController : AWindowBaseContentController
+public class InventoryContentController : AWindowBaseContentController
 {
     public GameObject slotPrefab;
     public GameObject itemPrefabSmall;
