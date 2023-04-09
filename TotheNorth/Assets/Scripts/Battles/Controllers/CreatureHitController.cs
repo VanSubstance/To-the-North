@@ -7,8 +7,18 @@ namespace Assets.Scripts.Battles
     class CreatureHitController : MonoBehaviour
     {
         private ICreatureBattle battleFunction;
+        private Transform ownerTf;
+        public Transform Owner
+        {
+            get
+            {
+                return ownerTf;
+            }
+        }
+
         private void Awake()
         {
+            ownerTf = transform.parent;
             battleFunction = transform.parent.GetComponent<ICreatureBattle>();
             for (int i = 0; i < transform.childCount; i++)
             {

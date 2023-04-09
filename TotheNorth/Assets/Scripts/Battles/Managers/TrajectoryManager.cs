@@ -3,23 +3,23 @@ using UnityEngine;
 
 namespace Assets.Scripts.Battles
 {
-    internal class ProjectileManager : MonoBehaviour
+    internal class TrajectoryManager : MonoBehaviour
     {
         [SerializeField]
         private Transform projectilePrefab;
-        private List<ProjectileController> projectiles;
+        private List<TrajectoryController> trajectories;
 
         // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
-        private static ProjectileManager _instance;
+        private static TrajectoryManager _instance;
         // 인스턴스에 접근하기 위한 프로퍼티
-        public static ProjectileManager Instance
+        public static TrajectoryManager Instance
         {
             get
             {
                 // 인스턴스가 없는 경우에 접근하려 하면 인스턴스를 할당해준다.
                 if (!_instance)
                 {
-                    _instance = FindObjectOfType(typeof(ProjectileManager)) as ProjectileManager;
+                    _instance = FindObjectOfType(typeof(TrajectoryManager)) as TrajectoryManager;
 
                     if (_instance == null)
                         Debug.Log("no Singleton obj");
@@ -43,21 +43,21 @@ namespace Assets.Scripts.Battles
             DontDestroyOnLoad(gameObject);
             if (transform.childCount == 0)
             {
-                projectiles = new List<ProjectileController>();
+                trajectories = new List<TrajectoryController>();
                 for (int i = 0; i < 100; i++)
                 {
-                    projectiles.Add(Instantiate(projectilePrefab, transform).GetComponent<ProjectileController>());
+                    trajectories.Add(Instantiate(projectilePrefab, transform).GetComponent<TrajectoryController>());
                 }
             }
         }
 
-        public ProjectileController GetNewProjectile()
+        public TrajectoryController GetNewTrajectory()
         {
-            for (int i = 0; i < projectiles.Count; i++)
+            for (int i = 0; i < trajectories.Count; i++)
             {
-                if (!projectiles[i].gameObject.activeSelf)
+                if (!trajectories[i].IsPossessed && !trajectories[i].gameObject.activeSelf)
                 {
-                    return projectiles[i];
+                    return trajectories[i];
                 }
             }
             return null;

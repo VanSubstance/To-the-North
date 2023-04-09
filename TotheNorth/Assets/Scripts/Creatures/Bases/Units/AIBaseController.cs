@@ -174,6 +174,7 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void ControllMovement()
         {
+            Vector3 vecToMove = Vector3.zero;
             if (targetPos != null && targetToMove != null)
             {
                 // 현재 이동 목표에 도달했는지
@@ -221,10 +222,11 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     vectorToDistort *= 7 / 8f;
                 }
-                transform.Translate(
+                vecToMove =
                     (((Vector3)vectorToMove).normalized + vectorToDistort)
-                    * info.moveSpd * Time.deltaTime);
+                    * info.moveSpd * Time.deltaTime;
             }
+            transform.Translate(vecToMove);
         }
 
         private void ControllGaze()
@@ -614,7 +616,7 @@ namespace Assets.Scripts.Creatures.Bases
             if (vectorToMove != null && targetPos != null)
             {
                 isCollided = true;
-                vectorToDistort += CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(collision.contacts[0].normal) + UnityEngine.Random.Range(-30, 30)) * 2;
+                vectorToDistort += CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(collision.contacts[0].normal) + UnityEngine.Random.Range(-30, 30));
             }
         }
 
@@ -648,7 +650,7 @@ namespace Assets.Scripts.Creatures.Bases
             Vector3 originPos = transform.position;
             float dis = Vector3.Distance(_targetPos, originPos);
             if (dis > weaponRange) return false;
-            return !Physics2D.Raycast(originPos, (_targetPos - originPos).normalized, dis, GlobalStatus.Constant.compositeObstacleMask);
+            return !Physics2D.Raycast(originPos, (_targetPos - originPos).normalized, dis, GlobalStatus.Constant.blockingSightMask);
         }
 
         public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitPos)
@@ -668,6 +670,7 @@ namespace Assets.Scripts.Creatures.Bases
                 case PartType.Leg:
                     break;
             }
+            // 계산 처리
             if (info)
             {
                 // AI 기준

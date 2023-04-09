@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Commons.Functions;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Assets.Scripts.Battles
 {
@@ -13,10 +7,6 @@ namespace Assets.Scripts.Battles
     {
         [SerializeField]
         private ProjectileInfo info;
-
-        private float prevDis = float.MaxValue;
-        private LineRenderer line;
-        private List<Vector3> positions;
         private bool isReady;
 
         public bool isAffected = false;
@@ -30,19 +20,33 @@ namespace Assets.Scripts.Battles
             }
         }
 
-        public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir)
+        private Transform owner;
+        public Transform Owner
         {
+            get
+            {
+                return owner;
+            }
+        }
+
+        private TrajectoryController trajectory;
+
+        public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner)
+        {
+            trajectory = TrajectoryManager.Instance.GetNewTrajectory();
+            owner = _owner;
             targetDir.z = 0f;
 
             this.startPos = startPos;
 
             info = ProjectileInfo.GetClone(_info);
-            transform.position = startPos + LocalPostionToWorld(info.StartPos, targetDir);
-            targetPos = LocalPostionToWorld(info.EndPos - info.StartPos, targetDir);
-            prevDis = float.MaxValue;
+            GetComponent<BoxCollider2D>().size = new Vector2(0.2f, info.Height);
+            transform.localRotation = Quaternion.Euler(0f, 0f, CalculationFunctions.AngleFromDir(targetDir));
+            transform.position = startPos;
+            targetPos = LocalPostionToWorld(info.EndPos, targetDir);
             gameObject.SetActive(true);
             GetComponent<Rigidbody2D>().velocity = targetPos.normalized * info.Spd;
-            targetPos *= (info.EndPos - info.StartPos).magnitude;
+            targetPos *= (info.EndPos).magnitude;
             targetPos += transform.position;
             isAffected = false;
             isReady = true;
@@ -50,44 +54,28 @@ namespace Assets.Scripts.Battles
 
         public void Arrive()
         {
+            if (isAffected) return;
             isAffected = true;
+            trajectory.Finish();
             gameObject.SetActive(false);
         }
 
         private void Awake()
         {
-            line = GetComponent<LineRenderer>();
-            positions = new List<Vector3>();
             gameObject.SetActive(false);
         }
 
         private void Update()
         {
             if (!isReady) return;
-            if (
-                positions.Count > 0 &&
-                Vector3.Distance(positions[positions.Count - 1], transform.position) < .1f)
+            if (trajectory)
             {
-                return;
+                trajectory.AddPoint(transform.position);
             }
-            if (transform.position == Vector3.zero) return;
-            if (Vector3.Distance(transform.position, targetPos) >= prevDis)
+            if (Vector3.Distance(transform.position, startPos) >= Vector3.Distance(targetPos, startPos))
             {
-                gameObject.SetActive(false);
+                Arrive();
             }
-            else prevDis = Vector3.Distance(transform.position, targetPos);
-            positions.Add(transform.position);
-            if (positions.Count > 10)
-            {
-                positions.RemoveAt(0);
-            }
-            DrawTail();
-        }
-
-        private void DrawTail()
-        {
-            line.positionCount = positions.Count;
-            line.SetPositions(positions.ToArray());
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -102,10 +90,11 @@ namespace Assets.Scripts.Battles
 
         private void OnDisable()
         {
+            startPos = Vector3.zero;
+            targetPos = Vector3.zero;
             isReady = false;
             transform.position = Vector3.zero;
-            line.positionCount = 0;
-            positions = new List<Vector3>();
+            trajectory = null;
         }
 
         private Vector3 LocalPostionToWorld(Vector3 targetPos, Vector3 targetDir)
