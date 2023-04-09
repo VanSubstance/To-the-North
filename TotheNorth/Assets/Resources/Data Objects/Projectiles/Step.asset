@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Step
   m_EditorClassIdentifier: 
   endPos: {x: 0.4, y: 0, z: 0}
-  spd: 10
+  spd: 5
   heightCollider: 1
+  powerKnockback: 3

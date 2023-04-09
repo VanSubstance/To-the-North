@@ -25,7 +25,7 @@ namespace Assets.Scripts.Creatures.Bases
 
         public AIStatusType statusType = AIStatusType.Petrol;
         public Vector3? targetToMove, targetToGaze, targetPos, vectorToMove;
-        private Vector3 vectorToDistort = Vector3.zero, vectorToKnock = Vector3.zero;
+        private Vector3 vectorToDistort = Vector3.zero;
         protected AISquadBaseController squadBase;
         private DetectionPassiveController passiveController;
         private DetectionSightController sightController;
@@ -222,19 +222,11 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     vectorToDistort *= 7 / 8f;
                 }
-                if (vectorToKnock.magnitude < 0.125f)
-                {
-                    vectorToKnock = Vector3.zero;
-                }
-                else
-                {
-                    vectorToKnock *= 7 / 8f;
-                }
                 vecToMove =
                     (((Vector3)vectorToMove).normalized + vectorToDistort)
                     * info.moveSpd * Time.deltaTime;
             }
-            transform.Translate(vecToMove + vectorToKnock);
+            transform.Translate(vecToMove);
         }
 
         private void ControllGaze()
@@ -678,8 +670,6 @@ namespace Assets.Scripts.Creatures.Bases
                 case PartType.Leg:
                     break;
             }
-            // 넉백 처리
-            vectorToKnock += -(hitPos - transform.position).normalized * Time.deltaTime * 10 * _info.PowerKnockback;
             // 계산 처리
             if (info)
             {

@@ -5,7 +5,6 @@ namespace Assets.Scripts.Users
 {
     internal class UserMoveController : MonoBehaviour
     {
-        public Vector3 vectorToKnock = Vector3.zero;
         private float secForRecoverStamina = 0;
         private void Update()
         {
@@ -66,8 +65,7 @@ namespace Assets.Scripts.Users
                 vecToMove += Vector3.up * spdW * Time.deltaTime;
                 vecVer += Vector3.up;
             }
-            transform.Translate(vecToMove + vectorToKnock);
-            vectorToKnock *= 7 / 8;
+            transform.Translate(vecToMove);
             CameraTrackControlller.headHorPos = vecHor * spdW;
             CameraTrackControlller.headVerPos = vecVer * spdW;
         }

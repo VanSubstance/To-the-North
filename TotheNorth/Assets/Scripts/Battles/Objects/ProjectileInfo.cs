@@ -10,7 +10,7 @@ namespace Assets.Scripts.Battles
         [SerializeField]
         private float spd;
         [SerializeField]
-        private float heightCollider, powerKnockback = 1f;
+        private float heightCollider, powerKnockback;
 
         public float PowerKnockback
         {
@@ -57,6 +57,7 @@ namespace Assets.Scripts.Battles
             res.endPos = _info.endPos;
             res.spd = _info.spd;
             res.heightCollider = _info.heightCollider;
+            res.powerKnockback = _info.powerKnockback;
             return res;
         }
 

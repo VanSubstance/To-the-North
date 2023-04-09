@@ -15,3 +15,4 @@ MonoBehaviour:
   endPos: {x: 10, y: 0, z: 0}
   spd: 50
   heightCollider: 0.25
+  powerKnockback: 1
