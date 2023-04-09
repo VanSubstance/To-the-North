@@ -76,6 +76,11 @@ namespace Assets.Scripts.Items
                                 return false;
                             }
                         }
+                        else if (destSlot.slotType == SlotType.Equipment)
+                        {
+                            // EquipmentType은 사이즈체크 스킵
+                            return true;
+                        }
                     }
                     catch (System.IndexOutOfRangeException)
                     {
@@ -91,12 +96,15 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void ItemAttach(InventorySlotController attachSlot)
         {
+            Debug.Log("itemAttach");
             if (attachSlot.slotType == SlotType.Inventory)
                 transform.SetParent(InventoryManager.rightInventoryTF);
             if (attachSlot.slotType == SlotType.Shop || attachSlot.slotType == SlotType.Rooting)
                 transform.SetParent(InventoryManager.leftInventoryTF);
+            if (attachSlot.slotType == SlotType.Equipment)
+                transform.SetParent(attachSlot.itemTF);
             Vector3 destPos;
-            destPos = new Vector3(attachSlot.transform.localPosition.x, attachSlot.transform.localPosition.y, 0f);
+            destPos = new Vector3(attachSlot.transform.localPosition.x, attachSlot.transform.localPosition.y, -1f);
             objTF.localPosition = destPos;
             for (int i = 0; i < itemSizeCol; i++)
             {
@@ -153,9 +161,13 @@ namespace Assets.Scripts.Items
                     {
                         InventoryManager.inventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
                     }
-                    if (readySlot.slotType == SlotType.Rooting)
+                    else if (readySlot.slotType == SlotType.Rooting)
                     {
                         InventoryManager.rootSlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
+                    }
+                    else if (readySlot.slotType == SlotType.Equipment)
+                    {
+                        readySlot.isAttachReady = true;
                     }
                 }
             }
@@ -181,6 +193,10 @@ namespace Assets.Scripts.Items
                         else if (readySlot.slotType == SlotType.Rooting)
                         {
                             InventoryManager.rootSlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
+                        }
+                        else if (readySlot.slotType == SlotType.Equipment)
+                        {
+                            readySlot.isAttachReady = false;
                         }
                     }
                     catch (System.NullReferenceException)
@@ -301,6 +317,11 @@ namespace Assets.Scripts.Items
                     if (CheckItemTag(hit.transform.GetComponent<InventorySlotController>()))
                     {
                         ItemAttach(hit.transform.GetComponent<InventorySlotController>());
+                    }
+                    else
+                    {
+                        ReturnToPost();
+                        UnCheckReady(readySlot);
                     }
                 }
                 else

@@ -15,6 +15,7 @@ public class InventorySlotController : MonoBehaviour
     public Sprite normal;
     public Sprite ready;
     private Image slotImage;
+    public Transform itemTF;
     private void Start()
     {
         slotImage = GetComponent<Image>();
