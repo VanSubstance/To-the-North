@@ -78,20 +78,20 @@ namespace Assets.Scripts.Creatures.Bases
             for (int i = 0; i < unitsTank.Count; i++)
             {
                 if (unitsTank[i].isInSelfControl) continue;
+                unitsTank[i].ClearAllAct();
                 unitsTank[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(0, i), 0, true);
-                unitsTank[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(0, i), 0);
             }
             for (int i = 0; i < unitsBruiser.Count; i++)
             {
                 if (unitsBruiser[i].isInSelfControl) continue;
+                unitsBruiser[i].ClearAllAct();
                 unitsBruiser[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0, true);
-                unitsBruiser[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
             }
             for (int i = 0; i < unitRanger.Count; i++)
             {
                 if (unitRanger[i].isInSelfControl) continue;
+                unitRanger[i].ClearAllAct();
                 unitRanger[i].SetTargetToTrack(_targetPos + GetCorrectionVectorDependingOnPoint(2, i), 0, true);
-                unitRanger[i].SetTargetToGaze(targetPos + GetCorrectionVectorDependingOnPoint(1, i), 0);
             }
             transform.position = _targetPos;
         }
