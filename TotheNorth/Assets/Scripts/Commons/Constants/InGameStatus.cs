@@ -1,5 +1,4 @@
 using Assets.Scripts.Components.Progress;
-using Assets.Scripts.Creatures;
 using Assets.Scripts.Users.Objects;
 
 namespace Assets.Scripts.Commons.Constants
