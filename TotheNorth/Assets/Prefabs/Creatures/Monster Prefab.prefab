@@ -898,6 +898,8 @@ GameObject:
   - component: {fileID: 7865440330523968143}
   - component: {fileID: 2844125861306491779}
   - component: {fileID: 8821249586427688319}
+  - component: {fileID: 1782565532728971554}
+  - component: {fileID: 3984194926472984288}
   - component: {fileID: 1070078780410703675}
   - component: {fileID: 5930805339340001714}
   - component: {fileID: 7249881556927368016}
@@ -945,6 +947,8 @@ MonoBehaviour:
   statusType: 0
   isOrderMoveDone: 1
   isCollided: 0
+  isAttacked: 0
+  isRunAway: 0
 --- !u!114 &2844125861306491779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -971,7 +975,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfGazeAfterLost: 3
-  isActive: 1
+  isInSelfControl: 0
+--- !u!114 &1782565532728971554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249881556927368019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b9a5f9cd6959a47b1791d2d758f87c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3984194926472984288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249881556927368019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0504b8208bc54cc448424cd3cde7b0ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1070078780410703675
 MonoBehaviour:
   m_ObjectHideFlags: 0

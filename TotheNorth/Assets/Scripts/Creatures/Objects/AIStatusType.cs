@@ -3,6 +3,6 @@ namespace Assets.Scripts.Creatures.Interfaces
     internal enum AIStatusType
     {
         None,
-        Petrol, Combat,
+        Petrol, Combat, Runaway, Wander
     }
 }
