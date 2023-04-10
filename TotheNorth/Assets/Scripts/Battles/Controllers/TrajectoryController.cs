@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Commons.Functions;
 using UnityEngine;
 
 namespace Assets.Scripts.Battles
 {
     public class TrajectoryController : MonoBehaviour
     {
-        private bool isPossessed, isTerminated;
+        private TrailRenderer trail;
+        private bool isPossessed, isTerminated,
+            isCurved, isClockwise;
+        private Vector3 centerPos;
         public bool IsPossessed
         {
             get
@@ -15,23 +19,47 @@ namespace Assets.Scripts.Battles
             }
         }
         private float timerAfterStart;
+
+        private float curDegree, endDegree, radius;
         private void Awake()
         {
+            trail = GetComponent<TrailRenderer>();
             isTerminated = false;
             isPossessed = false;
+            isCurved = false;
             timerAfterStart = 0f;
             gameObject.SetActive(false);
         }
 
         private void Update()
         {
-            if (timerAfterStart < 0.2f)
+            if (isTerminated) return;
+            if (isCurved)
             {
-                timerAfterStart += Time.deltaTime;
+                transform.position = centerPos + CalculationFunctions.DirFromAngle(isClockwise ? curDegree -= 2 : curDegree += 2).normalized * radius;
+                if (
+                    (isClockwise && curDegree < endDegree) ||
+                    (!isClockwise && curDegree > endDegree))
+                {
+                    if (gameObject.activeSelf)
+                    {
+                        StartCoroutine(CoroutineKill());
+                    }
+                }
             }
-            if (timerAfterStart > .2f && !isTerminated)
+            else
             {
-                StartCoroutine(CoroutineKill());
+                if (timerAfterStart < 0.2f)
+                {
+                    timerAfterStart += Time.deltaTime;
+                }
+                if (timerAfterStart > .2f)
+                {
+                    if (gameObject.activeSelf)
+                    {
+                        StartCoroutine(CoroutineKill());
+                    }
+                }
             }
         }
 
@@ -44,23 +72,59 @@ namespace Assets.Scripts.Battles
             transform.position = posToMove;
             if (!gameObject.activeSelf)
             {
+                isCurved = false;
                 timerAfterStart = 0f;
                 isPossessed = true;
                 gameObject.SetActive(true);
+                isTerminated = false;
             }
         }
 
         public void Finish()
         {
-            StartCoroutine(CoroutineKill());
+            if (gameObject.activeSelf)
+            {
+                StartCoroutine(CoroutineKill());
+            }
         }
 
         private IEnumerator CoroutineKill()
         {
             isTerminated = true;
             yield return new WaitForSeconds(3f);
+            trail.startWidth = .2f;
+            trail.numCapVertices = 1;
             isPossessed = false;
             gameObject.SetActive(false);
+        }
+
+        public float GetCurDegree()
+        {
+            return curDegree;
+        }
+
+        public void PlayCurve(Vector3 _centerPos, float zeroDegree, float maxDergree, float _radius)
+        {
+            trail.startWidth = _radius / 2;
+            trail.numCapVertices = 0;
+            centerPos = _centerPos;
+            if (zeroDegree > 90 || zeroDegree < -90)
+            {
+                isClockwise = false;
+                curDegree = zeroDegree - maxDergree;
+                endDegree = zeroDegree + maxDergree;
+            }
+            else
+            {
+                isClockwise = true;
+                curDegree = zeroDegree + maxDergree;
+                endDegree = zeroDegree - maxDergree;
+            }
+            radius = _radius;
+            isCurved = true;
+            isTerminated = false;
+            transform.position = centerPos + CalculationFunctions.DirFromAngle(isClockwise ? curDegree-- : curDegree++).normalized * radius;
+            gameObject.SetActive(true);
         }
     }
 }
