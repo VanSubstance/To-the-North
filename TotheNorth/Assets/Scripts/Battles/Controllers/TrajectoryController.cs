@@ -6,9 +6,7 @@ namespace Assets.Scripts.Battles
 {
     public class TrajectoryController : MonoBehaviour
     {
-        private LineRenderer line;
-        private List<Vector3> positions;
-        private bool isFinish, isPossessed;
+        private bool isPossessed, isTerminated;
         public bool IsPossessed
         {
             get
@@ -19,9 +17,7 @@ namespace Assets.Scripts.Battles
         private float timerAfterStart;
         private void Awake()
         {
-            line = GetComponent<LineRenderer>();
-            positions = new List<Vector3>();
-            isFinish = false;
+            isTerminated = false;
             isPossessed = false;
             timerAfterStart = 0f;
             gameObject.SetActive(false);
@@ -33,58 +29,36 @@ namespace Assets.Scripts.Battles
             {
                 timerAfterStart += Time.deltaTime;
             }
-            else
-            {
-                if (positions.Count > 0)
-                {
-                    positions.RemoveAt(0);
-                }
-            }
-            DrawTail();
-            if (!isFinish) return;
-            if (positions.Count > 0)
-            {
-                positions.RemoveAt(0);
-                return;
-            }
-            if (positions.Count == 0)
+            if (timerAfterStart > .2f && !isTerminated)
             {
                 StartCoroutine(CoroutineKill());
-                return;
             }
         }
 
-        public void AddPoint(Vector3 pointToAdd)
+        /// <summary>
+        /// 해당 위치로 궤적 이동
+        /// </summary>
+        /// <param name="posToMove"></param>
+        public void MoveTo(Vector3 posToMove)
         {
+            transform.position = posToMove;
             if (!gameObject.activeSelf)
             {
                 timerAfterStart = 0f;
                 isPossessed = true;
-                isFinish = false;
                 gameObject.SetActive(true);
             }
-            //if (positions.Count > 10)
-            //{
-            //    positions.RemoveAt(0);
-            //}
-            positions.Add(pointToAdd);
         }
 
         public void Finish()
         {
-            isFinish = true;
-        }
-
-        private void DrawTail()
-        {
-            line.positionCount = positions.Count;
-            line.SetPositions(positions.ToArray());
+            StartCoroutine(CoroutineKill());
         }
 
         private IEnumerator CoroutineKill()
         {
+            isTerminated = true;
             yield return new WaitForSeconds(3f);
-            positions.Clear();
             isPossessed = false;
             gameObject.SetActive(false);
         }

@@ -70,7 +70,7 @@ namespace Assets.Scripts.Battles
             if (!isReady) return;
             if (trajectory)
             {
-                trajectory.AddPoint(transform.position);
+                trajectory.MoveTo(transform.position);
             }
             if (Vector3.Distance(transform.position, startPos) >= Vector3.Distance(targetPos, startPos))
             {
