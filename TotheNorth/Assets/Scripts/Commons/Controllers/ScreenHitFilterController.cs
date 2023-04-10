@@ -1,32 +1,44 @@
-using System;
 using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using Assets.Scripts.Commons.Functions;
 
 namespace Assets.Scripts.Commons
 {
-    public class CameraHitEffectController : MonoBehaviour
+    public class ScreenHitFilterController : MonoBehaviour
     {
-        private float timeVib = .5f, timeLeft, powerVib;
+        private SpriteRenderer image;
+        private float timeVib = .5f, timeLeft;
+        private float powerRed
+        {
+            set
+            {
+                image.color = new Color(value, 0, 0, .25f);
+            }
+            get
+            {
+                return image.color.r;
+            }
+        }
+
+        private void Awake()
+        {
+            image = GetComponent<SpriteRenderer>();
+        }
         /// <summary>
-        /// 데미지에 따라 화면에 진동을 주는 함수
+        /// 데미지에 따라 화면 필터의 색을 변결하는 함수
         /// </summary>
         public void OnHit(float damage)
         {
             if (damage <= 10)
             {
-                powerVib = 0.2f;
+                powerRed = 0.4f;
             }
             else if (damage < 30)
             {
-                powerVib = 0.5f;
+                powerRed = 0.7f;
             }
             else
             {
-                powerVib = 1f;
+                powerRed = 1f;
             }
             if (timeLeft > 0)
             {
@@ -44,13 +56,11 @@ namespace Assets.Scripts.Commons
             while (timeLeft >= 0)
             {
                 timeLeft -= Time.deltaTime;
-                transform.localPosition = CalculationFunctions.DirFromAngle(UnityEngine.Random.Range(0, 360)) * powerVib;
-                powerVib *= 0.7f;
+                powerRed *= 0.7f;
                 yield return new WaitForSeconds(Time.deltaTime);
             }
-            transform.localPosition = Vector3.zero;
             timeLeft = 0;
-            powerVib = 0f;
+            powerRed = 0;
         }
     }
 }

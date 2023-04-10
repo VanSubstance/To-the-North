@@ -11,7 +11,7 @@ using Assets.Scripts.Commons;
 public class CommonGameManager : MonoBehaviour
 {
     [SerializeField]
-    private Transform fadeImagePrefab, userPrefab, smogForScreenPrefab,
+    private Transform fadeImagePrefab, userPrefab, filterForScreenPrefab,
         pauseWindowPrefab, inventoryWindowPrefab,
         panelForLeftTop,
         projectileManager, trajectoryManager,
@@ -23,6 +23,7 @@ public class CommonGameManager : MonoBehaviour
 
     private ScreenHitEffectManager _screenHitManager;
     private CameraHitEffectController _cameraHitController;
+    private ScreenHitFilterController _screenHitFilterController;
 
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static CommonGameManager _instance;
@@ -118,7 +119,8 @@ public class CommonGameManager : MonoBehaviour
             keyAdded.InitContent(KeyCode.I, windowForInventory.GetComponent<MonoBehaviourControllByKey>());
 
             // 화면 필터 이미지 추가
-            Transform imageForSmog = Instantiate(smogForScreenPrefab, uiTf);
+            Transform imageForSmog = Instantiate(filterForScreenPrefab, uiTf);
+            _screenHitFilterController = imageForSmog.GetComponent<ScreenHitFilterController>();
             imageForFade.localPosition = Vector3.zero;
             imageForSmog.SetAsLastSibling();
 
@@ -269,6 +271,7 @@ public class CommonGameManager : MonoBehaviour
     public void OnHit(float degree, int damage)
     {
         _screenHitManager.OnHit(degree);
-        _cameraHitController.Execute(damage);
+        _cameraHitController.OnHit(damage);
+        _screenHitFilterController.OnHit(damage);
     }
 }
