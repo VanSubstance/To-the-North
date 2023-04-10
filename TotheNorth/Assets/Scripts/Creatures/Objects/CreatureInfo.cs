@@ -9,7 +9,7 @@ namespace Assets.Scripts.Creatures
         [SerializeField]
         private int maxHp;
         [SerializeField]
-        private bool isAttackFirst;
+        private bool isActiveBehaviour, isRunAway;
 
         public float sightRange = 5f, moveSpd = 3f, moveDis = 3f;
         public ProgressInfo hp = null;
@@ -26,11 +26,19 @@ namespace Assets.Scripts.Creatures
             }
         }
 
-        public bool IsAttackFirst
+        public bool IsActiveBehaviour
         {
             get
             {
-                return isAttackFirst;
+                return isActiveBehaviour;
+            }
+        }
+
+        public bool IsRunAway
+        {
+            get
+            {
+                return isRunAway;
             }
         }
 
@@ -41,7 +49,8 @@ namespace Assets.Scripts.Creatures
             res.sightRange = _data.sightRange;
             res.moveSpd = _data.moveSpd;
             res.moveDis = _data.moveDis;
-            res.isAttackFirst = _data.isAttackFirst;
+            res.isActiveBehaviour = _data.isActiveBehaviour;
+            res.isRunAway = _data.isRunAway;
             return res;
         }
     }
