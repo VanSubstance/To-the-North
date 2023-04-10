@@ -655,6 +655,7 @@ namespace Assets.Scripts.Creatures.Bases
 
         public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitDir)
         {
+            transform.position = transform.position - (hitDir.normalized * 0.5f);
             // 피격 당한쪽 바라보기
             SetTargetToGaze(hitDir, 3, false);
             switch (partType)
