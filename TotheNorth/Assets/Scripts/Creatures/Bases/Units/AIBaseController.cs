@@ -653,10 +653,10 @@ namespace Assets.Scripts.Creatures.Bases
             return !Physics2D.Raycast(originPos, (_targetPos - originPos).normalized, dis, GlobalStatus.Constant.blockingSightMask);
         }
 
-        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitPos)
+        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitDir)
         {
             // 피격 당한쪽 바라보기
-            SetTargetToGaze(hitPos, 3, false);
+            SetTargetToGaze(hitDir, 3, false);
             switch (partType)
             {
                 case PartType.Helmat:
