@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   maxHp: 100
-  isAttackFirst: 1
+  isAttackFirst: 0
   sightRange: 20
   moveSpd: 3
   moveDis: 3

@@ -68,8 +68,11 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
+        public bool isAttacked;
+
         private void Awake()
         {
+            isAttacked = info.IsAttackFirst;
             if (handL.childCount > 0)
             {
                 itemL = handL.GetChild(0).GetComponent<IItemHandable>();
@@ -144,7 +147,7 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void ControllAttack()
         {
-            if (!info.IsAttackFirst) return;
+            if (!isAttacked) return;
             if (!detectionBase.targetTf) return;
             Vector3 _targetPos = detectionBase.targetTf.position;
             Vector3 originPos = transform.position;
@@ -655,6 +658,7 @@ namespace Assets.Scripts.Creatures.Bases
 
         public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitDir)
         {
+            isAttacked = true;
             transform.position = transform.position - (hitDir.normalized * 0.5f);
             // 피격 당한쪽 바라보기
             SetTargetToGaze(hitDir, 3, false);

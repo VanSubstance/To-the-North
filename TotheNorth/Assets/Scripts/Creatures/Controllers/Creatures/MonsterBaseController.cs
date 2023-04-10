@@ -16,6 +16,7 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
         /// <param name="targetTf">Null이 아니다 = 유저가 눈에 보인다, Null이다 = 유저가 안보인다</param>
         public override void OnDetectUser(Transform targetTf)
         {
+            if (!isAttacked) return;
             if (squadBase != null)
             {
                 // 부대 소속 유닛
