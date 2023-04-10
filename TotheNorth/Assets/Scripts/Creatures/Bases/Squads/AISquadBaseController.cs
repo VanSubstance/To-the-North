@@ -135,9 +135,27 @@ namespace Assets.Scripts.Creatures.Bases
 
         public void SetAllUnitsStatus(AIStatusType _type)
         {
-            foreach (AIBaseController unit in units)
+            switch (_type)
             {
-                unit.statusType = _type;
+                case AIStatusType.Combat:
+                    foreach (AIBaseController unit in units)
+                    {
+                        unit.statusType = _type;
+                        unit.isAttacked = true;
+                    }
+                    break;
+                case AIStatusType.None:
+                    foreach (AIBaseController unit in units)
+                    {
+                        unit.statusType = _type;
+                    }
+                    break;
+                case AIStatusType.Petrol:
+                    foreach (AIBaseController unit in units)
+                    {
+                        unit.statusType = _type;
+                    }
+                    break;
             }
         }
 
