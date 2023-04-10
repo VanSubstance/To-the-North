@@ -22,6 +22,7 @@ public class CommonGameManager : MonoBehaviour
     private int curStatus = 0;
 
     private ScreenHitEffectManager _screenHitManager;
+    private CameraHitEffectController _cameraHitController;
 
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static CommonGameManager _instance;
@@ -149,11 +150,12 @@ public class CommonGameManager : MonoBehaviour
                 temp.name = "Trajectories";
             }
 
-            // 화면 피격 풀
+            // 화면 피격 풀 + 카메라 피격 컨트롤러
             if (uiTf.Find("On Hit") == null)
             {
                 _screenHitManager = Instantiate(screenHitManager, uiTf).GetComponent<ScreenHitEffectManager>();
                 _screenHitManager.transform.name = "On Hit";
+                _cameraHitController = GameObject.Find("Camera Container").transform.GetChild(0).GetComponent<CameraHitEffectController>();
             }
         }
 
@@ -264,8 +266,9 @@ public class CommonGameManager : MonoBehaviour
     /// 피격 관련 광역 이벤트 처리 함수
     /// </summary>
     /// <param name="degree">피격 발생 각도 (화면 중간 right 반시계 기준 각도)</param>
-    public void OnHit(float degree)
+    public void OnHit(float degree, int damage)
     {
         _screenHitManager.OnHit(degree);
+        _cameraHitController.Execute(damage);
     }
 }

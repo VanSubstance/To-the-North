@@ -24,7 +24,7 @@ namespace Assets.Scripts.Users
             }
 
             // 화면 피격 이벤트 처리
-            CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(hitDir));
+            CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(hitDir), 8);
 
             // 계산 처리
             InGameStatus.User.status.hpBar.LiveInfo = -10;

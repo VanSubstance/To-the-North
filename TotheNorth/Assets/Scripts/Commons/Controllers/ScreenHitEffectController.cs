@@ -7,13 +7,6 @@ namespace Assets.Scripts.Commons
     public class ScreenHitEffectController : MonoBehaviour
     {
         private Image image;
-        public float RotationDegree
-        {
-            set
-            {
-                Execute(value);
-            }
-        }
 
         private void Awake()
         {
