@@ -1079,7 +1079,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7b08c359439c64ebc248bd05c94fd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vectorToKnock: {x: 0, y: 0, z: 0}
 --- !u!114 &3251740218194836106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1418,7 +1417,7 @@ PrefabInstance:
     - target: {fileID: 1421393144885258505, guid: 8aa37ddad1fdcc94fb4a71c7dfcb8673, type: 3}
       propertyPath: info
       value: 
-      objectReference: {fileID: 11400000, guid: 7e463e33373e7ab4eadd22eb65e0b9a3, type: 2}
+      objectReference: {fileID: 11400000, guid: 28a0c2b1fc9a5d14caaa96982e0f0db9, type: 2}
     - target: {fileID: 5395000417286172383, guid: 8aa37ddad1fdcc94fb4a71c7dfcb8673, type: 3}
       propertyPath: m_Name
       value: Weapon

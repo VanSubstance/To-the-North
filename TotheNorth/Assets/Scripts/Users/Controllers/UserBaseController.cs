@@ -7,7 +7,7 @@ namespace Assets.Scripts.Users
 {
     internal class UserBaseController : MonoBehaviour, ICreatureBattle
     {
-        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitPos)
+        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitDir)
         {
             switch (partType)
             {
@@ -22,6 +22,9 @@ namespace Assets.Scripts.Users
                 case PartType.Leg:
                     break;
             }
+
+            // 화면 피격 이벤트 처리
+            CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(hitDir));
 
             // 계산 처리
             InGameStatus.User.status.hpBar.LiveInfo = -10;

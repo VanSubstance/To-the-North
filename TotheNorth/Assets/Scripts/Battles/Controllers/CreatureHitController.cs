@@ -30,9 +30,10 @@ namespace Assets.Scripts.Battles
         /// 피격당했을 때 작동하는 함수
         /// </summary>
         /// <param name="partType">피격당한 부위</param>
-        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitPos)
+        /// <param name="hitDir">공격을 받은 방향</param>
+        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitDir)
         {
-            battleFunction.OnHit(partType, _info, hitPos);
+            battleFunction.OnHit(partType, _info, hitDir);
         }
     }
 }
