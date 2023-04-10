@@ -9,6 +9,6 @@ namespace Assets.Scripts.Battles
 {
     public interface ICreatureBattle
     {
-        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitPos);
+        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitDir);
     }
 }

@@ -6,19 +6,24 @@ using TMPro;
 using Unity.VisualScripting;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Components.Infos;
-using Assets.Scripts.Creatures;
+using Assets.Scripts.Commons;
 
 public class CommonGameManager : MonoBehaviour
 {
     [SerializeField]
-    private Transform fadeImagePrefab, userPrefab, smogForScreenPrefab,
+    private Transform fadeImagePrefab, userPrefab, filterForScreenPrefab,
         pauseWindowPrefab, inventoryWindowPrefab,
         panelForLeftTop,
-        projectileManager, trajectoryManager
+        projectileManager, trajectoryManager,
+        screenHitManager
         ;
 
     private Image fadeImage;
     private int curStatus = 0;
+
+    private ScreenHitEffectManager _screenHitManager;
+    private CameraHitEffectController _cameraHitController;
+    private ScreenHitFilterController _screenHitFilterController;
 
     // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static CommonGameManager _instance;
@@ -114,7 +119,8 @@ public class CommonGameManager : MonoBehaviour
             keyAdded.InitContent(KeyCode.I, windowForInventory.GetComponent<MonoBehaviourControllByKey>());
 
             // 화면 필터 이미지 추가
-            Transform imageForSmog = Instantiate(smogForScreenPrefab, uiTf);
+            Transform imageForSmog = Instantiate(filterForScreenPrefab, uiTf);
+            _screenHitFilterController = imageForSmog.GetComponent<ScreenHitFilterController>();
             imageForFade.localPosition = Vector3.zero;
             imageForSmog.SetAsLastSibling();
 
@@ -132,16 +138,26 @@ public class CommonGameManager : MonoBehaviour
             InGameStatus.User.status.hpBar = panelLeftTop.GetComponent<UINumericController>().barForHp;
             InGameStatus.User.status.staminaBar = panelLeftTop.GetComponent<UINumericController>().barForStamina;
 
+            // 투사체 풀
             if (GameObject.Find("Projectiles") == null)
             {
                 Transform temp = Instantiate(projectileManager);
                 temp.name = "Projectiles";
             }
 
+            // 궤적 풀
             if (GameObject.Find("Trajectories") == null)
             {
                 Transform temp = Instantiate(trajectoryManager);
                 temp.name = "Trajectories";
+            }
+
+            // 화면 피격 풀 + 카메라 피격 컨트롤러
+            if (uiTf.Find("On Hit") == null)
+            {
+                _screenHitManager = Instantiate(screenHitManager, uiTf).GetComponent<ScreenHitEffectManager>();
+                _screenHitManager.transform.name = "On Hit";
+                _cameraHitController = GameObject.Find("Camera Container").transform.GetChild(0).GetComponent<CameraHitEffectController>();
             }
         }
 
@@ -246,5 +262,16 @@ public class CommonGameManager : MonoBehaviour
     public void SaveGame()
     {
 
+    }
+
+    /// <summary>
+    /// 피격 관련 광역 이벤트 처리 함수
+    /// </summary>
+    /// <param name="degree">피격 발생 각도 (화면 중간 right 반시계 기준 각도)</param>
+    public void OnHit(float degree, int damage)
+    {
+        _screenHitManager.OnHit(degree);
+        _cameraHitController.OnHit(damage);
+        _screenHitFilterController.OnHit(damage);
     }
 }
