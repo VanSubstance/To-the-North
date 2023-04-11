@@ -31,7 +31,7 @@ namespace Assets.Scripts.Battles
 
         private TrajectoryController trajectory;
 
-        public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner)
+        public void Fire(float range, ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner)
         {
             trajectory = TrajectoryManager.Instance.GetNewTrajectory();
             owner = _owner;
@@ -43,20 +43,26 @@ namespace Assets.Scripts.Battles
             GetComponent<BoxCollider2D>().size = new Vector2(0.2f, info.Height);
             transform.localRotation = Quaternion.Euler(0f, 0f, CalculationFunctions.AngleFromDir(targetDir));
             transform.position = startPos;
-            targetPos = LocalPostionToWorld(info.EndPos, targetDir);
             gameObject.SetActive(true);
-            GetComponent<Rigidbody2D>().velocity = targetPos.normalized * info.Spd;
-            targetPos *= (info.EndPos).magnitude;
-            targetPos += transform.position;
+            GetComponent<Rigidbody2D>().velocity = targetDir.normalized * info.Spd;
+            targetPos = startPos + targetDir.normalized * range;
             isAffected = false;
             isReady = true;
+            if (info.TrajectoryType == TrajectoryType.Curve)
+            {
+                trajectory.PlayCurve(startPos, CalculationFunctions.AngleFromDir(targetDir), 45, range);
+                trajectory = null;
+            }
         }
 
         public void Arrive()
         {
             if (isAffected) return;
             isAffected = true;
-            trajectory.Finish();
+            if (trajectory)
+            {
+                trajectory.Finish();
+            }
             gameObject.SetActive(false);
         }
 
@@ -70,7 +76,7 @@ namespace Assets.Scripts.Battles
             if (!isReady) return;
             if (trajectory)
             {
-                trajectory.AddPoint(transform.position);
+                trajectory.MoveTo(transform.position);
             }
             if (Vector3.Distance(transform.position, startPos) >= Vector3.Distance(targetPos, startPos))
             {

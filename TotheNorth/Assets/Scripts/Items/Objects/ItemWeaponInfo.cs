@@ -11,5 +11,6 @@ namespace Assets.Scripts.Items
         // 리팩토링이 반드시 필요함!!
         public ProjectileInfo projectileInfo;
         public float delayAmongFire;
+        public float powerKnockback;
     }
 }

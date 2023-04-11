@@ -1,5 +1,6 @@
 using Assets.Scripts.Battles;
 using UnityEngine;
+using static GlobalComponent.Common;
 
 namespace Assets.Scripts.Items
 {
@@ -16,6 +17,7 @@ namespace Assets.Scripts.Items
         private bool isAiming;
         private void Awake()
         {
+            info.projectileInfo.PowerKnockback = info.powerKnockback;
             delayAmongFire = 0f;
             timeFocus = 0f;
             isAiming = false;
@@ -46,7 +48,7 @@ namespace Assets.Scripts.Items
             if (delayAmongFire >= info.delayAmongFire)
             {
                 float randRange = (3 - timeFocus) / 3f;
-                ProjectileManager.Instance.GetNewProjectile().Fire(info.projectileInfo, transform.position,
+                ProjectileManager.Instance.GetNewProjectile().Fire(info.range, info.projectileInfo, transform.position,
                     new Vector2(targetDir.x + randRange * Random.Range(-1f, 1f), targetDir.y + randRange * Random.Range(-1f, 1f))
                     , owner);
                 delayAmongFire = 0f;

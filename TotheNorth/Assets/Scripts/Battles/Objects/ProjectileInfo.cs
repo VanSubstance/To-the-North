@@ -6,29 +6,21 @@ namespace Assets.Scripts.Battles
     public class ProjectileInfo : ScriptableObject
     {
         [SerializeField]
-        private Vector3 endPos;
-        [SerializeField]
         private float spd;
         [SerializeField]
         private float heightCollider, powerKnockback;
+        [SerializeField]
+        private TrajectoryType trajectoryType;
 
         public float PowerKnockback
         {
+            set
+            {
+                powerKnockback = value;
+            }
             get
             {
                 return powerKnockback;
-            }
-        }
-
-        public Vector3 EndPos
-        {
-            get
-            {
-                return endPos;
-            }
-            set
-            {
-                endPos = value;
             }
         }
 
@@ -51,20 +43,22 @@ namespace Assets.Scripts.Battles
                 return heightCollider;
             }
         }
+
+        public TrajectoryType TrajectoryType
+        {
+            get
+            {
+                return trajectoryType;
+            }
+        }
         public static ProjectileInfo GetClone(ProjectileInfo _info)
         {
             ProjectileInfo res = CreateInstance<ProjectileInfo>();
-            res.endPos = _info.endPos;
             res.spd = _info.spd;
             res.heightCollider = _info.heightCollider;
             res.powerKnockback = _info.powerKnockback;
+            res.trajectoryType = _info.trajectoryType;
             return res;
         }
-
-        //public static ProjectileInfo GenerateInfo(WeaponInfo weapon)
-        //{
-        //    ProjectileInfo res = CreateInstance<ProjectileInfo>();
-        //    return res;
-        //}
     }
 }

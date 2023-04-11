@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Commons.Functions;
 using UnityEngine;
 
 namespace Assets.Scripts.Battles
 {
     public class TrajectoryController : MonoBehaviour
     {
-        private LineRenderer line;
-        private List<Vector3> positions;
-        private bool isFinish, isPossessed;
+        private TrailRenderer trail;
+        private bool isPossessed, isTerminated,
+            isCurved, isClockwise;
+        private Vector3 centerPos;
         public bool IsPossessed
         {
             get
@@ -17,76 +19,112 @@ namespace Assets.Scripts.Battles
             }
         }
         private float timerAfterStart;
+
+        private float curDegree, endDegree, radius;
         private void Awake()
         {
-            line = GetComponent<LineRenderer>();
-            positions = new List<Vector3>();
-            isFinish = false;
+            trail = GetComponent<TrailRenderer>();
+            isTerminated = false;
             isPossessed = false;
+            isCurved = false;
             timerAfterStart = 0f;
             gameObject.SetActive(false);
         }
 
         private void Update()
         {
-            if (timerAfterStart < 0.2f)
+            if (isTerminated) return;
+            if (isCurved)
             {
-                timerAfterStart += Time.deltaTime;
+                transform.position = centerPos + CalculationFunctions.DirFromAngle(isClockwise ? curDegree -= 2 : curDegree += 2).normalized * radius;
+                if (
+                    (isClockwise && curDegree < endDegree) ||
+                    (!isClockwise && curDegree > endDegree))
+                {
+                    if (gameObject.activeSelf)
+                    {
+                        StartCoroutine(CoroutineKill());
+                    }
+                }
             }
             else
             {
-                if (positions.Count > 0)
+                if (timerAfterStart < 0.2f)
                 {
-                    positions.RemoveAt(0);
+                    timerAfterStart += Time.deltaTime;
                 }
-            }
-            DrawTail();
-            if (!isFinish) return;
-            if (positions.Count > 0)
-            {
-                positions.RemoveAt(0);
-                return;
-            }
-            if (positions.Count == 0)
-            {
-                StartCoroutine(CoroutineKill());
-                return;
+                if (timerAfterStart > .2f)
+                {
+                    if (gameObject.activeSelf)
+                    {
+                        StartCoroutine(CoroutineKill());
+                    }
+                }
             }
         }
 
-        public void AddPoint(Vector3 pointToAdd)
+        /// <summary>
+        /// 해당 위치로 궤적 이동
+        /// </summary>
+        /// <param name="posToMove"></param>
+        public void MoveTo(Vector3 posToMove)
         {
+            transform.position = posToMove;
             if (!gameObject.activeSelf)
             {
+                isCurved = false;
                 timerAfterStart = 0f;
                 isPossessed = true;
-                isFinish = false;
                 gameObject.SetActive(true);
+                isTerminated = false;
             }
-            //if (positions.Count > 10)
-            //{
-            //    positions.RemoveAt(0);
-            //}
-            positions.Add(pointToAdd);
         }
 
         public void Finish()
         {
-            isFinish = true;
-        }
-
-        private void DrawTail()
-        {
-            line.positionCount = positions.Count;
-            line.SetPositions(positions.ToArray());
+            if (gameObject.activeSelf)
+            {
+                StartCoroutine(CoroutineKill());
+            }
         }
 
         private IEnumerator CoroutineKill()
         {
+            isTerminated = true;
             yield return new WaitForSeconds(3f);
-            positions.Clear();
+            trail.startWidth = .2f;
+            trail.numCapVertices = 1;
             isPossessed = false;
             gameObject.SetActive(false);
+        }
+
+        public float GetCurDegree()
+        {
+            return curDegree;
+        }
+
+        public void PlayCurve(Vector3 _centerPos, float zeroDegree, float maxDergree, float _radius)
+        {
+            trail.startWidth = _radius / 2;
+            trail.numCapVertices = 0;
+            centerPos = _centerPos;
+            if (zeroDegree > 90 || zeroDegree < -90)
+            {
+                isClockwise = false;
+                curDegree = zeroDegree - maxDergree;
+                endDegree = zeroDegree + maxDergree;
+            }
+            else
+            {
+                isClockwise = true;
+                curDegree = zeroDegree + maxDergree;
+                endDegree = zeroDegree - maxDergree;
+            }
+            radius = _radius;
+            isCurved = true;
+            isTerminated = false;
+            transform.position = centerPos + CalculationFunctions.DirFromAngle(isClockwise ? curDegree-- : curDegree++).normalized * radius;
+            gameObject.SetActive(true);
         }
     }
 }
