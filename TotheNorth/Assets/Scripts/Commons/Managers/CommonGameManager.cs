@@ -13,7 +13,7 @@ public class CommonGameManager : MonoBehaviour
     [SerializeField]
     private Transform fadeImagePrefab, userPrefab, filterForScreenPrefab,
         pauseWindowPrefab, inventoryWindowPrefab,
-        panelForLeftTop,
+        panelForLeftTop, panelForCondition,
         projectileManager, trajectoryManager,
         screenHitManager
         ;
@@ -137,6 +137,11 @@ public class CommonGameManager : MonoBehaviour
             panelLeftTop.localPosition = new Vector3(-960, 540, 0);
             InGameStatus.User.status.hpBar = panelLeftTop.GetComponent<UINumericController>().barForHp;
             InGameStatus.User.status.staminaBar = panelLeftTop.GetComponent<UINumericController>().barForStamina;
+
+            // 상태 이상 표기용 UI
+            Transform panelCondition = Instantiate(panelForCondition, uiTf);
+            panelCondition.localScale = Vector3.one;
+            panelCondition.localPosition = new Vector3(-960, 340, 0);
 
             // 투사체 풀
             if (GameObject.Find("Projectiles") == null)
