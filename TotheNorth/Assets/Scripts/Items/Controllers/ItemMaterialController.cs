@@ -3,12 +3,9 @@ using static GlobalComponent.Common;
 
 namespace Assets.Scripts.Items
 {
-    public class ItemMaterialController : AItemBaseController
+    public class ItemMaterialController : AItemBaseController<ItemMaterialInfo>
     {
         private readonly string TAG = "재료 아이템:\n";
-
-        [SerializeField]
-        public ItemMaterialInfo info;
 
         protected override bool CheckItemTag(InventorySlotController slot)
         {
@@ -18,10 +15,6 @@ namespace Assets.Scripts.Items
                 return true;
             }
             return false;
-        }
-        public override ItemBaseInfo ExtractBaseInfo()
-        {
-            return info;
         }
 
         protected override void OnDoubleClick()

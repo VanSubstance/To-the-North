@@ -2,12 +2,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Items
 {
-    public class ItemEquipmentController : AItemBaseController
+    public class ItemEquipmentController : AItemBaseController<ItemEquipmentInfo>
     {
         private readonly string TAG = "장비 아이템:\n";
-
-        [SerializeField]
-        public ItemEquipmentInfo info;
 
         protected override bool CheckItemTag(InventorySlotController slot)
         {
@@ -18,10 +15,6 @@ namespace Assets.Scripts.Items
                 return true;
             }
             return false;
-        }
-        public override ItemBaseInfo ExtractBaseInfo()
-        {
-            return info;
         }
 
         protected override void OnDoubleClick()

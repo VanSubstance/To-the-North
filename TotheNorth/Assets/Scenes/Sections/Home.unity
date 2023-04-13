@@ -5970,9 +5970,17 @@ MonoBehaviour:
   - itemInfo: {fileID: 11400000, guid: cf3c89fd83c24254cbae0c16f6bbbac9, type: 2}
     pos: {x: 0, y: 0}
   - itemInfo: {fileID: 11400000, guid: cf3c89fd83c24254cbae0c16f6bbbac9, type: 2}
-    pos: {x: 1, y: 0}
+    pos: {x: 1, y: 1}
   - itemInfo: {fileID: 11400000, guid: cf3c89fd83c24254cbae0c16f6bbbac9, type: 2}
-    pos: {x: 2, y: 0}
+    pos: {x: 2, y: 2}
+  - itemInfo: {fileID: 11400000, guid: 76c2424991838fa4f8ad1602191fcb44, type: 2}
+    pos: {x: 3, y: 0}
+  - itemInfo: {fileID: 11400000, guid: 76c2424991838fa4f8ad1602191fcb44, type: 2}
+    pos: {x: 4, y: 0}
+  - itemInfo: {fileID: 11400000, guid: bfccca620c9d81a47b27d4279675b22e, type: 2}
+    pos: {x: 5, y: 0}
+  - itemInfo: {fileID: 11400000, guid: 8449883dca26d474da7c005ae68d0620, type: 2}
+    pos: {x: 5, y: 4}
 --- !u!1001 &1221996200
 PrefabInstance:
   m_ObjectHideFlags: 0

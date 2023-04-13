@@ -1,6 +1,9 @@
 
+using System;
+
 namespace Assets.Scripts.Items
 {
+    [Serializable]
     public class ItemEquipmentInfo : ItemBaseInfo
     {
         public EquipmentType equipmentType;

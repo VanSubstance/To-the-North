@@ -1,9 +1,11 @@
 
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
 {
     [CreateAssetMenu(fileName = "Consumable Info", menuName = "Data Objects/Items/Consumable", order = int.MaxValue)]
+    [Serializable]
     public class ItemConsumableInfo : ItemBaseInfo
     {
         public new ItemType itemType

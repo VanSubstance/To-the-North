@@ -17,7 +17,7 @@ public class InventoryContentController : AWindowBaseContentController
     private new void Awake()
     {
         base.Awake();
-        GenerateItemObjects();
+        //GenerateItemObjects();
     }
 
     /// <summary>
@@ -28,29 +28,30 @@ public class InventoryContentController : AWindowBaseContentController
         ItemGenerateController tempGenerator;
         foreach (ItemInventoryInfo info in InGameStatus.Item.inventory)
         {
+            // 풀링 시스템이 고안되고 나면, 여기서 인스턴시에이트가 아닌 존재하는 오브젝트를 불러와야 함
             tempGenerator = Instantiate(itemPrefab, itemParentTF).GetComponent<ItemGenerateController>();
-            tempGenerator.InitItem(info.itemInfo);
             tempGenerator.transform.position = new Vector3
             (InventoryManager.inventorySlots[info.x, info.y].transform.position.x,
             InventoryManager.inventorySlots[info.x, info.y].transform.position.y,
             itemParentTF.transform.position.z);
+            tempGenerator.InitItem(info.itemInfo);
         }
     }
 
     /// <summary>
     /// 풀링을 위한 사전 생성
     /// </summary>
-    private void GenerateItemObjects()
-    {
-        Transform temp;
-        for (int i = 0; i < GlobalSetting.InventorySlotCount; i++)
-        {
-            temp = Instantiate(itemPrefab, itemParentTF);
-            temp.gameObject.SetActive(false);
-            temp.localPosition = Vector3.zero;
-            temp.localScale = Vector3.one;
-        }
-    }
+    //private void GenerateItemObjects()
+    //{
+    //    Transform temp;
+    //    for (int i = 0; i < GlobalSetting.InventorySlotCount; i++)
+    //    {
+    //        temp = Instantiate(itemPrefab, itemParentTF);
+    //        temp.gameObject.SetActive(false);
+    //        temp.localPosition = Vector3.zero;
+    //        temp.localScale = Vector3.one;
+    //    }
+    //}
 
     public override void ClearContent()
     {
@@ -91,7 +92,7 @@ public class InventoryContentController : AWindowBaseContentController
         // 아이템들의 TF를 넣어주고, 이후 아이템 이동 시 사용
         InventoryManager.leftInventoryTF = rtemParentTF;
         InventoryManager.rightInventoryTF = itemParentTF;
-        InventoryManager.movingSpaeceTF = movingSpaceTF;
+        InventoryManager.movingSpaceTF = movingSpaceTF;
         testItemInit();
         isInit = true;
     }

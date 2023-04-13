@@ -18,7 +18,7 @@ namespace Assets.Scripts.Items
             isMouseDown = false,
             isMouseClickedJustNow = false;
 
-        private void Update()
+        protected void Update()
         {
             isKeyPressed = Input.GetKey(keyToPress);
             TrackHover();

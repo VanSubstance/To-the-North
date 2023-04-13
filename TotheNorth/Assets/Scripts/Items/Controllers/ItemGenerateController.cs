@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -15,21 +16,24 @@ namespace Assets.Scripts.Items
             try
             {
                 // 재료 아이템
-                ItemMaterialInfo materialInfo = (ItemMaterialInfo)itemInfo;
+                ItemMaterialInfo info = (ItemMaterialInfo)itemInfo;
+                transform.AddComponent<ItemMaterialController>().InitInfo(info);
             }
             catch (InvalidCastException)
             {
                 try
                 {
                     // 장비 아이템
-                    ItemEquipmentInfo equipmentInfo = (ItemEquipmentInfo)itemInfo;
+                    ItemEquipmentInfo info = (ItemEquipmentInfo)itemInfo;
+                    transform.AddComponent<ItemEquipmentController>().InitInfo(info);
                 }
                 catch (InvalidCastException)
                 {
                     try
                     {
                         // 소모성 아이템
-                        ItemConsumableInfo consumableInfo = (ItemConsumableInfo)itemInfo;
+                        ItemConsumableInfo info = (ItemConsumableInfo)itemInfo;
+                        transform.AddComponent<ItemConsumableController>().InitInfo(info);
                     }
                     catch (InvalidCastException)
                     {
