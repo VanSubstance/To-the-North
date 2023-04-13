@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Test Consumable
   m_EditorClassIdentifier: 
   itemType: 0
+  size: {x: 1, y: 1}
   imagePath: Images/Items/TrafficCone
   itemName: "\uAF2C\uAE4C\uAF2C\uAE4C"
   description: "\uAF2C\uAE54\uCF58 \uB9DB\uC5C6\uC5C9"
   price: 20
+  consumbableType: 0

@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Armor Info
   m_EditorClassIdentifier: 
   itemType: 1
+  size: {x: 3, y: 4}
   imagePath: Images/Items/DrumTong
   itemName: "\uB4DC\uB7FC\uD1B5"
   description: "\uD654\uC0B4\uB530\uC704\uB85C\uB294 \uB6AB\uC744 \uC218 \uC5C6\uC5B4!"
   price: 170
   equipmentType: 0
+  equipPartType: 3

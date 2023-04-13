@@ -28,6 +28,7 @@ public static class GlobalStatus
             public static bool PopupModalController = false;
             public static bool InfoMessageManager = false;
             public static bool ConversationManager = false;
+            public static bool InventoryLoading = false;
 
             public static bool isSystemLoadingDone()
             {
@@ -37,6 +38,7 @@ public static class GlobalStatus
                     PopupModalController &&
                     InfoMessageManager &&
                     ConversationManager &&
+                    InventoryLoading &&
                     true
                     ;
             }
@@ -50,5 +52,6 @@ public static class GlobalStatus
         Loading.System.PopupModalController = false;
         Loading.System.InfoMessageManager = false;
         Loading.System.ConversationManager = false;
+        Loading.System.InventoryLoading = false;
     }
 }

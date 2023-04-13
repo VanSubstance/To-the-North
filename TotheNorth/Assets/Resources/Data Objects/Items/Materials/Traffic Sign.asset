@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Traffic Sign
   m_EditorClassIdentifier: 
   itemType: 2
+  size: {x: 2, y: 2}
   imagePath: Images/Items/TrafficSign
   itemName: "\uD45C\uC9C0\uD310"
   description: "\uBC29\uD328\uAC19\uB124 \u314B\u314B"

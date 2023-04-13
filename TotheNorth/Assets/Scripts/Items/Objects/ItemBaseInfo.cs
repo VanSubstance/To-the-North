@@ -1,9 +1,12 @@
-using Assets.Scripts.Battles;
+using System;
 using UnityEngine;
 
+[Serializable]
 public class ItemBaseInfo : ScriptableObject
 {
+    [HideInInspector]
     public ItemType itemType;
+    public Vector2 size;
     public string imagePath;
     public string itemName;
     public string description;
@@ -17,6 +20,7 @@ public class ItemBaseInfo : ScriptableObject
         res.itemName = itemName;
         res.description = description;
         res.price = price;
+        res.size = size;
         return res;
     }
 }

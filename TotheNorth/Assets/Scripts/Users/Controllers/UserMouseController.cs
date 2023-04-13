@@ -7,8 +7,14 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal class UserMouseController : MonoBehaviour
     {
-        [SerializeField]
-        Transform handL, handR;
+        private ItemWeaponController weaponL, weaponR;
+
+        private void Awake()
+        {
+            Transform temp = transform.Find("Hands");
+            weaponR = temp.GetChild(0).GetChild(0).GetComponent<ItemWeaponController>();
+            weaponL = temp.GetChild(1).GetChild(0).GetComponent<ItemWeaponController>();
+        }
         private void Update()
         {
             if (!InGameStatus.User.isPause)
@@ -32,18 +38,18 @@ namespace Assets.Scripts.Users.Controllers
             {
                 CameraTrackControlller.targetPos =
                     (
-                    mousePos - GlobalComponent.Common.userTf.position
+                    mousePos - GlobalComponent.Common.userController.position
                     )
                     * 2 / 3f;
-                if (handL.childCount > 0)
+                if (!weaponL.IsEmpty())
                 {
-                    handL.GetChild(0).GetComponent<IItemHandable>().Aim(
-                    mousePos - GlobalComponent.Common.userTf.position);
+                    weaponL.Aim(
+                    mousePos - GlobalComponent.Common.userController.position);
                 }
-                if (handR.childCount > 0)
+                if (!weaponR.IsEmpty())
                 {
-                    handR.GetChild(0).GetComponent<IItemHandable>().Aim(
-                    mousePos - GlobalComponent.Common.userTf.position);
+                    weaponR.Aim(
+                    mousePos - GlobalComponent.Common.userController.position);
                 }
                 InGameStatus.User.Detection.Sight.isControllInRealTime = true;
             }
@@ -58,15 +64,15 @@ namespace Assets.Scripts.Users.Controllers
         {
             if (Input.GetMouseButton((int)MouseButton.LeftMouse))
             {
-                if (handL.childCount > 0)
+                if (!weaponL.IsEmpty())
                 {
-                    handL.GetChild(0).GetComponent<IItemHandable>().Use(
-                    mousePos - GlobalComponent.Common.userTf.position);
+                    weaponL.Use(
+                    mousePos - GlobalComponent.Common.userController.position);
                 }
-                if (handR.childCount > 0)
+                if (!weaponR.IsEmpty())
                 {
-                    handR.GetChild(0).GetComponent<IItemHandable>().Use(
-                    mousePos - GlobalComponent.Common.userTf.position);
+                    weaponR.Use(
+                    mousePos - GlobalComponent.Common.userController.position);
                 }
             }
         }

@@ -147,10 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sizeToUnit: {x: 14, y: 7}
   slotPrefab: {fileID: 8657988864342740038, guid: b04dc1605717f984791213898143b703, type: 3}
-  itemPrefabSmall: {fileID: 8958241393174041177, guid: 1e0e6e35a00aaa94c8984a285fd11170, type: 3}
-  itemPrefabBig: {fileID: 8958241393174041177, guid: a3154ae00dafa1649b9fa8dc9e9036e8, type: 3}
-  itemPrefabDrumTong: {fileID: 6000595022747120599, guid: 15e9534e6bcbcdb4d8b007a459f1a27f, type: 3}
-  itemPrefabGarodeung: {fileID: 8958241393174041177, guid: fa82ff795c8bec441851416116a9e996, type: 3}
+  itemPrefab: {fileID: 8958241393174041182, guid: be82d8c9375f27e48b0e889cc2c68a8a, type: 3}
   slotParentTF: {fileID: 5934109794292726169}
   itemParentTF: {fileID: 6742576964986920411}
   rootParentTF: {fileID: 2195329646145303481}

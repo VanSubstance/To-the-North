@@ -7,13 +7,14 @@ using Unity.VisualScripting;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Components.Infos;
 using Assets.Scripts.Commons;
+using Assets.Scripts.Users;
 
 public class CommonGameManager : MonoBehaviour
 {
     [SerializeField]
     private Transform fadeImagePrefab, userPrefab, filterForScreenPrefab,
         pauseWindowPrefab, inventoryWindowPrefab,
-        panelForLeftTop,
+        panelForLeftTop, panelForCondition,
         projectileManager, trajectoryManager,
         screenHitManager
         ;
@@ -129,7 +130,7 @@ public class CommonGameManager : MonoBehaviour
             userGo.localScale = Vector3.one;
             userGo.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
             GlobalStatus.userInitPosition = new float[] { 0, 0 };
-            GlobalComponent.Common.userTf = userGo;
+            GlobalComponent.Common.userController = userGo.GetComponent<UserBaseController>();
 
             // 필요한 UI
             Transform panelLeftTop = Instantiate(panelForLeftTop, uiTf);
@@ -138,6 +139,11 @@ public class CommonGameManager : MonoBehaviour
             InGameStatus.User.status.hpBar = panelLeftTop.GetComponent<UINumericController>().barForHp;
             InGameStatus.User.status.staminaBar = panelLeftTop.GetComponent<UINumericController>().barForStamina;
             panelLeftTop.SetAsFirstSibling();
+
+            // 상태 이상 표기용 UI
+            Transform panelCondition = Instantiate(panelForCondition, uiTf);
+            panelCondition.localScale = Vector3.one;
+            panelCondition.localPosition = new Vector3(-960, 340, 0);
 
             // 투사체 풀
             if (GameObject.Find("Projectiles") == null)
