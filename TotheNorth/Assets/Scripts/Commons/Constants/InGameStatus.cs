@@ -1,10 +1,14 @@
+using System.Collections.Generic;
 using Assets.Scripts.Components.Progress;
+using Assets.Scripts.Items;
 using Assets.Scripts.Users.Objects;
+using UnityEngine;
 
 namespace Assets.Scripts.Commons.Constants
 {
     public static class InGameStatus
     {
+        public const string TAG = "인게임 정보";
         public static class User
         {
             public static bool isPause = false;
@@ -38,6 +42,101 @@ namespace Assets.Scripts.Commons.Constants
                     public static int degree = 90;
                     public static bool isControllInRealTime = false;
                 }
+            }
+        }
+
+        public static class Item
+        {
+            /// <summary>
+            /// 현재 착용하고 있는 장비 정보
+            /// </summary>
+            private static Dictionary<EquipBodyType, ItemEquipmentInfo> curEquipments = new Dictionary<EquipBodyType, ItemEquipmentInfo>();
+            public static List<ItemInventoryInfo> inventory = new List<ItemInventoryInfo>();
+
+            /// <summary>
+            /// 착용 장비 정보 할당 함수
+            /// </summary>
+            /// <param name="targetPartType">착용할 신체 부위</param>
+            /// <param name="itemInfo">착용할 아이템 정보</param>
+            public static void SetEquipmentInfo(EquipBodyType targetPartType, ItemEquipmentInfo itemInfo)
+            {
+                if (itemInfo == null)
+                {
+                    //Debug.unityLogger.Log(TAG, $"{targetPartType}:: 착용하려는 아이템 정보 없음");
+                    return;
+                }
+                switch (targetPartType)
+                {
+                    case EquipBodyType.Helmat:
+                    case EquipBodyType.Head:
+                    case EquipBodyType.Mask:
+                    case EquipBodyType.Body:
+                    case EquipBodyType.Leg:
+                        try
+                        {
+                            ItemArmorInfo armorInfo = (ItemArmorInfo)itemInfo;
+                            if (targetPartType != armorInfo.equipPartType)
+                            {
+                                // 목표 착용 부위와 장비가 안맞음
+                                throw new System.InvalidCastException();
+                            }
+                        }
+                        catch (System.InvalidCastException)
+                        {
+                            // 목표 착용 부위와 장비가 안맞음
+                        }
+                        break;
+                    case EquipBodyType.Back:
+                        break;
+                    case EquipBodyType.Right:
+                    case EquipBodyType.Left:
+                        try
+                        {
+                            ItemWeaponInfo weaponInfo = (ItemWeaponInfo)itemInfo;
+                            switch (weaponInfo.handType)
+                            {
+                                case EquipHandType.Single:
+                                    // 한손 무기일 경우
+                                    break;
+                                case EquipHandType.Multiple:
+                                    // 양손 무기일 경우
+                                    break;
+                            }
+                        }
+                        catch (System.InvalidCastException)
+                        {
+                            // 목표 착용 부위와 장비가 안맞음
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                curEquipments[targetPartType] = itemInfo;
+                GlobalComponent.Common.userController.ChangeEquipment(targetPartType, itemInfo);
+            }
+
+            /// <summary>
+            /// 착용 정보 함수 반환 함수
+            /// </summary>
+            /// <param name="targetPartType">목표 부위</param>
+            /// <returns></returns>
+            public static ItemEquipmentInfo GetEquipmentInfo(EquipBodyType targetPartType)
+            {
+                switch (targetPartType)
+                {
+                    case EquipBodyType.Helmat:
+                    case EquipBodyType.Head:
+                    case EquipBodyType.Mask:
+                    case EquipBodyType.Body:
+                    case EquipBodyType.Leg:
+                        return (ItemArmorInfo)curEquipments[targetPartType];
+                    case EquipBodyType.Right:
+                    case EquipBodyType.Left:
+                        return (ItemWeaponInfo)curEquipments[targetPartType];
+                    case EquipBodyType.Back:
+                        return (ItemEquipmentInfo)curEquipments[targetPartType];
+                }
+                return null;
             }
         }
     }

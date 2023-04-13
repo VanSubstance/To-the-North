@@ -11,14 +11,22 @@ namespace Assets.Scripts.Items
     /// 마우스 위에서 유지: 정보 뜨기
     /// 더블클릭: 추후 추상 구현
     /// </summary>
-    public abstract class AItemBaseController : AbsItemController
+    public abstract class AItemBaseController<TItemInfo> : AbsItemController
     {
         [SerializeField]
         InventorySlotController curSlot;
         InventorySlotController readySlot;
 
-        public int itemSizeRow;
-        public int itemSizeCol;
+        public int itemSizeRow
+        {
+            set => baseInfo.size.y = value;
+            get => (int)baseInfo.size.y;
+        }
+        public int itemSizeCol
+        {
+            set => baseInfo.size.x = value;
+            get => (int)baseInfo.size.x;
+        }
         public bool isRotate;
 
         private Vector2 rayPos;
@@ -26,17 +34,31 @@ namespace Assets.Scripts.Items
         private BoxCollider2D objCollider;
         private Image image;
 
-        private ItemBaseInfo baseInfo;
+        private ItemBaseInfo baseInfo
+        {
+            get
+            {
+                return (ItemBaseInfo)(object)info;
+            }
+        }
+        private TItemInfo info;
+
+        private new void Update()
+        {
+            base.Update();
+        }
+
         private void Awake()
         {
             image = GetComponentInChildren<Image>();
             objTF = GetComponent<RectTransform>();
             objCollider = GetComponent<BoxCollider2D>();
-            baseInfo = GetBaseInfo();
-            SetImage(baseInfo.imagePath);
         }
 
-        private void Start()
+        /// <summary>
+        /// 오브젝트 생성 후 데이터 할당 후 최초로 부착하는 함수
+        /// </summary>
+        private void AttachInitially()
         {
             // BoxCollider2D에 RectTransform 사이즈 대입
             objCollider.size = objTF.sizeDelta;
@@ -106,6 +128,7 @@ namespace Assets.Scripts.Items
             Vector3 destPos;
             destPos = new Vector3(attachSlot.transform.localPosition.x, attachSlot.transform.localPosition.y, -1f);
             objTF.localPosition = destPos;
+            Debug.Log($"{itemSizeCol}, {itemSizeRow}");
             for (int i = 0; i < itemSizeCol; i++)
             {
                 for (int j = 0; j < itemSizeRow; j++)
@@ -130,7 +153,8 @@ namespace Assets.Scripts.Items
         /// <param name="detachSlot"></param>
         public void ItemDetach(InventorySlotController detachSlot)
         {
-            transform.SetParent(InventoryManager.movingSpaeceTF);
+            if (info == null) return;
+            transform.SetParent(InventoryManager.movingSpaceTF);
             for (int i = 0; i < itemSizeCol; i++)
             {
                 for (int j = 0; j < itemSizeRow; j++)
@@ -339,17 +363,21 @@ namespace Assets.Scripts.Items
         {
             image.sprite = Resources.Load<Sprite>(imagePath);
         }
+        /// <summary>
+        /// 종류에 맞는 데이터 할당 함수
+        /// </summary>
+        /// <param name="_info">데이터</param>
+        public void InitInfo(TItemInfo _info)
+        {
+            info = _info;
+            SetImage(baseInfo.imagePath);
+            AttachInitially();
+        }
 
         /// <summary>
         /// 아이템이 해당 칸에 설치될 수 있는지 체크하는 함수
         /// </summary>
         /// <returns></returns>
         protected abstract bool CheckItemTag(InventorySlotController slot);
-
-        /// <summary>
-        /// 자식의 데이터에서 공통된 아이템 처리에 필요한 데이터 추출하는 함수
-        /// </summary>
-        /// <returns></returns>
-        protected abstract ItemBaseInfo GetBaseInfo();
     }
 }

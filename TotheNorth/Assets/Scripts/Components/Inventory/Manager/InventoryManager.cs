@@ -12,7 +12,7 @@ public class InventoryManager : MonoBehaviour
     public static List<ItemBaseInfo> rootItems = new List<ItemBaseInfo>();
     public static Transform leftInventoryTF = null;
     public static Transform rightInventoryTF = null;
-    public static Transform movingSpaeceTF = null;
+    public static Transform movingSpaceTF = null;
     void Awake()
     {
         if (null == Instance)

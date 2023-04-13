@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: Test Knife
   m_EditorClassIdentifier: 
   itemType: 1
+  size: {x: 0, y: 0}
   imagePath: Images/Items/Equipments/Weapons/Test Dagger
   itemName: "\uD14C\uC2A4\uD2B8\uC6A9 \uCE7C"
   description: "\uD14C\uC2A4\uD2B8\uC6A9 \uCE7C\uC785\uB2C8\uB2E4."
   price: 100
-  equipmentType: 5
+  equipmentType: 1
+  handType: 0
+  bulletType: 0
   range: 1
   projectileInfo: {fileID: 11400000, guid: c0c976773308e714d8a619609525eddc, type: 2}
   delayAmongFire: 0.5
   powerKnockback: 3
+  powerPenetration: 10
+  powerImpact: 0

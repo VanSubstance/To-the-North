@@ -22,8 +22,8 @@ public class CameraTrackControlller : MonoBehaviour
     {
         transform.Translate(
             2 * Time.deltaTime * new Vector2(
-                GlobalComponent.Common.userTf.position.x - transform.position.x + targetPos.x + headHorPos.x + headVerPos.x,
-                GlobalComponent.Common.userTf.position.y - transform.position.y + targetPos.y + headHorPos.y + headVerPos.y
+                GlobalComponent.Common.userController.x - transform.position.x + targetPos.x + headHorPos.x + headVerPos.x,
+                GlobalComponent.Common.userController.y - transform.position.y + targetPos.y + headHorPos.y + headVerPos.y
                 )
             );
     }

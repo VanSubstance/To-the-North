@@ -1,3 +1,4 @@
+using Assets.Scripts.Items;
 using UnityEngine;
 
 namespace Assets.Scripts.Battles
@@ -11,6 +12,7 @@ namespace Assets.Scripts.Battles
         private float heightCollider, powerKnockback;
         [SerializeField]
         private TrajectoryType trajectoryType;
+        private AttackInfo attackInfo;
 
         public float PowerKnockback
         {
@@ -51,6 +53,19 @@ namespace Assets.Scripts.Battles
                 return trajectoryType;
             }
         }
+
+        public AttackInfo AttackInfo
+        {
+            set
+            {
+                attackInfo = value;
+            }
+            get
+            {
+                return attackInfo;
+            }
+        }
+
         public static ProjectileInfo GetClone(ProjectileInfo _info)
         {
             ProjectileInfo res = CreateInstance<ProjectileInfo>();
@@ -58,6 +73,7 @@ namespace Assets.Scripts.Battles
             res.heightCollider = _info.heightCollider;
             res.powerKnockback = _info.powerKnockback;
             res.trajectoryType = _info.trajectoryType;
+            res.attackInfo = _info.attackInfo;
             return res;
         }
     }
