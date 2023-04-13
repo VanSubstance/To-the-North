@@ -21,3 +21,4 @@ MonoBehaviour:
   range: 20
   projectileInfo: {fileID: 11400000, guid: 779ac09a961884c47b4ec979f0ca3589, type: 2}
   delayAmongFire: 0.5
+  powerKnockback: 1

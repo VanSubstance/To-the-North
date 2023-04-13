@@ -17,7 +17,7 @@ namespace Assets.Scripts.Creatures.Detections
         public MeshFilter viewMeshFilter, visualizationFilter;
         private void Awake()
         {
-            meshResolution = 1;
+            meshResolution = .5f;
         }
 
         public void Start()

@@ -1,4 +1,5 @@
 using System.Collections;
+using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Bases;
 using Assets.Scripts.Creatures.Conductions;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
         /// <param name="targetTf">Null이 아니다 = 유저가 눈에 보인다, Null이다 = 유저가 안보인다</param>
         public override void OnDetectUser(Transform targetTf)
         {
+            if (!isAttacked) return;
             if (squadBase != null)
             {
                 // 부대 소속 유닛
@@ -39,11 +41,32 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
             else
             {
                 // 단독 유닛
+                if (isRunAway)
+                {
+                    // 도주형 유닛일 경우
+                    if (statusType != Interfaces.AIStatusType.Runaway)
+                    {
+                        if (targetTf != null)
+                        {
+                            // 최초 유저 조우
+                            statusType = Interfaces.AIStatusType.Runaway;
+                            GetComponent<AIRunawayController>().RunawayFrom(targetTf.position);
+                        }
+                    } else
+                    {
+                        if (targetTf != null)
+                        {
+                            GetComponent<AIRunawayController>().RunawayFrom(targetTf.position);
+                        }
+                    }
+                    return;
+                }
                 if (statusType != Interfaces.AIStatusType.Combat)
                 {
-                    // 최초일 경우
+                    // 전투형 유닛일 경우
                     if (targetTf != null)
                     {
+                        // 최초일 경우
                         // 최초 유저 조우
                         statusType = Interfaces.AIStatusType.Combat;
                         StartCoroutine(CountMemory());

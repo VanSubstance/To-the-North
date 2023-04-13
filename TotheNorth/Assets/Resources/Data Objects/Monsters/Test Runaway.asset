@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bc2ebbcf019a0b46a20d120382042fb, type: 3}
-  m_Name: Far Swing
+  m_Script: {fileID: 11500000, guid: 94fd91681e2cfd445b7709446b613528, type: 3}
+  m_Name: Test Runaway
   m_EditorClassIdentifier: 
-  startPos: {x: 2, y: 2, z: 0}
-  endPos: {x: 2, y: -2, z: 0}
-  spd: 50
+  maxHp: 100
+  isActiveBehaviour: 0
+  isRunAway: 1
+  sightRange: 20
+  moveSpd: 3
+  moveDis: 3

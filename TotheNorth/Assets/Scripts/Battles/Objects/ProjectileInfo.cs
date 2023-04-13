@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Battles
@@ -11,31 +6,21 @@ namespace Assets.Scripts.Battles
     public class ProjectileInfo : ScriptableObject
     {
         [SerializeField]
-        private Vector3 startPos, endPos;
-        [SerializeField]
         private float spd;
+        [SerializeField]
+        private float heightCollider, powerKnockback;
+        [SerializeField]
+        private TrajectoryType trajectoryType;
 
-        public Vector3 StartPos
+        public float PowerKnockback
         {
-            get
-            {
-                return startPos;
-            }
             set
             {
-                startPos = value;
+                powerKnockback = value;
             }
-        }
-
-        public Vector3 EndPos
-        {
             get
             {
-                return endPos;
-            }
-            set
-            {
-                endPos = value;
+                return powerKnockback;
             }
         }
 
@@ -50,19 +35,30 @@ namespace Assets.Scripts.Battles
                 spd = value;
             }
         }
+
+        public float Height
+        {
+            get
+            {
+                return heightCollider;
+            }
+        }
+
+        public TrajectoryType TrajectoryType
+        {
+            get
+            {
+                return trajectoryType;
+            }
+        }
         public static ProjectileInfo GetClone(ProjectileInfo _info)
         {
             ProjectileInfo res = CreateInstance<ProjectileInfo>();
-            res.startPos = _info.startPos;
-            res.endPos = _info.endPos;
             res.spd = _info.spd;
+            res.heightCollider = _info.heightCollider;
+            res.powerKnockback = _info.powerKnockback;
+            res.trajectoryType = _info.trajectoryType;
             return res;
         }
-
-        //public static ProjectileInfo GenerateInfo(WeaponInfo weapon)
-        //{
-        //    ProjectileInfo res = CreateInstance<ProjectileInfo>();
-        //    return res;
-        //}
     }
 }

@@ -1,5 +1,6 @@
-using Assets.Scripts.Battles.Managers;
+using Assets.Scripts.Battles;
 using UnityEngine;
+using static GlobalComponent.Common;
 
 namespace Assets.Scripts.Items
 {
@@ -10,10 +11,17 @@ namespace Assets.Scripts.Items
     {
         [SerializeField]
         private ItemWeaponInfo info;
+        private Transform owner;
 
-        private float delayAmongFire = 0f;
+        private float delayAmongFire, timeFocus, timeFocusFull = 3f;
+        private bool isAiming;
         private void Awake()
         {
+            info.projectileInfo.PowerKnockback = info.powerKnockback;
+            delayAmongFire = 0f;
+            timeFocus = 0f;
+            isAiming = false;
+            owner = transform.parent.parent.parent;
             GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(info.imagePath);
             delayAmongFire = info.delayAmongFire;
         }
@@ -22,10 +30,16 @@ namespace Assets.Scripts.Items
         {
             if (delayAmongFire >= info.delayAmongFire) return;
             delayAmongFire += Time.deltaTime;
+            if (!isAiming)
+            {
+                timeFocus = Mathf.Max(timeFocus - Time.deltaTime, 0);
+            }
+            isAiming = false;
         }
         public void Aim(Vector3 targetDir)
         {
-            //Debug.Log("원거리 조준중 ...");
+            isAiming = true;
+            timeFocus = Mathf.Min(timeFocus + Time.deltaTime, timeFocusFull);
         }
 
         public void Use(Vector3 targetDir)
@@ -33,7 +47,10 @@ namespace Assets.Scripts.Items
             // 투사체 발사
             if (delayAmongFire >= info.delayAmongFire)
             {
-                ProjectileManager.Instance.GetNewProjectile().Fire(info.projectileInfo, transform.position, targetDir);
+                float randRange = (3 - timeFocus) / 3f;
+                ProjectileManager.Instance.GetNewProjectile().Fire(info.range, info.projectileInfo, transform.position,
+                    new Vector2(targetDir.x + randRange * Random.Range(-1f, 1f), targetDir.y + randRange * Random.Range(-1f, 1f))
+                    , owner);
                 delayAmongFire = 0f;
             }
         }

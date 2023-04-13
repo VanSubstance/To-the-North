@@ -13,8 +13,9 @@ namespace Assets.Scripts.Battles
             {
                 ProjectileController prj = collision.GetComponent<ProjectileController>();
                 if (prj.isAffected) return;
+                if (prj.Owner.Equals(hitController.Owner)) return;
+                hitController.OnHit(partType, prj.Info, (prj.startPos - transform.position));
                 prj.Arrive();
-                hitController.OnHit(partType, prj.Info, collision.transform.position);
             }
         }
 

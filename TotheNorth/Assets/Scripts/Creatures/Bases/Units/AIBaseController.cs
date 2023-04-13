@@ -10,6 +10,7 @@ using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Items;
 using UnityEngine;
 using static UnityEditor.Progress;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Assets.Scripts.Creatures.Bases
 {
@@ -68,8 +69,12 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
+        public bool isAttacked, isRunAway;
+
         private void Awake()
         {
+            isRunAway = info.IsRunAway;
+            isAttacked = isRunAway || info.IsActiveBehaviour;
             if (handL.childCount > 0)
             {
                 itemL = handL.GetChild(0).GetComponent<IItemHandable>();
@@ -102,12 +107,24 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
+        public void ClearAllAct()
+        {
+            vectorToMove = null;
+            targetPos = null;
+            targetToMove = null;
+            targetToGaze = null;
+            timeStayForMove = 0;
+            timeStayForGaze = 0;
+            isOrderMoveDone = true;
+        }
+
         /// <summary>
         /// 현재 목표 타겟 좌표 설정
         /// 이동 종료 후 대기 시간 설정
         /// </summary>
-        /// <param name="target"></param>
-        /// <param name="timeToStay"></param>
+        /// <param name="target">목표 좌표</param>
+        /// <param name="timeToStay">도착 후 대기 시간</param>
+        /// <param name="_isForce">사거리 내에 들어와도 더 접근할 지 여부</param>
         public void SetTargetToTrack(Vector3? target, float timeToStay, bool _isForce)
         {
             targetPos = CalculationFunctions.GetDetouredPositionIfInCollider(transform.position, (Vector3)target);
@@ -144,7 +161,7 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void ControllAttack()
         {
-            if (!info.IsAttackFirst) return;
+            if (!isAttacked) return;
             if (!detectionBase.targetTf) return;
             Vector3 _targetPos = detectionBase.targetTf.position;
             Vector3 originPos = transform.position;
@@ -174,13 +191,14 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void ControllMovement()
         {
+            Vector3 vecToMove = Vector3.zero;
             if (targetPos != null && targetToMove != null)
             {
                 // 현재 이동 목표에 도달했는지
                 if (Vector2.Distance(transform.position, (Vector3)targetToMove) < 0.25f)
                 {
                     vectorToMove = null;
-                    if (isOrderMoveDone && timeStayForMove > 0)
+                    if ((isOrderMoveDone) && timeStayForMove > 0)
                     {
                         timeStayForMove -= Time.deltaTime;
                     }
@@ -194,7 +212,7 @@ namespace Assets.Scripts.Creatures.Bases
                 if (Vector2.Distance(transform.position, (Vector3)targetPos) < 0.5f)
                 {
                     vectorToMove = null;
-                    if (isOrderMoveDone && timeStayForMove > 0)
+                    if ((isOrderMoveDone) && timeStayForMove > 0)
                     {
                         timeStayForMove -= Time.deltaTime;
                     }
@@ -221,10 +239,11 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     vectorToDistort *= 7 / 8f;
                 }
-                transform.Translate(
+                vecToMove =
                     (((Vector3)vectorToMove).normalized + vectorToDistort)
-                    * info.moveSpd * Time.deltaTime);
+                    * info.moveSpd * Time.deltaTime;
             }
+            transform.Translate(vecToMove);
         }
 
         private void ControllGaze()
@@ -319,10 +338,17 @@ namespace Assets.Scripts.Creatures.Bases
         public bool isAllActDone()
         {
             return
+                (
                 isOrderMoveDone &&
                 targetToGaze == null &&
                 timeStayForGaze <= 0 &&
-                true;
+                true
+                )
+                ||
+                (
+                !gameObject.activeSelf
+                )
+                ;
         }
 
         public void PauseOrResumeAct(bool toPause)
@@ -368,6 +394,8 @@ namespace Assets.Scripts.Creatures.Bases
         {
             squadBase = _squadBase;
             Destroy(GetComponent<AIPetrolController>());
+            Destroy(GetComponent<AIRunawayController>());
+            Destroy(GetComponent<AIWanderController>());
             GetComponent<AICombatController>().isInSelfControl = false;
         }
 
@@ -614,7 +642,7 @@ namespace Assets.Scripts.Creatures.Bases
             if (vectorToMove != null && targetPos != null)
             {
                 isCollided = true;
-                vectorToDistort += CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(collision.contacts[0].normal) + UnityEngine.Random.Range(-30, 30)) * 2;
+                vectorToDistort += CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(collision.contacts[0].normal) + UnityEngine.Random.Range(-30, 30));
             }
         }
 
@@ -648,13 +676,13 @@ namespace Assets.Scripts.Creatures.Bases
             Vector3 originPos = transform.position;
             float dis = Vector3.Distance(_targetPos, originPos);
             if (dis > weaponRange) return false;
-            return !Physics2D.Raycast(originPos, (_targetPos - originPos).normalized, dis, GlobalStatus.Constant.compositeObstacleMask);
+            return !Physics2D.Raycast(originPos, (_targetPos - originPos).normalized, dis, GlobalStatus.Constant.blockingSightMask);
         }
 
-        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitPos)
+        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitDir)
         {
-            // 피격 당한쪽 바라보기
-            SetTargetToGaze(hitPos, 3, false);
+            isAttacked = true;
+            transform.position = transform.position - (hitDir.normalized * 0.5f * _info.PowerKnockback);
             switch (partType)
             {
                 case PartType.Helmat:
@@ -668,6 +696,7 @@ namespace Assets.Scripts.Creatures.Bases
                 case PartType.Leg:
                     break;
             }
+            // 계산 처리
             if (info)
             {
                 // AI 기준
@@ -676,7 +705,17 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     gameObject.SetActive(false);
                 }
-                return;
+            }
+            if (isRunAway)
+            {
+                // 피격 반대 방향으로 개같이 런
+                statusType = AIStatusType.Runaway;
+                GetComponent<AIRunawayController>().RunawayFrom(hitDir);
+            }
+            else
+            {
+                // 피격 당한쪽 바라보기
+                SetTargetToGaze(hitDir, 3, false);
             }
         }
 

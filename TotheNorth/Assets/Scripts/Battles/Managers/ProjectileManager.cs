@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Battles.Managers
+namespace Assets.Scripts.Battles
 {
     internal class ProjectileManager : MonoBehaviour
     {

@@ -6,8 +6,16 @@ public class CameraTrackControlller : MonoBehaviour
         targetPos = Vector3.zero,
         headHorPos = Vector3.zero, headVerPos = Vector3.zero;
 
-    void Start()
+    private void Awake()
     {
+        Camera.main.orthographicSize = 8;
+    }
+
+    private void Update()
+    {
+        Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * 3;
+        if (Camera.main.orthographicSize < 6) Camera.main.orthographicSize = 6;
+        if (Camera.main.orthographicSize > 10) Camera.main.orthographicSize = 10;
     }
 
     private void LateUpdate()
