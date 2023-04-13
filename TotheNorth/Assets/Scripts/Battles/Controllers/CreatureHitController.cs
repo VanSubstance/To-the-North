@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Items;
 using UnityEngine;
 
 namespace Assets.Scripts.Battles
@@ -32,11 +33,13 @@ namespace Assets.Scripts.Battles
         /// 피격당했을 때 작동하는 함수
         /// </summary>
         /// <param name="partType">피격당한 부위</param>
+        /// <param name="armorInfo">피격당한 부위의 방어구 정보</param>
+        /// <param name="attackInfo">공격의 정보</param>
         /// <param name="hitDir">공격을 받은 방향</param>
-        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitDir)
+        public void OnHit(PartType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
         {
             int damage = 8;
-            battleFunction.OnHit(partType, _info, hitDir);
+            battleFunction.OnHit(partType, armorInfo, attackInfo, hitDir);
             if (damage <= 10)
             {
                 powerVib = 0.2f;

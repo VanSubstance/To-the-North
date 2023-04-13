@@ -1,13 +1,14 @@
 using Assets.Scripts.Battles;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Items;
 using UnityEngine;
 
 namespace Assets.Scripts.Users
 {
     internal class UserBaseController : MonoBehaviour, ICreatureBattle
     {
-        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitDir)
+        public void OnHit(PartType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
         {
             switch (partType)
             {

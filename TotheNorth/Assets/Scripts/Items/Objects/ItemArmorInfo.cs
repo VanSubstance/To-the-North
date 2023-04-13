@@ -3,31 +3,47 @@ using UnityEngine;
 namespace Assets.Scripts.Items
 {
     [CreateAssetMenu(fileName = "Armor Info", menuName = "Data Objects/Items/Equipments/Armor", order = int.MaxValue)]
-    internal class ItemArmorInfo : ItemEquipmentInfo
+    public class ItemArmorInfo : ItemEquipmentInfo
     {
+        public new EquipmentType equipmentType
+        {
+            get
+            {
+                return EquipmentType.Armor;
+            }
+        }
+        private int classPenetration, classImpact;
         public int ClassPenetration
         {
             set
             {
-                ClassPenetration = value;
+                classPenetration = value;
             }
 
             get
             {
-                return ClassPenetration >= 0 ? ClassPenetration : 0;
+                return classPenetration >= 0 ? classPenetration : 0;
             }
         }
         public int ClassImpact
         {
             set
             {
-                ClassImpact = value;
+                classImpact = value;
             }
 
             get
             {
-                return ClassImpact >= 0 ? ClassImpact : 0;
+                return classImpact >= 0 ? classImpact : 0;
             }
+        }
+
+        public static ItemArmorInfo GetPlainArmor()
+        {
+            ItemArmorInfo res = CreateInstance<ItemArmorInfo>();
+            res.classPenetration = 0;
+            res.classImpact = 0;
+            return res;
         }
     }
 }

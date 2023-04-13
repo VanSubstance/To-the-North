@@ -1,4 +1,5 @@
 using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Items;
 using UnityEngine;
 
 namespace Assets.Scripts.Battles
@@ -17,6 +18,14 @@ namespace Assets.Scripts.Battles
             get
             {
                 return info;
+            }
+        }
+
+        public AttackInfo AttackInfo
+        {
+            get
+            {
+                return info.AttackInfo;
             }
         }
 

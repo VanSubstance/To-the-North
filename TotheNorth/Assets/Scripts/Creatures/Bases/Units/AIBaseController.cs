@@ -679,10 +679,10 @@ namespace Assets.Scripts.Creatures.Bases
             return !Physics2D.Raycast(originPos, (_targetPos - originPos).normalized, dis, GlobalStatus.Constant.blockingSightMask);
         }
 
-        public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitDir)
+        public void OnHit(PartType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
         {
             isAttacked = true;
-            transform.position = transform.position - (hitDir.normalized * 0.5f * _info.PowerKnockback);
+            transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
             switch (partType)
             {
                 case PartType.Helmat:

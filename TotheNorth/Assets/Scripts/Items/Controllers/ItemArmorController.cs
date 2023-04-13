@@ -9,5 +9,14 @@ namespace Assets.Scripts.Items
 {
     public class ItemArmorController : MonoBehaviour
     {
+        [SerializeField]
+        private ItemArmorInfo info;
+        public ItemArmorInfo Info
+        {
+            get
+            {
+                return info;
+            }
+        }
     }
 }

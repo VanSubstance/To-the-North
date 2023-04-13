@@ -48,6 +48,14 @@ namespace Assets.Scripts.Items
             if (delayAmongFire >= info.delayAmongFire)
             {
                 float randRange = (3 - timeFocus) / 3f;
+                switch (info.bulletType)
+                {
+                    case ItemBulletType.None:
+                        // 총알 없음
+                        break;
+                    case ItemBulletType.mm_9:
+                        break;
+                }
                 ProjectileManager.Instance.GetNewProjectile().Fire(info.range, info.projectileInfo, transform.position,
                     new Vector2(targetDir.x + randRange * Random.Range(-1f, 1f), targetDir.y + randRange * Random.Range(-1f, 1f))
                     , owner);
