@@ -8,19 +8,19 @@ namespace Assets.Scripts.Users
 {
     internal class UserBaseController : MonoBehaviour, ICreatureBattle
     {
-        public void OnHit(PartType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
+        public void OnHit(EquipPartType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
         {
             switch (partType)
             {
-                case PartType.Helmat:
+                case EquipPartType.Helmat:
                     break;
-                case PartType.Mask:
+                case EquipPartType.Mask:
                     break;
-                case PartType.Head:
+                case EquipPartType.Head:
                     break;
-                case PartType.Body:
+                case EquipPartType.Body:
                     break;
-                case PartType.Leg:
+                case EquipPartType.Leg:
                     break;
             }
 

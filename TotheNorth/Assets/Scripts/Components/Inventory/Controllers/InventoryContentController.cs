@@ -1,14 +1,12 @@
 using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Items;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryContentController : AWindowBaseContentController
 {
     public GameObject slotPrefab;
-    public GameObject itemPrefabSmall;
-    public GameObject itemPrefabBig;
-    public GameObject itemPrefabDrumTong;
-    public GameObject itemPrefabGarodeung;
+    public Transform itemPrefab;
     public Transform slotParentTF;
     public Transform itemParentTF;
     public Transform rootParentTF;
@@ -16,33 +14,42 @@ public class InventoryContentController : AWindowBaseContentController
     public Transform movingSpaceTF;
     private bool isInit = false;
 
+    private new void Awake()
+    {
+        base.Awake();
+        GenerateItemObjects();
+    }
+
+    /// <summary>
+    /// 테스트용 아이템 객체들 생성
+    /// </summary>
     private void testItemInit()
     {
-        GameObject item1 = Instantiate(itemPrefabSmall, itemParentTF);
-        item1.transform.position = new Vector3
-            (InventoryManager.inventorySlots[0, 0].transform.position.x,
-            InventoryManager.inventorySlots[0, 0].transform.position.y,
+        ItemGenerateController tempGenerator;
+        foreach (ItemInventoryInfo info in InGameStatus.Item.inventory)
+        {
+            tempGenerator = Instantiate(itemPrefab, itemParentTF).GetComponent<ItemGenerateController>();
+            tempGenerator.InitItem(info.itemInfo);
+            tempGenerator.transform.position = new Vector3
+            (InventoryManager.inventorySlots[info.x, info.y].transform.position.x,
+            InventoryManager.inventorySlots[info.x, info.y].transform.position.y,
             itemParentTF.transform.position.z);
-        GameObject item2 = Instantiate(itemPrefabSmall, itemParentTF);
-        item2.transform.position = new Vector3
-            (InventoryManager.inventorySlots[5, 3].transform.position.x,
-            InventoryManager.inventorySlots[5, 3].transform.position.y,
-            itemParentTF.transform.position.z);
-        GameObject item3 = Instantiate(itemPrefabBig, itemParentTF);
-        item3.transform.position = new Vector3
-            (InventoryManager.inventorySlots[8, 8].transform.position.x,
-            InventoryManager.inventorySlots[8, 8].transform.position.y,
-            itemParentTF.transform.position.z);
-        GameObject item4 = Instantiate(itemPrefabDrumTong, itemParentTF);
-        item4.transform.position = new Vector3
-            (InventoryManager.inventorySlots[0, 4].transform.position.x,
-            InventoryManager.inventorySlots[0, 4].transform.position.y,
-            itemParentTF.transform.position.z);
-        GameObject item5 = Instantiate(itemPrefabGarodeung, itemParentTF);
-        item5.transform.position = new Vector3
-            (InventoryManager.inventorySlots[0, 1].transform.position.x,
-            InventoryManager.inventorySlots[0, 1].transform.position.y,
-            itemParentTF.transform.position.z);
+        }
+    }
+
+    /// <summary>
+    /// 풀링을 위한 사전 생성
+    /// </summary>
+    private void GenerateItemObjects()
+    {
+        Transform temp;
+        for (int i = 0; i < GlobalSetting.InventorySlotCount; i++)
+        {
+            temp = Instantiate(itemPrefab, itemParentTF);
+            temp.gameObject.SetActive(false);
+            temp.localPosition = Vector3.zero;
+            temp.localScale = Vector3.one;
+        }
     }
 
     public override void ClearContent()

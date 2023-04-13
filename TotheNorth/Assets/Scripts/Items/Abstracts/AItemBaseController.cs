@@ -17,8 +17,16 @@ namespace Assets.Scripts.Items
         InventorySlotController curSlot;
         InventorySlotController readySlot;
 
-        public int itemSizeRow;
-        public int itemSizeCol;
+        public int itemSizeRow
+        {
+            set => baseInfo.size.y = value;
+            get => (int)baseInfo.size.y;
+        }
+        public int itemSizeCol
+        {
+            set => baseInfo.size.x = value;
+            get => (int)baseInfo.size.x;
+        }
         public bool isRotate;
 
         private Vector2 rayPos;
@@ -32,7 +40,7 @@ namespace Assets.Scripts.Items
             image = GetComponentInChildren<Image>();
             objTF = GetComponent<RectTransform>();
             objCollider = GetComponent<BoxCollider2D>();
-            baseInfo = GetBaseInfo();
+            baseInfo = ExtractBaseInfo();
             SetImage(baseInfo.imagePath);
         }
 
@@ -340,16 +348,12 @@ namespace Assets.Scripts.Items
             image.sprite = Resources.Load<Sprite>(imagePath);
         }
 
+        public abstract ItemBaseInfo ExtractBaseInfo();
+
         /// <summary>
         /// 아이템이 해당 칸에 설치될 수 있는지 체크하는 함수
         /// </summary>
         /// <returns></returns>
         protected abstract bool CheckItemTag(InventorySlotController slot);
-
-        /// <summary>
-        /// 자식의 데이터에서 공통된 아이템 처리에 필요한 데이터 추출하는 함수
-        /// </summary>
-        /// <returns></returns>
-        protected abstract ItemBaseInfo GetBaseInfo();
     }
 }

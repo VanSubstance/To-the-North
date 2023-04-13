@@ -1,12 +1,14 @@
 using UnityEngine;
+using static GlobalComponent.Common;
 
 namespace Assets.Scripts.Items
 {
     public class ItemMaterialController : AItemBaseController
     {
         private readonly string TAG = "재료 아이템:\n";
+
         [SerializeField]
-        private ItemMaterialInfo info;
+        public ItemMaterialInfo info;
 
         protected override bool CheckItemTag(InventorySlotController slot)
         {
@@ -17,10 +19,9 @@ namespace Assets.Scripts.Items
             }
             return false;
         }
-
-        protected override ItemBaseInfo GetBaseInfo()
+        public override ItemBaseInfo ExtractBaseInfo()
         {
-            return info.GetClone();
+            return info;
         }
 
         protected override void OnDoubleClick()

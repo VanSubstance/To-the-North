@@ -7,7 +7,7 @@ namespace Assets.Scripts.Items
         private readonly string TAG = "소모성 아이템:\n";
 
         [SerializeField]
-        private ItemConsumableInfo info;
+        public ItemConsumableInfo info;
         protected override bool CheckItemTag(InventorySlotController slot)
         {
             if (slot.slotType == SlotType.Inventory || slot.slotType == SlotType.Quick ||
@@ -18,10 +18,9 @@ namespace Assets.Scripts.Items
             }
             return false;
         }
-
-        protected override ItemBaseInfo GetBaseInfo()
+        public override ItemBaseInfo ExtractBaseInfo()
         {
-            return info.GetClone();
+            return info;
         }
 
         protected override void OnDoubleClick()

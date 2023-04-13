@@ -1,9 +1,9 @@
-using Assets.Scripts.Battles;
 using UnityEngine;
 
 public class ItemBaseInfo : ScriptableObject
 {
     public ItemType itemType;
+    public Vector2 size;
     public string imagePath;
     public string itemName;
     public string description;
@@ -17,6 +17,7 @@ public class ItemBaseInfo : ScriptableObject
         res.itemName = itemName;
         res.description = description;
         res.price = price;
+        res.size = size;
         return res;
     }
 }

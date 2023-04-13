@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Items;
 using UnityEngine;
 
@@ -17,6 +12,6 @@ namespace Assets.Scripts.Battles
         /// <param name="armorInfo">피격 부위 방어구 정보</param>
         /// <param name="attackInfo">공격 정보</param>
         /// <param name="hitDir">피격 방향</param>
-        public void OnHit(PartType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir);
+        public void OnHit(EquipPartType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir);
     }
 }

@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using Assets.Scripts.Items;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +9,7 @@ public class InventorySlotController : MonoBehaviour
     public bool isAttached = false;
     public bool isAttachReady = false;
     public SlotType slotType;
-    public EquipType equipType;
+    public EquipPartType equipType;
     public Sprite normal;
     public Sprite ready;
     private Image slotImage;
@@ -41,15 +39,4 @@ public enum SlotType
     Shop,
     Quick,
     Ground
-}
-
-public enum EquipType
-{
-    Head,
-    Mask,
-    Body,
-    Leg,
-    Right,
-    Left,
-    Back,
 }

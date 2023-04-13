@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Assets.Scripts.Components.Progress;
+using Assets.Scripts.Items;
 using Assets.Scripts.Users.Objects;
 
 namespace Assets.Scripts.Commons.Constants
@@ -38,6 +40,83 @@ namespace Assets.Scripts.Commons.Constants
                     public static int degree = 90;
                     public static bool isControllInRealTime = false;
                 }
+            }
+        }
+
+        public static class Item
+        {
+            /// <summary>
+            /// 현재 착용하고 있는 장비 정보
+            /// </summary>
+            private static Dictionary<EquipPartType, ItemEquipmentInfo> curEquipments = new Dictionary<EquipPartType, ItemEquipmentInfo>();
+            public static List<ItemInventoryInfo> inventory = new List<ItemInventoryInfo>();
+
+            /// <summary>
+            /// 착용 장비 정보 할당 함수
+            /// </summary>
+            /// <param name="targetPartType">착용할 신체 부위</param>
+            /// <param name="itemInfo">착용할 아이템 정보</param>
+            public static void SetEquipmentInfo(EquipPartType targetPartType, ItemEquipmentInfo itemInfo)
+            {
+                switch (targetPartType)
+                {
+                    case EquipPartType.Helmat:
+                    case EquipPartType.Head:
+                    case EquipPartType.Mask:
+                    case EquipPartType.Body:
+                    case EquipPartType.Leg:
+                        try
+                        {
+                            itemInfo = (ItemArmorInfo)itemInfo;
+                        }
+                        catch (System.InvalidCastException)
+                        {
+                            // 목표 착용 부위와 장비가 안맞음
+                        }
+                        break;
+                    case EquipPartType.Back:
+                        break;
+                    case EquipPartType.Right:
+                    case EquipPartType.Left:
+                        try
+                        {
+                            itemInfo = (ItemWeaponInfo)itemInfo;
+                        }
+                        catch (System.InvalidCastException)
+                        {
+                            // 목표 착용 부위와 장비가 안맞음
+                        }
+                        break;
+                }
+                if (targetPartType != itemInfo.equipPartType)
+                {
+                    // 목표 착용 부위와 장비가 안맞음
+                }
+                curEquipments[targetPartType] = itemInfo;
+            }
+
+            /// <summary>
+            /// 착용 정보 함수 반환 함수
+            /// </summary>
+            /// <param name="targetPartType">목표 부위</param>
+            /// <returns></returns>
+            public static ItemEquipmentInfo GetEquipmentInfo(EquipPartType targetPartType)
+            {
+                switch (targetPartType)
+                {
+                    case EquipPartType.Helmat:
+                    case EquipPartType.Head:
+                    case EquipPartType.Mask:
+                    case EquipPartType.Body:
+                    case EquipPartType.Leg:
+                        return (ItemArmorInfo)curEquipments[targetPartType];
+                    case EquipPartType.Right:
+                    case EquipPartType.Left:
+                        return (ItemWeaponInfo)curEquipments[targetPartType];
+                    case EquipPartType.Back:
+                        return (ItemEquipmentInfo)curEquipments[targetPartType];
+                }
+                return null;
             }
         }
     }

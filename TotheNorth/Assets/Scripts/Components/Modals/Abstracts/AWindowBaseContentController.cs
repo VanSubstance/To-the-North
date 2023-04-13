@@ -8,7 +8,7 @@ public abstract class AWindowBaseContentController : MonoBehaviourControllByKey,
     [SerializeField]
     private Vector2 sizeToUnit;
 
-    private void Awake()
+    protected void Awake()
     {
         InitComposition();
         ControllByKey(2);
