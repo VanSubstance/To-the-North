@@ -36,7 +36,7 @@ namespace Assets.Scripts.Battles
         /// <param name="armorInfo">피격당한 부위의 방어구 정보</param>
         /// <param name="attackInfo">공격의 정보</param>
         /// <param name="hitDir">공격을 받은 방향</param>
-        public void OnHit(EquipPartType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
+        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
         {
             int damage = 8;
             battleFunction.OnHit(partType, armorInfo, attackInfo, hitDir);

@@ -8,6 +8,7 @@ namespace Assets.Scripts.Items
     [Serializable]
     public class ItemConsumableInfo : ItemBaseInfo
     {
+        [HideInInspector]
         public new ItemType itemType
         {
             get

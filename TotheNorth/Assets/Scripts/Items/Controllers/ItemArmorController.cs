@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Items
 {
-    public class ItemArmorController : MonoBehaviour
+    public class ItemArmorController : MonoBehaviour, IItemEquipable
     {
         [SerializeField]
         private ItemArmorInfo info;
@@ -18,5 +18,26 @@ namespace Assets.Scripts.Items
                 return info;
             }
         }
+
+        private SpriteRenderer sprite;
+        private void Awake()
+        {
+            sprite = GetComponent<SpriteRenderer>();
+        }
+
+        public void ChangeEquipment(ItemEquipmentInfo _info)
+        {
+            try
+            {
+                info = (ItemArmorInfo)_info;
+                sprite.sprite = Resources.Load<Sprite>(info.imagePath);
+            }
+            catch (InvalidCastException)
+            {
+                // 장비 정보가 오염됨
+            }
+        }
+
+        public bool IsEmpty() => info == null;
     }
 }

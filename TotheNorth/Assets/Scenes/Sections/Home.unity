@@ -3328,6 +3328,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Static Game Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: right
+      value: 
+      objectReference: {fileID: 11400000, guid: 28a0c2b1fc9a5d14caaa96982e0f0db9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
 --- !u!1001 &622875216
@@ -5949,38 +5953,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8581566272140703444, guid: fdb577a4924edf6469b4645c2fd8cea0, type: 3}
   m_PrefabInstance: {fileID: 1221248439}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1221358495 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 953080142591831897, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
-  m_PrefabInstance: {fileID: 621896724}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1221358499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1221358495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 183005abbca92aa40835e3b2c9d5f67a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryInfo:
-  - itemInfo: {fileID: 11400000, guid: cf3c89fd83c24254cbae0c16f6bbbac9, type: 2}
-    pos: {x: 0, y: 0}
-  - itemInfo: {fileID: 11400000, guid: cf3c89fd83c24254cbae0c16f6bbbac9, type: 2}
-    pos: {x: 1, y: 1}
-  - itemInfo: {fileID: 11400000, guid: cf3c89fd83c24254cbae0c16f6bbbac9, type: 2}
-    pos: {x: 2, y: 2}
-  - itemInfo: {fileID: 11400000, guid: 76c2424991838fa4f8ad1602191fcb44, type: 2}
-    pos: {x: 3, y: 0}
-  - itemInfo: {fileID: 11400000, guid: 76c2424991838fa4f8ad1602191fcb44, type: 2}
-    pos: {x: 4, y: 0}
-  - itemInfo: {fileID: 11400000, guid: bfccca620c9d81a47b27d4279675b22e, type: 2}
-    pos: {x: 5, y: 0}
-  - itemInfo: {fileID: 11400000, guid: 8449883dca26d474da7c005ae68d0620, type: 2}
-    pos: {x: 5, y: 4}
 --- !u!1001 &1221996200
 PrefabInstance:
   m_ObjectHideFlags: 0

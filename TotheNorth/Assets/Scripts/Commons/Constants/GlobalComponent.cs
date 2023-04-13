@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using Assets.Scripts.Users;
 using UnityEngine;
 
 public static class GlobalComponent
@@ -15,7 +15,7 @@ public static class GlobalComponent
 
     public static class Common
     {
-        public static Transform userTf;
+        public static UserBaseController userController;
         public static class Info
         {
             public static InfoMessageManager controller;

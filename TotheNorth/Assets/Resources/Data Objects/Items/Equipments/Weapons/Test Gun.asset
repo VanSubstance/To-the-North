@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: Test Gun
   m_EditorClassIdentifier: 
   itemType: 1
+  size: {x: 0, y: 0}
   imagePath: Images/Items/Equipments/Weapons/Gun Test
   itemName: "\uD14C\uC2A4\uD2B8\uC6A9 \uCD1D"
   description: "\uD14C\uC2A4\uD2B8\uC6A9 \uCD1D\uC785\uB2C8\uB2E4."
   price: 100
   equipmentType: 5
+  handType: 0
+  bulletType: 1
   range: 20
   projectileInfo: {fileID: 11400000, guid: 779ac09a961884c47b4ec979f0ca3589, type: 2}
   delayAmongFire: 0.5
   powerKnockback: 1
+  powerPenetration: 0
+  powerImpact: 10

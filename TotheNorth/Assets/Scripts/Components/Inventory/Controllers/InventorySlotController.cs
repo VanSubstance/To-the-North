@@ -9,7 +9,7 @@ public class InventorySlotController : MonoBehaviour
     public bool isAttached = false;
     public bool isAttachReady = false;
     public SlotType slotType;
-    public EquipPartType equipType;
+    public EquipBodyType equipType;
     public Sprite normal;
     public Sprite ready;
     private Image slotImage;

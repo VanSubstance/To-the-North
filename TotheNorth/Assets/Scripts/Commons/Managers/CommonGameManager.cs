@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Components.Infos;
 using Assets.Scripts.Commons;
+using Assets.Scripts.Users;
 
 public class CommonGameManager : MonoBehaviour
 {
@@ -129,7 +130,7 @@ public class CommonGameManager : MonoBehaviour
             userGo.localScale = Vector3.one;
             userGo.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
             GlobalStatus.userInitPosition = new float[] { 0, 0 };
-            GlobalComponent.Common.userTf = userGo;
+            GlobalComponent.Common.userController = userGo.GetComponent<UserBaseController>();
 
             // 필요한 UI
             Transform panelLeftTop = Instantiate(panelForLeftTop, uiTf);

@@ -1,14 +1,15 @@
 namespace Assets.Scripts.Items
 {
-    public enum EquipPartType
+    public enum EquipBodyType
     {
         Helmat,
         Head,
         Mask,
         Body,
         Leg,
+        Back,
+
         Right,
         Left,
-        Back,
     }
 }

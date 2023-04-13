@@ -1,13 +1,13 @@
+using System;
 using Assets.Scripts.Battles;
 using UnityEngine;
-using static GlobalComponent.Common;
 
 namespace Assets.Scripts.Items
 {
     /// <summary>
     /// 손에 장착 가능 + 무기 컨트롤러
     /// </summary>
-    internal class ItemWeaponController : MonoBehaviour, IItemHandable
+    internal class ItemWeaponController : MonoBehaviour, IItemHandable, IItemEquipable
     {
         [SerializeField]
         private ItemWeaponInfo info;
@@ -15,19 +15,15 @@ namespace Assets.Scripts.Items
 
         private float delayAmongFire, timeFocus, timeFocusFull = 3f;
         private bool isAiming;
+        private SpriteRenderer sprite;
         private void Awake()
         {
-            info.projectileInfo.PowerKnockback = info.powerKnockback;
-            delayAmongFire = 0f;
-            timeFocus = 0f;
-            isAiming = false;
-            owner = transform.parent.parent.parent;
-            GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(info.imagePath);
-            delayAmongFire = info.delayAmongFire;
+            sprite = GetComponent<SpriteRenderer>();
         }
 
         private void Update()
         {
+            if (info == null) return;
             if (delayAmongFire >= info.delayAmongFire) return;
             delayAmongFire += Time.deltaTime;
             if (!isAiming)
@@ -45,6 +41,7 @@ namespace Assets.Scripts.Items
         public void Use(Vector3 targetDir)
         {
             // 투사체 발사
+            //Debug.Log(info);
             if (delayAmongFire >= info.delayAmongFire)
             {
                 float randRange = (3 - timeFocus) / 3f;
@@ -57,7 +54,7 @@ namespace Assets.Scripts.Items
                         break;
                 }
                 ProjectileManager.Instance.GetNewProjectile().Fire(info.range, info.projectileInfo, transform.position,
-                    new Vector2(targetDir.x + randRange * Random.Range(-1f, 1f), targetDir.y + randRange * Random.Range(-1f, 1f))
+                    new Vector2(targetDir.x + randRange * UnityEngine.Random.Range(-1f, 1f), targetDir.y + randRange * UnityEngine.Random.Range(-1f, 1f))
                     , owner);
                 delayAmongFire = 0f;
             }
@@ -67,5 +64,25 @@ namespace Assets.Scripts.Items
         {
             return info.range;
         }
+
+        public void ChangeEquipment(ItemEquipmentInfo _info)
+        {
+            try
+            {
+                info = (ItemWeaponInfo)_info;
+                info.projectileInfo.PowerKnockback = info.PowerKnockback;
+                timeFocus = 0f;
+                isAiming = false;
+                owner = transform.parent.parent.parent;
+                sprite.sprite = Resources.Load<Sprite>(info.imagePath);
+                delayAmongFire = info.delayAmongFire;
+            }
+            catch (InvalidCastException)
+            {
+                // 장비 정보가 오염됨
+            }
+        }
+
+        public bool IsEmpty() => info == null;
     }
 }

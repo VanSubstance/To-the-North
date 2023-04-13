@@ -5,6 +5,7 @@ namespace Assets.Scripts.Items
     [CreateAssetMenu(fileName = "Armor Info", menuName = "Data Objects/Items/Equipments/Armor", order = int.MaxValue)]
     public class ItemArmorInfo : ItemEquipmentInfo
     {
+        [HideInInspector]
         public new EquipmentType equipmentType
         {
             get
@@ -12,6 +13,8 @@ namespace Assets.Scripts.Items
                 return EquipmentType.Armor;
             }
         }
+        public EquipBodyType equipPartType;
+        [SerializeField]
         private int classPenetration, classImpact;
         public int ClassPenetration
         {

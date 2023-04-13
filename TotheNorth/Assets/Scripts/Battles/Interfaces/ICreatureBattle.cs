@@ -12,6 +12,6 @@ namespace Assets.Scripts.Battles
         /// <param name="armorInfo">피격 부위 방어구 정보</param>
         /// <param name="attackInfo">공격 정보</param>
         /// <param name="hitDir">피격 방향</param>
-        public void OnHit(EquipPartType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir);
+        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir);
     }
 }

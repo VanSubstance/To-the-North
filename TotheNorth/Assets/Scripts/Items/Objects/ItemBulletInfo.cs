@@ -1,7 +1,10 @@
+using UnityEngine;
+
 namespace Assets.Scripts.Items
 {
     public class ItemBulletInfo : ItemConsumableInfo
     {
+        [HideInInspector]
         public new ConsumbableType consumbableType
         {
             get

@@ -4,8 +4,9 @@ using UnityEngine;
 namespace Assets.Scripts.Items
 {
     [CreateAssetMenu(fileName = "Weapon Info", menuName = "Data Objects/Items/Equipments/Weapon", order = int.MaxValue)]
-    internal class ItemWeaponInfo : ItemEquipmentInfo
+    public class ItemWeaponInfo : ItemEquipmentInfo
     {
+        [HideInInspector]
         public new EquipmentType equipmentType
         {
             get
@@ -13,33 +14,47 @@ namespace Assets.Scripts.Items
                 return EquipmentType.Weapon;
             }
         }
+
+        public EquipHandType handType;
         public ItemBulletType bulletType;
         public int range;
         // 아래 코드는 예시용임!
         // 리팩토링이 반드시 필요함!!
         public ProjectileInfo projectileInfo;
         public float delayAmongFire;
-        public float powerKnockback;
+        [SerializeField]
+        private float powerKnockback, powerPenetration, powerImpact;
+        public float PowerKnockback
+        {
+            set
+            {
+                powerKnockback = value;
+            }
+            get
+            {
+                return powerKnockback >= 0 ? powerKnockback : 0;
+            }
+        }
         public float PowerPenetration
         {
             set
             {
-                PowerPenetration = value;
+                powerPenetration = value;
             }
             get
             {
-                return PowerPenetration >= 0 ? PowerPenetration : 0;
+                return powerPenetration >= 0 ? powerPenetration : 0;
             }
         }
         public float PowerImpact
         {
             set
             {
-                PowerImpact = value;
+                powerImpact = value;
             }
             get
             {
-                return PowerImpact >= 0 ? PowerImpact : 0;
+                return powerImpact >= 0 ? powerImpact : 0;
             }
         }
     }

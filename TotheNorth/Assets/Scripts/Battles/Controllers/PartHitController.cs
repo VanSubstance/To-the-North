@@ -6,7 +6,7 @@ namespace Assets.Scripts.Battles
     internal class PartHitController : MonoBehaviour
     {
         [SerializeField]
-        private EquipPartType partType;
+        private EquipBodyType partType;
         private CreatureHitController hitController;
         private ItemArmorInfo info;
 
@@ -30,18 +30,20 @@ namespace Assets.Scripts.Battles
             }
             switch (partType)
             {
-                case EquipPartType.Helmat:
-                case EquipPartType.Mask:
+                case EquipBodyType.Helmat:
+                case EquipBodyType.Mask:
                     if (!isArmor)
                     {
                         gameObject.SetActive(false);
                     }
                     break;
-                case EquipPartType.Head:
+                case EquipBodyType.Head:
                     break;
-                case EquipPartType.Body:
+                case EquipBodyType.Body:
                     break;
-                case EquipPartType.Leg:
+                case EquipBodyType.Leg:
+                    break;
+                case EquipBodyType.Back:
                     break;
             }
         }

@@ -679,21 +679,21 @@ namespace Assets.Scripts.Creatures.Bases
             return !Physics2D.Raycast(originPos, (_targetPos - originPos).normalized, dis, GlobalStatus.Constant.blockingSightMask);
         }
 
-        public void OnHit(EquipPartType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
+        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
         {
             isAttacked = true;
             transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
             switch (partType)
             {
-                case EquipPartType.Helmat:
+                case EquipBodyType.Helmat:
                     break;
-                case EquipPartType.Mask:
+                case EquipBodyType.Mask:
                     break;
-                case EquipPartType.Head:
+                case EquipBodyType.Head:
                     break;
-                case EquipPartType.Body:
+                case EquipBodyType.Body:
                     break;
-                case EquipPartType.Leg:
+                case EquipBodyType.Leg:
                     break;
             }
             // 계산 처리
