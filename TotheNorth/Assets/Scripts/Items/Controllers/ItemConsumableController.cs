@@ -5,7 +5,7 @@ namespace Assets.Scripts.Items
     public class ItemConsumableController : AItemBaseController<ItemConsumableInfo>
     {
         private readonly string TAG = "소모성 아이템:\n";
-
+        
         protected override bool CheckItemTag(InventorySlotController slot)
         {
             if (slot.slotType == SlotType.Inventory || slot.slotType == SlotType.Quick ||

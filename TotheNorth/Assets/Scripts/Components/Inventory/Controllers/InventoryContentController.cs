@@ -92,7 +92,7 @@ public class InventoryContentController : AWindowBaseContentController
         // 아이템들의 TF를 넣어주고, 이후 아이템 이동 시 사용
         InventoryManager.leftInventoryTF = rtemParentTF;
         InventoryManager.rightInventoryTF = itemParentTF;
-        InventoryManager.movingSpaceTF = movingSpaceTF;
+        InventoryManager.movingSpaceTF = movingSpaceTF
         testItemInit();
         isInit = true;
     }
