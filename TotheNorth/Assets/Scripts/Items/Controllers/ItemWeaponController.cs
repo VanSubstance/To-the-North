@@ -5,7 +5,7 @@ using static GlobalComponent.Common;
 namespace Assets.Scripts.Items
 {
     /// <summary>
-    /// 손에 장착 가능 + 원거리 무기용 컨트롤러
+    /// 손에 장착 가능 + 무기 컨트롤러
     /// </summary>
     internal class ItemWeaponController : MonoBehaviour, IItemHandable
     {
