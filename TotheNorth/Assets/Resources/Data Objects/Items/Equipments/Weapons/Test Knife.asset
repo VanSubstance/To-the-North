@@ -19,5 +19,6 @@ MonoBehaviour:
   price: 100
   equipmentType: 5
   range: 1
-  projectileInfo: {fileID: 11400000, guid: 09235ddc16d1bef42a2acc2f3852aa1a, type: 2}
+  projectileInfo: {fileID: 11400000, guid: c0c976773308e714d8a619609525eddc, type: 2}
   delayAmongFire: 0.5
+  powerKnockback: 3

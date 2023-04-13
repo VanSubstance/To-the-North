@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Assets.Scripts.Commons.Functions;
 using UnityEngine;
@@ -54,7 +55,14 @@ namespace Assets.Scripts.Battles
             }
             else
             {
-                StartCoroutine(CoroutineVibrate());
+                try
+                {
+                    StartCoroutine(CoroutineVibrate());
+                }
+                catch (Exception)
+                {
+                    // hit 죽음
+                }
             }
         }
 
@@ -64,7 +72,7 @@ namespace Assets.Scripts.Battles
             while (timeLeft >= 0)
             {
                 timeLeft -= Time.deltaTime;
-                transform.localPosition = CalculationFunctions.DirFromAngle(Random.Range(0, 360)) * powerVib;
+                transform.localPosition = CalculationFunctions.DirFromAngle(UnityEngine.Random.Range(0, 360)) * powerVib;
                 powerVib *= 0.7f;
                 yield return new WaitForSeconds(Time.deltaTime);
             }

@@ -338,10 +338,17 @@ namespace Assets.Scripts.Creatures.Bases
         public bool isAllActDone()
         {
             return
+                (
                 isOrderMoveDone &&
                 targetToGaze == null &&
                 timeStayForGaze <= 0 &&
-                true;
+                true
+                )
+                ||
+                (
+                !gameObject.activeSelf
+                )
+                ;
         }
 
         public void PauseOrResumeAct(bool toPause)
@@ -675,7 +682,7 @@ namespace Assets.Scripts.Creatures.Bases
         public void OnHit(PartType partType, ProjectileInfo _info, Vector3 hitDir)
         {
             isAttacked = true;
-            transform.position = transform.position - (hitDir.normalized * 0.5f);
+            transform.position = transform.position - (hitDir.normalized * 0.5f * _info.PowerKnockback);
             switch (partType)
             {
                 case PartType.Helmat:

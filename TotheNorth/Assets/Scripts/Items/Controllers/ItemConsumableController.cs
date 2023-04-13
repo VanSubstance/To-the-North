@@ -8,9 +8,11 @@ namespace Assets.Scripts.Items
 
         [SerializeField]
         private ItemConsumableInfo info;
-        protected override bool CheckItemTag(string slotType)
+        protected override bool CheckItemTag(InventorySlotController slot)
         {
-            if (slotType == "Inventory" || slotType == "QuickSlot" || slotType == "Rooting")
+            if (slot.slotType == SlotType.Inventory || slot.slotType == SlotType.Quick ||
+                slot.slotType == SlotType.Rooting || slot.slotType == SlotType.Shop ||
+                slot.slotType == SlotType.Ground)
             {
                 return true;
             }
