@@ -722,6 +722,12 @@ namespace Assets.Scripts.Creatures.Bases
                 // 피격 당한쪽 바라보기
                 SetTargetToGaze(hitDir, 3, false);
             }
+
+            // 상태 이상 부여 심사
+            if (damage[1] > 0)
+            {
+                // 관통당했다
+            }
         }
 
         public abstract void OnDetectUser(Transform targetTf);

@@ -63,9 +63,41 @@ namespace Assets.Scripts.Users
                 case EquipBodyType.Leg:
                     break;
             }
+            // 상태 이상 부여 심사
+            if (damage[1] > 0)
+            {
+                // 관통당함
+                // 심각한 출혈 심사
+                if (Random.Range(0f, 1f) <= Mathf.Pow(damage[1] / 100f, 1.5f))
+                {
+                    // 심각한 출혈 발생
+                    InGameStatus.User.conditions[ConditionType.Bleeding_Heavy]++;
+                    ConditionManager.Instance.AwakeCondition(ConditionType.Bleeding_Heavy);
+                }
+            }
+
+            if (damage[2] > 0)
+            {
+                // 충격 데미지
+                // 얉은 출혈 심사
+                if (Random.Range(0f, 1f) <= damage[2] / 100f)
+                {
+                    // 얕은 출혈 발생
+                    InGameStatus.User.conditions[ConditionType.Bleeding_Light]++;
+                    ConditionManager.Instance.AwakeCondition(ConditionType.Bleeding_Light);
+                }
+                // 골절 심사
+                if (Random.Range(0f, 1f) <= Mathf.Pow(damage[1] / 100f, 1.7f))
+                {
+                    // 골절 발생
+                    InGameStatus.User.conditions[ConditionType.Fracture]++;
+                    ConditionManager.Instance.AwakeCondition(ConditionType.Fracture);
+                }
+            }
 
             // 화면 피격 이벤트 처리
             CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(hitDir), damage);
+
 
             // 계산 처리
             InGameStatus.User.status.hpBar.LiveInfo = -damage[0];

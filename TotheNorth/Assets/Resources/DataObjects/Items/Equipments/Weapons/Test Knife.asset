@@ -23,11 +23,9 @@ MonoBehaviour:
   bulletType: 0
   range: 1
   spd: 30
-  damagePenetration: 0
-  damageImpact: 0
+  damagePenetration: 3
+  damageImpact: 6
   delayAmongFire: 0.5
   headHeight: 0.25
   powerKnockback: 3
-  powerPenetration: 10
-  powerImpact: 0
   trajectoryType: 1

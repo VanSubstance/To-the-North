@@ -34,6 +34,7 @@ public static class GlobalComponent
         public static class Image
         {
             public static readonly string Root = $"Images/";
+            public static string Condition(ConditionType type) => $"{Root}Conditions/{type}";
         }
         public static class DataObject
         {

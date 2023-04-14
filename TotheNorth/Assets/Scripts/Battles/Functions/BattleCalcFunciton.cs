@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Items;
+using UnityEngine;
 
 namespace Assets.Scripts.Battles
 {
@@ -99,7 +101,7 @@ namespace Assets.Scripts.Battles
         {
             float rate = GetReductionRateOfImpact(armorInfo.ClassImpact, k);
             armorInfo.Durability -= UnityEngine.Random.Range(0f, 0.5f) * (1 - rate);
-            return (int)(damage * rate);
+            return (int)(damage * (1 - rate));
         }
     }
 }

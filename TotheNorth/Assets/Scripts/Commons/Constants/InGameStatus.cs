@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using Assets.Scripts.Components.Progress;
 using Assets.Scripts.Items;
 using Assets.Scripts.Items.Objects;
+using Assets.Scripts.Users;
 using Assets.Scripts.Users.Objects;
-using UnityEngine;
 
 namespace Assets.Scripts.Commons.Constants
 {
@@ -19,6 +19,14 @@ namespace Assets.Scripts.Commons.Constants
                 public static BarBaseController hpBar;
                 public static BarBaseController staminaBar;
             }
+
+            public static Dictionary<ConditionType, int> conditions = new Dictionary<ConditionType, int>() {
+                { ConditionType.Bleeding_Light, 0},
+                { ConditionType.Bleeding_Heavy, 0},
+                { ConditionType.Fracture, 0},
+            };
+
+
             public static class Movement
             {
                 /** 현재 바라보고 있는 시야 방향 각도 */
@@ -142,7 +150,7 @@ namespace Assets.Scripts.Commons.Constants
 
             public static ItemBulletInfo LookforBullet(ItemBulletType type)
             {
-                foreach(ItemInventoryInfo inven in inventory)
+                foreach (ItemInventoryInfo inven in inventory)
                 {
                     if (inven.itemInfo is ItemBulletInfo)
                     {
