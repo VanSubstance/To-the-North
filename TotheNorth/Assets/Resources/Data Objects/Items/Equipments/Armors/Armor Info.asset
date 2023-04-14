@@ -20,3 +20,5 @@ MonoBehaviour:
   price: 170
   equipmentType: 0
   equipPartType: 3
+  classPenetration: 0
+  classImpact: 0

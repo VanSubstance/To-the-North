@@ -34,7 +34,7 @@ public class InventoryContentController : AWindowBaseContentController
             (InventoryManager.inventorySlots[info.x, info.y].transform.position.x,
             InventoryManager.inventorySlots[info.x, info.y].transform.position.y,
             itemParentTF.transform.position.z);
-            tempGenerator.InitItem(info.itemInfo);
+            tempGenerator.InitItem(info.itemInfo, info);
         }
     }
 
