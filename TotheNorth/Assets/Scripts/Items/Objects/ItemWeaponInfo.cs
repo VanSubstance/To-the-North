@@ -1,4 +1,5 @@
 using Assets.Scripts.Battles;
+using Assets.Scripts.Items.Objects;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -17,7 +18,7 @@ namespace Assets.Scripts.Items
 
         public EquipHandType handType;
         public ItemBulletType bulletType;
-        public int range, spd;
+        public int range, spd, damagePenetration, damageImpact;
         private ProjectileInfo projectileInfo;
         public float delayAmongFire, headHeight = .25f;
         [SerializeField]

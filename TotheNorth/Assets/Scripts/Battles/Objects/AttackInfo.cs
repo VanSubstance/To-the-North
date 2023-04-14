@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Assets.Scripts.Items.Objects;
 
 namespace Assets.Scripts.Items
 {
@@ -16,6 +12,8 @@ namespace Assets.Scripts.Items
         public float powerImpact;
         public float powerKnockback;
 
+        public int damagePenetration, damageImpact;
+
         /// <summary>
         /// 무기 정보에서 공격 정보를 생성하는 함수
         /// </summary>
@@ -28,7 +26,9 @@ namespace Assets.Scripts.Items
             {
                 powerPenetration = noBulletWeapon.PowerPenetration,
                 powerImpact = noBulletWeapon.PowerImpact,
-                powerKnockback = noBulletWeapon.PowerKnockback
+                powerKnockback = noBulletWeapon.PowerKnockback,
+                damagePenetration = noBulletWeapon.damagePenetration,
+                damageImpact = noBulletWeapon.damageImpact,
             };
             return res;
         }
@@ -47,7 +47,9 @@ namespace Assets.Scripts.Items
             {
                 powerPenetration = withBulletWeapon.PowerPenetration + bulletInfo.powerPenetration,
                 powerImpact = withBulletWeapon.PowerImpact + bulletInfo.powerImpact,
-                powerKnockback = withBulletWeapon.PowerKnockback
+                powerKnockback = withBulletWeapon.PowerKnockback,
+                damagePenetration = withBulletWeapon.damagePenetration + bulletInfo.damagePenetration,
+                damageImpact = withBulletWeapon.damageImpact + bulletInfo.damageImpact,
             };
             return res;
         }

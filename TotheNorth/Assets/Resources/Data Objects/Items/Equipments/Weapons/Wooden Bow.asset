@@ -10,24 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4a36c07d2870b64ab9ce2cd48aa7bd6, type: 3}
-  m_Name: Test Gun
+  m_Name: Wooden Bow
   m_EditorClassIdentifier: 
   itemType: 1
   size: {x: 0, y: 0}
-  imagePath: Gun Test
-  itemName: "\uD14C\uC2A4\uD2B8\uC6A9 \uCD1D"
-  description: "\uD14C\uC2A4\uD2B8\uC6A9 \uCD1D\uC785\uB2C8\uB2E4."
+  imagePath: Wooden Bow
+  itemName: "\uC870\uC7A1\uD55C \uB098\uBB34\uD65C"
+  description: "\uC870\uC7A1\uD55C \uB098\uBB34\uD65C\uC774\uB2E4. \uBA87\uBC88 \uC3D8\uBA74
+    \uBD80\uB7EC\uC9C8 \uAC83 \uAC19\uB2E4."
   price: 100
   equipmentType: 5
-  handType: 0
-  bulletType: 1
+  handType: 1
+  bulletType: 2
   range: 20
-  spd: 10
-  damagePenetration: 0
-  damageImpact: 0
-  delayAmongFire: 0.5
+  spd: 8
+  damagePenetration: 13
+  damageImpact: 2
+  delayAmongFire: 2
   headHeight: 0.25
-  powerKnockback: 1
-  powerPenetration: 0
-  powerImpact: 10
+  powerKnockback: 0
+  powerPenetration: 20
+  powerImpact: 5
   trajectoryType: 0

@@ -398,11 +398,6 @@ namespace Assets.Scripts.Items
                 ReturnToPost();
             }
         }
-
-        private void SetImage(string imagePath)
-        {
-            image.sprite = Resources.Load<Sprite>(imagePath);
-        }
         /// <summary>
         /// 종류에 맞는 데이터 할당 함수
         /// </summary>
@@ -410,7 +405,7 @@ namespace Assets.Scripts.Items
         public void InitInfo(TItemInfo _info, ItemInventoryInfo inventoryInfo)
         {
             info = _info;
-            SetImage(baseInfo.imagePath);
+            image.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(baseInfo));
             AttachInitially(inventoryInfo);
         }
 

@@ -52,7 +52,7 @@ namespace Assets.Scripts.Items
                         // 총알 필요 없음
                         projInfo = info.GetProjectileInfo();
                         break;
-                    case ItemBulletType.mm_9:
+                    case ItemBulletType.Arrow:
                         // 탄환 필요함
                         // => 이게 이렇게 되면 안됨, 탄환 정보가 필요함 + 탄환 소비가 필요
                         projInfo = info.GetProjectileInfo();
@@ -78,7 +78,7 @@ namespace Assets.Scripts.Items
                 timeFocus = 0f;
                 isAiming = false;
                 owner = transform.parent.parent.parent;
-                sprite.sprite = Resources.Load<Sprite>(info.imagePath);
+                sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
                 delayAmongFire = info.delayAmongFire;
             }
             catch (InvalidCastException)

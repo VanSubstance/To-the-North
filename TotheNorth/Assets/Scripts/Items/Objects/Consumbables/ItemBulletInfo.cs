@@ -1,7 +1,8 @@
 using UnityEngine;
 
-namespace Assets.Scripts.Items
+namespace Assets.Scripts.Items.Objects
 {
+    [CreateAssetMenu(fileName = "Bullet Info", menuName = "Data Objects/Items/Consumable/Bullet", order = int.MaxValue)]
     public class ItemBulletInfo : ItemConsumableInfo
     {
         [HideInInspector]
@@ -29,5 +30,15 @@ namespace Assets.Scripts.Items
         /// 기본값 : 1
         /// </summary>
         public float powerSpd;
+        /// <summary>
+        /// 관통 데미지 가중치 (합연산)
+        /// 기본값: 0
+        /// </summary>
+        public int damagePenetration;
+        /// <summary>
+        /// 충격 데미지 가중치 (합연산)
+        /// 기본값: 0
+        /// </summary>
+        public int damageImpact;
     }
 }

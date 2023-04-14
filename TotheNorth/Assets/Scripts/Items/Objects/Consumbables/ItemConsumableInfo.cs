@@ -4,8 +4,6 @@ using UnityEngine;
 
 namespace Assets.Scripts.Items
 {
-    [CreateAssetMenu(fileName = "Consumable Info", menuName = "Data Objects/Items/Consumable", order = int.MaxValue)]
-    [Serializable]
     public class ItemConsumableInfo : ItemBaseInfo
     {
         [HideInInspector]
@@ -16,7 +14,7 @@ namespace Assets.Scripts.Items
                 return ItemType.Consumable;
             }
         }
-        // 소모성 아이템 필요 인포
+        [HideInInspector]
         public ConsumbableType consumbableType;
     }
 }

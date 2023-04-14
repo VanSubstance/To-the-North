@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a556f269288bb4a4ba9f9684cd585f07, type: 3}
-  m_Name: Test Consumable
+  m_Script: {fileID: 11500000, guid: 17741b4e520174b41909b460c66ddb7d, type: 3}
+  m_Name: CornSalad
   m_EditorClassIdentifier: 
   itemType: 0
   size: {x: 1, y: 1}
-  imagePath: Images/Items/TrafficCone
+  imagePath: TrafficCone
   itemName: "\uAF2C\uAE4C\uAF2C\uAE4C"
   description: "\uAF2C\uAE54\uCF58 \uB9DB\uC5C6\uC5C9"
   price: 20
