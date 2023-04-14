@@ -29,6 +29,8 @@ namespace Assets.Scripts.Items
         }
         public bool isRotate;
 
+        private int localRow;
+        private int localCol;
         private Vector2 rayPos;
         private RectTransform objTF;
         private BoxCollider2D objCollider;
@@ -54,16 +56,12 @@ namespace Assets.Scripts.Items
             objTF = GetComponent<RectTransform>();
             objCollider = GetComponent<BoxCollider2D>();
         }
-        private void Start()
-        {
-        }
 
         /// <summary>
         /// 오브젝트 생성 후 데이터 할당 후 최초로 부착하는 함수
         /// </summary>
         private void AttachInitially(ItemInventoryInfo info)
         {
-            Debug.Log("ITemInit");
             // 게임오브젝트 이름 변경
             gameObject.name = baseInfo.name;
             // RectTransform 변경
@@ -75,6 +73,9 @@ namespace Assets.Scripts.Items
             image.rectTransform.sizeDelta = objTF.sizeDelta;
             // 시작 curSlot 초기화 (OverLapPoint 사용, rayPos = 게임오브젝트 좌상단 기준 30f, -30f)
             rayPos = transform.TransformPoint(new Vector2(30f, -30f));
+            // 로컬 사이즈 설정
+            localRow = itemSizeRow;
+            localCol = itemSizeCol;
             // 첫 부착
             curSlot = InventoryManager.inventorySlots[(int)info.pos.x, (int)info.pos.y];
             ItemAttach(curSlot);
@@ -96,9 +97,9 @@ namespace Assets.Scripts.Items
         /// </summary>
         public bool ItemSizeCheck(InventorySlotController destSlot)
         {
-            for (int i = 0; i < itemSizeCol; i++)
+            for (int i = 0; i < localCol; i++)
             {
-                for (int j = 0; j < itemSizeRow; j++)
+                for (int j = 0; j < localRow; j++)
                 {
                     try
                     {
@@ -124,6 +125,7 @@ namespace Assets.Scripts.Items
                     }
                     catch (System.IndexOutOfRangeException)
                     {
+                        // 아이템 체크 시 인벤토리 범위를 넘어서면
                         return false;
                     }
                 }
@@ -145,10 +147,9 @@ namespace Assets.Scripts.Items
             Vector3 destPos;
             destPos = new Vector3(attachSlot.transform.localPosition.x, attachSlot.transform.localPosition.y, -1f);
             objTF.localPosition = destPos;
-            Debug.Log($"{itemSizeCol}, {itemSizeRow}");
-            for (int i = 0; i < itemSizeCol; i++)
+            for (int i = 0; i < localCol; i++)
             {
-                for (int j = 0; j < itemSizeRow; j++)
+                for (int j = 0; j < localRow; j++)
                 {
                     if (attachSlot.slotType == SlotType.Inventory)
                     {
@@ -172,9 +173,9 @@ namespace Assets.Scripts.Items
         {
             if (info == null) return;
             transform.SetParent(InventoryManager.movingSpaceTF);
-            for (int i = 0; i < itemSizeCol; i++)
+            for (int i = 0; i < localCol; i++)
             {
-                for (int j = 0; j < itemSizeRow; j++)
+                for (int j = 0; j < localRow; j++)
                 {
                     if (detachSlot.slotType == SlotType.Inventory)
                     {
@@ -194,9 +195,9 @@ namespace Assets.Scripts.Items
         /// <param name="detachSlot"></param>
         public void CheckReady(InventorySlotController readySlot)
         {
-            for (int i = 0; i < itemSizeCol; i++)
+            for (int i = 0; i < localCol; i++)
             {
-                for (int j = 0; j < itemSizeRow; j++)
+                for (int j = 0; j < localRow; j++)
                 {
                     if (readySlot.slotType == SlotType.Inventory)
                     {
@@ -220,9 +221,10 @@ namespace Assets.Scripts.Items
         /// <param name="detachSlot"></param>
         public void UnCheckReady(InventorySlotController readySlot)
         {
-            for (int i = 0; i < itemSizeCol; i++)
+
+            for (int i = 0; i < localCol; i++)
             {
-                for (int j = 0; j < itemSizeRow; j++)
+                for (int j = 0; j < localRow; j++)
                 {
                     try
                     {
@@ -238,14 +240,17 @@ namespace Assets.Scripts.Items
                         else if (readySlot.slotType == SlotType.Equipment)
                         {
                             readySlot.isAttachReady = false;
+                            return;
                         }
                     }
                     catch (System.NullReferenceException)
                     {
+                        // Slot이 없는 경우
                         return;
                     }
                     catch (System.IndexOutOfRangeException)
                     {
+                        // Slot에 사이즈가 없는 경우
                         return;
                     }
                 }
@@ -269,7 +274,7 @@ namespace Assets.Scripts.Items
         public void ItemRotate()
         {
             // 돌리는 의미가 없는 아이템이면 return
-            if (itemSizeRow == itemSizeCol)
+            if (localRow == localCol)
                 return;
             // 아이템 하단의 흰색 칸 헤제
             UnCheckReady(readySlot);
@@ -280,9 +285,9 @@ namespace Assets.Scripts.Items
                 image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f);
             // itemsize 변경
             int tempSize;
-            tempSize = itemSizeCol;
-            itemSizeCol = itemSizeRow;
-            itemSizeRow = tempSize;
+            tempSize = localCol;
+            localCol = localRow;
+            localRow = tempSize;
             // recttransform.sizeDelta 변경
             objTF.sizeDelta = new Vector2(objTF.sizeDelta.y, objTF.sizeDelta.x);
             // BoxCollider2D.size 변경
@@ -301,10 +306,12 @@ namespace Assets.Scripts.Items
 
         protected override void OnDraging()
         {
+            // 드래그 중 R키 누르면 아이템 회전
             if (Input.GetKeyDown(KeyCode.R))
             {
                 ItemRotate();
             }
+            // 마우스 드래그 이벤트
             objTF.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             objTF.localPosition = new Vector3(
                 objTF.localPosition.x - (transform.GetComponent<BoxCollider2D>().size.x / 2),
@@ -313,23 +320,31 @@ namespace Assets.Scripts.Items
                 );
             rayPos = transform.TransformPoint(new Vector2(30f, -30f));
             Collider2D hit;
+            // Slot이 감지되면
             if (hit = Physics2D.OverlapPoint(rayPos, GlobalStatus.Constant.slotMask))
             {
                 InventorySlotController tempSlot;
                 tempSlot = hit.transform.GetComponent<InventorySlotController>();
+                // 이전 Slot과 같고(가만히 있는 경우), readyslot이 이미 ready상태인경우
                 if (readySlot == tempSlot && readySlot.isAttachReady == true)
                 {
                     return;
                 }
+                // Slot이 달라졌거나 현재 Slot이 ready가 아닌경우
                 else
                 {
+                    // 사이즈 체크
                     if (ItemSizeCheck(tempSlot))
                     {
+                        // 이전 Slot이 있으면
                         if (readySlot != null)
                         {
+                            // 그 곳의 Check를 해제
                             UnCheckReady(readySlot);
                         }
+                        // Slot 변경하고
                         readySlot = tempSlot;
+                        // Check
                         CheckReady(readySlot);
                     }
                     else
@@ -338,10 +353,18 @@ namespace Assets.Scripts.Items
                     }
                 }
             }
+            // 슬롯이 감지 되지 않았을 때
             else
             {
-                UnCheckReady(readySlot);
-                readySlot = null;
+                // 이전 readySlot이 있으면
+                if (readySlot != null)
+                {
+                    // 거기서 check 해제하고 null 대입
+                    UnCheckReady(readySlot);
+                    readySlot = null;
+                }
+                // 이후론 아무것도 안함
+                return;
             }
         }
 
