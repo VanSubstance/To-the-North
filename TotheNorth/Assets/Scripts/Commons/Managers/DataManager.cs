@@ -29,19 +29,28 @@ namespace Assets.Scripts.Commons
 
         private void LoadInventory()
         {
-            InGameStatus.Item.inventory.AddRange(inventoryInfo);
+            ItemInventoryInfo c;
+            foreach (ItemInventoryInfo inf in inventoryInfo)
+            {
+                c = new ItemInventoryInfo
+                {
+                    pos = inf.pos,
+                    itemInfo = Instantiate(inf.itemInfo)
+                };
+                InGameStatus.Item.inventory.Add(c);
+            }
         }
 
         private void LoadEquipment()
         {
-            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Helmat, helmat);
-            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Mask, mask);
-            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Body, body);
-            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Leg, leg);
-            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Back, back);
+            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Helmat, helmat ? Instantiate(helmat) : null);
+            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Mask, mask ? Instantiate(mask) : null);
+            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Body, body ? Instantiate(body) : null);
+            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Leg, leg ? Instantiate(leg) : null);
+            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Back, back ? Instantiate(back) : null);
 
-            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Right, right);
-            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Left, left);
+            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Right, right ? Instantiate(right) : null);
+            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Left, left ? Instantiate(left) : null);
         }
     }
 }

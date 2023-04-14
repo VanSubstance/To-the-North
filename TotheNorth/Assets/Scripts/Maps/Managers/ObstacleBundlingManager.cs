@@ -12,14 +12,13 @@ namespace Assets.Scripts.Maps.Managers
     internal class ObstacleBundlingManager : MonoBehaviour
     {
         public Transform obstacleParent;
-        private Transform compositeObstacleParent;
         [SerializeField]
         private Transform compositeObjectPrefab;
 
         private Queue<ObstacleController> obsQueue = new Queue<ObstacleController>();
         private void Awake()
         {
-            compositeObstacleParent = new GameObject("Obstacles").transform;
+            Transform compositeObstacleParent = new GameObject("Obstacles").transform;
             compositeObstacleParent.SetParent(null);
             compositeObstacleParent.position = Vector3.zero;
             compositeObstacleParent.localScale = Vector3.one;

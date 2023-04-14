@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Components.Progress;
 using Assets.Scripts.Items;
+using Assets.Scripts.Items.Objects;
 using Assets.Scripts.Users.Objects;
 using UnityEngine;
 
@@ -135,6 +136,21 @@ namespace Assets.Scripts.Commons.Constants
                         return (ItemWeaponInfo)curEquipments[targetPartType];
                     case EquipBodyType.Back:
                         return (ItemEquipmentInfo)curEquipments[targetPartType];
+                }
+                return null;
+            }
+
+            public static ItemBulletInfo LookforBullet(ItemBulletType type)
+            {
+                foreach(ItemInventoryInfo inven in inventory)
+                {
+                    if (inven.itemInfo is ItemBulletInfo)
+                    {
+                        if (((ItemBulletInfo)inven.itemInfo).AmountCount > 0)
+                        {
+                            return (ItemBulletInfo)inven.itemInfo;
+                        }
+                    }
                 }
                 return null;
             }

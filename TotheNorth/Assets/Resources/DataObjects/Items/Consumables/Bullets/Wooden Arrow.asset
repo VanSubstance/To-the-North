@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a80c82bfdd9406458e6e71daf4f1b32, type: 3}
+  m_Name: Wooden Arrow
+  m_EditorClassIdentifier: 
+  itemType: 0
+  size: {x: 1, y: 1}
+  imagePath: Wooden Arrow
+  itemName: "\uC870\uC7A1\uD55C \uB098\uBB34 \uD654\uC0B4"
+  description: "\uC870\uC7A1\uD558\uAE30 \uADF8\uC9C0\uC5C6\uB294 \uB098\uBB34 \uD654\uC0B4\uC774\uB2E4.
+    \\n\uBB58 \uB6AB\uAE30\uB294 \uD558\uB824\uB098 ..."
+  price: 10
+  consumbableType: 0
+  bulletType: 2
+  powerPenetration: 0
+  powerImpact: 0
+  powerSpd: 0.9
+  damagePenetration: 5
+  damageImpact: 0
+  amountCurrent: 60

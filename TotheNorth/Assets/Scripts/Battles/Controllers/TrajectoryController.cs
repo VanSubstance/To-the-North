@@ -33,6 +33,11 @@ namespace Assets.Scripts.Battles
 
         private void Update()
         {
+            if (!GlobalStatus.Loading.System.CommonGameManager)
+            {
+                // 파괴
+                StartCoroutine(CoroutineKill(0));
+            }
             if (isTerminated) return;
             if (isCurved)
             {
@@ -43,7 +48,7 @@ namespace Assets.Scripts.Battles
                 {
                     if (gameObject.activeSelf)
                     {
-                        StartCoroutine(CoroutineKill());
+                        StartCoroutine(CoroutineKill(3));
                     }
                 }
             }
@@ -57,7 +62,7 @@ namespace Assets.Scripts.Battles
                 {
                     if (gameObject.activeSelf)
                     {
-                        StartCoroutine(CoroutineKill());
+                        StartCoroutine(CoroutineKill(3));
                     }
                 }
             }
@@ -84,14 +89,14 @@ namespace Assets.Scripts.Battles
         {
             if (gameObject.activeSelf)
             {
-                StartCoroutine(CoroutineKill());
+                StartCoroutine(CoroutineKill(3));
             }
         }
 
-        private IEnumerator CoroutineKill()
+        private IEnumerator CoroutineKill(float t)
         {
             isTerminated = true;
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(t);
             trail.startWidth = .2f;
             trail.numCapVertices = 1;
             isPossessed = false;

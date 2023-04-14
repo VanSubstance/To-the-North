@@ -1,6 +1,8 @@
 using System;
 using Assets.Scripts.Battles;
+using Assets.Scripts.Commons.Constants;
 using UnityEngine;
+using static GlobalComponent.Common;
 
 namespace Assets.Scripts.Items
 {
@@ -11,6 +13,8 @@ namespace Assets.Scripts.Items
     {
         [SerializeField]
         private ItemWeaponInfo info;
+        [SerializeField]
+        private bool isAI = true;
         private Transform owner;
 
         private float delayAmongFire, timeFocus, timeFocusFull = 3f;
@@ -19,6 +23,17 @@ namespace Assets.Scripts.Items
         private void Awake()
         {
             sprite = GetComponent<SpriteRenderer>();
+            if (isAI)
+            {
+                timeFocus = 0f;
+                isAiming = false;
+                owner = transform.parent.parent.parent;
+                if (info)
+                {
+                    sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
+                    delayAmongFire = info.delayAmongFire;
+                }
+            }
         }
 
         private void Update()
@@ -45,15 +60,30 @@ namespace Assets.Scripts.Items
             if (delayAmongFire >= info.delayAmongFire)
             {
                 float randRange = (3 - timeFocus) / 3f;
+                ProjectileInfo projInfo = new();
                 switch (info.bulletType)
                 {
                     case ItemBulletType.None:
-                        // 총알 없음
+                        // 총알 필요 없음
+                        projInfo = info.GetProjectileInfo();
                         break;
-                    case ItemBulletType.mm_9:
+                    case ItemBulletType.Arrow:
+                        // 탄환 필요함
+                        // => 이게 이렇게 되면 안됨, 탄환 정보가 필요함 + 탄환 소비가 필요
+                        if (!isAI)
+                        {
+                            projInfo = info.GetProjectileInfo(InGameStatus.Item.LookforBullet(info.bulletType));
+                        }
+                        else
+                        {
+                            projInfo = info.GetProjectileInfo(Instantiate(
+                                GlobalComponent.Path.GetMonsterBulletInfo(ItemBulletType.Arrow, 1)
+                                ));
+                        }
                         break;
                 }
-                ProjectileManager.Instance.GetNewProjectile().Fire(info.range, info.projectileInfo, transform.position,
+                if (projInfo == null) return;
+                ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, transform.position,
                     new Vector2(targetDir.x + randRange * UnityEngine.Random.Range(-1f, 1f), targetDir.y + randRange * UnityEngine.Random.Range(-1f, 1f))
                     , owner);
                 delayAmongFire = 0f;
@@ -70,11 +100,10 @@ namespace Assets.Scripts.Items
             try
             {
                 info = (ItemWeaponInfo)_info;
-                info.projectileInfo.PowerKnockback = info.PowerKnockback;
                 timeFocus = 0f;
                 isAiming = false;
                 owner = transform.parent.parent.parent;
-                sprite.sprite = Resources.Load<Sprite>(info.imagePath);
+                sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
                 delayAmongFire = info.delayAmongFire;
             }
             catch (InvalidCastException)
