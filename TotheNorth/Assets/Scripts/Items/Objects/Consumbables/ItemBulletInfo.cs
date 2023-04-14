@@ -29,7 +29,7 @@ namespace Assets.Scripts.Items.Objects
         /// 속도 가중치 (곱연산)
         /// 기본값 : 1
         /// </summary>
-        public float powerSpd;
+        public float powerSpd = 1;
         /// <summary>
         /// 관통 데미지 가중치 (합연산)
         /// 기본값: 0
@@ -40,5 +40,23 @@ namespace Assets.Scripts.Items.Objects
         /// 기본값: 0
         /// </summary>
         public int damageImpact;
+        [SerializeField]
+        /// <summary>
+        /// 현재 잔여량
+        /// 최대치: 60
+        /// </summary>
+        private int amountCurrent = 60;
+
+        public int AmountCount
+        {
+            get
+            {
+                return amountCurrent;
+            }
+            set
+            {
+                amountCurrent = value >= 0 ? value : 0;
+            }
+        }
     }
 }

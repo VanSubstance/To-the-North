@@ -1,5 +1,6 @@
 using System;
 using Assets.Scripts.Battles;
+using Assets.Scripts.Commons.Constants;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -55,9 +56,10 @@ namespace Assets.Scripts.Items
                     case ItemBulletType.Arrow:
                         // 탄환 필요함
                         // => 이게 이렇게 되면 안됨, 탄환 정보가 필요함 + 탄환 소비가 필요
-                        projInfo = info.GetProjectileInfo();
+                        projInfo = info.GetProjectileInfo(InGameStatus.Item.LookforBullet(info.bulletType));
                         break;
                 }
+                if (projInfo == null) return;
                 ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, transform.position,
                     new Vector2(targetDir.x + randRange * UnityEngine.Random.Range(-1f, 1f), targetDir.y + randRange * UnityEngine.Random.Range(-1f, 1f))
                     , owner);

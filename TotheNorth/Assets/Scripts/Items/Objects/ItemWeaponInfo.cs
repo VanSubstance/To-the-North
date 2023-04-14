@@ -95,6 +95,12 @@ namespace Assets.Scripts.Items
                 Debug.Log("탄환 정보가 필요 없습니다!");
                 return GetProjectileInfo();
             }
+            if (bulletInfo.AmountCount == 0)
+            {
+                Debug.Log("탄환이 없습니다!");
+                return null;
+            }
+            bulletInfo.AmountCount--;
             projectileInfo = new()
             {
                 TrajectoryType = trajectoryType,
