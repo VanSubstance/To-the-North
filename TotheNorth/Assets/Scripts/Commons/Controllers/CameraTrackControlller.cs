@@ -1,3 +1,4 @@
+using Assets.Scripts.Commons.Constants;
 using UnityEngine;
 
 public class CameraTrackControlller : MonoBehaviour
@@ -13,9 +14,10 @@ public class CameraTrackControlller : MonoBehaviour
 
     private void Update()
     {
-        Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * 3;
-        if (Camera.main.orthographicSize < 6) Camera.main.orthographicSize = 6;
-        if (Camera.main.orthographicSize > 10) Camera.main.orthographicSize = 10;
+        if (!InGameStatus.User.isPause)
+        {
+            TrackZoom();
+        }
     }
 
     private void LateUpdate()
@@ -26,5 +28,12 @@ public class CameraTrackControlller : MonoBehaviour
                 GlobalComponent.Common.userController.y - transform.position.y + targetPos.y + headHorPos.y + headVerPos.y
                 )
             );
+    }
+
+    private void TrackZoom()
+    {
+        Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * 3;
+        if (Camera.main.orthographicSize < 6) Camera.main.orthographicSize = 6;
+        if (Camera.main.orthographicSize > 10) Camera.main.orthographicSize = 10;
     }
 }

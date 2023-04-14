@@ -85,7 +85,6 @@ namespace Assets.Scripts.Battles
 
         public static ProjectileInfo GetClone(ProjectileInfo _info)
         {
-            Debug.Log(_info);
             ProjectileInfo res = new()
             {
                 spd = _info.spd,
