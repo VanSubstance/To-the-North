@@ -9,12 +9,29 @@ namespace Assets.Scripts.Items
         protected override bool CheckItemTag(InventorySlotController slot, bool isGridOn)
         {
             if (slot.slotType == SlotType.Inventory ||
-                slot.slotType == SlotType.Equipment && isGridOn == false ||
                 slot.slotType == SlotType.Rooting ||
                 slot.slotType == SlotType.Shop ||
                 slot.slotType == SlotType.Quick && isGridOn == false)
             {
                 return true;
+            }
+            if (info is ItemWeaponInfo)
+            {
+                if (slot.slotType == SlotType.Equipment && isGridOn == false &&
+                    slot.equipType == EquipBodyType.Left ||
+                    slot.slotType == SlotType.Equipment && isGridOn == false &&
+                    slot.equipType == EquipBodyType.Right)
+                {
+                    return true;
+                }
+            }
+            if (info is ItemArmorInfo)
+            {
+                if (slot.slotType == SlotType.Equipment && isGridOn == false &&
+                    slot.equipType == EquipBodyType.Body)
+                {
+                    return true;
+                }
             }
             return false;
         }

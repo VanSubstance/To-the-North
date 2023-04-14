@@ -38,14 +38,14 @@ namespace Assets.Scripts.Items
         private BoxCollider2D objCollider;
         private Image image;
 
-        private ItemBaseInfo baseInfo
+        protected ItemBaseInfo baseInfo
         {
             get
             {
                 return (ItemBaseInfo)(object)info;
             }
         }
-        private TItemInfo info;
+        protected TItemInfo info;
 
         private new void Update()
         {

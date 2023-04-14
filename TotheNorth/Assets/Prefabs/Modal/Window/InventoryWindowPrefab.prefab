@@ -663,7 +663,7 @@ MonoBehaviour:
   isAttached: 0
   isAttachReady: 0
   slotType: 2
-  equipType: 0
+  equipType: 1
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 1602744734658468322}
@@ -1119,7 +1119,7 @@ MonoBehaviour:
   isAttached: 0
   isAttachReady: 0
   slotType: 2
-  equipType: 2
+  equipType: 3
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 3727113946084276363}
@@ -1244,7 +1244,7 @@ MonoBehaviour:
   isAttached: 0
   isAttachReady: 0
   slotType: 2
-  equipType: 3
+  equipType: 4
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 5170920923276334650}
@@ -1407,7 +1407,7 @@ MonoBehaviour:
   isAttached: 0
   isAttachReady: 0
   slotType: 2
-  equipType: 5
+  equipType: 7
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 4047150311989061114}
@@ -1976,7 +1976,7 @@ MonoBehaviour:
   isAttached: 0
   isAttachReady: 0
   slotType: 2
-  equipType: 1
+  equipType: 2
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 6700052574982325917}
@@ -2137,7 +2137,7 @@ MonoBehaviour:
   isAttached: 0
   isAttachReady: 0
   slotType: 2
-  equipType: 4
+  equipType: 6
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 9157992735997124572}
@@ -2894,7 +2894,7 @@ MonoBehaviour:
   isAttached: 0
   isAttachReady: 0
   slotType: 2
-  equipType: 6
+  equipType: 5
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 211774221198767285}
