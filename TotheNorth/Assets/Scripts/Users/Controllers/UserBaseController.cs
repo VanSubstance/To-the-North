@@ -48,7 +48,7 @@ namespace Assets.Scripts.Users
             equipableBodies[targetType].ChangeEquipment(itemInfo);
         }
 
-        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
+        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
         {
             switch (partType)
             {
@@ -65,10 +65,10 @@ namespace Assets.Scripts.Users
             }
 
             // 화면 피격 이벤트 처리
-            CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(hitDir), 8);
+            CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(hitDir), damage);
 
             // 계산 처리
-            InGameStatus.User.status.hpBar.LiveInfo = -10;
+            InGameStatus.User.status.hpBar.LiveInfo = -damage[0];
             if (InGameStatus.User.status.hpBar.LiveInfo <= 0)
             {
                 //InGameStatus.User.isPause = true;

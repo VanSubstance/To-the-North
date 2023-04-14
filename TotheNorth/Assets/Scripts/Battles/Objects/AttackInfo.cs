@@ -8,8 +8,8 @@ namespace Assets.Scripts.Items
     /// 
     public class AttackInfo
     {
-        public float powerPenetration;
-        public float powerImpact;
+        public int powerPenetration;
+        public int powerImpact;
         public float powerKnockback;
 
         public int damagePenetration, damageImpact;

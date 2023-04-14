@@ -116,15 +116,5 @@ namespace Assets.Scripts.Battles
             transform.position = Vector3.zero;
             trajectory = null;
         }
-
-        private Vector3 LocalPostionToWorld(Vector3 targetPos, Vector3 targetDir)
-        {
-            return CalculationFunctions.GetRotatedVector2(
-                targetPos.magnitude * targetDir.normalized,
-                CalculationFunctions.AngleFromDir(
-                    targetPos.normalized
-                    )
-                ) * (1f + targetPos.magnitude);
-        }
     }
 }

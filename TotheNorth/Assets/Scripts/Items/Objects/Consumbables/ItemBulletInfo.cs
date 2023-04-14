@@ -19,12 +19,12 @@ namespace Assets.Scripts.Items.Objects
         /// 관통 가중치 (한연산)
         /// 기본값: 0
         /// </summary>
-        public float powerPenetration;
+        public int powerPenetration;
         /// <summary>
         /// 충격 가중치 (한연산)
         /// 기본값: 0
         /// </summary>
-        public float powerImpact;
+        public int powerImpact;
         /// <summary>
         /// 속도 가중치 (곱연산)
         /// 기본값 : 1

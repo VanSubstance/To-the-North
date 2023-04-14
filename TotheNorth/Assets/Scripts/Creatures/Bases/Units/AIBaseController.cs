@@ -685,7 +685,7 @@ namespace Assets.Scripts.Creatures.Bases
             return !Physics2D.Raycast(originPos, (_targetPos - originPos).normalized, dis, GlobalStatus.Constant.blockingSightMask);
         }
 
-        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
+        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
         {
             isAttacked = true;
             transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
@@ -705,8 +705,7 @@ namespace Assets.Scripts.Creatures.Bases
             // 계산 처리
             if (info)
             {
-                // AI 기준
-                info.LiveHp = -10;
+                info.LiveHp = -damage[0];
                 if (info.LiveHp <= 0)
                 {
                     gameObject.SetActive(false);

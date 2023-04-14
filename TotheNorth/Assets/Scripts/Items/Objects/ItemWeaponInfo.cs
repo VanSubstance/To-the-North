@@ -22,7 +22,8 @@ namespace Assets.Scripts.Items
         private ProjectileInfo projectileInfo;
         public float delayAmongFire, headHeight = .25f;
         [SerializeField]
-        private float powerKnockback, powerPenetration, powerImpact;
+        private float powerKnockback;
+        private int powerPenetration, powerImpact;
         [SerializeField]
         private TrajectoryType trajectoryType;
 
@@ -37,7 +38,7 @@ namespace Assets.Scripts.Items
                 return powerKnockback >= 0 ? powerKnockback : 0;
             }
         }
-        public float PowerPenetration
+        public int PowerPenetration
         {
             set
             {
@@ -48,7 +49,7 @@ namespace Assets.Scripts.Items
                 return powerPenetration >= 0 ? powerPenetration : 0;
             }
         }
-        public float PowerImpact
+        public int PowerImpact
         {
             set
             {
