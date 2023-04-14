@@ -6,7 +6,7 @@ namespace Assets.Scripts.Items
     {
         private readonly string TAG = "소모성 아이템:\n";
         
-        protected override bool CheckItemTag(InventorySlotController slot)
+        protected override bool CheckItemTag(InventorySlotController slot, bool isGridOn)
         {
             if (slot.slotType == SlotType.Inventory || slot.slotType == SlotType.Quick ||
                 slot.slotType == SlotType.Rooting || slot.slotType == SlotType.Shop ||

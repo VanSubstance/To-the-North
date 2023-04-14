@@ -6,11 +6,13 @@ namespace Assets.Scripts.Items
     {
         private readonly string TAG = "장비 아이템:\n";
 
-        protected override bool CheckItemTag(InventorySlotController slot)
+        protected override bool CheckItemTag(InventorySlotController slot, bool isGridOn)
         {
-            if (slot.slotType == SlotType.Inventory || slot.slotType == SlotType.Equipment ||
-                slot.slotType == SlotType.Rooting || slot.slotType == SlotType.Shop ||
-                slot.slotType == SlotType.Quick)
+            if (slot.slotType == SlotType.Inventory ||
+                slot.slotType == SlotType.Equipment && isGridOn == false ||
+                slot.slotType == SlotType.Rooting ||
+                slot.slotType == SlotType.Shop ||
+                slot.slotType == SlotType.Quick && isGridOn == false)
             {
                 return true;
             }
