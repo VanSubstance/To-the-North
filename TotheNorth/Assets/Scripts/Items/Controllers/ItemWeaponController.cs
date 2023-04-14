@@ -2,6 +2,7 @@ using System;
 using Assets.Scripts.Battles;
 using Assets.Scripts.Commons.Constants;
 using UnityEngine;
+using static GlobalComponent.Common;
 
 namespace Assets.Scripts.Items
 {
@@ -12,6 +13,8 @@ namespace Assets.Scripts.Items
     {
         [SerializeField]
         private ItemWeaponInfo info;
+        [SerializeField]
+        private bool isAI = true;
         private Transform owner;
 
         private float delayAmongFire, timeFocus, timeFocusFull = 3f;
@@ -20,6 +23,17 @@ namespace Assets.Scripts.Items
         private void Awake()
         {
             sprite = GetComponent<SpriteRenderer>();
+            if (isAI)
+            {
+                timeFocus = 0f;
+                isAiming = false;
+                owner = transform.parent.parent.parent;
+                if (info)
+                {
+                    sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
+                    delayAmongFire = info.delayAmongFire;
+                }
+            }
         }
 
         private void Update()
@@ -56,7 +70,16 @@ namespace Assets.Scripts.Items
                     case ItemBulletType.Arrow:
                         // 탄환 필요함
                         // => 이게 이렇게 되면 안됨, 탄환 정보가 필요함 + 탄환 소비가 필요
-                        projInfo = info.GetProjectileInfo(InGameStatus.Item.LookforBullet(info.bulletType));
+                        if (!isAI)
+                        {
+                            projInfo = info.GetProjectileInfo(InGameStatus.Item.LookforBullet(info.bulletType));
+                        }
+                        else
+                        {
+                            projInfo = info.GetProjectileInfo(Instantiate(
+                                GlobalComponent.Path.GetMonsterBulletInfo(ItemBulletType.Arrow, 1)
+                                ));
+                        }
                         break;
                 }
                 if (projInfo == null) return;

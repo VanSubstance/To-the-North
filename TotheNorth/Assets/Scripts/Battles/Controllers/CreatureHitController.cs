@@ -23,10 +23,6 @@ namespace Assets.Scripts.Battles
         {
             ownerTf = transform.parent;
             battleFunction = transform.parent.GetComponent<ICreatureBattle>();
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).GetComponent<PartHitController>().SetHitController(this);
-            }
         }
 
         /// <summary>
@@ -60,7 +56,8 @@ namespace Assets.Scripts.Battles
             {
                 try
                 {
-                    StartCoroutine(CoroutineVibrate());
+                    if (gameObject.activeSelf)
+                        StartCoroutine(CoroutineVibrate());
                 }
                 catch (Exception)
                 {

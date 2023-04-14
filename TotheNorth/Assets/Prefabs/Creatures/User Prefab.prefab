@@ -1096,8 +1096,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1438cd9e6929094cba9ffc47084e52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handL: {fileID: 8728397256870694550}
-  handR: {fileID: 8427379005130797500}
 --- !u!114 &2575853989354701783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1730,6 +1728,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8427379005130797500}
     m_Modifications:
+    - target: {fileID: 1421393144885258505, guid: 8aa37ddad1fdcc94fb4a71c7dfcb8673, type: 3}
+      propertyPath: isAI
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5395000417286172383, guid: 8aa37ddad1fdcc94fb4a71c7dfcb8673, type: 3}
       propertyPath: m_Name
       value: Weapon
@@ -1792,6 +1794,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8728397256870694550}
     m_Modifications:
+    - target: {fileID: 1421393144885258505, guid: 8aa37ddad1fdcc94fb4a71c7dfcb8673, type: 3}
+      propertyPath: isAI
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5395000417286172383, guid: 8aa37ddad1fdcc94fb4a71c7dfcb8673, type: 3}
       propertyPath: m_Name
       value: Weapon

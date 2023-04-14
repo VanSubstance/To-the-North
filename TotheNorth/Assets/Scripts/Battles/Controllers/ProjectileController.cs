@@ -82,6 +82,11 @@ namespace Assets.Scripts.Battles
 
         private void Update()
         {
+            if (!GlobalStatus.Loading.System.CommonGameManager)
+            {
+                // 파괴
+                Arrive();
+            }
             if (!isReady) return;
             if (trajectory)
             {
