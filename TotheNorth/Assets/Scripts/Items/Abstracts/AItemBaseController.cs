@@ -19,13 +19,13 @@ namespace Assets.Scripts.Items
 
         public int itemSizeRow
         {
-            set => baseInfo.size.y = value;
-            get => (int)baseInfo.size.y;
+            set => baseInfo.size.x = value;
+            get => (int)baseInfo.size.x;
         }
         public int itemSizeCol
         {
-            set => baseInfo.size.x = value;
-            get => (int)baseInfo.size.x;
+            set => baseInfo.size.y = value;
+            get => (int)baseInfo.size.y;
         }
         public bool isRotate;
 
@@ -54,23 +54,41 @@ namespace Assets.Scripts.Items
             objTF = GetComponent<RectTransform>();
             objCollider = GetComponent<BoxCollider2D>();
         }
+        private void Start()
+        {
+        }
 
         /// <summary>
         /// 오브젝트 생성 후 데이터 할당 후 최초로 부착하는 함수
         /// </summary>
-        private void AttachInitially()
+        private void AttachInitially(ItemInventoryInfo info)
         {
+            Debug.Log("ITemInit");
+            // 게임오브젝트 이름 변경
+            gameObject.name = baseInfo.name;
+            // RectTransform 변경
+            objTF.sizeDelta = baseInfo.size * 60f;
             // BoxCollider2D에 RectTransform 사이즈 대입
             objCollider.size = objTF.sizeDelta;
             objCollider.offset = new Vector2(objTF.sizeDelta.x / 2f, objTF.sizeDelta.y / -2f);
-            // 시작 curSlot 초기화 (ray 사용, rayPos = 게임오브젝트 좌상단 기준 30f, -30f)
+            // Image 사이즈 변경
+            image.rectTransform.sizeDelta = objTF.sizeDelta;
+            // 시작 curSlot 초기화 (OverLapPoint 사용, rayPos = 게임오브젝트 좌상단 기준 30f, -30f)
             rayPos = transform.TransformPoint(new Vector2(30f, -30f));
-            RaycastHit2D hit;
-            if ((hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask)) && hit.collider)
+            // 첫 부착
+            curSlot = InventoryManager.inventorySlots[(int)info.pos.x, (int)info.pos.y];
+            ItemAttach(curSlot);
+            /*
+            Collider2D hit;
+            if (hit = Physics2D.OverlapPoint(rayPos, GlobalStatus.Constant.slotMask))
             {
                 curSlot = hit.transform.GetComponent<InventorySlotController>();
                 ItemAttach(curSlot);
             }
+            else
+            {
+            }
+            */
         }
 
         /// <summary>
@@ -118,7 +136,6 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void ItemAttach(InventorySlotController attachSlot)
         {
-            Debug.Log("itemAttach");
             if (attachSlot.slotType == SlotType.Inventory)
                 transform.SetParent(InventoryManager.rightInventoryTF);
             if (attachSlot.slotType == SlotType.Shop || attachSlot.slotType == SlotType.Rooting)
@@ -295,8 +312,8 @@ namespace Assets.Scripts.Items
                 0f
                 );
             rayPos = transform.TransformPoint(new Vector2(30f, -30f));
-            RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask);
-            if (hit.collider)
+            Collider2D hit;
+            if (hit = Physics2D.OverlapPoint(rayPos, GlobalStatus.Constant.slotMask))
             {
                 InventorySlotController tempSlot;
                 tempSlot = hit.transform.GetComponent<InventorySlotController>();
@@ -331,8 +348,8 @@ namespace Assets.Scripts.Items
         protected override void OnUp()
         {
             rayPos = transform.TransformPoint(new Vector2(30f, -30f));
-            RaycastHit2D hit = Physics2D.Raycast(rayPos, transform.forward, 10f, GlobalStatus.Constant.slotMask);
-            if (hit.collider)
+            Collider2D hit;
+            if (hit = Physics2D.OverlapPoint(rayPos, GlobalStatus.Constant.slotMask))
             {
                 // 아이템 사이즈 체크
                 if (ItemSizeCheck(hit.transform.GetComponent<InventorySlotController>()))
@@ -367,11 +384,11 @@ namespace Assets.Scripts.Items
         /// 종류에 맞는 데이터 할당 함수
         /// </summary>
         /// <param name="_info">데이터</param>
-        public void InitInfo(TItemInfo _info)
+        public void InitInfo(TItemInfo _info, ItemInventoryInfo inventoryInfo)
         {
             info = _info;
             SetImage(baseInfo.imagePath);
-            AttachInitially();
+            AttachInitially(inventoryInfo);
         }
 
         /// <summary>

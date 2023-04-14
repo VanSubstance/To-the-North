@@ -3332,6 +3332,22 @@ PrefabInstance:
       propertyPath: right
       value: 
       objectReference: {fileID: 11400000, guid: 28a0c2b1fc9a5d14caaa96982e0f0db9, type: 2}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[4].pos.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[4].pos.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[5].pos.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[5].pos.y
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
 --- !u!1001 &622875216
