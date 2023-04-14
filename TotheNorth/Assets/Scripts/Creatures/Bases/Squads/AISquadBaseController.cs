@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Collections;
-using Assets.Scripts.Creatures.Interfaces;
-using Assets.Scripts.Creatures.Controllers.Creatures;
 using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Creatures.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Bases

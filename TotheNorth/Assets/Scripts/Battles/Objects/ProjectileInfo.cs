@@ -3,14 +3,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Battles
 {
-    [CreateAssetMenu(fileName = "Projectile Info", menuName = "Data Objects/Projectile Info", order = int.MaxValue)]
-    public class ProjectileInfo : ScriptableObject
+    public class ProjectileInfo
     {
-        [SerializeField]
-        private float spd;
-        [SerializeField]
+        private float spd, range;
         private float heightCollider, powerKnockback;
-        [SerializeField]
         private TrajectoryType trajectoryType;
         private AttackInfo attackInfo;
 
@@ -40,6 +36,10 @@ namespace Assets.Scripts.Battles
 
         public float Height
         {
+            set
+            {
+                heightCollider = value;
+            }
             get
             {
                 return heightCollider;
@@ -48,6 +48,10 @@ namespace Assets.Scripts.Battles
 
         public TrajectoryType TrajectoryType
         {
+            set
+            {
+                this.trajectoryType = value;
+            }
             get
             {
                 return trajectoryType;
@@ -66,14 +70,31 @@ namespace Assets.Scripts.Battles
             }
         }
 
+        public float Range
+        {
+            get
+            {
+                return range;
+            }
+
+            set
+            {
+                range = value;
+            }
+        }
+
         public static ProjectileInfo GetClone(ProjectileInfo _info)
         {
-            ProjectileInfo res = CreateInstance<ProjectileInfo>();
-            res.spd = _info.spd;
-            res.heightCollider = _info.heightCollider;
-            res.powerKnockback = _info.powerKnockback;
-            res.trajectoryType = _info.trajectoryType;
-            res.attackInfo = _info.attackInfo;
+            Debug.Log(_info);
+            ProjectileInfo res = new()
+            {
+                spd = _info.spd,
+                range = _info.range,
+                heightCollider = _info.heightCollider,
+                powerKnockback = _info.powerKnockback,
+                trajectoryType = _info.trajectoryType,
+                attackInfo = _info.attackInfo
+            };
             return res;
         }
     }

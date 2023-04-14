@@ -45,15 +45,20 @@ namespace Assets.Scripts.Items
             if (delayAmongFire >= info.delayAmongFire)
             {
                 float randRange = (3 - timeFocus) / 3f;
+                ProjectileInfo projInfo = new();
                 switch (info.bulletType)
                 {
                     case ItemBulletType.None:
-                        // 총알 없음
+                        // 총알 필요 없음
+                        projInfo = info.GetProjectileInfo();
                         break;
                     case ItemBulletType.mm_9:
+                        // 탄환 필요함
+                        // => 이게 이렇게 되면 안됨, 탄환 정보가 필요함 + 탄환 소비가 필요
+                        projInfo = info.GetProjectileInfo();
                         break;
                 }
-                ProjectileManager.Instance.GetNewProjectile().Fire(info.range, info.projectileInfo, transform.position,
+                ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, transform.position,
                     new Vector2(targetDir.x + randRange * UnityEngine.Random.Range(-1f, 1f), targetDir.y + randRange * UnityEngine.Random.Range(-1f, 1f))
                     , owner);
                 delayAmongFire = 0f;
@@ -70,7 +75,6 @@ namespace Assets.Scripts.Items
             try
             {
                 info = (ItemWeaponInfo)_info;
-                info.projectileInfo.PowerKnockback = info.PowerKnockback;
                 timeFocus = 0f;
                 isAiming = false;
                 owner = transform.parent.parent.parent;

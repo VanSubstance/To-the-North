@@ -40,7 +40,7 @@ namespace Assets.Scripts.Battles
 
         private TrajectoryController trajectory;
 
-        public void Fire(float range, ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner)
+        public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner)
         {
             trajectory = TrajectoryManager.Instance.GetNewTrajectory();
             owner = _owner;
@@ -54,12 +54,12 @@ namespace Assets.Scripts.Battles
             transform.position = startPos;
             gameObject.SetActive(true);
             GetComponent<Rigidbody2D>().velocity = targetDir.normalized * info.Spd;
-            targetPos = startPos + targetDir.normalized * range;
+            targetPos = startPos + targetDir.normalized * _info.Range;
             isAffected = false;
             isReady = true;
             if (info.TrajectoryType == TrajectoryType.Curve)
             {
-                trajectory.PlayCurve(startPos, CalculationFunctions.AngleFromDir(targetDir), 45, range);
+                trajectory.PlayCurve(startPos, CalculationFunctions.AngleFromDir(targetDir), 45, _info.Range);
                 trajectory = null;
             }
         }
