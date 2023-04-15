@@ -32,7 +32,7 @@ namespace Assets.Scripts.Users
         public static class UtilBlock
         {
             public static readonly ConditionType[] Run = { ConditionType.Fracture };
-            public static readonly ConditionType[] Dash = { ConditionType.Fracture };
+            public static readonly ConditionType[] Dodge = { ConditionType.Fracture };
             public static readonly ConditionType[] Aim = { };
         }
 
@@ -45,6 +45,7 @@ namespace Assets.Scripts.Users
             public static readonly ConditionType[] Accuracy = { ConditionType.Fracture };
             public static readonly ConditionType[] SpeedCameraTracking = { };
             public static readonly ConditionType[] SpeedMove = { };
+            public static readonly ConditionType[] SpeedReload = { };
             public static readonly ConditionType[] DegreeSight = { };
             public static readonly ConditionType[] RangeSight = { };
         }

@@ -128,7 +128,12 @@ namespace Assets.Scripts.Items
 
         private IEnumerator CoroutineReload(ItemMagazineInfo newMagazine)
         {
-            yield return new WaitForSeconds(info.timeReload);
+            float w = 1;
+            if (!isAI && InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedReload))
+            {
+                w *= 1.5f;
+            }
+            yield return new WaitForSeconds(info.timeReload * w);
             info.ReloadMagazine(newMagazine);
             isReloading = false;
         }
