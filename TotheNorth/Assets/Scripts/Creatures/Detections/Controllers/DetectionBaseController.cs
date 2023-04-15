@@ -13,8 +13,8 @@ namespace Assets.Scripts.Creatures.Detections
         protected AIBaseController aIBaseController;
         public bool isAI = true;
         public float meshResolution;
-        public Mesh viewMesh, viewMeshForVisualization;
-        public MeshFilter viewMeshFilter, visualizationFilter;
+        public Mesh viewMesh;
+        public MeshFilter viewMeshFilter;
         private void Awake()
         {
             meshResolution = .5f;
@@ -26,9 +26,9 @@ namespace Assets.Scripts.Creatures.Detections
             viewMesh.name = "View Mesh";
             viewMeshFilter.mesh = viewMesh;
             viewMeshFilter.GetComponent<Renderer>().sortingLayerName = "Detection";
-            viewMeshForVisualization = new Mesh();
-            viewMeshForVisualization.name = "View Mesh";
-            visualizationFilter.mesh = viewMeshForVisualization;
+            //viewMeshForVisualization = new Mesh();
+            //viewMeshForVisualization.name = "View Mesh";
+            //visualizationFilter.mesh = viewMeshForVisualization;
         }
 
         public void LateUpdate()

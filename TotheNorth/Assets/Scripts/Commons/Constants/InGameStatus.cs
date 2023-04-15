@@ -54,6 +54,18 @@ namespace Assets.Scripts.Commons.Constants
                 }
                 public static class Sight
                 {
+                    private static float degreeError = 10;
+                    public static float DegreeError
+                    {
+                        get
+                        {
+                            return degreeError;
+                        }
+                        set
+                        {
+                            degreeError = value > .5f ? value : .5f;
+                        }
+                    }
                     public static float Range
                     {
                         get

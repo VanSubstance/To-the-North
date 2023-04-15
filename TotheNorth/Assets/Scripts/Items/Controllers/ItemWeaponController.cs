@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Assets.Scripts.Battles;
 using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Users;
 using UnityEngine;
 
@@ -18,7 +19,21 @@ namespace Assets.Scripts.Items
         private bool isAI = true;
         private Transform owner;
 
-        private float delayAmongFire, timeFocus, timeFocusFull = 3f;
+        private float delayAmongFire, timeFocusFull = 3f;
+        private float timeFocus;
+        private float TimeFocus
+        {
+            get
+            {
+                return timeFocus;
+            }
+            set
+            {
+                timeFocus = value;
+                if (!isAI)
+                    InGameStatus.User.Detection.Sight.DegreeError = 10 * (timeFocusFull - timeFocus) / 3f;
+            }
+        }
         private bool isAiming, isReloading;
         private SpriteRenderer sprite;
 
@@ -27,7 +42,7 @@ namespace Assets.Scripts.Items
             sprite = GetComponent<SpriteRenderer>();
             if (isAI)
             {
-                timeFocus = 0f;
+                TimeFocus = 0f;
                 isAiming = false;
                 isReloading = false;
                 owner = transform.parent.parent.parent;
@@ -42,13 +57,10 @@ namespace Assets.Scripts.Items
         private void Update()
         {
             if (info == null) return;
+            TrackReleaseAiming();
+            isAiming = false;
             if (delayAmongFire >= info.delayAmongFire) return;
             delayAmongFire += Time.deltaTime;
-            if (!isAiming)
-            {
-                timeFocus = Mathf.Max(timeFocus - Time.deltaTime, 0);
-            }
-            isAiming = false;
             if (Input.GetKeyDown(KeyCode.R) && !isAI)
             {
                 // 재장전
@@ -56,6 +68,14 @@ namespace Assets.Scripts.Items
                 {
                     TryReload(InGameStatus.Item.LookForMagazine(info.bulletType));
                 }
+            }
+        }
+
+        private void TrackReleaseAiming()
+        {
+            if (!isAiming && TimeFocus > 0)
+            {
+                TimeFocus = Mathf.Max(TimeFocus - (3 * Time.deltaTime), 0);
             }
         }
         public void Aim(Vector3 targetDir)
@@ -67,7 +87,7 @@ namespace Assets.Scripts.Items
             {
                 weight = 2;
             }
-            timeFocus = Mathf.Min(timeFocus + (Time.deltaTime / weight), timeFocusFull / weight);
+            TimeFocus = Mathf.Min(TimeFocus + (Time.deltaTime / weight), timeFocusFull / weight);
         }
 
         public void Use(Vector3 targetDir)
@@ -76,7 +96,6 @@ namespace Assets.Scripts.Items
             // 투사체 발사
             if (delayAmongFire >= info.delayAmongFire)
             {
-                float randRange = (3 - timeFocus) / 3f;
                 ProjectileInfo projInfo = info.GetProjectileInfo(isAI);
                 if (projInfo == null)
                 {
@@ -89,7 +108,7 @@ namespace Assets.Scripts.Items
                 else
                 {
                     ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, transform.position,
-                        new Vector2(targetDir.x + randRange * UnityEngine.Random.Range(-1f, 1f), targetDir.y + randRange * UnityEngine.Random.Range(-1f, 1f))
+                        CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(targetDir) + UnityEngine.Random.Range(-InGameStatus.User.Detection.Sight.DegreeError, InGameStatus.User.Detection.Sight.DegreeError))
                         , owner);
                 }
                 delayAmongFire = 0f;
@@ -106,7 +125,7 @@ namespace Assets.Scripts.Items
             try
             {
                 info = (ItemWeaponInfo)_info;
-                timeFocus = 0f;
+                TimeFocus = 0f;
                 isAiming = false;
                 owner = transform.parent.parent.parent;
                 sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));

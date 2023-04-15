@@ -2,20 +2,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Events.Interfaces;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Detections
 {
-    internal class DetectionSightController : DetectionBaseController
+    internal class DetectionAimController : DetectionBaseController
     {
         public float range = 3f, degree = 60f, curDegree = 0;
+        private MeshRenderer sprite;
         private new void Start()
         {
             base.Start();
+            sprite = viewMeshFilter.GetComponent<MeshRenderer>();
             if (!isAI)
-                StartCoroutine(CheckCurRotation(0.01f));
+                StartCoroutine(CheckCurRotation(Time.deltaTime));
+        }
+
+        private void TrackColor()
+        {
+            sprite.material.color = new Color(
+                InGameStatus.User.Detection.Sight.DegreeError / 10,
+                (10 - InGameStatus.User.Detection.Sight.DegreeError) / 10,
+                0,
+                0.1f
+                );
         }
 
         private IEnumerator CheckCurRotation(float delay)
@@ -24,6 +36,7 @@ namespace Assets.Scripts.Creatures.Detections
             {
                 yield return new WaitForSeconds(delay);
                 SetRotationDegree();
+                TrackColor();
             }
         }
 
@@ -91,16 +104,28 @@ namespace Assets.Scripts.Creatures.Detections
         /** 시야 시각화 */
         public override void DrawSightArea()
         {
-            int stepCount = Mathf.RoundToInt((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) * meshResolution);
-            float stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / stepCount;
+            int stepCount = Mathf.RoundToInt((isAI ? degree : InGameStatus.User.Detection.Sight.DegreeError) * meshResolution);
+            stepCount = stepCount > 0 ? stepCount : 1;
+            float stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.DegreeError) / stepCount;
+            stepAngleSize = float.IsInfinity(stepAngleSize) ? 0.5f : stepAngleSize;
             List<Vector3> viewPoints = new List<Vector3>();
 
-            for (int i = 0; i <= stepCount; i++)
+            if (InGameStatus.User.Detection.Sight.DegreeError < 0.5f)
             {
-                float angle = transform.eulerAngles.z - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
-
-                DetectionSightInfo newViewCast = SightCast(angle);
+                float angle = transform.eulerAngles.z - ((isAI ? degree : InGameStatus.User.Detection.Sight.DegreeError) / 2);
+                DetectionSightInfo newViewCast = SightCast(angle + 0.5f);
                 viewPoints.Add(newViewCast.point);
+                newViewCast = SightCast(angle - 0.5f);
+                viewPoints.Add(newViewCast.point);
+            }
+            else
+            {
+                for (int i = 0; i <= stepCount; i++)
+                {
+                    float angle = transform.eulerAngles.z - ((isAI ? degree : InGameStatus.User.Detection.Sight.DegreeError) / 2) + stepAngleSize * i;
+                    DetectionSightInfo newViewCast = SightCast(angle);
+                    viewPoints.Add(newViewCast.point);
+                }
             }
 
             int vertexCount = viewPoints.Count + 1;
@@ -122,10 +147,6 @@ namespace Assets.Scripts.Creatures.Detections
             viewMesh.vertices = vertices;
             viewMesh.triangles = triangles;
             viewMesh.RecalculateNormals();
-            //viewMeshForVisualization.Clear();
-            //viewMeshForVisualization.vertices = vertices;
-            //viewMeshForVisualization.triangles = triangles;
-            //viewMeshForVisualization.RecalculateNormals();
         }
 
         /// <summary>
@@ -188,15 +209,6 @@ namespace Assets.Scripts.Creatures.Detections
                 }
             }
             return null;
-        }
-
-        /// <summary>
-        /// 현재 Transform이 바라보고 있는 방향을 기준으로 angle 방향 정규 벡터 + Transform 위치 Vector3
-        /// </summary>
-        /// <param name="angle"></param>
-        public Vector3 GetPositionOfLooking(float angle)
-        {
-            return transform.position + CalculationFunctions.DirFromAngle(curDegree + angle).normalized;
         }
     }
 }
