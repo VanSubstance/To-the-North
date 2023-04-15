@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Components.Progress;
 using Assets.Scripts.Items;
 using Assets.Scripts.Items.Objects;
@@ -26,6 +27,14 @@ namespace Assets.Scripts.Commons.Constants
                 { ConditionType.Fracture, 0},
             };
 
+            public static bool IsConditionExist(ConditionType[] targetTypes)
+            {
+                foreach (ConditionType type in targetTypes)
+                {
+                    if (conditions[type] > 0) return true;
+                }
+                return false;
+            }
 
             public static class Movement
             {

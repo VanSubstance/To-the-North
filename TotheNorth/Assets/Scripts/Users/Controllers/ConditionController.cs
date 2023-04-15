@@ -17,15 +17,6 @@ namespace Assets.Scripts.Users
         private float tickLive = 0;
 
         private static readonly float tickTime = 2;
-        private static readonly ConditionType[] conditionTickDamage = { ConditionType.Bleeding_Light, ConditionType.Bleeding_Heavy };
-        private static readonly ConditionType[] conditionVibrating = { ConditionType.Bleeding_Light, ConditionType.Fracture };
-        private static readonly ConditionType[] conditionBlurred = { ConditionType.Fracture, ConditionType.Bleeding_Heavy };
-        private static readonly Dictionary<ConditionType, int> tickAmountForCondition = new Dictionary<ConditionType, int>()
-        {
-            {ConditionType.Bleeding_Light, 2},
-            {ConditionType.Bleeding_Heavy, 6},
-            {ConditionType.Fracture, 11},
-        };
 
         private void Awake()
         {
@@ -52,21 +43,21 @@ namespace Assets.Scripts.Users
             sleepTf = _sleepTf;
             targetType = _targetType;
             GetComponent<Image>().sprite = Resources.Load<Sprite>(GlobalComponent.Path.Image.Condition(targetType));
-            tickAmount = tickAmountForCondition[targetType];
+            tickAmount = ConditionConstraint.Tick.TickAmountForCondition[targetType];
             // 1. 틱 데미지가 있는 상태이상?
-            if (conditionTickDamage.Contains(targetType))
+            if (ConditionConstraint.Tick.Damage.Contains(targetType))
             {
                 conditionControl += ApplyDamage;
             }
 
             // 2. 화면 진통이 있는 상태이상?
-            if (conditionVibrating.Contains(targetType))
+            if (ConditionConstraint.Tick.Vibrating.Contains(targetType))
             {
                 conditionControl += ScreenVibrate;
             }
 
             // 3. 화면 붉어짐이 있는 상태 이상?
-            if (conditionBlurred.Contains(targetType))
+            if (ConditionConstraint.Tick.Blurred.Contains(targetType))
             {
                 conditionControl += ScreenBlurred;
             }

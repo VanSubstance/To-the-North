@@ -117,6 +117,12 @@ namespace Assets.Scripts.Users
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
+                if (InGameStatus.User.IsConditionExist(ConditionConstraint.UtilBlock.Run))
+                {
+                    Debug.Log("상태 이상:: 달리기 불가");
+                    // 상태 이상으로 인해 달릴 수 없음
+                    return;
+                }
                 InGameStatus.User.Movement.curMovement = Objects.MovementType.RUN;
                 return;
             }
@@ -134,7 +140,13 @@ namespace Assets.Scripts.Users
             {
                 // 마지막으로 뛴 순간으로부터 2초 후
                 // = 스테미나 회복 시작
-                InGameStatus.User.status.staminaBar.AddCurrent(Time.deltaTime * 10);
+                int weight = 10;
+                if (InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.RecoveryStamina))
+                {
+                    Debug.Log("상태 이상:: 스테미나 회복도 절반");
+                    weight /= 2;
+                }
+                InGameStatus.User.status.staminaBar.AddCurrent(Time.deltaTime * (float)weight);
                 return;
             }
             secForRecoverStamina += Time.deltaTime;

@@ -1,8 +1,8 @@
 using System;
 using Assets.Scripts.Battles;
 using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Users;
 using UnityEngine;
-using static GlobalComponent.Common;
 
 namespace Assets.Scripts.Items
 {
@@ -50,7 +50,14 @@ namespace Assets.Scripts.Items
         public void Aim(Vector3 targetDir)
         {
             isAiming = true;
-            timeFocus = Mathf.Min(timeFocus + Time.deltaTime, timeFocusFull);
+            float weight = 1;
+            if ( !isAI &&
+                InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.Accuracy))
+            {
+                Debug.Log("상태 이상:: 최대 조준 정확도 절반, 조준 속도 절반");
+                weight = 2;
+            }
+            timeFocus = Mathf.Min(timeFocus + (Time.deltaTime / weight), timeFocusFull / weight);
         }
 
         public void Use(Vector3 targetDir)

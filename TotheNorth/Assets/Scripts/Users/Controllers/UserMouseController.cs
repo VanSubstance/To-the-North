@@ -36,6 +36,11 @@ namespace Assets.Scripts.Users.Controllers
         {
             if (Input.GetMouseButton((int)MouseButton.RightMouse))
             {
+                if (InGameStatus.User.IsConditionExist(ConditionConstraint.UtilBlock.Aim))
+                {
+                    Debug.Log("상태 이상:: 조준 불가");
+                    return;
+                }
                 CameraTrackControlller.targetPos =
                     (
                     mousePos - GlobalComponent.Common.userController.position

@@ -71,8 +71,7 @@ namespace Assets.Scripts.Users
                 if (Random.Range(0f, 1f) <= Mathf.Pow(damage[1] / 100f, 1.5f))
                 {
                     // 심각한 출혈 발생
-                    InGameStatus.User.conditions[ConditionType.Bleeding_Heavy]++;
-                    ConditionManager.Instance.AwakeCondition(ConditionType.Bleeding_Heavy);
+                    OccurCondition(ConditionType.Bleeding_Heavy);
                 }
             }
 
@@ -83,21 +82,30 @@ namespace Assets.Scripts.Users
                 if (Random.Range(0f, 1f) <= damage[2] / 100f)
                 {
                     // 얕은 출혈 발생
-                    InGameStatus.User.conditions[ConditionType.Bleeding_Light]++;
-                    ConditionManager.Instance.AwakeCondition(ConditionType.Bleeding_Light);
+                    OccurCondition(ConditionType.Bleeding_Light);
                 }
                 // 골절 심사
+                OccurCondition(ConditionType.Fracture);
                 if (Random.Range(0f, 1f) <= Mathf.Pow(damage[1] / 100f, 1.7f))
                 {
                     // 골절 발생
-                    InGameStatus.User.conditions[ConditionType.Fracture]++;
-                    ConditionManager.Instance.AwakeCondition(ConditionType.Fracture);
+                    OccurCondition(ConditionType.Fracture);
                 }
             }
 
             // 화면 피격 이벤트 처리
             CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(hitDir), damage);
             return;
+        }
+
+        /// <summary>
+        /// 상태 이상 발생 함수
+        /// </summary>
+        /// <param name="targetCondition">발생할 상태 이상</param>
+        private void OccurCondition(ConditionType targetCondition)
+        {
+            InGameStatus.User.conditions[targetCondition]++;
+            ConditionManager.Instance.AwakeCondition(targetCondition);
         }
     }
 }
