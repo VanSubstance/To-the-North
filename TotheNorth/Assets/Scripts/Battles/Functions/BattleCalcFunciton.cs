@@ -1,11 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.Items;
-using UnityEngine;
 
 namespace Assets.Scripts.Battles
 {

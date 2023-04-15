@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -10,6 +12,21 @@ namespace Assets.Scripts.Users
         private ConditionType targetType;
         private TextMeshProUGUI count;
         private Transform sleepTf;
+        private ConditionControl conditionControl;
+        private int tickAmount;
+        private float tickLive = 0;
+
+        private static readonly float tickTime = 2;
+        private static readonly ConditionType[] conditionTickDamage = { ConditionType.Bleeding_Light, ConditionType.Bleeding_Heavy };
+        private static readonly ConditionType[] conditionVibrating = { ConditionType.Bleeding_Light, ConditionType.Fracture };
+        private static readonly ConditionType[] conditionBlurred = { ConditionType.Fracture, ConditionType.Bleeding_Heavy };
+        private static readonly Dictionary<ConditionType, int> tickAmountForCondition = new Dictionary<ConditionType, int>()
+        {
+            {ConditionType.Bleeding_Light, 2},
+            {ConditionType.Bleeding_Heavy, 6},
+            {ConditionType.Fracture, 11},
+        };
+
         private void Awake()
         {
             count = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
@@ -25,14 +42,62 @@ namespace Assets.Scripts.Users
             if (targetType != ConditionType.None)
             {
                 count.text = InGameStatus.User.conditions[targetType].ToString();
+                ApplyEffects();
             }
         }
 
         public void InitCondition(ConditionType _targetType, Transform _sleepTf)
         {
+            tickLive = 0;
             sleepTf = _sleepTf;
             targetType = _targetType;
             GetComponent<Image>().sprite = Resources.Load<Sprite>(GlobalComponent.Path.Image.Condition(targetType));
+            tickAmount = tickAmountForCondition[targetType];
+            // 1. 틱 데미지가 있는 상태이상?
+            if (conditionTickDamage.Contains(targetType))
+            {
+                conditionControl += ApplyDamage;
+            }
+
+            // 2. 화면 진통이 있는 상태이상?
+            if (conditionVibrating.Contains(targetType))
+            {
+                conditionControl += ScreenVibrate;
+            }
+
+            // 3. 화면 붉어짐이 있는 상태 이상?
+            if (conditionBlurred.Contains(targetType))
+            {
+                conditionControl += ScreenBlurred;
+            }
+        }
+
+        /// <summary>
+        /// 상태 이상에 따른 효과 적용 함수
+        /// </summary>
+        private void ApplyEffects()
+        {
+            tickLive += Time.deltaTime;
+            if (tickLive >= tickTime)
+            {
+                tickLive = 0;
+                conditionControl.Invoke(tickAmount * InGameStatus.User.conditions[targetType]);
+            }
+        }
+
+        private void ScreenVibrate(int amount)
+        {
+            CommonGameManager.Instance.CameraHitController.OnHit(amount);
+        }
+
+        private void ScreenBlurred(int amount)
+        {
+            CommonGameManager.Instance.ScreenHitFilterController.OnHit(amount);
+        }
+
+        private void ApplyDamage(int amount)
+        {
+            CommonGameManager.Instance.ApplyDamage(amount);
         }
     }
 }

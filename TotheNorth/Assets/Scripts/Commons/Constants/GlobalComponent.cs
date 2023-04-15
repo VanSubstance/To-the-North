@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Assets.Scripts.Items;
 using Assets.Scripts.Items.Objects;

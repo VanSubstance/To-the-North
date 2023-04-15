@@ -97,14 +97,6 @@ namespace Assets.Scripts.Users
 
             // 화면 피격 이벤트 처리
             CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(hitDir), damage);
-
-
-            // 계산 처리
-            InGameStatus.User.status.hpBar.LiveInfo = -damage[0];
-            if (InGameStatus.User.status.hpBar.LiveInfo <= 0)
-            {
-                //InGameStatus.User.isPause = true;
-            }
             return;
         }
     }
