@@ -47,7 +47,7 @@ namespace Assets.Scripts.Creatures.Detections
             Vector3 dir = DirFromAngle(globalAngle, true);
             RaycastHit2D hit;
             if (hit = Physics2D.Raycast(transform.position, dir,
-                (isAI ? range : (int)InGameStatus.User.Detection.Sight.range),
+                (isAI ? range : (int)InGameStatus.User.Detection.Sight.Range),
                 GlobalStatus.Constant.blockingSightMask))
             {
                 return new DetectionSightInfo(true, DistortPoint(globalAngle, hit.point), hit.distance, globalAngle);
@@ -55,8 +55,8 @@ namespace Assets.Scripts.Creatures.Detections
             else
             {
                 return new DetectionSightInfo(false, transform.position + dir *
-                    (isAI ? range : InGameStatus.User.Detection.Sight.range),
-                    (isAI ? range : InGameStatus.User.Detection.Sight.range),
+                    (isAI ? range : InGameStatus.User.Detection.Sight.Range),
+                    (isAI ? range : InGameStatus.User.Detection.Sight.Range),
                     globalAngle);
             }
         }
@@ -91,13 +91,13 @@ namespace Assets.Scripts.Creatures.Detections
         /** 시야 시각화 */
         public override void DrawSightArea()
         {
-            int stepCount = Mathf.RoundToInt((isAI ? degree : InGameStatus.User.Detection.Sight.degree) * meshResolution);
-            float stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.degree) / stepCount;
+            int stepCount = Mathf.RoundToInt((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) * meshResolution);
+            float stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / stepCount;
             List<Vector3> viewPoints = new List<Vector3>();
 
             for (int i = 0; i <= stepCount; i++)
             {
-                float angle = transform.eulerAngles.z - ((isAI ? degree : InGameStatus.User.Detection.Sight.degree) / 2) + stepAngleSize * i;
+                float angle = transform.eulerAngles.z - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
 
                 DetectionSightInfo newViewCast = SightCast(angle);
                 viewPoints.Add(newViewCast.point);
@@ -122,10 +122,10 @@ namespace Assets.Scripts.Creatures.Detections
             viewMesh.vertices = vertices;
             viewMesh.triangles = triangles;
             viewMesh.RecalculateNormals();
-            viewMeshForVisualization.Clear();
-            viewMeshForVisualization.vertices = vertices;
-            viewMeshForVisualization.triangles = triangles;
-            viewMeshForVisualization.RecalculateNormals();
+            //viewMeshForVisualization.Clear();
+            //viewMeshForVisualization.vertices = vertices;
+            //viewMeshForVisualization.triangles = triangles;
+            //viewMeshForVisualization.RecalculateNormals();
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Assets.Scripts.Creatures.Detections
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
 
                 // (플레이어와 forward와 target이 이루는 각 - 마우스 회전각)이 설정한 각도 내라면
-                if (Math.Abs(Vector3.SignedAngle(transform.right, dirToTarget, Vector3.forward)) * 2 < InGameStatus.User.Detection.Sight.degree)
+                if (Math.Abs(Vector3.SignedAngle(transform.right, dirToTarget, Vector3.forward)) * 2 < InGameStatus.User.Detection.Sight.Degree)
                 {
                     float dstToTarget = Vector3.Distance(transform.position, target.transform.position);
 

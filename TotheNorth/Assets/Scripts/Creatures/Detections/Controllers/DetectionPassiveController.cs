@@ -44,10 +44,10 @@ namespace Assets.Scripts.Creatures.Detections
             viewMesh.vertices = vertices;
             viewMesh.triangles = triangles;
             viewMesh.RecalculateNormals();
-            viewMeshForVisualization.Clear();
-            viewMeshForVisualization.vertices = vertices;
-            viewMeshForVisualization.triangles = triangles;
-            viewMeshForVisualization.RecalculateNormals();
+            //viewMeshForVisualization.Clear();
+            //viewMeshForVisualization.vertices = vertices;
+            //viewMeshForVisualization.triangles = triangles;
+            //viewMeshForVisualization.RecalculateNormals();
         }
 
         /// <summary>

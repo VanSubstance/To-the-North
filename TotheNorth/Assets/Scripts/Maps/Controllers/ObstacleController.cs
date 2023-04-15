@@ -32,6 +32,10 @@ namespace Assets.Scripts.Maps
         {
             Collider2D[] list;
             list = new Collider2D[20];
+            if (spriteBottom == null)
+            {
+                spriteBottom = transform.Find("Bottom").GetComponent<SpriteRenderer>();
+            }
             Physics2D.OverlapCollider(spriteBottom.GetComponent<PolygonCollider2D>(), filterOption, list);
             return list;
         }

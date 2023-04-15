@@ -1,10 +1,14 @@
+using Assets.Scripts.Commons.Constants;
 using UnityEngine;
+using Assets.Scripts.Users;
 
 public class CameraTrackControlller : MonoBehaviour
 {
     public static Vector3
         targetPos = Vector3.zero,
         headHorPos = Vector3.zero, headVerPos = Vector3.zero;
+
+    private static int speedTracking = 2;
 
     private void Awake()
     {
@@ -13,18 +17,31 @@ public class CameraTrackControlller : MonoBehaviour
 
     private void Update()
     {
-        Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * 3;
-        if (Camera.main.orthographicSize < 6) Camera.main.orthographicSize = 6;
-        if (Camera.main.orthographicSize > 10) Camera.main.orthographicSize = 10;
+        if (!InGameStatus.User.isPause)
+        {
+            TrackZoom();
+        }
     }
 
     private void LateUpdate()
     {
+        float weight = 1;
+        if (InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedCameraTracking))
+        {
+            weight /= 2;
+        }
         transform.Translate(
-            2 * Time.deltaTime * new Vector2(
+            weight * speedTracking * Time.deltaTime * new Vector2(
                 GlobalComponent.Common.userController.x - transform.position.x + targetPos.x + headHorPos.x + headVerPos.x,
                 GlobalComponent.Common.userController.y - transform.position.y + targetPos.y + headHorPos.y + headVerPos.y
                 )
             );
+    }
+
+    private void TrackZoom()
+    {
+        Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * 3;
+        if (Camera.main.orthographicSize < 6) Camera.main.orthographicSize = 6;
+        if (Camera.main.orthographicSize > 10) Camera.main.orthographicSize = 10;
     }
 }

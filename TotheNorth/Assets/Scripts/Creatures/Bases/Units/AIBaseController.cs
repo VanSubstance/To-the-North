@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Assets.Scripts.Battles;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Conductions;
@@ -9,8 +10,6 @@ using Assets.Scripts.Creatures.Detections.Controllers;
 using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Items;
 using UnityEngine;
-using static UnityEditor.Progress;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Assets.Scripts.Creatures.Bases
 {
@@ -18,8 +17,6 @@ namespace Assets.Scripts.Creatures.Bases
     {
         [SerializeField]
         private CreatureInfo info;
-        [SerializeField]
-        private Transform handL, handR;
         private DetectionCompositeController detectionBase;
 
         private bool isInit = false;
@@ -38,8 +35,10 @@ namespace Assets.Scripts.Creatures.Bases
         private readonly float forcingDis = 2f;
 
         private Transform hpBarTf;
-        private IItemHandable itemL, itemR;
         private float weaponRange = 0f;
+
+        private Dictionary<EquipBodyType, IItemEquipable> equipableBodies = new Dictionary<EquipBodyType, IItemEquipable>();
+        private ItemWeaponController weaponL, weaponR;
 
         public CreatureInfo Info
         {
@@ -75,21 +74,28 @@ namespace Assets.Scripts.Creatures.Bases
         {
             isRunAway = info.IsRunAway;
             isAttacked = isRunAway || info.IsActiveBehaviour;
-            if (handL.childCount > 0)
-            {
-                itemL = handL.GetChild(0).GetComponent<IItemHandable>();
-            }
-            if (handR.childCount > 0)
-            {
-                itemR = handR.GetChild(0).GetComponent<IItemHandable>();
-            }
-            weaponRange = Mathf.Max(itemL != null ? itemL.Range() : 0, itemR != null ? itemR.Range() : 0);
             Transform temp = transform.Find("Detection Controller");
             detectionBase = GetComponent<DetectionCompositeController>();
             passiveController = temp.Find("Passive").GetComponent<DetectionPassiveController>();
             sightController = temp.Find("Sight").GetComponent<DetectionSightController>();
             passiveController.SetAIBaseController(this);
             sightController.SetAIBaseController(this);
+
+            temp = transform.Find("Hands");
+            weaponR = temp.GetChild(0).GetChild(0).GetComponent<ItemWeaponController>();
+            weaponL = temp.GetChild(1).GetChild(0).GetComponent<ItemWeaponController>();
+            weaponRange = Mathf.Max(!weaponL.IsEmpty() ? weaponL.Range() : 0, !weaponR.IsEmpty() ? weaponR.Range() : 0);
+
+            temp = transform.Find("Hits");
+            equipableBodies[EquipBodyType.Helmat] = temp.GetChild(0).GetChild(0).GetComponent<ItemArmorController>();
+            equipableBodies[EquipBodyType.Mask] = temp.GetChild(1).GetChild(0).GetComponent<ItemArmorController>();
+            equipableBodies[EquipBodyType.Head] = temp.GetChild(2).GetChild(0).GetComponent<ItemArmorController>();
+            equipableBodies[EquipBodyType.Body] = temp.GetChild(3).GetChild(0).GetComponent<ItemArmorController>();
+            equipableBodies[EquipBodyType.Leg] = temp.GetChild(4).GetChild(0).GetComponent<ItemArmorController>();
+            temp = transform.Find("Hands");
+            equipableBodies[EquipBodyType.Right] = temp.GetChild(0).GetChild(0).GetComponent<ItemWeaponController>();
+            equipableBodies[EquipBodyType.Left] = temp.GetChild(1).GetChild(0).GetComponent<ItemWeaponController>();
+
             if (info == null) OnDisable();
             else OnEnable();
         }
@@ -167,13 +173,13 @@ namespace Assets.Scripts.Creatures.Bases
             Vector3 originPos = transform.position;
             if (IsAttackable())
             {
-                if (itemL != null)
+                if (!weaponL.IsEmpty())
                 {
-                    itemL.Use(_targetPos - originPos);
+                    weaponL.Use(_targetPos - originPos);
                 }
-                if (itemR != null)
+                if (!weaponR.IsEmpty())
                 {
-                    itemR.Use(_targetPos - originPos);
+                    weaponR.Use(_targetPos - originPos);
                 }
             }
         }
@@ -679,7 +685,7 @@ namespace Assets.Scripts.Creatures.Bases
             return !Physics2D.Raycast(originPos, (_targetPos - originPos).normalized, dis, GlobalStatus.Constant.blockingSightMask);
         }
 
-        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
+        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
         {
             isAttacked = true;
             transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
@@ -699,8 +705,7 @@ namespace Assets.Scripts.Creatures.Bases
             // 계산 처리
             if (info)
             {
-                // AI 기준
-                info.LiveHp = -10;
+                info.LiveHp = -damage[0];
                 if (info.LiveHp <= 0)
                 {
                     gameObject.SetActive(false);
@@ -716,6 +721,12 @@ namespace Assets.Scripts.Creatures.Bases
             {
                 // 피격 당한쪽 바라보기
                 SetTargetToGaze(hitDir, 3, false);
+            }
+
+            // 상태 이상 부여 심사
+            if (damage[1] > 0)
+            {
+                // 관통당했다
             }
         }
 

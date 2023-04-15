@@ -11,16 +11,4 @@ public class ItemBaseInfo : ScriptableObject
     public string itemName;
     public string description;
     public int price;
-
-    public ItemBaseInfo GetClone()
-    {
-        ItemBaseInfo res = CreateInstance<ItemBaseInfo>();
-        res.itemType = itemType;
-        res.imagePath = imagePath;
-        res.itemName = itemName;
-        res.description = description;
-        res.price = price;
-        res.size = size;
-        return res;
-    }
 }

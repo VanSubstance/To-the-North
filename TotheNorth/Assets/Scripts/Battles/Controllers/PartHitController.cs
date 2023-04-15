@@ -12,6 +12,7 @@ namespace Assets.Scripts.Battles
 
         private void Awake()
         {
+            hitController = transform.parent.GetComponent<CreatureHitController>();
             bool isArmor = false;
             if (transform.childCount == 0)
             {

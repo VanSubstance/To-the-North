@@ -30,7 +30,7 @@ namespace Assets.Scripts.Items
             try
             {
                 info = (ItemArmorInfo)_info;
-                sprite.sprite = Resources.Load<Sprite>(info.imagePath);
+                sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
             }
             catch (InvalidCastException)
             {

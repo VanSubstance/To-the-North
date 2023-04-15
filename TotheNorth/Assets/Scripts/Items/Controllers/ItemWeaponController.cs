@@ -1,5 +1,9 @@
 using System;
+using System.Collections;
 using Assets.Scripts.Battles;
+using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Users;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -11,51 +15,102 @@ namespace Assets.Scripts.Items
     {
         [SerializeField]
         private ItemWeaponInfo info;
+        [SerializeField]
+        private bool isAI = true;
         private Transform owner;
 
-        private float delayAmongFire, timeFocus, timeFocusFull = 3f;
-        private bool isAiming;
+        private float delayAmongFire, timeFocusFull = 3f;
+        private float timeFocus;
+        private float TimeFocus
+        {
+            get
+            {
+                return timeFocus;
+            }
+            set
+            {
+                timeFocus = value;
+                if (!isAI)
+                    InGameStatus.User.Detection.Sight.DegreeError = 10 * (timeFocusFull - timeFocus) / 3f;
+            }
+        }
+        private bool isAiming, isReloading;
         private SpriteRenderer sprite;
+
         private void Awake()
         {
             sprite = GetComponent<SpriteRenderer>();
+            if (isAI)
+            {
+                TimeFocus = 0f;
+                isAiming = false;
+                isReloading = false;
+                owner = transform.parent.parent.parent;
+                if (info)
+                {
+                    sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
+                    delayAmongFire = info.delayAmongFire;
+                }
+            }
         }
 
         private void Update()
         {
             if (info == null) return;
+            TrackReleaseAiming();
+            isAiming = false;
             if (delayAmongFire >= info.delayAmongFire) return;
             delayAmongFire += Time.deltaTime;
-            if (!isAiming)
+            if (Input.GetKeyDown(KeyCode.R) && !isAI)
             {
-                timeFocus = Mathf.Max(timeFocus - Time.deltaTime, 0);
+                // 재장전
+                if (info.isMagazineRequired())
+                {
+                    TryReload(InGameStatus.Item.LookForMagazine(info.bulletType));
+                }
             }
-            isAiming = false;
+        }
+
+        private void TrackReleaseAiming()
+        {
+            if (!isAiming && TimeFocus > 0)
+            {
+                TimeFocus = Mathf.Max(TimeFocus - (3 * Time.deltaTime), 0);
+            }
         }
         public void Aim(Vector3 targetDir)
         {
             isAiming = true;
-            timeFocus = Mathf.Min(timeFocus + Time.deltaTime, timeFocusFull);
+            float weight = 1;
+            if (!isAI &&
+                InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.Accuracy))
+            {
+                weight = 2;
+            }
+            TimeFocus = Mathf.Min(TimeFocus + (Time.deltaTime / weight), timeFocusFull / weight);
         }
 
         public void Use(Vector3 targetDir)
         {
+            if (isReloading) return; // 재장전중
             // 투사체 발사
-            //Debug.Log(info);
             if (delayAmongFire >= info.delayAmongFire)
             {
-                float randRange = (3 - timeFocus) / 3f;
-                switch (info.bulletType)
+                ProjectileInfo projInfo = info.GetProjectileInfo(isAI);
+                if (projInfo == null)
                 {
-                    case ItemBulletType.None:
-                        // 총알 없음
-                        break;
-                    case ItemBulletType.mm_9:
-                        break;
+                    // 탄환이 없는 원거리 무기
+                    // = 재장전 필요
+                    Debug.Log("탄환 또는 탄창이 없습니다! 재장전이 필요합니다!");
+                    if (isAI) TryReload(GlobalComponent.Path.GetMonsterMagazineInfo(info.bulletType, 1));
+                    return;
                 }
-                ProjectileManager.Instance.GetNewProjectile().Fire(info.range, info.projectileInfo, transform.position,
-                    new Vector2(targetDir.x + randRange * UnityEngine.Random.Range(-1f, 1f), targetDir.y + randRange * UnityEngine.Random.Range(-1f, 1f))
-                    , owner);
+                else
+                {
+                    ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, transform.position,
+                        CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(targetDir) + UnityEngine.Random.Range(-InGameStatus.User.Detection.Sight.DegreeError, InGameStatus.User.Detection.Sight.DegreeError))
+                        , owner);
+                }
                 delayAmongFire = 0f;
             }
         }
@@ -70,11 +125,10 @@ namespace Assets.Scripts.Items
             try
             {
                 info = (ItemWeaponInfo)_info;
-                info.projectileInfo.PowerKnockback = info.PowerKnockback;
-                timeFocus = 0f;
+                TimeFocus = 0f;
                 isAiming = false;
                 owner = transform.parent.parent.parent;
-                sprite.sprite = Resources.Load<Sprite>(info.imagePath);
+                sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
                 delayAmongFire = info.delayAmongFire;
             }
             catch (InvalidCastException)
@@ -84,5 +138,23 @@ namespace Assets.Scripts.Items
         }
 
         public bool IsEmpty() => info == null;
+
+        private void TryReload(ItemMagazineInfo newMagazine)
+        {
+            isReloading = true;
+            StartCoroutine(CoroutineReload(newMagazine));
+        }
+
+        private IEnumerator CoroutineReload(ItemMagazineInfo newMagazine)
+        {
+            float w = 1;
+            if (!isAI && InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedReload))
+            {
+                w *= 1.5f;
+            }
+            yield return new WaitForSeconds(info.timeReload * w);
+            info.ReloadMagazine(newMagazine);
+            isReloading = false;
+        }
     }
 }

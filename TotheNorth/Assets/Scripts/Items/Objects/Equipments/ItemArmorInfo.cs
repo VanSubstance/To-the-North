@@ -1,0 +1,66 @@
+using UnityEngine;
+
+namespace Assets.Scripts.Items
+{
+    [CreateAssetMenu(fileName = "Armor Info", menuName = "Data Objects/Items/Equipments/Armor", order = int.MaxValue)]
+    public class ItemArmorInfo : ItemEquipmentInfo
+    {
+        [HideInInspector]
+        public new EquipmentType equipmentType
+        {
+            get
+            {
+                return EquipmentType.Armor;
+            }
+        }
+        public EquipBodyType equipPartType;
+        [SerializeField]
+        private int classPenetration, classImpact;
+        private float durability = 1;
+        public int ClassPenetration
+        {
+            set
+            {
+                classPenetration = value;
+            }
+
+            get
+            {
+                return classPenetration >= 0 ? classPenetration : 0;
+            }
+        }
+        public int ClassImpact
+        {
+            set
+            {
+                classImpact = value;
+            }
+
+            get
+            {
+                return classImpact >= 0 ? classImpact : 0;
+            }
+        }
+
+        public float Durability
+        {
+            get
+            {
+                return durability;
+            }
+
+            set
+            {
+                durability = value;
+            }
+        }
+
+        public static ItemArmorInfo GetPlainArmor()
+        {
+            ItemArmorInfo res = CreateInstance<ItemArmorInfo>();
+            res.classPenetration = 0;
+            res.classImpact = 0;
+            return res;
+        }
+    }
+}

@@ -23,10 +23,6 @@ namespace Assets.Scripts.Battles
         {
             ownerTf = transform.parent;
             battleFunction = transform.parent.GetComponent<ICreatureBattle>();
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).GetComponent<PartHitController>().SetHitController(this);
-            }
         }
 
         /// <summary>
@@ -38,13 +34,13 @@ namespace Assets.Scripts.Battles
         /// <param name="hitDir">공격을 받은 방향</param>
         public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
         {
-            int damage = 8;
-            battleFunction.OnHit(partType, armorInfo, attackInfo, hitDir);
-            if (damage <= 10)
+            int[] damage = BattleCalcFunciton.GetDamageTotalToApply(armorInfo, attackInfo);
+            battleFunction.OnHit(partType, armorInfo, attackInfo, damage, hitDir);
+            if (damage[2] <= 10)
             {
                 powerVib = 0.2f;
             }
-            else if (damage < 30)
+            else if (damage[2] < 30)
             {
                 powerVib = 0.5f;
             }
@@ -60,7 +56,8 @@ namespace Assets.Scripts.Battles
             {
                 try
                 {
-                    StartCoroutine(CoroutineVibrate());
+                    if (gameObject.activeSelf)
+                        StartCoroutine(CoroutineVibrate());
                 }
                 catch (Exception)
                 {

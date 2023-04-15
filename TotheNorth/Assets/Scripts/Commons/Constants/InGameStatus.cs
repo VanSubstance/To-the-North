@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using Assets.Scripts.Components.Progress;
 using Assets.Scripts.Items;
+using Assets.Scripts.Items.Objects;
+using Assets.Scripts.Users;
 using Assets.Scripts.Users.Objects;
-using UnityEngine;
 
 namespace Assets.Scripts.Commons.Constants
 {
@@ -18,6 +19,23 @@ namespace Assets.Scripts.Commons.Constants
                 public static BarBaseController hpBar;
                 public static BarBaseController staminaBar;
             }
+
+            public static Dictionary<ConditionType, int> conditions = new Dictionary<ConditionType, int>() {
+                { ConditionType.Bleeding_Light, 0},
+                { ConditionType.Bleeding_Heavy, 0},
+                { ConditionType.Fracture, 0},
+                { ConditionType.Test, 0},
+            };
+
+            public static bool IsConditionExist(ConditionType[] targetTypes)
+            {
+                foreach (ConditionType type in targetTypes)
+                {
+                    if (conditions[type] > 0) return true;
+                }
+                return false;
+            }
+
             public static class Movement
             {
                 /** 현재 바라보고 있는 시야 방향 각도 */
@@ -36,10 +54,42 @@ namespace Assets.Scripts.Commons.Constants
                 }
                 public static class Sight
                 {
-                    public static float rangeMin = 45.0f;
-                    public static float rangeMax = 60.0f;
-                    public static float range = 45.0f;
-                    public static int degree = 90;
+                    private static float degreeError = 10;
+                    public static float DegreeError
+                    {
+                        get
+                        {
+                            return degreeError;
+                        }
+                        set
+                        {
+                            degreeError = value > .5f ? value : .5f;
+                        }
+                    }
+                    public static float Range
+                    {
+                        get
+                        {
+                            float w = 1;
+                            if (IsConditionExist(ConditionConstraint.PerformanceLack.RangeSight))
+                            {
+                                w /= 2;
+                            }
+                            return 45 / w;
+                        }
+                    }
+                    public static int Degree
+                    {
+                        get
+                        {
+                            int w = 1;
+                            if (IsConditionExist(ConditionConstraint.PerformanceLack.DegreeSight))
+                            {
+                                w /= 2;
+                            }
+                            return 90 / w;
+                        }
+                    }
                     public static bool isControllInRealTime = false;
                 }
             }
@@ -135,6 +185,33 @@ namespace Assets.Scripts.Commons.Constants
                         return (ItemWeaponInfo)curEquipments[targetPartType];
                     case EquipBodyType.Back:
                         return (ItemEquipmentInfo)curEquipments[targetPartType];
+                }
+                return null;
+            }
+
+            public static ItemBulletInfo LookforBullet(ItemBulletType type)
+            {
+                foreach (ItemInventoryInfo inven in inventory)
+                {
+                    if (inven.itemInfo is ItemBulletInfo)
+                    {
+                        if (((ItemBulletInfo)inven.itemInfo).AmountCount > 0)
+                        {
+                            return (ItemBulletInfo)inven.itemInfo;
+                        }
+                    }
+                }
+                return null;
+            }
+
+            public static ItemMagazineInfo LookForMagazine(ItemBulletType type)
+            {
+                foreach (ItemInventoryInfo inven in inventory)
+                {
+                    if (inven.itemInfo is ItemMagazineInfo)
+                    {
+                        return (ItemMagazineInfo)inven.itemInfo;
+                    }
                 }
                 return null;
             }
