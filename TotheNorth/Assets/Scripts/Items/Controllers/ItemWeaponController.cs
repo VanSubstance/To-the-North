@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Assets.Scripts.Battles;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Users;
@@ -18,7 +19,7 @@ namespace Assets.Scripts.Items
         private Transform owner;
 
         private float delayAmongFire, timeFocus, timeFocusFull = 3f;
-        private bool isAiming;
+        private bool isAiming, isReloading;
         private SpriteRenderer sprite;
 
         private void Awake()
@@ -28,6 +29,7 @@ namespace Assets.Scripts.Items
             {
                 timeFocus = 0f;
                 isAiming = false;
+                isReloading = false;
                 owner = transform.parent.parent.parent;
                 if (info)
                 {
@@ -47,6 +49,14 @@ namespace Assets.Scripts.Items
                 timeFocus = Mathf.Max(timeFocus - Time.deltaTime, 0);
             }
             isAiming = false;
+            if (Input.GetKeyDown(KeyCode.R) && !isAI)
+            {
+                // 재장전
+                if (info.isMagazineRequired())
+                {
+                    TryReload(InGameStatus.Item.LookForMagazine(info.bulletType));
+                }
+            }
         }
         public void Aim(Vector3 targetDir)
         {
@@ -62,16 +72,18 @@ namespace Assets.Scripts.Items
 
         public void Use(Vector3 targetDir)
         {
+            if (isReloading) return; // 재장전중
             // 투사체 발사
             if (delayAmongFire >= info.delayAmongFire)
             {
                 float randRange = (3 - timeFocus) / 3f;
-                ProjectileInfo projInfo = info.GetProjectileInfo();
+                ProjectileInfo projInfo = info.GetProjectileInfo(isAI);
                 if (projInfo == null)
                 {
                     // 탄환이 없는 원거리 무기
                     // = 재장전 필요
                     Debug.Log("탄환 또는 탄창이 없습니다! 재장전이 필요합니다!");
+                    if (isAI) TryReload(GlobalComponent.Path.GetMonsterMagazineInfo(info.bulletType, 1));
                     return;
                 }
                 else
@@ -107,5 +119,18 @@ namespace Assets.Scripts.Items
         }
 
         public bool IsEmpty() => info == null;
+
+        private void TryReload(ItemMagazineInfo newMagazine)
+        {
+            isReloading = true;
+            StartCoroutine(CoroutineReload(newMagazine));
+        }
+
+        private IEnumerator CoroutineReload(ItemMagazineInfo newMagazine)
+        {
+            yield return new WaitForSeconds(info.timeReload);
+            info.ReloadMagazine(newMagazine);
+            isReloading = false;
+        }
     }
 }

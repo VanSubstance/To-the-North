@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.Items.Objects
+namespace Assets.Scripts.Items
 {
     public class ItemMagazineInfo : ItemEquipmentInfo
     {
@@ -13,6 +13,7 @@ namespace Assets.Scripts.Items.Objects
                 return EquipmentType.Magazine;
             }
         }
+        public ItemBulletType bulletType;
         [SerializeField]
         private int maxCount;
         private int curCount;
@@ -26,6 +27,7 @@ namespace Assets.Scripts.Items.Objects
         /// <returns>장전 후 남은 탄환 뭉치 (없다면 null)</returns>
         public ItemBulletInfo LoadMagazine(ItemBulletInfo bulletInfo)
         {
+            if (bulletInfo.bulletType != bulletType) return bulletInfo; // 탄창과 호환되지 않음
             // 삽입 가능 최대 탄환수
             int availableCount = maxCount - curCount;
             if (availableCount == 0) return bulletInfo;

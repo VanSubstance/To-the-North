@@ -73,6 +73,12 @@ public static class GlobalComponent
                 /// <param name="name">무기 이름</param>
                 /// <returns></returns>
                 public static string Weapon(string name) => $"{Root}Weapons/{name}";
+                /// <summary>
+                /// 탄창 경로
+                /// </summary>
+                /// <param name="name">탄창 이름</param>
+                /// <returns></returns>
+                public static string Magazine(string name) => $"{Root}Magazines/{name}";
             }
             /// <summary>
             /// 재료 이미지 경로
@@ -85,6 +91,11 @@ public static class GlobalComponent
         public static ItemBulletInfo GetMonsterBulletInfo(ItemBulletType bulletType, int lv)
         {
             return Resources.Load<ItemBulletInfo>($"{DataObject.Root}Monsters/{Item.Consumbable.Bullet($"Monster{bulletType}Lv{lv}")}");
+        }
+
+        public static ItemMagazineInfo GetMonsterMagazineInfo(ItemBulletType bulletType, int lv)
+        {
+            return Resources.Load<ItemMagazineInfo>($"{DataObject.Root}Monsters/{Item.Equipment.Magazine($"Monster{bulletType}Lv{lv}")}");
         }
 
         /// <summary>

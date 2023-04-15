@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Scripts.Items.Objects
+namespace Assets.Scripts.Items
 {
     [CreateAssetMenu(fileName = "Bullet Info", menuName = "Data Objects/Items/Consumable/Bullet", order = int.MaxValue)]
     public class ItemBulletInfo : ItemConsumableInfo

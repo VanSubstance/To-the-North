@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.Components.Progress;
 using Assets.Scripts.Items;
 using Assets.Scripts.Items.Objects;
@@ -188,6 +187,18 @@ namespace Assets.Scripts.Commons.Constants
                         {
                             return (ItemBulletInfo)inven.itemInfo;
                         }
+                    }
+                }
+                return null;
+            }
+
+            public static ItemMagazineInfo LookForMagazine(ItemBulletType type)
+            {
+                foreach (ItemInventoryInfo inven in inventory)
+                {
+                    if (inven.itemInfo is ItemMagazineInfo)
+                    {
+                        return (ItemMagazineInfo)inven.itemInfo;
                     }
                 }
                 return null;
