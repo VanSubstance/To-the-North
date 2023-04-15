@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4a36c07d2870b64ab9ce2cd48aa7bd6, type: 3}
+  m_Script: {fileID: 11500000, guid: 4036e84fcb0facb4eb551b709478e67b, type: 3}
   m_Name: Test Knife
   m_EditorClassIdentifier: 
   itemType: 1

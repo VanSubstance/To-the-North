@@ -20,6 +20,7 @@ namespace Assets.Scripts.Items
         private float delayAmongFire, timeFocus, timeFocusFull = 3f;
         private bool isAiming;
         private SpriteRenderer sprite;
+
         private void Awake()
         {
             sprite = GetComponent<SpriteRenderer>();
@@ -51,7 +52,7 @@ namespace Assets.Scripts.Items
         {
             isAiming = true;
             float weight = 1;
-            if ( !isAI &&
+            if (!isAI &&
                 InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.Accuracy))
             {
                 weight = 2;
@@ -62,36 +63,23 @@ namespace Assets.Scripts.Items
         public void Use(Vector3 targetDir)
         {
             // 투사체 발사
-            //Debug.Log(info);
             if (delayAmongFire >= info.delayAmongFire)
             {
                 float randRange = (3 - timeFocus) / 3f;
-                ProjectileInfo projInfo = new();
-                switch (info.bulletType)
+                ProjectileInfo projInfo = info.GetProjectileInfo();
+                if (projInfo == null)
                 {
-                    case ItemBulletType.None:
-                        // 총알 필요 없음
-                        projInfo = info.GetProjectileInfo();
-                        break;
-                    case ItemBulletType.Arrow:
-                        // 탄환 필요함
-                        // => 이게 이렇게 되면 안됨, 탄환 정보가 필요함 + 탄환 소비가 필요
-                        if (!isAI)
-                        {
-                            projInfo = info.GetProjectileInfo(InGameStatus.Item.LookforBullet(info.bulletType));
-                        }
-                        else
-                        {
-                            projInfo = info.GetProjectileInfo(Instantiate(
-                                GlobalComponent.Path.GetMonsterBulletInfo(ItemBulletType.Arrow, 1)
-                                ));
-                        }
-                        break;
+                    // 탄환이 없는 원거리 무기
+                    // = 재장전 필요
+                    Debug.Log("탄환 또는 탄창이 없습니다! 재장전이 필요합니다!");
+                    return;
                 }
-                if (projInfo == null) return;
-                ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, transform.position,
-                    new Vector2(targetDir.x + randRange * UnityEngine.Random.Range(-1f, 1f), targetDir.y + randRange * UnityEngine.Random.Range(-1f, 1f))
-                    , owner);
+                else
+                {
+                    ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, transform.position,
+                        new Vector2(targetDir.x + randRange * UnityEngine.Random.Range(-1f, 1f), targetDir.y + randRange * UnityEngine.Random.Range(-1f, 1f))
+                        , owner);
+                }
                 delayAmongFire = 0f;
             }
         }

@@ -26,6 +26,7 @@ namespace Assets.Scripts.Items
         private int powerPenetration, powerImpact;
         [SerializeField]
         private TrajectoryType trajectoryType;
+        private ItemMagazineInfo magazine;
 
         public float PowerKnockback
         {
@@ -62,16 +63,34 @@ namespace Assets.Scripts.Items
         }
 
         /// <summary>
-        /// 탄환이 없는 무기의 투사체 반환 함수
+        /// 투사체 반환 함수
         /// </summary>
-        /// <returns></returns>
+        /// <returns>근거리 무기 or 탄환이 있는 원거리 무기 = 투사체, 탄환이 없다면 null 반환</returns>
         public ProjectileInfo GetProjectileInfo()
         {
             if (bulletType != ItemBulletType.None)
             {
-                Debug.Log("탄환 정보가 필요합니다!");
-                return null;
+                if (magazine == null) return null;
+                ItemBulletInfo bulletInfo;
+                // 탄환 필요
+                if (!magazine.GetNextBullet(out bulletInfo))
+                {
+                    // 탄환 없음
+                    return null;
+                }
+                // 탄환 있음
+                projectileInfo = new()
+                {
+                    TrajectoryType = trajectoryType,
+                    Spd = spd * bulletInfo.powerSpd,
+                    Range = range,
+                    Height = headHeight,
+                    PowerKnockback = powerKnockback,
+                    AttackInfo = AttackInfo.GetAttackInfo(this, bulletInfo)
+                };
+                return projectileInfo;
             }
+            // 투사체 없음
             if (projectileInfo != null) return projectileInfo;
             projectileInfo = new()
             {
@@ -86,32 +105,12 @@ namespace Assets.Scripts.Items
         }
 
         /// <summary>
-        /// 탄환이 있는 무기 투사체 반환 함수
+        ///  재장전 함수
         /// </summary>
-        /// <returns></returns>
-        public ProjectileInfo GetProjectileInfo(ItemBulletInfo bulletInfo)
+        /// <param name="_magazine"></param>
+        public void ReloadMagazine(ItemMagazineInfo _magazine)
         {
-            if (bulletType == ItemBulletType.None)
-            {
-                Debug.Log("탄환 정보가 필요 없습니다!");
-                return GetProjectileInfo();
-            }
-            if (bulletInfo.AmountCount == 0)
-            {
-                Debug.Log("탄환이 없습니다!");
-                return null;
-            }
-            bulletInfo.AmountCount--;
-            projectileInfo = new()
-            {
-                TrajectoryType = trajectoryType,
-                Spd = spd * bulletInfo.powerSpd,
-                Range = range,
-                Height = headHeight,
-                PowerKnockback = powerKnockback,
-                AttackInfo = AttackInfo.GetAttackInfo(this, bulletInfo)
-            };
-            return projectileInfo;
+            magazine = _magazine;
         }
     }
 }
