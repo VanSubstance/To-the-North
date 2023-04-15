@@ -16,6 +16,7 @@ namespace Assets.Scripts.Items
         public EquipBodyType equipPartType;
         [SerializeField]
         private int classPenetration, classImpact;
+        private float durability = 1;
         public int ClassPenetration
         {
             set
@@ -38,6 +39,19 @@ namespace Assets.Scripts.Items
             get
             {
                 return classImpact >= 0 ? classImpact : 0;
+            }
+        }
+
+        public float Durability
+        {
+            get
+            {
+                return durability;
+            }
+
+            set
+            {
+                durability = value;
             }
         }
 

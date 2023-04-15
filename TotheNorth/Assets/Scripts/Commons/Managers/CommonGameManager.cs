@@ -45,6 +45,30 @@ public class CommonGameManager : MonoBehaviour
         }
     }
 
+    public ScreenHitEffectManager ScreenHitManager
+    {
+        get
+        {
+            return _screenHitManager;
+        }
+    }
+
+    public CameraHitEffectController CameraHitController
+    {
+        get
+        {
+            return _cameraHitController;
+        }
+    }
+
+    public ScreenHitFilterController ScreenHitFilterController
+    {
+        get
+        {
+            return _screenHitFilterController;
+        }
+    }
+
     private void Awake()
     {
         if (_instance == null)
@@ -275,10 +299,22 @@ public class CommonGameManager : MonoBehaviour
     /// 피격 관련 광역 이벤트 처리 함수
     /// </summary>
     /// <param name="degree">피격 발생 각도 (화면 중간 right 반시계 기준 각도)</param>
-    public void OnHit(float degree, int damage)
+    /// <param name="damage">[0]: 전체 데미지, [1]: 관통 데미지, [2]: 충격 데미지</param>
+    public void OnHit(float degree, int[] damage)
     {
+        // 데미지 계산
+        ApplyDamage(damage[0]);
         _screenHitManager.OnHit(degree);
-        _cameraHitController.OnHit(damage);
-        _screenHitFilterController.OnHit(damage);
+        _cameraHitController.OnHit(damage[2]);
+        _screenHitFilterController.OnHit(damage[1]);
+    }
+
+    public void ApplyDamage(int amount)
+    {
+        InGameStatus.User.status.hpBar.LiveInfo = -amount;
+        if (InGameStatus.User.status.hpBar.LiveInfo <= 0)
+        {
+            //InGameStatus.User.isPause = true;
+        }
     }
 }

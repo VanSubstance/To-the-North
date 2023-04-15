@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Scripts.Items.Objects
+namespace Assets.Scripts.Items
 {
     [CreateAssetMenu(fileName = "Bullet Info", menuName = "Data Objects/Items/Consumable/Bullet", order = int.MaxValue)]
     public class ItemBulletInfo : ItemConsumableInfo
@@ -19,12 +19,12 @@ namespace Assets.Scripts.Items.Objects
         /// 관통 가중치 (한연산)
         /// 기본값: 0
         /// </summary>
-        public float powerPenetration;
+        public int powerPenetration;
         /// <summary>
         /// 충격 가중치 (한연산)
         /// 기본값: 0
         /// </summary>
-        public float powerImpact;
+        public int powerImpact;
         /// <summary>
         /// 속도 가중치 (곱연산)
         /// 기본값 : 1

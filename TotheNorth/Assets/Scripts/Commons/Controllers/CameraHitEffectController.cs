@@ -16,7 +16,7 @@ namespace Assets.Scripts.Commons
             {
                 powerVib = 0.2f;
             }
-            else if (damage < 30)
+            else if (damage < 20)
             {
                 powerVib = 0.5f;
             }

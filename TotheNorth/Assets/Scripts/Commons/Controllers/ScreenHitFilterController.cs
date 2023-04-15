@@ -30,11 +30,11 @@ namespace Assets.Scripts.Commons
         {
             if (damage <= 10)
             {
-                powerRed = 0.4f;
+                powerRed = 0.6f;
             }
-            else if (damage < 30)
+            else if (damage < 20)
             {
-                powerRed = 0.7f;
+                powerRed = 0.8f;
             }
             else
             {

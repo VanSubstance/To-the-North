@@ -48,7 +48,7 @@ namespace Assets.Scripts.Users
             equipableBodies[targetType].ChangeEquipment(itemInfo);
         }
 
-        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
+        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
         {
             switch (partType)
             {
@@ -63,17 +63,52 @@ namespace Assets.Scripts.Users
                 case EquipBodyType.Leg:
                     break;
             }
+            // 상태 이상 부여 심사
+
+            // 테스트 효과 활성화
+            OccurCondition(ConditionType.Test);
+
+            if (damage[1] > 0)
+            {
+                // 관통당함
+                // 심각한 출혈 심사
+                if (Random.Range(0f, 1f) <= Mathf.Pow(damage[1] / 100f, 1.5f))
+                {
+                    // 심각한 출혈 발생
+                    OccurCondition(ConditionType.Bleeding_Heavy);
+                }
+            }
+
+            if (damage[2] > 0)
+            {
+                // 충격 데미지
+                // 얉은 출혈 심사
+                if (Random.Range(0f, 1f) <= damage[2] / 100f)
+                {
+                    // 얕은 출혈 발생
+                    OccurCondition(ConditionType.Bleeding_Light);
+                }
+                // 골절 심사
+                if (Random.Range(0f, 1f) <= Mathf.Pow(damage[1] / 100f, 1.7f))
+                {
+                    // 골절 발생
+                    OccurCondition(ConditionType.Fracture);
+                }
+            }
 
             // 화면 피격 이벤트 처리
-            CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(hitDir), 8);
-
-            // 계산 처리
-            InGameStatus.User.status.hpBar.LiveInfo = -10;
-            if (InGameStatus.User.status.hpBar.LiveInfo <= 0)
-            {
-                //InGameStatus.User.isPause = true;
-            }
+            CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(hitDir), damage);
             return;
+        }
+
+        /// <summary>
+        /// 상태 이상 발생 함수
+        /// </summary>
+        /// <param name="targetCondition">발생할 상태 이상</param>
+        private void OccurCondition(ConditionType targetCondition)
+        {
+            InGameStatus.User.conditions[targetCondition]++;
+            ConditionManager.Instance.AwakeCondition(targetCondition);
         }
     }
 }

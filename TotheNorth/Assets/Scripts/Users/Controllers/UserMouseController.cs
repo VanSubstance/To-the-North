@@ -36,6 +36,10 @@ namespace Assets.Scripts.Users.Controllers
         {
             if (Input.GetMouseButton((int)MouseButton.RightMouse))
             {
+                if (InGameStatus.User.IsConditionExist(ConditionConstraint.UtilBlock.Aim))
+                {
+                    return;
+                }
                 CameraTrackControlller.targetPos =
                     (
                     mousePos - GlobalComponent.Common.userController.position
