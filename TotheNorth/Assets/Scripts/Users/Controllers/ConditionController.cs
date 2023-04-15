@@ -43,7 +43,15 @@ namespace Assets.Scripts.Users
             sleepTf = _sleepTf;
             targetType = _targetType;
             GetComponent<Image>().sprite = Resources.Load<Sprite>(GlobalComponent.Path.Image.Condition(targetType));
-            tickAmount = ConditionConstraint.Tick.TickAmountForCondition[targetType];
+            try
+            {
+                tickAmount = ConditionConstraint.Tick.TickAmountForCondition[targetType];
+            }
+            catch (KeyNotFoundException)
+            {
+                // 해당 상태 이상 틱 효과 없음
+                tickAmount = 0;
+            }
             // 1. 틱 데미지가 있는 상태이상?
             if (ConditionConstraint.Tick.Damage.Contains(targetType))
             {
@@ -72,7 +80,14 @@ namespace Assets.Scripts.Users
             if (tickLive >= tickTime)
             {
                 tickLive = 0;
-                conditionControl.Invoke(tickAmount * InGameStatus.User.conditions[targetType]);
+                try
+                {
+                    conditionControl.Invoke(tickAmount * InGameStatus.User.conditions[targetType]);
+                }
+                catch (System.NullReferenceException)
+                {
+                    // 해상 상태이상 틱 효과 없음
+                }
             }
         }
 

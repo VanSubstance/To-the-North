@@ -38,7 +38,6 @@ namespace Assets.Scripts.Users.Controllers
             {
                 if (InGameStatus.User.IsConditionExist(ConditionConstraint.UtilBlock.Aim))
                 {
-                    Debug.Log("상태 이상:: 조준 불가");
                     return;
                 }
                 CameraTrackControlller.targetPos =

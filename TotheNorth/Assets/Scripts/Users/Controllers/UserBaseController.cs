@@ -64,6 +64,10 @@ namespace Assets.Scripts.Users
                     break;
             }
             // 상태 이상 부여 심사
+
+            // 테스트 효과 활성화
+            OccurCondition(ConditionType.Test);
+
             if (damage[1] > 0)
             {
                 // 관통당함
@@ -85,7 +89,6 @@ namespace Assets.Scripts.Users
                     OccurCondition(ConditionType.Bleeding_Light);
                 }
                 // 골절 심사
-                OccurCondition(ConditionType.Fracture);
                 if (Random.Range(0f, 1f) <= Mathf.Pow(damage[1] / 100f, 1.7f))
                 {
                     // 골절 발생

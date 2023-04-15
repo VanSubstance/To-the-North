@@ -1,11 +1,14 @@
 using Assets.Scripts.Commons.Constants;
 using UnityEngine;
+using Assets.Scripts.Users;
 
 public class CameraTrackControlller : MonoBehaviour
 {
     public static Vector3
         targetPos = Vector3.zero,
         headHorPos = Vector3.zero, headVerPos = Vector3.zero;
+
+    private static int speedTracking = 2;
 
     private void Awake()
     {
@@ -22,8 +25,13 @@ public class CameraTrackControlller : MonoBehaviour
 
     private void LateUpdate()
     {
+        float weight = 1;
+        if (InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedCameraTracking))
+        {
+            weight /= 2;
+        }
         transform.Translate(
-            2 * Time.deltaTime * new Vector2(
+            weight * speedTracking * Time.deltaTime * new Vector2(
                 GlobalComponent.Common.userController.x - transform.position.x + targetPos.x + headHorPos.x + headVerPos.x,
                 GlobalComponent.Common.userController.y - transform.position.y + targetPos.y + headHorPos.y + headVerPos.y
                 )

@@ -54,7 +54,6 @@ namespace Assets.Scripts.Items
             if ( !isAI &&
                 InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.Accuracy))
             {
-                Debug.Log("상태 이상:: 최대 조준 정확도 절반, 조준 속도 절반");
                 weight = 2;
             }
             timeFocus = Mathf.Min(timeFocus + (Time.deltaTime / weight), timeFocusFull / weight);

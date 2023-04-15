@@ -77,7 +77,12 @@ namespace Assets.Scripts.Users
             }
             if (isMoving)
             {
-                rigid.velocity = vecToMove;
+                float w = 1;
+                if (InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedMove))
+                {
+                    w /= 2;
+                }
+                rigid.velocity = vecToMove * w;
             }
             else
             {
@@ -119,7 +124,6 @@ namespace Assets.Scripts.Users
             {
                 if (InGameStatus.User.IsConditionExist(ConditionConstraint.UtilBlock.Run))
                 {
-                    Debug.Log("상태 이상:: 달리기 불가");
                     // 상태 이상으로 인해 달릴 수 없음
                     return;
                 }
@@ -143,7 +147,6 @@ namespace Assets.Scripts.Users
                 int weight = 10;
                 if (InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.RecoveryStamina))
                 {
-                    Debug.Log("상태 이상:: 스테미나 회복도 절반");
                     weight /= 2;
                 }
                 InGameStatus.User.status.staminaBar.AddCurrent(Time.deltaTime * (float)weight);

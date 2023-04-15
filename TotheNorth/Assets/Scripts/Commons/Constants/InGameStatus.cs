@@ -25,6 +25,7 @@ namespace Assets.Scripts.Commons.Constants
                 { ConditionType.Bleeding_Light, 0},
                 { ConditionType.Bleeding_Heavy, 0},
                 { ConditionType.Fracture, 0},
+                { ConditionType.Test, 0},
             };
 
             public static bool IsConditionExist(ConditionType[] targetTypes)
@@ -54,10 +55,30 @@ namespace Assets.Scripts.Commons.Constants
                 }
                 public static class Sight
                 {
-                    public static float rangeMin = 45.0f;
-                    public static float rangeMax = 60.0f;
-                    public static float range = 45.0f;
-                    public static int degree = 90;
+                    public static float Range
+                    {
+                        get
+                        {
+                            float w = 1;
+                            if (IsConditionExist(ConditionConstraint.PerformanceLack.RangeSight))
+                            {
+                                w /= 2;
+                            }
+                            return 45 / w;
+                        }
+                    }
+                    public static int Degree
+                    {
+                        get
+                        {
+                            int w = 1;
+                            if (IsConditionExist(ConditionConstraint.PerformanceLack.DegreeSight))
+                            {
+                                w /= 2;
+                            }
+                            return 90 / w;
+                        }
+                    }
                     public static bool isControllInRealTime = false;
                 }
             }

@@ -43,6 +43,10 @@ namespace Assets.Scripts.Users
         {
             public static readonly ConditionType[] RecoveryStamina = { ConditionType.Fracture, ConditionType.Bleeding_Heavy };
             public static readonly ConditionType[] Accuracy = { ConditionType.Fracture };
+            public static readonly ConditionType[] SpeedCameraTracking = { };
+            public static readonly ConditionType[] SpeedMove = { };
+            public static readonly ConditionType[] DegreeSight = { };
+            public static readonly ConditionType[] RangeSight = { };
         }
     }
 }

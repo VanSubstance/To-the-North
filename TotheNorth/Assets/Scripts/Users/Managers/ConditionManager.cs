@@ -33,14 +33,12 @@ namespace Assets.Scripts.Users
         {
             visualizationTf = transform.GetChild(0);
             sleepTf = transform.GetChild(1);
-            controllers[ConditionType.Bleeding_Heavy] = Instantiate(controllerPrefab, sleepTf).GetComponent<ConditionController>();
-            controllers[ConditionType.Bleeding_Heavy].InitCondition(ConditionType.Bleeding_Heavy, sleepTf);
-
-            controllers[ConditionType.Bleeding_Light] = Instantiate(controllerPrefab, sleepTf).GetComponent<ConditionController>();
-            controllers[ConditionType.Bleeding_Light].InitCondition(ConditionType.Bleeding_Light, sleepTf);
-
-            controllers[ConditionType.Fracture] = Instantiate(controllerPrefab, sleepTf).GetComponent<ConditionController>();
-            controllers[ConditionType.Fracture].InitCondition(ConditionType.Fracture, sleepTf);
+            foreach (ConditionType type in System.Enum.GetValues(typeof(ConditionType)))
+            {
+                if (type == ConditionType.None) continue;
+                controllers[type] = Instantiate(controllerPrefab, sleepTf).GetComponent<ConditionController>();
+                controllers[type].InitCondition(type, sleepTf);
+            }
 
             foreach (ConditionType type in System.Enum.GetValues(typeof(ConditionType)))
             {
