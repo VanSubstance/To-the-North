@@ -5,14 +5,19 @@ namespace Assets.Scripts.Items
     public class ItemConsumableController : AItemBaseController<ItemConsumableInfo>
     {
         private readonly string TAG = "소모성 아이템:\n";
-        
-        protected override bool CheckItemTag(InventorySlotController slot)
+
+        protected override bool CheckItemTag(InventorySlotController slot, bool isGridOn)
         {
-            if (slot.slotType == SlotType.Inventory || slot.slotType == SlotType.Quick ||
-                slot.slotType == SlotType.Rooting || slot.slotType == SlotType.Shop ||
-                slot.slotType == SlotType.Ground)
+            switch (slot.slotType)
             {
-                return true;
+                case SlotType.Inventory:
+                case SlotType.Rooting:
+                case SlotType.Shop:
+                case SlotType.Ground:
+                    return true;
+
+                case SlotType.Quick when !isGridOn:
+                    return true;
             }
             return false;
         }
