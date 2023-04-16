@@ -17,7 +17,6 @@ public static class GlobalComponent
 
     public static class Common
     {
-        public static UserBaseController userController;
         public static class Info
         {
             public static InfoMessageManager controller;

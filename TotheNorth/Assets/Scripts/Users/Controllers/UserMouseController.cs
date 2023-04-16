@@ -42,18 +42,18 @@ namespace Assets.Scripts.Users.Controllers
                 }
                 CameraTrackControlller.targetPos =
                     (
-                    mousePos - GlobalComponent.Common.userController.position
+                    mousePos - UserBaseController.Instance.position
                     )
                     * 2 / 3f;
                 if (!weaponL.IsEmpty())
                 {
                     weaponL.Aim(
-                    mousePos - GlobalComponent.Common.userController.position);
+                    mousePos - UserBaseController.Instance.position);
                 }
                 if (!weaponR.IsEmpty())
                 {
                     weaponR.Aim(
-                    mousePos - GlobalComponent.Common.userController.position);
+                    mousePos - UserBaseController.Instance.position);
                 }
                 InGameStatus.User.Detection.Sight.isControllInRealTime = true;
             }
@@ -71,12 +71,12 @@ namespace Assets.Scripts.Users.Controllers
                 if (!weaponL.IsEmpty())
                 {
                     weaponL.Use(
-                    mousePos - GlobalComponent.Common.userController.position);
+                    mousePos - UserBaseController.Instance.position);
                 }
                 if (!weaponR.IsEmpty())
                 {
                     weaponR.Use(
-                    mousePos - GlobalComponent.Common.userController.position);
+                    mousePos - UserBaseController.Instance.position);
                 }
             }
         }

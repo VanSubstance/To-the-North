@@ -18,11 +18,11 @@ namespace Assets.Scripts.Creatures
         {
             set
             {
-                hp.curValue += value;
+                hp.CurValue += value;
             }
             get
             {
-                return (int)hp.curValue;
+                return (int)hp.CurValue;
             }
         }
 
