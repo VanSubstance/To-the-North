@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Assets.Scripts.Components.Progress;
 using Assets.Scripts.Items;
-using Assets.Scripts.Items.Objects;
 using Assets.Scripts.Users;
 using Assets.Scripts.Users.Objects;
 
@@ -113,9 +112,9 @@ namespace Assets.Scripts.Commons.Constants
             /// <param name="itemInfo">착용할 아이템 정보</param>
             public static void SetEquipmentInfo(EquipBodyType targetPartType, ItemEquipmentInfo itemInfo)
             {
-                if (itemInfo == null)
+                if (itemInfo == null || UserBaseController.Instance == null)
                 {
-                    //Debug.unityLogger.Log(TAG, $"{targetPartType}:: 착용하려는 아이템 정보 없음");
+                    // 아이템 정보가 없거나 유저 오브젝트가 준비되지 않음
                     return;
                 }
                 switch (targetPartType)

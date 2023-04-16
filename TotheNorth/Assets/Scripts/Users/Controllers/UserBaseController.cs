@@ -39,7 +39,9 @@ namespace Assets.Scripts.Users
                     _instance = FindObjectOfType(typeof(UserBaseController)) as UserBaseController;
 
                     if (_instance == null)
-                        Debug.Log("no Singleton obj");
+                    {
+                        // 아직 유저 오브젝트 없음
+                    }
                 }
                 return _instance;
             }

@@ -21,6 +21,18 @@ namespace Assets.Scripts.Commons
             }
         }
 
+        private Camera ConnectedCamera
+        {
+            get
+            {
+                return GetComponent<Canvas>().worldCamera;
+            }
+            set
+            {
+                GetComponent<Canvas>().worldCamera = value;
+            }
+        }
+
         private void Awake()
         {
             if (_instance == null)
@@ -34,6 +46,14 @@ namespace Assets.Scripts.Commons
             }
             // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
             DontDestroyOnLoad(gameObject);
+        }
+
+        private void Update()
+        {
+            if (ConnectedCamera == null)
+            {
+                ConnectedCamera = Camera.main;
+            }
         }
     }
 }
