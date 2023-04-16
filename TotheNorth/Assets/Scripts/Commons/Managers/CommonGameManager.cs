@@ -14,7 +14,7 @@ public class CommonGameManager : MonoBehaviour
     [SerializeField]
     private Transform fadeImagePrefab, userPrefab, filterForScreenPrefab,
         pauseWindowPrefab, inventoryWindowPrefab,
-        panelForLeftTop, panelForCondition,
+        panelForHpSp, panelForCondition, panelForWelfare,
         projectileManager, trajectoryManager,
         screenHitManager
         ;
@@ -156,18 +156,28 @@ public class CommonGameManager : MonoBehaviour
             GlobalStatus.userInitPosition = new float[] { 0, 0 };
             GlobalComponent.Common.userController = userGo.GetComponent<UserBaseController>();
 
-            // 필요한 UI
-            Transform panelLeftTop = Instantiate(panelForLeftTop, uiTf);
+            // 체력 UI
+            Transform panelLeftTop = Instantiate(panelForHpSp, uiTf);
             panelLeftTop.localScale = Vector3.one;
             panelLeftTop.localPosition = new Vector3(-960, 540, 0);
-            InGameStatus.User.status.hpBar = panelLeftTop.GetComponent<UINumericController>().barForHp;
-            InGameStatus.User.status.staminaBar = panelLeftTop.GetComponent<UINumericController>().barForStamina;
-            panelLeftTop.SetAsFirstSibling();
+            InGameStatus.User.status.hpBar = panelLeftTop.GetComponent<UIHpSpController>().barForHp;
+            InGameStatus.User.status.staminaBar = panelLeftTop.GetComponent<UIHpSpController>().barForStamina;
+            //panelLeftTop.SetAsFirstSibling();
 
             // 상태 이상 표기용 UI
             Transform panelCondition = Instantiate(panelForCondition, uiTf);
             panelCondition.localScale = Vector3.one;
             panelCondition.localPosition = new Vector3(-960, 340, 0);
+
+            // 건강 UI
+            Transform PanelForWelfare = Instantiate(panelForWelfare, uiTf);
+            PanelForWelfare.localScale = Vector3.one;
+            PanelForWelfare.localPosition = new Vector3(-960, -540, 0);
+            InGameStatus.User.status.hungerBar = PanelForWelfare.GetComponent<UIWelfareController>().barForHunger;
+            InGameStatus.User.status.thirstBar = PanelForWelfare.GetComponent<UIWelfareController>().barForThirst;
+            InGameStatus.User.status.temperatureBar = PanelForWelfare.GetComponent<UIWelfareController>().barForTemperature;
+            InGameStatus.User.status.temperatureBar.LiveInfo = -50;
+            //PanelForWelfare.SetAsFirstSibling();
 
             // 투사체 풀
             if (GameObject.Find("Projectiles") == null)

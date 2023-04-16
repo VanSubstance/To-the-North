@@ -18,6 +18,9 @@ namespace Assets.Scripts.Commons.Constants
             {
                 public static BarBaseController hpBar;
                 public static BarBaseController staminaBar;
+                public static BarBaseController hungerBar;
+                public static BarBaseController thirstBar;
+                public static BarBaseController temperatureBar;
             }
 
             public static Dictionary<ConditionType, int> conditions = new Dictionary<ConditionType, int>() {
