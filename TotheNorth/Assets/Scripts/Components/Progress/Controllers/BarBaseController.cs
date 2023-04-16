@@ -57,16 +57,16 @@ namespace Assets.Scripts.Components.Progress
 
         private Image barFill;
         private ProgressInfo info;
-        public int LiveInfo
+        public float LiveInfo
         {
             set
             {
-                info.curValue += value;
+                info.CurValue += value;
                 barFill.color = BarColor;
             }
             get
             {
-                return (int)info.curValue;
+                return (int)info.CurValue;
             }
         }
 
@@ -88,15 +88,15 @@ namespace Assets.Scripts.Components.Progress
         /// <param name="value">더할 값</param>
         public void AddCurrent(float value)
         {
-            info.curValue += value;
-            if (info.curValue < 0)
+            info.CurValue += value;
+            if (info.CurValue < 0)
             {
-                info.curValue = 0;
+                info.CurValue = 0;
                 return;
             }
-            if (info.curValue > info.maxValue)
+            if (info.CurValue > info.maxValue)
             {
-                info.curValue = info.maxValue;
+                info.CurValue = info.maxValue;
                 return;
             }
         }
@@ -107,7 +107,7 @@ namespace Assets.Scripts.Components.Progress
         /// <returns></returns>
         public float GetCurrent()
         {
-            return info.curValue;
+            return info.CurValue;
         }
     }
 }

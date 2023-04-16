@@ -24,6 +24,8 @@ namespace Assets.Scripts.Users
 
         private Dictionary<EquipBodyType, IItemEquipable> equipableBodies = new Dictionary<EquipBodyType, IItemEquipable>();
 
+        private float tickHealthCondition;
+
         private void Awake()
         {
             Transform temp = transform.Find("Hits");
@@ -35,7 +37,25 @@ namespace Assets.Scripts.Users
             temp = transform.Find("Hands");
             equipableBodies[EquipBodyType.Right] = temp.GetChild(0).GetChild(0).GetComponent<ItemWeaponController>();
             equipableBodies[EquipBodyType.Left] = temp.GetChild(1).GetChild(0).GetComponent<ItemWeaponController>();
+            tickHealthCondition = 0;
+        }
 
+        private void Update()
+        {
+            tickHealthCondition += Time.deltaTime;
+            if (tickHealthCondition > 1)
+            {
+                tickHealthCondition = 0;
+                TickHealthCondition();
+            }
+        }
+
+        private void TickHealthCondition()
+        {
+            InGameStatus.User.status.hungerBar.LiveInfo = -.2f;
+            InGameStatus.User.status.thirstBar.LiveInfo = -.2f;
+            // 온도의 경우, 주변 환경에 따라서 오르거나 내리거나 유지되어야 할 듯
+            InGameStatus.User.status.temperatureBar.LiveInfo = +.5f;
         }
 
         /// <summary>
