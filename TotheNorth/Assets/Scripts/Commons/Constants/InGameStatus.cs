@@ -165,7 +165,7 @@ namespace Assets.Scripts.Commons.Constants
                         break;
                 }
                 curEquipments[targetPartType] = itemInfo;
-                GlobalComponent.Common.userController.ChangeEquipment(targetPartType, itemInfo);
+                UserBaseController.Instance.ChangeEquipment(targetPartType, itemInfo);
             }
 
             /// <summary>

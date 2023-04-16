@@ -26,14 +26,12 @@ public class CommonGameManager : MonoBehaviour
     private CameraHitEffectController _cameraHitController;
     private ScreenHitFilterController _screenHitFilterController;
 
-    // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static CommonGameManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
     public static CommonGameManager Instance
     {
         get
         {
-            // 인스턴스가 없는 경우에 접근하려 하면 인스턴스를 할당해준다.
             if (!_instance)
             {
                 _instance = FindObjectOfType(typeof(CommonGameManager)) as CommonGameManager;
@@ -121,6 +119,16 @@ public class CommonGameManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         Transform uiTf = GameObject.Find("UI").transform;
+        if (uiTf.GetComponent<UIManager>().isInit)
+        {
+            CameraTrackControlller.Instance.transform.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1], -20);
+            UserBaseController.Instance.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
+            GlobalStatus.userInitPosition = new float[] { 0, 0 };
+            GlobalStatus.Loading.System.CommonGameManager = true;
+            curStatus = 0;
+            yield break;
+        }
+        uiTf.GetComponent<UIManager>().isInit = true;
         // 페이드아웃 이미지 추가
         Transform imageForFade = Instantiate(fadeImagePrefab, uiTf);
         imageForFade.localPosition = Vector3.zero;
@@ -154,7 +162,6 @@ public class CommonGameManager : MonoBehaviour
             userGo.localScale = Vector3.one;
             userGo.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
             GlobalStatus.userInitPosition = new float[] { 0, 0 };
-            GlobalComponent.Common.userController = userGo.GetComponent<UserBaseController>();
 
             // 체력 UI
             Transform panelLeftTop = Instantiate(panelForHpSp, uiTf);
@@ -204,6 +211,8 @@ public class CommonGameManager : MonoBehaviour
 
         GlobalStatus.Loading.System.CommonGameManager = true;
         imageForFade.SetAsFirstSibling();
+
+        SceneManager.sceneLoaded += (scene, mode) => FadeScreen(false);
         curStatus = 0;
     }
 
