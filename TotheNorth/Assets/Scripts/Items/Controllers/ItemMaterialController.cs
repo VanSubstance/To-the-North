@@ -9,10 +9,13 @@ namespace Assets.Scripts.Items
 
         protected override bool CheckItemTag(InventorySlotController slot, bool isGridOn)
         {
-            if (slot.slotType == SlotType.Inventory || slot.slotType == SlotType.Rooting ||
-                slot.slotType == SlotType.Ground || slot.slotType == SlotType.Shop)
+            switch (slot.slotType)
             {
-                return true;
+                case SlotType.Inventory:
+                case SlotType.Rooting:
+                case SlotType.Shop:
+                case SlotType.Ground:
+                    return true;
             }
             return false;
         }
