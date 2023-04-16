@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Events.Interfaces;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Detections
@@ -16,6 +15,7 @@ namespace Assets.Scripts.Creatures.Detections
         {
             base.Start();
             sprite = viewMeshFilter.GetComponent<MeshRenderer>();
+            sprite.renderingLayerMask = 3;
             if (!isAI)
                 StartCoroutine(CheckCurRotation(Time.deltaTime));
         }

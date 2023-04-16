@@ -34,6 +34,7 @@ namespace Assets.Scripts.Items
 
         private void OnMouseExit()
         {
+            OnHoverExit();
             isMouseEnter = false;
         }
 
@@ -103,6 +104,11 @@ namespace Assets.Scripts.Items
         /// 호버링중에 실행되어야 할 함수
         /// </summary>
         protected abstract void OnHover();
+
+        /// <summary>
+        /// 호버링 종료 시에 실행되어야 할 함수
+        /// </summary>
+        protected abstract void OnHoverExit();
         /// <summary>
         /// 드래그중에 실행되어야 할 함수
         /// </summary>

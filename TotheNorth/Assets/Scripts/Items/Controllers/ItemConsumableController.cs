@@ -1,3 +1,4 @@
+using Assets.Scripts.Components.Popups;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -29,7 +30,12 @@ namespace Assets.Scripts.Items
 
         protected override void OnHover()
         {
-            Debug.unityLogger.Log(TAG, "호버링");
+            HoverInfoController.Instance.OnHoverEnter(info);
+        }
+
+        protected override void OnHoverExit()
+        {
+            HoverInfoController.Instance.OnHoverExit();
         }
 
         protected override void OnMouseClickWithKeyPress()
