@@ -3338,7 +3338,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 28a0c2b1fc9a5d14caaa96982e0f0db9, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.size
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[3].pos.x
@@ -3346,7 +3346,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[3].pos.y
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[4].pos.x
@@ -3354,31 +3354,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[4].pos.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
-      propertyPath: inventoryInfo.Array.data[5].pos.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
-      propertyPath: inventoryInfo.Array.data[5].pos.y
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
-      propertyPath: inventoryInfo.Array.data[6].pos.x
+      propertyPath: inventoryInfo.Array.data[5].pos.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
-      propertyPath: inventoryInfo.Array.data[6].pos.y
+      propertyPath: inventoryInfo.Array.data[5].pos.y
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[6].pos.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[6].pos.y
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[7].pos.x
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[7].pos.y
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[8].pos.x
@@ -3391,19 +3391,19 @@ PrefabInstance:
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[3].itemInfo
       value: 
-      objectReference: {fileID: 11400000, guid: cf3c89fd83c24254cbae0c16f6bbbac9, type: 2}
+      objectReference: {fileID: 11400000, guid: 76c2424991838fa4f8ad1602191fcb44, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[5].itemInfo
       value: 
-      objectReference: {fileID: 11400000, guid: 76c2424991838fa4f8ad1602191fcb44, type: 2}
+      objectReference: {fileID: 11400000, guid: bfccca620c9d81a47b27d4279675b22e, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[6].itemInfo
       value: 
-      objectReference: {fileID: 11400000, guid: bfccca620c9d81a47b27d4279675b22e, type: 2}
+      objectReference: {fileID: 11400000, guid: 8449883dca26d474da7c005ae68d0620, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[7].itemInfo
       value: 
-      objectReference: {fileID: 11400000, guid: 8449883dca26d474da7c005ae68d0620, type: 2}
+      objectReference: {fileID: 11400000, guid: 28a0c2b1fc9a5d14caaa96982e0f0db9, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[8].itemInfo
       value: 
