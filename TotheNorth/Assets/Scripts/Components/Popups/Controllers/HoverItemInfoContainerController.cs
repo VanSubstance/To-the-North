@@ -38,8 +38,9 @@ namespace Assets.Scripts.Components.Popups
             gameObject.SetActive(false);
             isOccupied = false;
             prevH = 0;
-            infoDisplayFunctions = new IHoverItemInfo[9];
-            for (int i = 0; i < 9; i++)
+            int c = System.Enum.GetNames(typeof(DisplayIndex)).Length;
+            infoDisplayFunctions = new IHoverItemInfo[c];
+            for (int i = 0; i < c; i++)
             {
                 infoDisplayFunctions[i] = transform.GetChild(i).GetComponent<IHoverItemInfo>();
             }
@@ -81,7 +82,12 @@ namespace Assets.Scripts.Components.Popups
                 itemInfoControl += (info) => infoDisplayFunctions[(int)DisplayIndex.Equipment].OnItemInfoChanged(info);
                 if (info is ItemWeaponInfo)
                 {
+                    itemInfoControl += (info) => infoDisplayFunctions[(int)DisplayIndex.Damage].OnItemInfoChanged(info);
                     itemInfoControl += (info) => infoDisplayFunctions[(int)DisplayIndex.Weapon].OnItemInfoChanged(info);
+                    if (((ItemWeaponInfo)info).bulletType != ItemBulletType.None)
+                    {
+                        itemInfoControl += (info) => infoDisplayFunctions[(int)DisplayIndex.WeaponRange].OnItemInfoChanged(info);
+                    }
                 }
                 else if (info is ItemArmorInfo)
                 {
@@ -162,15 +168,17 @@ namespace Assets.Scripts.Components.Popups
 
         private enum DisplayIndex
         {
-            Base = 0,
-            Equipment = 1,
-            Armor = 2,
-            Weapon = 3,
-            Magazine = 4,
-            Material = 5,
-            Consumable = 6,
-            Food = 7,
-            Bullet = 8,
+            Base,
+            Equipment,
+            Armor,
+            Damage,
+            Weapon,
+            WeaponRange,
+            Magazine,
+            Material,
+            Consumable,
+            Food,
+            Bullet,
         }
     }
 }

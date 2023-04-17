@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Components.Popups
 {
-    public class HoverItemInfoWeaponController : MonoBehaviour, IHoverItemInfo
+    public class HoverItemInfoDamageController : MonoBehaviour, IHoverItemInfo
     {
         [SerializeField]
-        private TextMeshProUGUI tAtkSpd, tHandType;
+        private TextMeshProUGUI pwPene, pwImp, pwKnock, dmgPene, dmgImp;
         private void Awake()
         {
         }
@@ -20,8 +20,11 @@ namespace Assets.Scripts.Components.Popups
                 return;
             }
             ItemWeaponInfo info = (ItemWeaponInfo)_info;
-            tAtkSpd.text = $"1회 / {info.delayAmongFire}초";
-            tHandType.text = info.handType == EquipHandType.Multiple ? "양손" : "한손";
+            pwPene.text = info.PowerPenetration.ToString();
+            pwImp.text = info.PowerImpact.ToString();
+            pwKnock.text = info.PowerKnockback.ToString();
+            dmgPene.text = info.damagePenetration.ToString();
+            dmgImp.text = info.damageImpact.ToString();
             gameObject.SetActive(true);
         }
     }

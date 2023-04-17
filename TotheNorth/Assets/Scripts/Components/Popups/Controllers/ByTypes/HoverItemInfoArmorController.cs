@@ -7,7 +7,7 @@ namespace Assets.Scripts.Components.Popups
     public class HoverItemInfoArmorController : MonoBehaviour, IHoverItemInfo
     {
         [SerializeField]
-        TextMeshProUGUI tPenatration, tImpact, tHeat;
+        private TextMeshProUGUI tPenatration, tImpact, tHeat;
         private void Awake()
         {
         }
