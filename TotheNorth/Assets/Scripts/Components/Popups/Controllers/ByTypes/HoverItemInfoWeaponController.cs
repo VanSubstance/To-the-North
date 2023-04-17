@@ -1,10 +1,13 @@
 using Assets.Scripts.Items;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.Components.Popups
 {
     public class HoverItemInfoWeaponController : MonoBehaviour, IHoverItemInfo
     {
+        [SerializeField]
+        TextMeshProUGUI tAtkSpd, tHandType;
         private void Awake()
         {
         }
@@ -17,6 +20,8 @@ namespace Assets.Scripts.Components.Popups
                 return;
             }
             ItemWeaponInfo info = (ItemWeaponInfo)_info;
+            tAtkSpd.text = $"1회 / {info.delayAmongFire}초";
+            tHandType.text = info.handType == EquipHandType.Multiple ? "양손" : "한손";
             gameObject.SetActive(true);
         }
     }
