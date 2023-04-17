@@ -1,3 +1,4 @@
+using Assets.Scripts.Components.Progress;
 using Assets.Scripts.Items;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ namespace Assets.Scripts.Components.Popups
 {
     public class HoverItemInfoEquipmentController : MonoBehaviour, IHoverItemInfo
     {
+        [SerializeField]
+        private BarBaseController durabilityBar;
         private void Awake()
         {
         }
@@ -17,6 +20,7 @@ namespace Assets.Scripts.Components.Popups
                 return;
             }
             ItemEquipmentInfo info = (ItemEquipmentInfo)_info;
+            durabilityBar.SetValue(1, info.Durability);
             gameObject.SetActive(true);
         }
     }

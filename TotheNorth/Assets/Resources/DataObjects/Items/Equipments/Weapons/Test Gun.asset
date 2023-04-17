@@ -19,6 +19,7 @@ MonoBehaviour:
   description: "\uD14C\uC2A4\uD2B8\uC6A9 \uCD1D\uC785\uB2C8\uB2E4."
   price: 100
   equipmentType: 5
+  durability: 0.6
   handType: 0
   bulletType: 1
   range: 20
