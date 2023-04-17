@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using Assets.Scripts.Commons;
-using UnityEngine;
 using Assets.Scripts.Items;
+using UnityEngine;
 
 namespace Assets.Scripts.Components.Popups
 {
-    internal class HoverItemInfoContainerController : MouseTrackController
+    internal class HoverItemInfoContainerController : MouseTrackController, IControllByKey
     {
         private bool isOccupied = false;
         private int prevH;
@@ -148,9 +147,17 @@ namespace Assets.Scripts.Components.Popups
         public void OnHoverExit()
         {
             gameObject.SetActive(false);
-            itemInfoControl.Invoke(null);
+            if (itemInfoControl != null)
+            {
+                itemInfoControl.Invoke(null);
+            }
             itemInfoControl = null;
             isOccupied = false;
+        }
+
+        public void ControllByKey(int purpose)
+        {
+            OnHoverExit();
         }
 
         private enum DisplayIndex

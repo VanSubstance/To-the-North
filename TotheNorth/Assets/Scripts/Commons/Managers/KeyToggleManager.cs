@@ -3,10 +3,8 @@ using UnityEngine;
 
 public class KeyToggleManager : MonoBehaviour
 {
-    [SerializeField]
-    private KeyCode keyToToggle;
-    [SerializeField]
-    private MonoBehaviourControllByKey modalToControll;
+    public KeyCode keyToToggle;
+    private IControllByKey modalToControll;
 
     // Update is called once per frame
     void Update()
@@ -30,7 +28,7 @@ public class KeyToggleManager : MonoBehaviour
         }
     }
 
-    public void InitContent(KeyCode _keyToToggle, MonoBehaviourControllByKey objectToControll)
+    public void InitContent(KeyCode _keyToToggle, IControllByKey objectToControll)
     {
         keyToToggle = _keyToToggle;
         modalToControll = objectToControll;

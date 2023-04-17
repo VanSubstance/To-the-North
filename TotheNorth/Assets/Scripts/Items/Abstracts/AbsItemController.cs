@@ -14,6 +14,15 @@ namespace Assets.Scripts.Items
             isMouseClickedJustNow = false,
             isHovering = false;
 
+        private void OnDisable()
+        {
+            isKeyPressed = false;
+            isMouseEnter = false;
+            isMouseDown = false;
+            isMouseClickedJustNow = false;
+            isHovering = false;
+        }
+
         protected void Update()
         {
             isKeyPressed = Input.GetKey(keyToPress);
