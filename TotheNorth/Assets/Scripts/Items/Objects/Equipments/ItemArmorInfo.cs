@@ -15,7 +15,7 @@ namespace Assets.Scripts.Items
         }
         public EquipBodyType equipPartType;
         [SerializeField]
-        private int classPenetration, classImpact;
+        private int classPenetration, classImpact, classHeat;
         public int ClassPenetration
         {
             set
@@ -40,12 +40,25 @@ namespace Assets.Scripts.Items
                 return classImpact >= 0 ? classImpact : 0;
             }
         }
+        public int ClassHeat
+        {
+            get
+            {
+                return classHeat;
+            }
+
+            set
+            {
+                classHeat = value;
+            }
+        }
 
         public static ItemArmorInfo GetPlainArmor()
         {
             ItemArmorInfo res = CreateInstance<ItemArmorInfo>();
             res.classPenetration = 0;
             res.classImpact = 0;
+            res.classHeat = 0;
             return res;
         }
     }

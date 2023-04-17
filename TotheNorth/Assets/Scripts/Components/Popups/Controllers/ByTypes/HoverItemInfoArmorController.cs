@@ -1,10 +1,13 @@
 using Assets.Scripts.Items;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.Components.Popups
 {
     public class HoverItemInfoArmorController : MonoBehaviour, IHoverItemInfo
     {
+        [SerializeField]
+        TextMeshProUGUI tPenatration, tImpact, tHeat;
         private void Awake()
         {
         }
@@ -17,6 +20,9 @@ namespace Assets.Scripts.Components.Popups
                 return;
             }
             ItemArmorInfo info = (ItemArmorInfo)_info;
+            tPenatration.text = info.ClassPenetration.ToString();
+            tImpact.text = info.ClassImpact.ToString();
+            tHeat.text = info.ClassHeat.ToString();
             gameObject.SetActive(true);
         }
     }
