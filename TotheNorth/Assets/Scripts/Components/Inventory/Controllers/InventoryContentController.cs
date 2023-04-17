@@ -1,6 +1,5 @@
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Items;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryContentController : AWindowBaseContentController

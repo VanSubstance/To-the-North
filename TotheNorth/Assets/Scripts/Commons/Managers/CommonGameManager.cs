@@ -134,8 +134,6 @@ public class CommonGameManager : MonoBehaviour
         imageForFade.localScale = Vector3.one;
         fadeImage = imageForFade.GetComponent<Image>();
 
-        Transform hovering = Instantiate(hoveringItemInfo, uiTf);
-
         if (GameObject.Find("Field") != null)
         {
             // 필드 있음 = 유저가 있어야 함
@@ -144,13 +142,17 @@ public class CommonGameManager : MonoBehaviour
             Transform windowForPause = Instantiate(pauseWindowPrefab, uiTf);
             windowForPause.localPosition = Vector3.zero;
             KeyToggleManager keyAdded = uiTf.AddComponent<KeyToggleManager>();
-            keyAdded.InitContent(KeyCode.Escape, windowForPause.GetComponent<MonoBehaviourControllByKey>());
+            keyAdded.InitContent(KeyCode.Escape, windowForPause.GetComponent<IControllByKey>());
 
             // 인벤토리 모달 추가
             Transform windowForInventory = Instantiate(inventoryWindowPrefab, uiTf);
             windowForPause.localPosition = Vector3.zero;
             keyAdded = uiTf.AddComponent<KeyToggleManager>();
-            keyAdded.InitContent(KeyCode.I, windowForInventory.GetComponent<MonoBehaviourControllByKey>());
+            keyAdded.InitContent(KeyCode.I, windowForInventory.GetComponent<IControllByKey>());
+
+            Transform hovering = Instantiate(hoveringItemInfo, uiTf);
+            keyAdded = uiTf.AddComponent<KeyToggleManager>();
+            keyAdded.InitContent(KeyCode.I, hovering.GetComponent<IControllByKey>());
 
             // 화면 필터 이미지 추가
             Transform imageForSmog = Instantiate(filterForScreenPrefab, uiTf);

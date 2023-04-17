@@ -24,6 +24,7 @@ namespace Assets.Scripts.Items
         public float delayAmongFire, timeReload = 2.5f, headHeight = .25f;
         [SerializeField]
         private float powerKnockback;
+        [SerializeField]
         private int powerPenetration, powerImpact;
         [SerializeField]
         private TrajectoryType trajectoryType;

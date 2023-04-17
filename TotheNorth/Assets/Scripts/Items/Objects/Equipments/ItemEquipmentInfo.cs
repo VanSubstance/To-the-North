@@ -19,5 +19,20 @@ namespace Assets.Scripts.Items
                 return ItemType.Equipment;
             }
         }
+
+        [SerializeField]
+        private float durability = 1;
+        public float Durability
+        {
+            get
+            {
+                return durability;
+            }
+
+            set
+            {
+                durability = value;
+            }
+        }
     }
 }

@@ -69,12 +69,19 @@ namespace Assets.Scripts.Components.Progress
                 return (int)info.CurValue;
             }
         }
+        public float LivePercent
+        {
+            get => info.GetCurrentPercent();
+        }
 
         private void Awake()
         {
-            barFill = currentTf.GetComponent<Image>();
-            info = new ProgressInfo(100);
-            LiveInfo = +0;
+            if (barFill == null)
+            {
+                barFill = currentTf.GetComponent<Image>();
+                info = new ProgressInfo(100);
+                LiveInfo = +0;
+            }
         }
         private void Update()
         {
@@ -82,32 +89,14 @@ namespace Assets.Scripts.Components.Progress
             currentTf.offsetMax = Vector2.zero;
         }
 
-        /// <summary>
-        /// 수치 변화
-        /// </summary>
-        /// <param name="value">더할 값</param>
-        public void AddCurrent(float value)
+        public void SetValue(float maxValue, float curValue)
         {
-            info.CurValue += value;
-            if (info.CurValue < 0)
+            if (barFill == null)
             {
-                info.CurValue = 0;
-                return;
+                barFill = currentTf.GetComponent<Image>();
             }
-            if (info.CurValue > info.maxValue)
-            {
-                info.CurValue = info.maxValue;
-                return;
-            }
-        }
-
-        /// <summary>
-        /// 현재 값 반환
-        /// </summary>
-        /// <returns></returns>
-        public float GetCurrent()
-        {
-            return info.CurValue;
+            info = new ProgressInfo(maxValue);
+            LiveInfo = curValue - maxValue;
         }
     }
 }
