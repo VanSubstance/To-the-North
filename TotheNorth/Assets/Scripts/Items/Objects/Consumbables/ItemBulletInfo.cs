@@ -26,6 +26,11 @@ namespace Assets.Scripts.Items
         /// </summary>
         public int powerImpact;
         /// <summary>
+        /// 넉백 가중치 (한연산)
+        /// 기본값: 0
+        /// </summary>
+        public int powerKnockback;
+        /// <summary>
         /// 속도 가중치 (곱연산)
         /// 기본값 : 1
         /// </summary>

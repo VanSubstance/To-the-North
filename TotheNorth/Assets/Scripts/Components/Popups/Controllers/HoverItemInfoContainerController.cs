@@ -113,6 +113,7 @@ namespace Assets.Scripts.Components.Popups
                 }
                 else if (info is ItemBulletInfo)
                 {
+                    itemInfoControl += (info) => infoDisplayFunctions[(int)DisplayIndex.Damage].OnItemInfoChanged(info);
                     itemInfoControl += (info) => infoDisplayFunctions[(int)DisplayIndex.Bullet].OnItemInfoChanged(info);
                 }
                 return;

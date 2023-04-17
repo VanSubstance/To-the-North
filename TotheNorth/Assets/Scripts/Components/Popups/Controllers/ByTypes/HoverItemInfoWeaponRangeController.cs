@@ -23,19 +23,7 @@ namespace Assets.Scripts.Components.Popups
             tReload.text = $"{info.timeReload}초";
             tRange.text = info.range.ToString();
             tProjSpd.text = info.spd.ToString();
-            string bt = string.Empty;
-            switch (info.bulletType)
-            {
-                case ItemBulletType.None:
-                    break;
-                case ItemBulletType.Bullet_mm9:
-                    bt += "9mm";
-                    break;
-                case ItemBulletType.Arrow:
-                    bt += "화살";
-                    break;
-            }
-            tBulletType.text = $"{bt}";
+            tBulletType.text = $"{HoverItemInfoBulletController.ConvertBulletTypeToString(info.bulletType)}";
             gameObject.SetActive(true);
         }
     }
