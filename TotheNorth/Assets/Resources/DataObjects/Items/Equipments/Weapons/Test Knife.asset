@@ -15,7 +15,7 @@ MonoBehaviour:
   itemType: 1
   size: {x: 1, y: 1}
   imagePath: Test Dagger
-  itemName: "\uD14C\uC2A4\uD2B8\uC6A9 \uCE7C"
+  title: "\uACFC\uC77C\uCE7C"
   description: "\uD14C\uC2A4\uD2B8\uC6A9 \uCE7C\uC785\uB2C8\uB2E4."
   price: 100
   equipmentType: 1
@@ -26,6 +26,7 @@ MonoBehaviour:
   damagePenetration: 3
   damageImpact: 6
   delayAmongFire: 0.5
+  timeReload: 2.5
   headHeight: 0.25
   powerKnockback: 3
   trajectoryType: 1

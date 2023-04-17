@@ -15,7 +15,7 @@ MonoBehaviour:
   itemType: 0
   size: {x: 1, y: 1}
   imagePath: TrafficCone
-  itemName: "\uAF2C\uAE4C\uAF2C\uAE4C"
+  title: "\uAF2C\uAC08\uCF58"
   description: "\uAF2C\uAE54\uCF58 \uB9DB\uC5C6\uC5C9"
   price: 20
   consumbableType: 0
