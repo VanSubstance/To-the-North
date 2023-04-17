@@ -1,11 +1,12 @@
+using Assets.Scripts.Commons;
 using UnityEngine;
-using static GlobalComponent.Common;
 
 namespace Assets.Scripts.Components.Popups
 {
-    internal class HoverInfoController : MonoBehaviour
+    internal class HoverInfoController : MouseTrackController
     {
         private bool isOccupied = false;
+        private int prevH;
         private static HoverInfoController _instance;
         public static HoverInfoController Instance
         {
@@ -34,14 +35,32 @@ namespace Assets.Scripts.Components.Popups
             }
             gameObject.SetActive(false);
             isOccupied = false;
+            prevH = 0;
         }
 
-        private void Update()
+        protected new void Update()
         {
+            base.Update();
             if (transform.GetSiblingIndex() != transform.parent.childCount - 1)
             {
                 transform.SetAsLastSibling();
             }
+            ResizeByChildren();
+        }
+
+        private void ResizeByChildren()
+        {
+            float h = 0;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                h += transform.GetChild(i).GetComponent<RectTransform>().sizeDelta.y + 10;
+            }
+            if ((int)h != prevH)
+            {
+                float w = transform.GetComponent<RectTransform>().sizeDelta.x;
+                transform.GetComponent<RectTransform>().sizeDelta = new Vector2(w, h + 10);
+            }
+            prevH = (int)h;
         }
 
         /// <summary>
@@ -52,7 +71,9 @@ namespace Assets.Scripts.Components.Popups
         public void OnHoverEnter(ItemBaseInfo _info)
         {
             if (isOccupied) return;
-            Debug.Log("호버링 아이템 정보 할당!! " + _info);
+            isOccupied = true;
+            base.TracksMouse();
+            //Debug.Log("호버링 아이템 정보 할당!! " + _info);
             string[] t = _info.GetType().ToString().Split(".");
             string comp = t[t.Length - 1];
             switch (comp)
@@ -68,7 +89,6 @@ namespace Assets.Scripts.Components.Popups
                 case "ItemMaterialInfo":
                     break;
             }
-            isOccupied = true;
             gameObject.SetActive(true);
         }
 

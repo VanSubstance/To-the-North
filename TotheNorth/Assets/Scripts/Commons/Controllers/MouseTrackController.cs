@@ -2,14 +2,23 @@ using UnityEngine;
 
 namespace Assets.Scripts.Commons
 {
-    internal class MouseTrackController : MonoBehaviour
+    public class MouseTrackController : MonoBehaviour
     {
-        private void Update()
+        protected void Update()
+        {
+            TracksMouse();
+        }
+
+        protected void TracksMouse()
         {
             Vector3 nextPos;
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             nextPos = transform.localPosition;
-            transform.localPosition = new Vector3(nextPos.x, nextPos.y, 0);
+            transform.localPosition = new Vector3(
+                nextPos.x,
+                nextPos.y - transform.GetComponent<RectTransform>().sizeDelta.y,
+                0
+                );
         }
     }
 }
