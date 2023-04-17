@@ -16,7 +16,8 @@ public class CommonGameManager : MonoBehaviour
         pauseWindowPrefab, inventoryWindowPrefab,
         panelForHpSp, panelForCondition, panelForWelfare,
         projectileManager, trajectoryManager,
-        screenHitManager
+        screenHitManager,
+        hoveringItemInfo
         ;
 
     private Image fadeImage;
@@ -132,6 +133,8 @@ public class CommonGameManager : MonoBehaviour
         imageForFade.localPosition = Vector3.zero;
         imageForFade.localScale = Vector3.one;
         fadeImage = imageForFade.GetComponent<Image>();
+
+        Transform hovering = Instantiate(hoveringItemInfo, uiTf);
 
         if (GameObject.Find("Field") != null)
         {

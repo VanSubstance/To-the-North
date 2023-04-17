@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Scripts.Items.Objects
+namespace Assets.Scripts.Items
 {
 
     [CreateAssetMenu(fileName = "Food Info", menuName = "Data Objects/Items/Consumable/Food", order = int.MaxValue)]

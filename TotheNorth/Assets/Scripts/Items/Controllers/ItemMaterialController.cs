@@ -27,12 +27,12 @@ namespace Assets.Scripts.Items
 
         protected override void OnHover()
         {
-            HoverInfoController.Instance.OnHoverEnter(info);
+            HoverItemInfoContainerController.Instance.OnHoverEnter(info);
         }
 
         protected override void OnHoverExit()
         {
-            HoverInfoController.Instance.OnHoverExit();
+            HoverItemInfoContainerController.Instance.OnHoverExit();
         }
 
         protected override void OnMouseClickWithKeyPress()

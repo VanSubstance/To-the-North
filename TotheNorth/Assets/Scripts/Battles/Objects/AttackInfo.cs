@@ -1,5 +1,3 @@
-using Assets.Scripts.Items.Objects;
-
 namespace Assets.Scripts.Items
 {
     /// <summary>

@@ -15,6 +15,6 @@ MonoBehaviour:
   itemType: 2
   size: {x: 2, y: 2}
   imagePath: TrafficSign
-  itemName: "\uD45C\uC9C0\uD310"
+  title: "\uBD80\uC11C\uC9C4 \uD45C\uC9C0\uD310"
   description: "\uBC29\uD328\uAC19\uB124 \u314B\u314B"
   price: 15

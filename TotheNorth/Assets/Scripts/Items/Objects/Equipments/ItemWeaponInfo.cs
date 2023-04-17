@@ -1,6 +1,5 @@
 using System.Linq;
 using Assets.Scripts.Battles;
-using Assets.Scripts.Items.Objects;
 using Assets.Scripts.Commons.Constants;
 using UnityEngine;
 

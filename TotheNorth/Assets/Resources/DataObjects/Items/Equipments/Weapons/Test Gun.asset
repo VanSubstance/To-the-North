@@ -15,7 +15,7 @@ MonoBehaviour:
   itemType: 1
   size: {x: 1, y: 1}
   imagePath: Gun Test
-  itemName: "\uD14C\uC2A4\uD2B8\uC6A9 \uCD1D"
+  title: "\uBE44\uBE44\uD0C4 \uCD1D"
   description: "\uD14C\uC2A4\uD2B8\uC6A9 \uCD1D\uC785\uB2C8\uB2E4."
   price: 100
   equipmentType: 5
@@ -26,8 +26,7 @@ MonoBehaviour:
   damagePenetration: 0
   damageImpact: 0
   delayAmongFire: 0.5
+  timeReload: 2.5
   headHeight: 0.25
   powerKnockback: 1
-  powerPenetration: 0
-  powerImpact: 10
   trajectoryType: 0

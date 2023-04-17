@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Assets.Scripts.Items;
-using Assets.Scripts.Items.Objects;
 using Assets.Scripts.Users;
 using UnityEngine;
 
@@ -40,6 +39,16 @@ public static class GlobalComponent
         }
         public static class Item
         {
+            //public static string[] Categories = new string[] {
+            //    typeof(ItemMaterialInfo).Name,
+
+            //    typeof(ItemWeaponInfo).Name,
+            //    typeof(ItemArmorInfo).Name,
+            //    typeof(ItemMagazineInfo).Name,
+
+            //    typeof(ItemFoodInfo).Name,
+            //    typeof(ItemBulletInfo).Name,
+            //};
             private static readonly string Root = $"Items/";
             public static class Consumbable
             {
@@ -104,20 +113,23 @@ public static class GlobalComponent
         /// <returns></returns>
         public static string GetImagePath(ItemBaseInfo info)
         {
-            string[] t = info.GetType().ToString().Split(".");
-            string comp = t[t.Length - 1];
+            string comp = info.GetType().Name;
             switch (comp)
             {
                 case "ItemWeaponInfo":
                     return $"{Image.Root}{Item.Equipment.Weapon(info.imagePath)}";
                 case "ItemArmorInfo":
                     return $"{Image.Root}{Item.Equipment.Armor(info.imagePath)}";
+                case "ItemMagazineInfo":
+                    return $"{Image.Root}{Item.Equipment.Magazine(info.imagePath)}";
                 case "ItemFoodInfo":
                     return $"{Image.Root}{Item.Consumbable.Food(info.imagePath)}";
                 case "ItemBulletInfo":
                     return $"{Image.Root}{Item.Consumbable.Bullet(info.imagePath)}";
                 case "ItemMaterialInfo":
                     return $"{Image.Root}{Item.Material(info.imagePath)}";
+                default:
+                    break;
             }
             return null;
         }

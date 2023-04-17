@@ -11,7 +11,8 @@ namespace Assets.Scripts.Items
             isKeyPressed = false,
             isMouseEnter = false,
             isMouseDown = false,
-            isMouseClickedJustNow = false;
+            isMouseClickedJustNow = false,
+            isHovering = false;
 
         protected void Update()
         {
@@ -29,7 +30,11 @@ namespace Assets.Scripts.Items
 
         private void OnMouseExit()
         {
-            OnHoverExit();
+            if (isHovering)
+            {
+                isHovering = false;
+                OnHoverExit();
+            }
             isMouseEnter = false;
         }
 
@@ -74,6 +79,7 @@ namespace Assets.Scripts.Items
                 {
                     if (!isMouseDown)
                     {
+                        isHovering = true;
                         OnHover();
                     }
                 }
