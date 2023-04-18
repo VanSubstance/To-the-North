@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Commons;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -178,6 +179,11 @@ namespace Assets.Scripts.Items
         /// <param name="detachSlot"></param>
         public void ItemDetach(InventorySlotController detachSlot)
         {
+            if (curSlot.slotType == SlotType.Equipment)
+            {
+                EquipmentSlotController equipmentSlot = curSlot as EquipmentSlotController;
+                equipmentSlot.UnEquipItem();
+            }
             if (info == null) return;
             transform.SetParent(InventoryManager.movingSpaceTF);
             for (int i = 0; i < localCol; i++)

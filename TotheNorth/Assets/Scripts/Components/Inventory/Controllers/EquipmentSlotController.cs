@@ -26,4 +26,23 @@ public class EquipmentSlotController : InventorySlotController
         }
         DataManager.Instance.updateEquipment();
     }
+    public void UnEquipItem()
+    {
+        switch (equipItem)
+        {
+            case ItemArmorInfo armorInfo:
+                // Perform actions specific to ItemArmorInfo
+                DataManager.Instance.body = null;
+                break;
+            case ItemWeaponInfo weaponInfo:
+                // Perform actions specific to ItemWeaponInfo
+                DataManager.Instance.right = null;
+                break;
+            default:
+                // Handle other cases
+                break;
+        }
+        equipItem = null;
+        DataManager.Instance.updateEquipment();
+    }
 }

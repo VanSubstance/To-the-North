@@ -7,7 +7,7 @@ namespace Assets.Scripts.Commons
     internal class DataManager : MonoBehaviour
     {
         [SerializeField]
-        private ItemInventoryInfo[] inventoryInfo;
+        public ItemInventoryInfo[] inventoryInfo;
         [SerializeField]
         public ItemArmorInfo helmat, mask, body, leg, back;
         [SerializeField]
