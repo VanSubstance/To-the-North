@@ -45,7 +45,7 @@ namespace Assets.Scripts.Items
                 return (ItemBaseInfo)(object)info;
             }
         }
-        protected TItemInfo info;
+        public TItemInfo info;
 
         private new void Update()
         {
@@ -146,7 +146,11 @@ namespace Assets.Scripts.Items
             if (attachSlot.slotType == SlotType.Shop || attachSlot.slotType == SlotType.Rooting)
                 transform.SetParent(InventoryManager.leftInventoryTF);
             if (attachSlot.slotType == SlotType.Equipment)
+            {
                 transform.SetParent(attachSlot.itemTF);
+                EquipmentSlotController equipmentSlot = attachSlot as EquipmentSlotController;
+                equipmentSlot.EquipItem();
+            }
             Vector3 destPos;
             destPos = new Vector3(attachSlot.transform.localPosition.x, attachSlot.transform.localPosition.y, -1f);
             objTF.localPosition = destPos;
@@ -319,6 +323,7 @@ namespace Assets.Scripts.Items
         {
             ItemDetach(curSlot);
             objTF.SetAsLastSibling();
+            OnHoverExit();
         }
 
         protected override void OnDraging()
