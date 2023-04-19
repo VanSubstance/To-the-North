@@ -3335,10 +3335,10 @@ PrefabInstance:
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: right
       value: 
-      objectReference: {fileID: 11400000, guid: 28a0c2b1fc9a5d14caaa96982e0f0db9, type: 2}
+      objectReference: {fileID: 11400000, guid: 28f7c59c66deb014f8fd4aa0a8f16213, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.size
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[3].pos.x
@@ -3405,6 +3405,14 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[11].pos.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[11].pos.y
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[3].itemInfo
       value: 
       objectReference: {fileID: 11400000, guid: 76c2424991838fa4f8ad1602191fcb44, type: 2}
@@ -3430,6 +3438,10 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: e99d3967c18138e49a62359e68e464f2, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[10].itemInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: 56e6f503548491641a9db09db2368f96, type: 2}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[11].itemInfo
       value: 
       objectReference: {fileID: 11400000, guid: 56e6f503548491641a9db09db2368f96, type: 2}
     m_RemovedComponents: []

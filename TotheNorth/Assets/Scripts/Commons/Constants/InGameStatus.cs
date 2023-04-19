@@ -220,6 +220,7 @@ namespace Assets.Scripts.Commons.Constants
 
             public static ItemBaseInfo PullItemFromInventory(ItemInventoryInfo itemFromInventory)
             {
+                UnityEngine.Debug.Log("강민준:: Inventory에 해당 아이템 찾아서 삭제하기");
                 inventory.Remove(itemFromInventory);
                 return itemFromInventory.itemInfo;
             }
@@ -227,7 +228,7 @@ namespace Assets.Scripts.Commons.Constants
             public static void PutItemToInventory(ItemBaseInfo _info)
             {
                 ItemInventoryInfo newItem = new ItemInventoryInfo(_info);
-                // Inventory에 알아서 빈 자리 찾아서 들어가기
+                UnityEngine.Debug.Log("강민준:: Inventory에 알아서 빈 자리 찾아서 들어가기");
             }
         }
     }

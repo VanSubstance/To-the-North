@@ -166,6 +166,7 @@ namespace Assets.Scripts.Items
             }
             curSlot = attachSlot;
             UnCheckReady(attachSlot);
+            attachSlot.attachedInfo = baseInfo;
         }
 
         /// <summary>
@@ -306,12 +307,21 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void GridOnCheck(InventorySlotController checkSlot)
         {
-            if (checkSlot.slotType == SlotType.Inventory && isGridOn == false ||
-                checkSlot.slotType == SlotType.Shop && isGridOn == false ||
-                checkSlot.slotType == SlotType.Rooting && isGridOn == false ||
-                checkSlot.slotType == SlotType.Ground && isGridOn == false)
+            if (!isGridOn)
             {
-                isGridOn = true;
+                switch (checkSlot.slotType)
+                {
+                    case SlotType.Inventory:
+                    case SlotType.Ground:
+                    case SlotType.Rooting:
+                    case SlotType.Shop:
+                        isGridOn = true;
+                        break;
+                    case SlotType.Equipment:
+                        break;
+                    case SlotType.Quick:
+                        break;
+                }
             }
         }
 
@@ -419,6 +429,10 @@ namespace Assets.Scripts.Items
                 InventorySlotController tempSlot;
                 tempSlot = hit.transform.GetComponent<InventorySlotController>();
                 GridOnCheck(tempSlot);
+                if (tempSlot.isAttached)
+                {
+                    GridOnCheckIfItemExist(tempSlot);
+                }
             }
             // 슬롯 미감지시 그리드 위는 어차피 아님
             else
@@ -476,5 +490,11 @@ namespace Assets.Scripts.Items
         /// </summary>
         /// <returns></returns>
         protected abstract bool CheckItemTag(InventorySlotController slot, bool isGridOn);
+
+        /// <summary>
+        /// 아이템을 뗄 때 그 아래 다른 아이템이 있으면 실행하는 함수
+        /// </summary>
+        /// <param name="slotController"></param>
+        public abstract void GridOnCheckIfItemExist(InventorySlotController slotController);
     }
 }

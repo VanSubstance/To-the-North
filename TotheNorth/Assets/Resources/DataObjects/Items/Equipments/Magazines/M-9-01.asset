@@ -22,3 +22,4 @@ MonoBehaviour:
   durability: 1
   bulletType: 1
   maxCount: 5
+  curCount: 5

@@ -17,7 +17,7 @@ namespace Assets.Scripts.Items
         public ItemBulletType bulletType;
         [SerializeField]
         private int maxCount;
-        private int curCount;
+        private int curCount = 0;
         private Queue<ItemBulletInfo> bullets = new Queue<ItemBulletInfo>();
         private ItemBulletInfo currentBullet;
 
@@ -37,6 +37,7 @@ namespace Assets.Scripts.Items
             {
                 // 전부 장전
                 bulletToLoad.AmountCount = bulletInfo.AmountCount;
+                curCount = bulletToLoad.AmountCount;
                 bullets.Enqueue(bulletToLoad);
                 bulletInfo.AmountCount = 0;
                 return null;
@@ -45,6 +46,7 @@ namespace Assets.Scripts.Items
             {
                 // 일부 장전
                 bulletToLoad.AmountCount = availableCount;
+                curCount += bulletToLoad.AmountCount;
                 bullets.Enqueue(bulletToLoad);
                 bulletInfo.AmountCount -= availableCount;
                 return bulletInfo;
@@ -69,6 +71,7 @@ namespace Assets.Scripts.Items
                     return false;
                 }
             }
+            curCount--;
             currentBullet.AmountCount--;
             bullet = currentBullet;
             return true;

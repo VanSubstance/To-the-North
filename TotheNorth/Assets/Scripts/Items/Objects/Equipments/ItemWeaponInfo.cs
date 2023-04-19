@@ -128,11 +128,11 @@ namespace Assets.Scripts.Items
         /// <returns>원래 장착되어있던 탄창</returns>
         public ItemMagazineInfo ReloadMagazine(ItemMagazineInfo _magazine)
         {
-            if (magazine == null)
+            ItemMagazineInfo oldMagazine = null;
+            if (magazine != null)
             {
-                return null;
+                oldMagazine = Instantiate(magazine);
             }
-            ItemMagazineInfo oldMagazine = Instantiate(magazine);
             magazine = _magazine;
             return oldMagazine;
         }
