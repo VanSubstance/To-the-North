@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -10,13 +5,23 @@ namespace Assets.Scripts.Items
     public abstract class AbsItemController : MonoBehaviour
     {
         protected KeyCode keyToPress = KeyCode.LeftControl;
-        protected float timeHover = 1, timeClick = 0.5f;
+        protected float timeHover = .5f, timeClick = 0.5f;
+        protected bool isMouseDown = false;
         private float liveTimeHover = 0, liveTimeClick = 0;
         private bool
             isKeyPressed = false,
             isMouseEnter = false,
-            isMouseDown = false,
+            isMouseClickedJustNow = false,
+            isHovering = false;
+
+        private void OnDisable()
+        {
+            isKeyPressed = false;
+            isMouseEnter = false;
+            isMouseDown = false;
             isMouseClickedJustNow = false;
+            isHovering = false;
+        }
 
         protected void Update()
         {
@@ -34,6 +39,11 @@ namespace Assets.Scripts.Items
 
         private void OnMouseExit()
         {
+            if (isHovering)
+            {
+                isHovering = false;
+                OnHoverExit();
+            }
             isMouseEnter = false;
         }
 
@@ -46,7 +56,10 @@ namespace Assets.Scripts.Items
 
         private void OnMouseDrag()
         {
-            OnDraging();
+            if (isMouseDown)
+            {
+                OnDraging();
+            }
         }
 
         private void OnMouseUp()
@@ -78,6 +91,7 @@ namespace Assets.Scripts.Items
                 {
                     if (!isMouseDown)
                     {
+                        isHovering = true;
                         OnHover();
                     }
                 }
@@ -103,6 +117,11 @@ namespace Assets.Scripts.Items
         /// 호버링중에 실행되어야 할 함수
         /// </summary>
         protected abstract void OnHover();
+
+        /// <summary>
+        /// 호버링 종료 시에 실행되어야 할 함수
+        /// </summary>
+        protected abstract void OnHoverExit();
         /// <summary>
         /// 드래그중에 실행되어야 할 함수
         /// </summary>

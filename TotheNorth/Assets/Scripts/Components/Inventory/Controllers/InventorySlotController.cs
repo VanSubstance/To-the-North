@@ -12,13 +12,13 @@ public class InventorySlotController : MonoBehaviour
     public EquipBodyType equipType;
     public Sprite normal;
     public Sprite ready;
-    private Image slotImage;
+    protected Image slotImage;
     public Transform itemTF;
-    private void Start()
+    protected void Start()
     {
         slotImage = GetComponent<Image>();
     }
-    private void Update()
+    protected void Update()
     {
         if (isAttachReady)
         {
@@ -29,6 +29,8 @@ public class InventorySlotController : MonoBehaviour
             slotImage.sprite = normal;
         }
     }
+
+    public ItemBaseInfo attachedInfo;
 }
 
 public enum SlotType

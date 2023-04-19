@@ -86,7 +86,7 @@ namespace Assets.Scripts.Users
             {
                 if (timeDodgeTrack <= 0.2f)
                 {
-                    InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 100 * WforStamina);
+                    InGameStatus.User.status.staminaBar.LiveInfo = (-Time.deltaTime * 100 * WforStamina);
                 }
                 timeDodgeTrack += Time.deltaTime;
                 rigid.velocity = dodgeDir * spdDodge * (1 + Mathf.Log(1 - timeDodgeTrack));
@@ -101,7 +101,7 @@ namespace Assets.Scripts.Users
         private void Dodge(Vector3 dir)
         {
             if (InGameStatus.User.IsConditionExist(ConditionConstraint.UtilBlock.Dodge)) return;
-            if (InGameStatus.User.status.staminaBar.GetCurrent() <= 0) return;
+            if (InGameStatus.User.status.staminaBar.LiveInfo <= 0) return;
             dodgeDir = dir;
             timeDodgeTrack = 0;
             secForRecoverStamina = 0;
@@ -127,7 +127,7 @@ namespace Assets.Scripts.Users
                 if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
                 {
                     secForRecoverStamina = 0;
-                    InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20 * WforStamina);
+                    InGameStatus.User.status.staminaBar.LiveInfo = (-Time.deltaTime * 20 * WforStamina);
                 }
                 vecToMove += Vector3.left * spdW;
                 vecHor += Vector3.left;
@@ -145,7 +145,7 @@ namespace Assets.Scripts.Users
                 if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
                 {
                     secForRecoverStamina = 0;
-                    InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20 * WforStamina);
+                    InGameStatus.User.status.staminaBar.LiveInfo = (-Time.deltaTime * 20 * WforStamina);
                 }
                 vecToMove += Vector3.down * spdW;
                 vecVer += Vector3.down;
@@ -163,7 +163,7 @@ namespace Assets.Scripts.Users
                 if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
                 {
                     secForRecoverStamina = 0;
-                    InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20 * WforStamina);
+                    InGameStatus.User.status.staminaBar.LiveInfo = (-Time.deltaTime * 20 * WforStamina);
                 }
                 vecToMove += Vector3.right * spdW;
                 vecVer += Vector3.right;
@@ -181,7 +181,7 @@ namespace Assets.Scripts.Users
                 if (InGameStatus.User.Movement.curMovement == Objects.MovementType.RUN)
                 {
                     secForRecoverStamina = 0;
-                    InGameStatus.User.status.staminaBar.AddCurrent(-Time.deltaTime * 20 * WforStamina);
+                    InGameStatus.User.status.staminaBar.LiveInfo = (-Time.deltaTime * 20 * WforStamina);
                 }
                 vecToMove += Vector3.up * spdW;
                 vecVer += Vector3.up;
@@ -215,7 +215,7 @@ namespace Assets.Scripts.Users
                 case Objects.MovementType.WALK:
                     return InGameStatus.User.Movement.spdWalk;
                 case Objects.MovementType.RUN:
-                    if (InGameStatus.User.status.staminaBar.GetCurrent() > 0)
+                    if (InGameStatus.User.status.staminaBar.LiveInfo > 0)
                     {
                         return InGameStatus.User.Movement.weightRun;
                     }
@@ -260,7 +260,7 @@ namespace Assets.Scripts.Users
                 {
                     weight /= 2;
                 }
-                InGameStatus.User.status.staminaBar.AddCurrent(Time.deltaTime * (float)weight);
+                InGameStatus.User.status.staminaBar.LiveInfo = (Time.deltaTime * (float)weight);
                 return;
             }
             secForRecoverStamina += Time.deltaTime;

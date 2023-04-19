@@ -52,6 +52,9 @@ TagManager:
   - name: Trajectory
     uniqueID: 529751051
     locked: 0
+  - name: Detection
+    uniqueID: 1963262453
+    locked: 0
   - name: Objects on Map
     uniqueID: 2807117983
     locked: 0
@@ -60,7 +63,4 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 3300573435
-    locked: 0
-  - name: Detection
-    uniqueID: 1963262453
     locked: 0

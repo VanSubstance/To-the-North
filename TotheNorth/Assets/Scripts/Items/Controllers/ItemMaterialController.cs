@@ -1,5 +1,5 @@
+using Assets.Scripts.Components.Popups;
 using UnityEngine;
-using static GlobalComponent.Common;
 
 namespace Assets.Scripts.Items
 {
@@ -7,12 +7,15 @@ namespace Assets.Scripts.Items
     {
         private readonly string TAG = "재료 아이템:\n";
 
-        protected override bool CheckItemTag(InventorySlotController slot)
+        protected override bool CheckItemTag(InventorySlotController slot, bool isGridOn)
         {
-            if (slot.slotType == SlotType.Inventory || slot.slotType == SlotType.Rooting ||
-                slot.slotType == SlotType.Ground || slot.slotType == SlotType.Shop)
+            switch (slot.slotType)
             {
-                return true;
+                case SlotType.Inventory:
+                case SlotType.Rooting:
+                case SlotType.Shop:
+                case SlotType.Ground:
+                    return true;
             }
             return false;
         }
@@ -24,7 +27,12 @@ namespace Assets.Scripts.Items
 
         protected override void OnHover()
         {
-            Debug.unityLogger.Log(TAG, "호버링");
+            HoverItemInfoContainerController.Instance.OnHoverEnter(info);
+        }
+
+        protected override void OnHoverExit()
+        {
+            HoverItemInfoContainerController.Instance.OnHoverExit();
         }
 
         protected override void OnMouseClickWithKeyPress()
@@ -35,6 +43,10 @@ namespace Assets.Scripts.Items
         protected override void OnMouseEnterWithKeyPress()
         {
             Debug.unityLogger.Log(TAG, "키 누른 상태로 진입");
+        }
+
+        public override void GridOnCheckIfItemExist(InventorySlotController slotController)
+        {
         }
     }
 }

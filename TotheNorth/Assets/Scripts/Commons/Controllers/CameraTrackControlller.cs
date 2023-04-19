@@ -10,9 +10,37 @@ public class CameraTrackControlller : MonoBehaviour
 
     private static int speedTracking = 2;
 
+    private static CameraTrackControlller _instance;
+    // 인스턴스에 접근하기 위한 프로퍼티
+    public static CameraTrackControlller Instance
+    {
+        get
+        {
+            if (!_instance)
+            {
+                _instance = FindObjectOfType(typeof(CameraTrackControlller)) as CameraTrackControlller;
+
+                if (_instance == null)
+                    Debug.Log("no Singleton obj");
+            }
+            return _instance;
+        }
+    }
+
     private void Awake()
     {
         Camera.main.orthographicSize = 8;
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+        // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
+        else if (_instance != this)
+        {
+            Destroy(gameObject);
+        }
+        // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
@@ -32,8 +60,8 @@ public class CameraTrackControlller : MonoBehaviour
         }
         transform.Translate(
             weight * speedTracking * Time.deltaTime * new Vector2(
-                GlobalComponent.Common.userController.x - transform.position.x + targetPos.x + headHorPos.x + headVerPos.x,
-                GlobalComponent.Common.userController.y - transform.position.y + targetPos.y + headHorPos.y + headVerPos.y
+                UserBaseController.Instance.x - transform.position.x + targetPos.x + headHorPos.x + headVerPos.x,
+                UserBaseController.Instance.y - transform.position.y + targetPos.y + headHorPos.y + headVerPos.y
                 )
             );
     }

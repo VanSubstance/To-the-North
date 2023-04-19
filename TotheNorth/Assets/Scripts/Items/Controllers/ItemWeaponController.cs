@@ -4,6 +4,7 @@ using Assets.Scripts.Battles;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Users;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -16,7 +17,7 @@ namespace Assets.Scripts.Items
         [SerializeField]
         private ItemWeaponInfo info;
         [SerializeField]
-        private bool isAI = true;
+        private bool isAI = true, isMagazineEmpty;
         private Transform owner;
 
         private float delayAmongFire, timeFocusFull = 3f;
@@ -40,6 +41,7 @@ namespace Assets.Scripts.Items
         private void Awake()
         {
             sprite = GetComponent<SpriteRenderer>();
+            isMagazineEmpty = false;
             if (isAI)
             {
                 TimeFocus = 0f;
@@ -59,16 +61,14 @@ namespace Assets.Scripts.Items
             if (info == null) return;
             TrackReleaseAiming();
             isAiming = false;
-            if (delayAmongFire >= info.delayAmongFire) return;
-            delayAmongFire += Time.deltaTime;
-            if (Input.GetKeyDown(KeyCode.R) && !isAI)
+            if (Input.GetKey(KeyCode.R) && !isAI && isMagazineEmpty && !isReloading)
             {
                 // 재장전
-                if (info.isMagazineRequired())
-                {
-                    TryReload(InGameStatus.Item.LookForMagazine(info.bulletType));
-                }
+                isReloading = true;
+                TryReload(InGameStatus.Item.LookForMagazine(info.bulletType));
             }
+            if (delayAmongFire >= info.delayAmongFire) return;
+            delayAmongFire += Time.deltaTime;
         }
 
         private void TrackReleaseAiming()
@@ -101,8 +101,10 @@ namespace Assets.Scripts.Items
                 {
                     // 탄환이 없는 원거리 무기
                     // = 재장전 필요
-                    Debug.Log("탄환 또는 탄창이 없습니다! 재장전이 필요합니다!");
+                    Debug.Log("재장전 필요!");
                     if (isAI) TryReload(GlobalComponent.Path.GetMonsterMagazineInfo(info.bulletType, 1));
+                    else
+                        isMagazineEmpty = true;
                     return;
                 }
                 else
@@ -122,18 +124,29 @@ namespace Assets.Scripts.Items
 
         public void ChangeEquipment(ItemEquipmentInfo _info)
         {
-            try
+            if (_info == null)
             {
-                info = (ItemWeaponInfo)_info;
-                TimeFocus = 0f;
-                isAiming = false;
-                owner = transform.parent.parent.parent;
-                sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
-                delayAmongFire = info.delayAmongFire;
+                info = null;
+                sprite.sprite = null;
+                Debug.Log("장비 뺌 or null 들어옴");
             }
-            catch (InvalidCastException)
+            else
             {
-                // 장비 정보가 오염됨
+                try
+                {
+                    info = (ItemWeaponInfo)_info;
+                    TimeFocus = 0f;
+                    isAiming = false;
+                    owner = transform.parent.parent.parent;
+                    sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
+                    delayAmongFire = info.delayAmongFire;
+                    Debug.Log("장비 착용함");
+                }
+                catch (InvalidCastException)
+                {
+                    // 장비 정보가 오염됨
+                    Debug.Log("장비 정보가 오염 됨");
+                }
             }
         }
 
@@ -141,20 +154,29 @@ namespace Assets.Scripts.Items
 
         private void TryReload(ItemMagazineInfo newMagazine)
         {
-            isReloading = true;
             StartCoroutine(CoroutineReload(newMagazine));
         }
 
         private IEnumerator CoroutineReload(ItemMagazineInfo newMagazine)
         {
+            Debug.Log("Reload Starts ...");
             float w = 1;
             if (!isAI && InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedReload))
             {
                 w *= 1.5f;
             }
             yield return new WaitForSeconds(info.timeReload * w);
-            info.ReloadMagazine(newMagazine);
+            ItemMagazineInfo temp = info.ReloadMagazine(newMagazine);
+            if (temp != null)
+            {
+                InGameStatus.Item.PutItemToInventory(temp);
+            }
             isReloading = false;
+            if (!isAI)
+            {
+                isMagazineEmpty = false;
+            }
+            Debug.Log("Reload Complete!");
         }
     }
 }

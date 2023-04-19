@@ -14,9 +14,10 @@ public class CommonGameManager : MonoBehaviour
     [SerializeField]
     private Transform fadeImagePrefab, userPrefab, filterForScreenPrefab,
         pauseWindowPrefab, inventoryWindowPrefab,
-        panelForLeftTop, panelForCondition,
+        panelForHpSp, panelForCondition, panelForWelfare,
         projectileManager, trajectoryManager,
-        screenHitManager
+        screenHitManager,
+        hoveringItemInfo
         ;
 
     private Image fadeImage;
@@ -26,14 +27,12 @@ public class CommonGameManager : MonoBehaviour
     private CameraHitEffectController _cameraHitController;
     private ScreenHitFilterController _screenHitFilterController;
 
-    // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
     private static CommonGameManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
     public static CommonGameManager Instance
     {
         get
         {
-            // 인스턴스가 없는 경우에 접근하려 하면 인스턴스를 할당해준다.
             if (!_instance)
             {
                 _instance = FindObjectOfType(typeof(CommonGameManager)) as CommonGameManager;
@@ -75,12 +74,10 @@ public class CommonGameManager : MonoBehaviour
         {
             _instance = this;
         }
-        // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
         else if (_instance != this)
         {
             Destroy(gameObject);
         }
-        // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
         DontDestroyOnLoad(gameObject);
     }
 
@@ -121,6 +118,16 @@ public class CommonGameManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         Transform uiTf = GameObject.Find("UI").transform;
+        if (uiTf.GetComponent<UIManager>().isInit)
+        {
+            CameraTrackControlller.Instance.transform.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1], -20);
+            UserBaseController.Instance.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
+            GlobalStatus.userInitPosition = new float[] { 0, 0 };
+            GlobalStatus.Loading.System.CommonGameManager = true;
+            curStatus = 0;
+            yield break;
+        }
+        uiTf.GetComponent<UIManager>().isInit = true;
         // 페이드아웃 이미지 추가
         Transform imageForFade = Instantiate(fadeImagePrefab, uiTf);
         imageForFade.localPosition = Vector3.zero;
@@ -135,13 +142,17 @@ public class CommonGameManager : MonoBehaviour
             Transform windowForPause = Instantiate(pauseWindowPrefab, uiTf);
             windowForPause.localPosition = Vector3.zero;
             KeyToggleManager keyAdded = uiTf.AddComponent<KeyToggleManager>();
-            keyAdded.InitContent(KeyCode.Escape, windowForPause.GetComponent<MonoBehaviourControllByKey>());
+            keyAdded.InitContent(KeyCode.Escape, windowForPause.GetComponent<IControllByKey>());
 
             // 인벤토리 모달 추가
             Transform windowForInventory = Instantiate(inventoryWindowPrefab, uiTf);
             windowForPause.localPosition = Vector3.zero;
             keyAdded = uiTf.AddComponent<KeyToggleManager>();
-            keyAdded.InitContent(KeyCode.I, windowForInventory.GetComponent<MonoBehaviourControllByKey>());
+            keyAdded.InitContent(KeyCode.I, windowForInventory.GetComponent<IControllByKey>());
+
+            Transform hovering = Instantiate(hoveringItemInfo, uiTf);
+            keyAdded = uiTf.AddComponent<KeyToggleManager>();
+            keyAdded.InitContent(KeyCode.I, hovering.GetComponent<IControllByKey>());
 
             // 화면 필터 이미지 추가
             Transform imageForSmog = Instantiate(filterForScreenPrefab, uiTf);
@@ -154,20 +165,29 @@ public class CommonGameManager : MonoBehaviour
             userGo.localScale = Vector3.one;
             userGo.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
             GlobalStatus.userInitPosition = new float[] { 0, 0 };
-            GlobalComponent.Common.userController = userGo.GetComponent<UserBaseController>();
 
-            // 필요한 UI
-            Transform panelLeftTop = Instantiate(panelForLeftTop, uiTf);
+            // 체력 UI
+            Transform panelLeftTop = Instantiate(panelForHpSp, uiTf);
             panelLeftTop.localScale = Vector3.one;
             panelLeftTop.localPosition = new Vector3(-960, 540, 0);
-            InGameStatus.User.status.hpBar = panelLeftTop.GetComponent<UINumericController>().barForHp;
-            InGameStatus.User.status.staminaBar = panelLeftTop.GetComponent<UINumericController>().barForStamina;
-            panelLeftTop.SetAsFirstSibling();
+            InGameStatus.User.status.hpBar = panelLeftTop.GetComponent<UIHpSpController>().barForHp;
+            InGameStatus.User.status.staminaBar = panelLeftTop.GetComponent<UIHpSpController>().barForStamina;
+            //panelLeftTop.SetAsFirstSibling();
 
             // 상태 이상 표기용 UI
             Transform panelCondition = Instantiate(panelForCondition, uiTf);
             panelCondition.localScale = Vector3.one;
             panelCondition.localPosition = new Vector3(-960, 340, 0);
+
+            // 건강 UI
+            Transform PanelForWelfare = Instantiate(panelForWelfare, uiTf);
+            PanelForWelfare.localScale = Vector3.one;
+            PanelForWelfare.localPosition = new Vector3(-960, -540, 0);
+            InGameStatus.User.status.hungerBar = PanelForWelfare.GetComponent<UIWelfareController>().barForHunger;
+            InGameStatus.User.status.thirstBar = PanelForWelfare.GetComponent<UIWelfareController>().barForThirst;
+            InGameStatus.User.status.temperatureBar = PanelForWelfare.GetComponent<UIWelfareController>().barForTemperature;
+            InGameStatus.User.status.temperatureBar.LiveInfo = -50;
+            //PanelForWelfare.SetAsFirstSibling();
 
             // 투사체 풀
             if (GameObject.Find("Projectiles") == null)
@@ -194,6 +214,8 @@ public class CommonGameManager : MonoBehaviour
 
         GlobalStatus.Loading.System.CommonGameManager = true;
         imageForFade.SetAsFirstSibling();
+
+        SceneManager.sceneLoaded += (scene, mode) => FadeScreen(false);
         curStatus = 0;
     }
 

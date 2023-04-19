@@ -1,6 +1,5 @@
 using System.Linq;
 using Assets.Scripts.Battles;
-using Assets.Scripts.Items.Objects;
 using Assets.Scripts.Commons.Constants;
 using UnityEngine;
 
@@ -25,6 +24,7 @@ namespace Assets.Scripts.Items
         public float delayAmongFire, timeReload = 2.5f, headHeight = .25f;
         [SerializeField]
         private float powerKnockback;
+        [SerializeField]
         private int powerPenetration, powerImpact;
         [SerializeField]
         private TrajectoryType trajectoryType;
@@ -128,7 +128,11 @@ namespace Assets.Scripts.Items
         /// <returns>원래 장착되어있던 탄창</returns>
         public ItemMagazineInfo ReloadMagazine(ItemMagazineInfo _magazine)
         {
-            ItemMagazineInfo oldMagazine = Instantiate(magazine);
+            ItemMagazineInfo oldMagazine = null;
+            if (magazine != null)
+            {
+                oldMagazine = Instantiate(magazine);
+            }
             magazine = _magazine;
             return oldMagazine;
         }

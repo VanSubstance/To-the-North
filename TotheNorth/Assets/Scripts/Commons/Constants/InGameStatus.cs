@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Assets.Scripts.Components.Progress;
 using Assets.Scripts.Items;
-using Assets.Scripts.Items.Objects;
 using Assets.Scripts.Users;
 using Assets.Scripts.Users.Objects;
 
@@ -18,6 +17,9 @@ namespace Assets.Scripts.Commons.Constants
             {
                 public static BarBaseController hpBar;
                 public static BarBaseController staminaBar;
+                public static BarBaseController hungerBar;
+                public static BarBaseController thirstBar;
+                public static BarBaseController temperatureBar;
             }
 
             public static Dictionary<ConditionType, int> conditions = new Dictionary<ConditionType, int>() {
@@ -110,9 +112,9 @@ namespace Assets.Scripts.Commons.Constants
             /// <param name="itemInfo">착용할 아이템 정보</param>
             public static void SetEquipmentInfo(EquipBodyType targetPartType, ItemEquipmentInfo itemInfo)
             {
-                if (itemInfo == null)
+                if (itemInfo == null || UserBaseController.Instance == null)
                 {
-                    //Debug.unityLogger.Log(TAG, $"{targetPartType}:: 착용하려는 아이템 정보 없음");
+                    // 아이템 정보가 없거나 유저 오브젝트가 준비되지 않음
                     return;
                 }
                 switch (targetPartType)
@@ -162,7 +164,7 @@ namespace Assets.Scripts.Commons.Constants
                         break;
                 }
                 curEquipments[targetPartType] = itemInfo;
-                GlobalComponent.Common.userController.ChangeEquipment(targetPartType, itemInfo);
+                UserBaseController.Instance.ChangeEquipment(targetPartType, itemInfo);
             }
 
             /// <summary>
@@ -210,10 +212,23 @@ namespace Assets.Scripts.Commons.Constants
                 {
                     if (inven.itemInfo is ItemMagazineInfo)
                     {
-                        return (ItemMagazineInfo)inven.itemInfo;
+                        return (ItemMagazineInfo)PullItemFromInventory(inven);
                     }
                 }
                 return null;
+            }
+
+            public static ItemBaseInfo PullItemFromInventory(ItemInventoryInfo itemFromInventory)
+            {
+                UnityEngine.Debug.Log("강민준:: Inventory에 해당 아이템 찾아서 삭제하기");
+                inventory.Remove(itemFromInventory);
+                return itemFromInventory.itemInfo;
+            }
+
+            public static void PutItemToInventory(ItemBaseInfo _info)
+            {
+                ItemInventoryInfo newItem = new ItemInventoryInfo(_info);
+                UnityEngine.Debug.Log("강민준:: Inventory에 알아서 빈 자리 찾아서 들어가기");
             }
         }
     }
