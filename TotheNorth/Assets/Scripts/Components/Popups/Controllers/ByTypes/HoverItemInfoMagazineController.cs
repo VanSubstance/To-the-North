@@ -16,7 +16,8 @@ namespace Assets.Scripts.Components.Popups
                 gameObject.SetActive(false);
                 return;
             }
-            ItemMaterialInfo info = (ItemMaterialInfo)_info;
+            
+            ItemMagazineInfo info = (ItemMagazineInfo)_info;
             gameObject.SetActive(true);
         }
     }

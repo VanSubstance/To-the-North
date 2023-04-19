@@ -44,5 +44,9 @@ namespace Assets.Scripts.Items
         {
             Debug.unityLogger.Log(TAG, "키 누른 상태로 진입");
         }
+
+        public override void GridOnCheckIfItemExist(InventorySlotController slotController)
+        {
+        }
     }
 }

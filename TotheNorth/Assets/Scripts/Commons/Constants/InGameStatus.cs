@@ -212,10 +212,23 @@ namespace Assets.Scripts.Commons.Constants
                 {
                     if (inven.itemInfo is ItemMagazineInfo)
                     {
-                        return (ItemMagazineInfo)inven.itemInfo;
+                        return (ItemMagazineInfo)PullItemFromInventory(inven);
                     }
                 }
                 return null;
+            }
+
+            public static ItemBaseInfo PullItemFromInventory(ItemInventoryInfo itemFromInventory)
+            {
+                UnityEngine.Debug.Log("강민준:: Inventory에 해당 아이템 찾아서 삭제하기");
+                inventory.Remove(itemFromInventory);
+                return itemFromInventory.itemInfo;
+            }
+
+            public static void PutItemToInventory(ItemBaseInfo _info)
+            {
+                ItemInventoryInfo newItem = new ItemInventoryInfo(_info);
+                UnityEngine.Debug.Log("강민준:: Inventory에 알아서 빈 자리 찾아서 들어가기");
             }
         }
     }

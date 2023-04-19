@@ -29,6 +29,8 @@ public class InventorySlotController : MonoBehaviour
             slotImage.sprite = normal;
         }
     }
+
+    public ItemBaseInfo attachedInfo;
 }
 
 public enum SlotType
