@@ -3338,7 +3338,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 28a0c2b1fc9a5d14caaa96982e0f0db9, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.size
-      value: 9
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[3].pos.x
@@ -3389,6 +3389,22 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[9].pos.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[9].pos.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[10].pos.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[10].pos.y
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[3].itemInfo
       value: 
       objectReference: {fileID: 11400000, guid: 76c2424991838fa4f8ad1602191fcb44, type: 2}
@@ -3408,6 +3424,14 @@ PrefabInstance:
       propertyPath: inventoryInfo.Array.data[8].itemInfo
       value: 
       objectReference: {fileID: 11400000, guid: d221bc8af54aedd48bd56169c0d48950, type: 2}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[9].itemInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: e99d3967c18138e49a62359e68e464f2, type: 2}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: inventoryInfo.Array.data[10].itemInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: 56e6f503548491641a9db09db2368f96, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
 --- !u!1001 &622875216

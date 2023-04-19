@@ -212,10 +212,22 @@ namespace Assets.Scripts.Commons.Constants
                 {
                     if (inven.itemInfo is ItemMagazineInfo)
                     {
-                        return (ItemMagazineInfo)inven.itemInfo;
+                        return (ItemMagazineInfo)PullItemFromInventory(inven);
                     }
                 }
                 return null;
+            }
+
+            public static ItemBaseInfo PullItemFromInventory(ItemInventoryInfo itemFromInventory)
+            {
+                inventory.Remove(itemFromInventory);
+                return itemFromInventory.itemInfo;
+            }
+
+            public static void PutItemToInventory(ItemBaseInfo _info)
+            {
+                ItemInventoryInfo newItem = new ItemInventoryInfo(_info);
+                // Inventory에 알아서 빈 자리 찾아서 들어가기
             }
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.Items
 {
+    [CreateAssetMenu(fileName = "Magazine Info", menuName = "Data Objects/Items/Equipments/Magazine", order = int.MaxValue)]
     public class ItemMagazineInfo : ItemEquipmentInfo
     {
         [HideInInspector]
