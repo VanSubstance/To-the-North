@@ -44,10 +44,6 @@ namespace Assets.Scripts.Creatures.Detections
             viewMesh.vertices = vertices;
             viewMesh.triangles = triangles;
             viewMesh.RecalculateNormals();
-            //viewMeshForVisualization.Clear();
-            //viewMeshForVisualization.vertices = vertices;
-            //viewMeshForVisualization.triangles = triangles;
-            //viewMeshForVisualization.RecalculateNormals();
         }
 
         /// <summary>
@@ -91,10 +87,47 @@ namespace Assets.Scripts.Creatures.Detections
         public override DetectionSightInfo SightCast(float globalAngle)
         {
             Vector3 dir = DirFromAngle(globalAngle, true);
-            return new DetectionSightInfo(false, transform.position + dir *
-                (isAI ? range : InGameStatus.User.Detection.Instinct.range),
-                (isAI ? range : InGameStatus.User.Detection.Instinct.range),
-                globalAngle);
+            RaycastHit2D hit;
+            if (hit = Physics2D.Raycast(transform.position, dir,
+                (isAI ? range : (int)InGameStatus.User.Detection.Instinct.range),
+                GlobalStatus.Constant.blockingSightMask))
+            {
+                return new DetectionSightInfo(true, DistortPoint(globalAngle, hit.point), hit.distance, globalAngle);
+            }
+            else
+            {
+                return new DetectionSightInfo(false, transform.position + dir *
+                    (isAI ? range : InGameStatus.User.Detection.Instinct.range),
+                    (isAI ? range : InGameStatus.User.Detection.Instinct.range),
+                    globalAngle);
+            }
+        }
+
+        /** 현재 각도에 따른 충돌 포인트 왜곡 */
+        private Vector2 DistortPoint(float globalAngle, Vector2 pointOrigin, float distortRate = 0.1f)
+        {
+            globalAngle = globalAngle % 360;
+            if (globalAngle < 90)
+            {
+                pointOrigin.x += distortRate;
+                pointOrigin.y += distortRate;
+                return pointOrigin;
+            }
+            if (globalAngle < 180)
+            {
+                pointOrigin.x -= distortRate;
+                pointOrigin.y += distortRate;
+                return pointOrigin;
+            }
+            if (globalAngle < 270)
+            {
+                pointOrigin.x -= distortRate;
+                pointOrigin.y -= distortRate;
+                return pointOrigin;
+            }
+            pointOrigin.x += distortRate;
+            pointOrigin.y -= distortRate;
+            return pointOrigin;
         }
     }
 }
