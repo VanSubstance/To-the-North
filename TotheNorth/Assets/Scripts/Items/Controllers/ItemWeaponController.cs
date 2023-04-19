@@ -101,6 +101,7 @@ namespace Assets.Scripts.Items
                 {
                     // 탄환이 없는 원거리 무기
                     // = 재장전 필요
+                    Debug.Log("재장전 필요!");
                     if (isAI) TryReload(GlobalComponent.Path.GetMonsterMagazineInfo(info.bulletType, 1));
                     else
                         isMagazineEmpty = true;
