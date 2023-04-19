@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    private static InventoryManager Instance = null;
-
     public static InventorySlotController[,] inventorySlots = new InventorySlotController[10, 12];
     public static InventorySlotController[,] rootSlots = new InventorySlotController[10, 12];
     public static List<ItemBaseInfo> items = new List<ItemBaseInfo>();
@@ -13,17 +11,24 @@ public class InventoryManager : MonoBehaviour
     public static Transform leftInventoryTF = null;
     public static Transform rightInventoryTF = null;
     public static Transform movingSpaceTF = null;
+
+    private static InventoryManager _instance;
+    public static InventoryManager Instance
+    {
+        get
+        {
+            if (!_instance)
+            {
+                _instance = FindObjectOfType(typeof(InventoryManager)) as InventoryManager;
+
+                if (_instance == null)
+                    Debug.Log("no Singleton obj");
+            }
+            return _instance;
+        }
+    }
     void Awake()
     {
-        if (null == Instance)
-        {
-            Instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
     }
     void Start()
     {

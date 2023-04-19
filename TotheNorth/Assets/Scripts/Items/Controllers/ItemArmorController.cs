@@ -27,14 +27,25 @@ namespace Assets.Scripts.Items
 
         public void ChangeEquipment(ItemEquipmentInfo _info)
         {
-            try
+            if (_info == null)
             {
-                info = (ItemArmorInfo)_info;
-                sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
+                info = null;
+                sprite.sprite = null;
+                Debug.Log("장비 뺌 or null 들어옴");
             }
-            catch (InvalidCastException)
+            else
             {
-                // 장비 정보가 오염됨
+                try
+                {
+                    info = (ItemArmorInfo)_info;
+                    sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
+                    Debug.Log("장비 착용함");
+                }
+                catch (InvalidCastException)
+                {
+                    // 장비 정보가 오염됨
+                    Debug.Log("장비 정보가 오염 됨");
+                }
             }
         }
 

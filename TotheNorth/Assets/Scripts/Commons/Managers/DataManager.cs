@@ -7,11 +7,28 @@ namespace Assets.Scripts.Commons
     internal class DataManager : MonoBehaviour
     {
         [SerializeField]
-        private ItemInventoryInfo[] inventoryInfo;
+        public ItemInventoryInfo[] inventoryInfo;
         [SerializeField]
-        private ItemArmorInfo helmat, mask, body, leg, back;
+        public ItemArmorInfo helmat, mask, body, leg, back;
         [SerializeField]
-        private ItemWeaponInfo right, left;
+        public ItemWeaponInfo right, left;
+
+        private static DataManager _instance;
+        // 인스턴스에 접근하기 위한 프로퍼티
+        public static DataManager Instance
+        {
+            get
+            {
+                if (!_instance)
+                {
+                    _instance = FindObjectOfType(typeof(DataManager)) as DataManager;
+
+                    if (_instance == null)
+                        Debug.Log("no Singleton obj");
+                }
+                return _instance;
+            }
+        }
         private void Awake()
         {
             LoadInventory();
@@ -39,6 +56,11 @@ namespace Assets.Scripts.Commons
                 };
                 InGameStatus.Item.inventory.Add(c);
             }
+        }
+
+        public void updateEquipment()
+        {
+            LoadEquipment();
         }
 
         private void LoadEquipment()

@@ -6,11 +6,11 @@ namespace Assets.Scripts.Items
     {
         protected KeyCode keyToPress = KeyCode.LeftControl;
         protected float timeHover = .5f, timeClick = 0.5f;
+        protected bool isMouseDown = false;
         private float liveTimeHover = 0, liveTimeClick = 0;
         private bool
             isKeyPressed = false,
             isMouseEnter = false,
-            isMouseDown = false,
             isMouseClickedJustNow = false,
             isHovering = false;
 
@@ -56,7 +56,10 @@ namespace Assets.Scripts.Items
 
         private void OnMouseDrag()
         {
-            OnDraging();
+            if (isMouseDown)
+            {
+                OnDraging();
+            }
         }
 
         private void OnMouseUp()
