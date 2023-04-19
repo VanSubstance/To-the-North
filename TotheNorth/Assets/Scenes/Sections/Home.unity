@@ -1323,7 +1323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 69225156}
   m_Layer: 0
-  m_Name: Field
+  m_Name: Obstacles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1343,8 +1343,8 @@ Transform:
   m_Children:
   - {fileID: 1633878920}
   - {fileID: 1420332233}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 822509313}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &71307538
 PrefabInstance:
@@ -5835,7 +5835,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &359943926
 GameObject:
@@ -23383,7 +23383,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 953080142591831872, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 953080142591831872, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27248,7 +27248,7 @@ GameObject:
   - component: {fileID: 822509313}
   - component: {fileID: 822509312}
   m_Layer: 0
-  m_Name: Tiles
+  m_Name: Field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27274,13 +27274,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 822509311}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 405031900}
+  - {fileID: 69225156}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &838652664
 PrefabInstance:
@@ -30728,7 +30729,7 @@ Transform:
   - {fileID: 547775926}
   - {fileID: 359943927}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1064406570
 PrefabInstance:
@@ -43273,7 +43274,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &1810225192
 AudioListener:
@@ -47967,11 +47968,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1538344158340248485, guid: 7b9e76dbaba984f46ae347adbb8f5bb5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.3
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 1538344158340248485, guid: 7b9e76dbaba984f46ae347adbb8f5bb5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.45
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 1538344158340248485, guid: 7b9e76dbaba984f46ae347adbb8f5bb5, type: 3}
       propertyPath: m_LocalPosition.z
