@@ -1,5 +1,6 @@
 using System;
 using Assets.Scripts.Commons;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -334,11 +335,19 @@ namespace Assets.Scripts.Items
 
         protected override void OnDraging()
         {
-            Debug.Log("drag");
+            Debug.Log("드래그");
             // 드래그 중 R키 누르면 아이템 회전
             if (Input.GetKeyDown(KeyCode.R))
             {
                 ItemRotate();
+            }
+            // 드래그 중 I키 누르면 놓아버림
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                Debug.Log("작동 됨");
+                OnUp();
+                isMouseDown = false;
+                return;
             }
             // 마우스 드래그 이벤트
             objTF.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
