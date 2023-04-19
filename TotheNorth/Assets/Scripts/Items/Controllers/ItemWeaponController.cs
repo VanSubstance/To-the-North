@@ -4,6 +4,7 @@ using Assets.Scripts.Battles;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Users;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -122,18 +123,29 @@ namespace Assets.Scripts.Items
 
         public void ChangeEquipment(ItemEquipmentInfo _info)
         {
-            try
+            if (_info == null)
             {
-                info = (ItemWeaponInfo)_info;
-                TimeFocus = 0f;
-                isAiming = false;
-                owner = transform.parent.parent.parent;
-                sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
-                delayAmongFire = info.delayAmongFire;
+                info = null;
+                sprite.sprite = null;
+                Debug.Log("장비 뺌 or null 들어옴");
             }
-            catch (InvalidCastException)
+            else
             {
-                // 장비 정보가 오염됨
+                try
+                {
+                    info = (ItemWeaponInfo)_info;
+                    TimeFocus = 0f;
+                    isAiming = false;
+                    owner = transform.parent.parent.parent;
+                    sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
+                    delayAmongFire = info.delayAmongFire;
+                    Debug.Log("장비 착용함");
+                }
+                catch (InvalidCastException)
+                {
+                    // 장비 정보가 오염됨
+                    Debug.Log("장비 정보가 오염 됨");
+                }
             }
         }
 

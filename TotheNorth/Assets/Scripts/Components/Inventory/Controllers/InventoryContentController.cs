@@ -6,10 +6,10 @@ public class InventoryContentController : AWindowBaseContentController
 {
     public GameObject slotPrefab;
     public Transform itemPrefab;
-    public Transform slotParentTF;
-    public Transform itemParentTF;
-    public Transform rootParentTF;
-    public Transform rtemParentTF;
+    public Transform rightGridTF;
+    public Transform rightItemTF;
+    public Transform leftGridTF;
+    public Transform leftItemTF;
     public Transform movingSpaceTF;
     private bool isInit = false;
 
@@ -28,11 +28,11 @@ public class InventoryContentController : AWindowBaseContentController
         foreach (ItemInventoryInfo info in InGameStatus.Item.inventory)
         {
             // 풀링 시스템이 고안되고 나면, 여기서 인스턴시에이트가 아닌 존재하는 오브젝트를 불러와야 함
-            tempGenerator = Instantiate(itemPrefab, itemParentTF).GetComponent<ItemGenerateController>();
+            tempGenerator = Instantiate(itemPrefab, rightGridTF).GetComponent<ItemGenerateController>();
             tempGenerator.transform.position = new Vector3
             (InventoryManager.inventorySlots[info.x, info.y].transform.position.x,
             InventoryManager.inventorySlots[info.x, info.y].transform.position.y,
-            itemParentTF.transform.position.z);
+            rightGridTF.transform.position.z);
             tempGenerator.InitItem(info.itemInfo, info);
         }
     }
@@ -64,7 +64,7 @@ public class InventoryContentController : AWindowBaseContentController
         {
             for (int row = 0; row < 10; row++)
             {
-                GameObject tempSlot = Instantiate(slotPrefab, slotParentTF);
+                GameObject tempSlot = Instantiate(slotPrefab, rightGridTF);
                 RectTransform slotTransform = tempSlot.GetComponent<RectTransform>();
                 slotTransform.anchoredPosition = new Vector2(row * 60f, col * -60f);
                 tempSlot.name = $"InventorySlot({row},{col})";
@@ -78,7 +78,7 @@ public class InventoryContentController : AWindowBaseContentController
         {
             for (int row = 0; row < 10; row++)
             {
-                GameObject tempSlot = Instantiate(slotPrefab, rootParentTF);
+                GameObject tempSlot = Instantiate(slotPrefab, leftGridTF);
                 RectTransform slotTransform = tempSlot.GetComponent<RectTransform>();
                 slotTransform.anchoredPosition = new Vector2(row * 60f, col * -60f);
                 tempSlot.name = $"rootSlot({row},{col})";
@@ -89,8 +89,8 @@ public class InventoryContentController : AWindowBaseContentController
             }
         }
         // 아이템들의 TF를 넣어주고, 이후 아이템 이동 시 사용
-        InventoryManager.leftInventoryTF = rtemParentTF;
-        InventoryManager.rightInventoryTF = itemParentTF;
+        InventoryManager.leftInventoryTF = leftItemTF;
+        InventoryManager.rightInventoryTF = rightItemTF;
         InventoryManager.movingSpaceTF = movingSpaceTF;
         testItemInit();
         isInit = true;

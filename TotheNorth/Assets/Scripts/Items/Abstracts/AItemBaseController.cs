@@ -1,4 +1,6 @@
 using System;
+using Assets.Scripts.Commons;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,7 +47,7 @@ namespace Assets.Scripts.Items
                 return (ItemBaseInfo)(object)info;
             }
         }
-        protected TItemInfo info;
+        public TItemInfo info;
 
         private new void Update()
         {
@@ -146,7 +148,11 @@ namespace Assets.Scripts.Items
             if (attachSlot.slotType == SlotType.Shop || attachSlot.slotType == SlotType.Rooting)
                 transform.SetParent(InventoryManager.leftInventoryTF);
             if (attachSlot.slotType == SlotType.Equipment)
+            {
                 transform.SetParent(attachSlot.itemTF);
+                EquipmentSlotController equipmentSlot = attachSlot as EquipmentSlotController;
+                equipmentSlot.EquipItem();
+            }
             Vector3 destPos;
             destPos = new Vector3(attachSlot.transform.localPosition.x, attachSlot.transform.localPosition.y, -1f);
             objTF.localPosition = destPos;
@@ -175,6 +181,11 @@ namespace Assets.Scripts.Items
         /// <param name="detachSlot"></param>
         public void ItemDetach(InventorySlotController detachSlot)
         {
+            if (curSlot.slotType == SlotType.Equipment)
+            {
+                EquipmentSlotController equipmentSlot = curSlot as EquipmentSlotController;
+                equipmentSlot.UnEquipItem();
+            }
             if (info == null) return;
             transform.SetParent(InventoryManager.movingSpaceTF);
             for (int i = 0; i < localCol; i++)
@@ -329,15 +340,24 @@ namespace Assets.Scripts.Items
         {
             ItemDetach(curSlot);
             objTF.SetAsLastSibling();
+            OnHoverExit();
         }
 
         protected override void OnDraging()
         {
-            Debug.Log("drag");
+            Debug.Log("드래그");
             // 드래그 중 R키 누르면 아이템 회전
             if (Input.GetKeyDown(KeyCode.R))
             {
                 ItemRotate();
+            }
+            // 드래그 중 I키 누르면 놓아버림
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                Debug.Log("작동 됨");
+                OnUp();
+                isMouseDown = false;
+                return;
             }
             // 마우스 드래그 이벤트
             objTF.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
