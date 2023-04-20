@@ -23,7 +23,13 @@ namespace Assets.Scripts.Creatures.Detections
 
                 DetectionSightInfo newViewCast = SightCast(angle);
                 viewPoints.Add(newViewCast.point);
-                newViewCast = SightCast(angle, .5f);
+            }
+
+            for (int i = 0; i <= stepCount; i++)
+            {
+                float angle = transform.eulerAngles.y - (360 / 2) + stepAngleSize * i;
+
+                DetectionSightInfo newViewCast = SightCast(angle, 1);
                 viewPoints.Add(newViewCast.point);
             }
 

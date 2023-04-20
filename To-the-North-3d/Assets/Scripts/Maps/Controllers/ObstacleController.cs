@@ -2,49 +2,23 @@ using UnityEngine;
 
 namespace Assets.Scripts.Maps
 {
-    internal class ObstacleController : BaseSpriteController
+    internal class ObstacleController : MonoBehaviour
     {
         [SerializeField]
-        private bool isDig = false;
-        public bool IsDig
-        {
-            get
-            {
-                return isDig;
-            }
-        }
-        public int CurrentLayer
-        {
-            get
-            {
-                return gameObject.layer;
-            }
-        }
-        private static ContactFilter2D filterOption = new ContactFilter2D();
-        private new void Awake()
-        {
-            base.Awake();
-            if (isDig) spriteBottom.color = new Color(.2f, .2f, .2f, .5f);
-            filterOption.SetLayerMask(GlobalStatus.Constant.obstacleMask);
-        }
+        private Transform imageToTilt;
+        private float height;
+        private static float sq2 = Mathf.Sqrt(2);
 
-        public Collider2D[] GetContactedColliders()
+        private void Awake()
         {
-            Collider2D[] list;
-            list = new Collider2D[20];
-            if (spriteBottom == null)
-            {
-                spriteBottom = transform.Find("Bottom").GetComponent<SpriteRenderer>();
-            }
-            Physics2D.OverlapCollider(spriteBottom.GetComponent<PolygonCollider2D>(), filterOption, list);
-            return list;
-        }
-
-        public void Composite(Transform parent)
-        {
-            gameObject.layer = 14;
-            spriteBottom.gameObject.layer = 0;
-            transform.SetParent(parent);
+            height = imageToTilt.position.y;
+            imageToTilt.localRotation = Quaternion.Euler(45, 0, 0);
+            Vector3 posOrigin = imageToTilt.localPosition;
+            imageToTilt.localPosition = new Vector3(
+                posOrigin.x,
+                height / sq2,
+                posOrigin.z + height / sq2
+                );
         }
     }
 }

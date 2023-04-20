@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 94518199656796054}
+  - component: {fileID: 609129364007430860}
   m_Layer: 0
   m_Name: Wall2
   m_TagString: Untagged
@@ -33,6 +34,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &609129364007430860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94518199656796055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe3a33ac94a7caf4283c16b0836abfab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageToTilt: {fileID: 7397465555982413437}
 --- !u!1 &94518200062780812
 GameObject:
   m_ObjectHideFlags: 0
