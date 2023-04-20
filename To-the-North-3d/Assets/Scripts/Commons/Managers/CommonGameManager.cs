@@ -120,8 +120,8 @@ public class CommonGameManager : MonoBehaviour
         Transform uiTf = GameObject.Find("UI").transform;
         if (uiTf.GetComponent<UIManager>().isInit)
         {
-            CameraTrackControlller.Instance.transform.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1], -20);
-            UserBaseController.Instance.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
+            CameraTrackControlller.Instance.transform.position = new Vector3(GlobalStatus.userInitPosition[0], 0, GlobalStatus.userInitPosition[1]);
+            UserBaseController.Instance.position = new Vector3(GlobalStatus.userInitPosition[0], 2, GlobalStatus.userInitPosition[1]);
             GlobalStatus.userInitPosition = new float[] { 0, 0 };
             GlobalStatus.Loading.System.CommonGameManager = true;
             curStatus = 0;
@@ -163,7 +163,7 @@ public class CommonGameManager : MonoBehaviour
             // 유저 위치
             Transform userGo = Instantiate(userPrefab);
             userGo.localScale = Vector3.one;
-            userGo.position = new Vector3(GlobalStatus.userInitPosition[0], GlobalStatus.userInitPosition[1]);
+            userGo.position = new Vector3(GlobalStatus.userInitPosition[0], 2, GlobalStatus.userInitPosition[1]);
             GlobalStatus.userInitPosition = new float[] { 0, 0 };
 
             // 체력 UI

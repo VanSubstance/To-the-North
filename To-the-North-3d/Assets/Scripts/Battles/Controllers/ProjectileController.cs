@@ -99,6 +99,7 @@ namespace Assets.Scripts.Battles
         {
             switch (collision.gameObject.layer)
             {
+                case 7:
                 case 14:
                     Arrive();
                     break;

@@ -55,11 +55,11 @@ namespace Assets.Scripts.Creatures.Detections
             {
                 // AI의 경우: 유저가 있는지만 체크
                 // 유저가 있다 ? 유저 식별 시 행동 호출
-                Collider2D userCol = Physics2D.OverlapCircle(transform.position, range, GlobalStatus.Constant.userMask);
+                Collider[] userCol = Physics.OverlapSphere(transform.position, range, GlobalStatus.Constant.userMask);
                 if (userCol != null)
                 {
-                    aIBaseController.OnDetectUser(userCol.transform);
-                    return userCol.transform;
+                    aIBaseController.OnDetectUser(userCol[0].transform);
+                    return userCol[0].transform;
                 }
                 else
                 {
@@ -68,8 +68,8 @@ namespace Assets.Scripts.Creatures.Detections
                 }
             }
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
-            List<Collider2D> targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask).ToList();
-            //targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.creatureMask));
+            List<Collider> targetsInViewRadius = Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask).ToList();
+            //targetsInViewRadius.AddRange(Physics.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.creatureMask));
             for (int i = 0; i < targetsInViewRadius.Count; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
@@ -87,12 +87,11 @@ namespace Assets.Scripts.Creatures.Detections
         public override DetectionSightInfo SightCast(float globalAngle)
         {
             Vector3 dir = DirFromAngle(globalAngle, true);
-            RaycastHit2D hit;
-            if (hit = Physics2D.Raycast(transform.position, dir,
+            if (Physics.Raycast(transform.position, dir, out RaycastHit hit,
                 (isAI ? range : (int)InGameStatus.User.Detection.Instinct.range),
-                GlobalStatus.Constant.blockingSightMask))
+                GlobalStatus.Constant.obstacleMask))
             {
-                return new DetectionSightInfo(true, DistortPoint(globalAngle, hit.point), hit.distance, globalAngle);
+                return new DetectionSightInfo(true, hit.point, hit.distance, globalAngle);
             }
             else
             {
@@ -101,33 +100,6 @@ namespace Assets.Scripts.Creatures.Detections
                     (isAI ? range : InGameStatus.User.Detection.Instinct.range),
                     globalAngle);
             }
-        }
-
-        /** 현재 각도에 따른 충돌 포인트 왜곡 */
-        private Vector2 DistortPoint(float globalAngle, Vector2 pointOrigin, float distortRate = 0.1f)
-        {
-            globalAngle = globalAngle % 360;
-            if (globalAngle < 90)
-            {
-                pointOrigin.x += distortRate;
-                pointOrigin.y += distortRate;
-                return pointOrigin;
-            }
-            if (globalAngle < 180)
-            {
-                pointOrigin.x -= distortRate;
-                pointOrigin.y += distortRate;
-                return pointOrigin;
-            }
-            if (globalAngle < 270)
-            {
-                pointOrigin.x -= distortRate;
-                pointOrigin.y -= distortRate;
-                return pointOrigin;
-            }
-            pointOrigin.x += distortRate;
-            pointOrigin.y -= distortRate;
-            return pointOrigin;
         }
     }
 }
