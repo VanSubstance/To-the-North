@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - InventorySlot
+  - Item
+  - Attack
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Background
+  - Obstacle
+  - Creature
+  - Event
+  - Map
+  - Item
+  - ItemSlot
+  - User
+  - Composite Collider
+  - Npc
+  - Projectile
+  - Hit
+  - Blocking Sight
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Objects Beneath MAp
+    uniqueID: 1245178655
+    locked: 0
+  - name: Trajectory
+    uniqueID: 84144153
+    locked: 0
+  - name: Detection
+    uniqueID: 70050035
+    locked: 0
+  - name: Objects on Map
+    uniqueID: 873360415
+    locked: 0
+  - name: UI Covering Map
+    uniqueID: 757277289
+    locked: 0
+  - name: UI
+    uniqueID: 2969970753
+    locked: 0
