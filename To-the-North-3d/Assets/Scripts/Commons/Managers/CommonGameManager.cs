@@ -163,7 +163,7 @@ public class CommonGameManager : MonoBehaviour
             // 유저 위치
             Transform userGo = Instantiate(userPrefab);
             userGo.localScale = Vector3.one;
-            userGo.position = new Vector3(GlobalStatus.userInitPosition[0], 2, GlobalStatus.userInitPosition[1]);
+            userGo.position = new Vector3(GlobalStatus.userInitPosition[0], 0.5f, GlobalStatus.userInitPosition[1]);
             GlobalStatus.userInitPosition = new float[] { 0, 0 };
 
             // 체력 UI

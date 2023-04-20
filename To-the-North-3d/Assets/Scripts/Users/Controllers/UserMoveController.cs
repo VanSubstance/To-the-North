@@ -11,7 +11,7 @@ namespace Assets.Scripts.Users
 
         private Vector3 dodgeDir = Vector3.zero;
         private float timeLastKeyTrack, timeDodgeTrack, spdDodge = 10;
-        private bool isDodging;
+        private bool isDodging, isCrouching;
         private float WforStamina
         {
             get
@@ -20,6 +20,9 @@ namespace Assets.Scripts.Users
             }
         }
 
+        [SerializeField]
+        Transform sightTf, hitTf;
+
         private void Awake()
         {
             rigid = GetComponent<Rigidbody>();
@@ -27,6 +30,7 @@ namespace Assets.Scripts.Users
             timeDodgeTrack = 0;
             timeLastKeyTrack = 0;
             isDodging = false;
+            isCrouching = false;
         }
         private void Update()
         {
@@ -96,17 +100,6 @@ namespace Assets.Scripts.Users
             keyCodeLast = KeyCode.None;
             dodgeDir = Vector3.zero;
             isDodging = false;
-        }
-
-        private void Dodge(Vector3 dir)
-        {
-            if (InGameStatus.User.IsConditionExist(ConditionConstraint.UtilBlock.Dodge)) return;
-            if (InGameStatus.User.status.staminaBar.LiveInfo <= 0) return;
-            dodgeDir = dir;
-            timeDodgeTrack = 0;
-            secForRecoverStamina = 0;
-            isDodging = true;
-            keyCodeLast = KeyCode.None;
         }
 
         private void TrackDirection()
@@ -244,9 +237,11 @@ namespace Assets.Scripts.Users
             if (Input.GetKey(KeyCode.LeftControl))
             {
                 InGameStatus.User.Movement.curMovement = Objects.MovementType.CROUCH;
+                Crouch();
                 return;
             }
             InGameStatus.User.Movement.curMovement = Objects.MovementType.WALK;
+            Stand();
         }
 
         private void TrackStamina()
@@ -264,6 +259,33 @@ namespace Assets.Scripts.Users
                 return;
             }
             secForRecoverStamina += Time.deltaTime;
+        }
+
+        private void Crouch()
+        {
+            if (isCrouching) return;
+            isCrouching = true;
+            hitTf.transform.localPosition = new Vector3(0, -.2f, 0);
+            sightTf.transform.localPosition = new Vector3(0, -.3f, 0);
+        }
+
+        private void Stand()
+        {
+            if (!isCrouching) return;
+            isCrouching = false;
+            hitTf.transform.localPosition = Vector3.zero;
+            sightTf.transform.localPosition = Vector3.zero;
+        }
+
+        private void Dodge(Vector3 dir)
+        {
+            if (InGameStatus.User.IsConditionExist(ConditionConstraint.UtilBlock.Dodge)) return;
+            if (InGameStatus.User.status.staminaBar.LiveInfo <= 0) return;
+            dodgeDir = dir;
+            timeDodgeTrack = 0;
+            secForRecoverStamina = 0;
+            isDodging = true;
+            keyCodeLast = KeyCode.None;
         }
     }
 
