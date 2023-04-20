@@ -28,12 +28,12 @@ namespace Assets.Scripts.Creatures
                 )
             {
                 // 오른쪽
-                body.rotation = Quaternion.Euler(0, 0, 0);
+                body.localScale = Vector3.one;
             }
             else
             {
                 // 왼쪽
-                body.rotation = Quaternion.Euler(0, 180, 0);
+                body.localScale = new Vector3(-1, 1, 1);
             }
 
             if (

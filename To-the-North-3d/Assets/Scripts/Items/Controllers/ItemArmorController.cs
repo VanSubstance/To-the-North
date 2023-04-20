@@ -17,19 +17,20 @@ namespace Assets.Scripts.Items
             {
                 return info;
             }
+            set
+            {
+                info = value;
+                sprite.sprite = GlobalComponent.Asset.GetImage(info);
+            }
         }
-
+        [SerializeField]
         private SpriteRenderer sprite;
-        private void Awake()
-        {
-            sprite = GetComponent<SpriteRenderer>();
-        }
 
         public void ChangeEquipment(ItemEquipmentInfo _info)
         {
             if (_info == null)
             {
-                info = null;
+                Info = null;
                 sprite.sprite = null;
                 Debug.Log("장비 뺌 or null 들어옴");
             }
@@ -37,8 +38,7 @@ namespace Assets.Scripts.Items
             {
                 try
                 {
-                    info = (ItemArmorInfo)_info;
-                    sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
+                    Info = (ItemArmorInfo)_info;
                     Debug.Log("장비 착용함");
                 }
                 catch (InvalidCastException)
@@ -49,6 +49,6 @@ namespace Assets.Scripts.Items
             }
         }
 
-        public bool IsEmpty() => info == null;
+        public bool IsEmpty() => Info == null;
     }
 }

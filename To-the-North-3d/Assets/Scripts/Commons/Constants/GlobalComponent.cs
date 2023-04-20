@@ -134,4 +134,13 @@ public static class GlobalComponent
             return null;
         }
     }
+
+    public static class Asset
+    {
+
+        public static Sprite GetImage(ItemBaseInfo info)
+        {
+            return Resources.Load<Sprite>(Path.GetImagePath(info));
+        }
+    }
 }

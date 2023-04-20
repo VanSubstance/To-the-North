@@ -9,6 +9,13 @@ namespace Assets.Scripts.Battles
         private EquipBodyType partType;
         private CreatureHitController hitController;
         private ItemArmorInfo info;
+        public ItemArmorInfo Info
+        {
+            set
+            {
+                info = value;
+            }
+        }
 
         private void Awake()
         {
@@ -16,13 +23,13 @@ namespace Assets.Scripts.Battles
             bool isArmor = false;
             if (transform.childCount == 0)
             {
-                info = ItemArmorInfo.GetPlainArmor();
+                Info = ItemArmorInfo.GetPlainArmor();
             }
             else
             {
-                if ((info = transform.GetChild(0).GetComponent<ItemArmorController>().Info) == null)
+                if ((Info = transform.GetChild(0).GetComponent<ItemArmorController>().Info) == null)
                 {
-                    info = ItemArmorInfo.GetPlainArmor();
+                    Info = ItemArmorInfo.GetPlainArmor();
                 }
                 else
                 {
@@ -49,7 +56,7 @@ namespace Assets.Scripts.Battles
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter(Collider collision)
         {
             if (collision.CompareTag("Attack"))
             {
@@ -59,11 +66,6 @@ namespace Assets.Scripts.Battles
                 hitController.OnHit(partType, info, prj.Info.AttackInfo, (prj.startPos - transform.position));
                 prj.Arrive();
             }
-        }
-
-        public void SetHitController(CreatureHitController _hitController)
-        {
-            hitController = _hitController;
         }
     }
 }
