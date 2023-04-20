@@ -72,8 +72,8 @@ public class CameraTrackControlller : MonoBehaviour
     private void TrackZoom()
     {
         Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * 3;
-        if (Camera.main.orthographicSize < 6) Camera.main.orthographicSize = 6;
-        if (Camera.main.orthographicSize > 10) Camera.main.orthographicSize = 10;
+        if (Camera.main.orthographicSize < 2.5f) Camera.main.orthographicSize = 2.5f;
+        if (Camera.main.orthographicSize > 5f) Camera.main.orthographicSize = 5f;
     }
 
     private void TrackMousePosOnTerrain()

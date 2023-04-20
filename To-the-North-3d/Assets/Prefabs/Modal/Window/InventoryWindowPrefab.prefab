@@ -302,8 +302,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Equipment
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
-  m_sharedMaterial: {fileID: 4892477022148786914, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d72554941db9af948bdb49f415c2f75d, type: 2}
+  m_sharedMaterial: {fileID: 4892477022148786914, guid: d72554941db9af948bdb49f415c2f75d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -437,8 +437,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: BackPack
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
-  m_sharedMaterial: {fileID: 4892477022148786914, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -743,6 +743,7 @@ MonoBehaviour:
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 1602744734658468322}
+  attachedInfo: {fileID: 0}
   equipItem: {fileID: 0}
 --- !u!1 &2311638565655693662
 GameObject:
@@ -1008,8 +1009,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Mask
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
-  m_sharedMaterial: {fileID: 4892477022148786914, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1200,6 +1201,7 @@ MonoBehaviour:
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 3727113946084276363}
+  attachedInfo: {fileID: 0}
   equipItem: {fileID: 0}
 --- !u!1 &4260338391024535535
 GameObject:
@@ -1326,6 +1328,7 @@ MonoBehaviour:
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 5170920923276334650}
+  attachedInfo: {fileID: 0}
   equipItem: {fileID: 0}
 --- !u!1 &4442856975649792398
 GameObject:
@@ -1490,6 +1493,7 @@ MonoBehaviour:
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 4047150311989061114}
+  attachedInfo: {fileID: 0}
   equipItem: {fileID: 0}
 --- !u!1 &4507479036426741790
 GameObject:
@@ -1595,8 +1599,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Leg
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
-  m_sharedMaterial: {fileID: 4892477022148786914, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1769,8 +1773,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: RightHand
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
-  m_sharedMaterial: {fileID: 4892477022148786914, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1904,8 +1908,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Body
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
-  m_sharedMaterial: {fileID: 4892477022148786914, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2096,6 +2100,7 @@ MonoBehaviour:
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 6700052574982325917}
+  attachedInfo: {fileID: 0}
   equipItem: {fileID: 0}
 --- !u!1 &6648232587807998022
 GameObject:
@@ -2222,6 +2227,7 @@ MonoBehaviour:
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 9157992735997124572}
+  attachedInfo: {fileID: 0}
   equipItem: {fileID: 0}
 --- !u!1 &6816579420247169085
 GameObject:
@@ -2442,8 +2448,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: LeftHand
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
-  m_sharedMaterial: {fileID: 4892477022148786914, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2577,8 +2583,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Inventory
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
-  m_sharedMaterial: {fileID: 4892477022148786914, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d72554941db9af948bdb49f415c2f75d, type: 2}
+  m_sharedMaterial: {fileID: 4892477022148786914, guid: d72554941db9af948bdb49f415c2f75d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2769,6 +2775,7 @@ MonoBehaviour:
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
   itemTF: {fileID: 211774221198767285}
+  attachedInfo: {fileID: 0}
   equipItem: {fileID: 0}
 --- !u!1 &8974828700742867976
 GameObject:
@@ -2838,8 +2845,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Head
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
-  m_sharedMaterial: {fileID: 4892477022148786914, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3011,8 +3018,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Ground
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
-  m_sharedMaterial: {fileID: 4892477022148786914, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d72554941db9af948bdb49f415c2f75d, type: 2}
+  m_sharedMaterial: {fileID: 4892477022148786914, guid: d72554941db9af948bdb49f415c2f75d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

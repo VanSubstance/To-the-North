@@ -44,8 +44,8 @@ namespace Assets.Scripts.Creatures.Detections
         /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */
         public override DetectionSightInfo SightCast(float globalAngle, float heightDistort = 0f)
         {
-            Vector3 dir = DirFromAngle(globalAngle, true);
-            if (Physics.Raycast(transform.position, dir, out RaycastHit hit,
+            Vector3 dir = DirFromAngle(globalAngle, true), movedTrPos = new Vector3(transform.position.x, transform.position.y + heightDistort, transform.position.z); ;
+            if (Physics.Raycast(movedTrPos, dir, out RaycastHit hit,
                 (isAI ? range : (int)InGameStatus.User.Detection.Sight.Range),
                 GlobalStatus.Constant.obstacleMask))
             {
@@ -53,7 +53,7 @@ namespace Assets.Scripts.Creatures.Detections
             }
             else
             {
-                return new DetectionSightInfo(false, transform.position + dir *
+                return new DetectionSightInfo(false, movedTrPos + dir *
                     (isAI ? range : InGameStatus.User.Detection.Sight.Range),
                     (isAI ? range : InGameStatus.User.Detection.Sight.Range),
                     globalAngle);
@@ -71,7 +71,7 @@ namespace Assets.Scripts.Creatures.Detections
             {
                 float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
 
-                DetectionSightInfo newViewCast = SightCast(angle);
+                DetectionSightInfo newViewCast = SightCast(angle, 0f);
                 viewPoints.Add(newViewCast.point);
             }
 
@@ -94,10 +94,6 @@ namespace Assets.Scripts.Creatures.Detections
             viewMesh.vertices = vertices;
             viewMesh.triangles = triangles;
             viewMesh.RecalculateNormals();
-            //viewMeshForVisualization.Clear();
-            //viewMeshForVisualization.vertices = vertices;
-            //viewMeshForVisualization.triangles = triangles;
-            //viewMeshForVisualization.RecalculateNormals();
         }
 
         /// <summary>
