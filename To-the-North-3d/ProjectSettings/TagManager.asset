@@ -7,6 +7,7 @@ TagManager:
   - InventorySlot
   - Item
   - Attack
+  - User
   layers:
   - Default
   - TransparentFX
@@ -28,7 +29,7 @@ TagManager:
   - Hit
   - Blocking Sight
   - Field
-  - 
+  - Detection for Field
   - 
   - 
   - 
