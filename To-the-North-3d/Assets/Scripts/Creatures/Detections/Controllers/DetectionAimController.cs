@@ -55,11 +55,10 @@ namespace Assets.Scripts.Creatures.Detections
         }
 
         /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */
-        public override DetectionSightInfo SightCast(float globalAngle)
+        public override DetectionSightInfo SightCast(float globalAngle, float heightDistort = 0f)
         {
             Vector3 dir = DirFromAngle(globalAngle, true);
-            RaycastHit2D hit;
-            if (hit = Physics2D.Raycast(transform.position, dir,
+            if (Physics.Raycast(transform.position, dir, out RaycastHit hit,
                 (isAI ? range : (int)InGameStatus.User.Detection.Sight.Range),
                 GlobalStatus.Constant.obstacleMask))
             {
@@ -158,16 +157,16 @@ namespace Assets.Scripts.Creatures.Detections
             {
                 // AI의 경우: 유저가 있는지만 체크
                 // 유저가 있다 ? 유저 식별 시 행동 호출
-                Collider2D userCol = Physics2D.OverlapCircle(transform.position, range, GlobalStatus.Constant.userMask);
+                Collider[] userCol = Physics.OverlapSphere(transform.position, range, GlobalStatus.Constant.userMask);
                 if (userCol != null)
                 {
-                    Transform userTf = userCol.transform;
+                    Transform userTf = userCol[0].transform;
                     Vector3 dirToTarget = (userTf.position - transform.position).normalized;
                     if (Math.Abs(Vector3.SignedAngle(transform.right, dirToTarget, Vector3.forward)) * 2 < degree)
                     {
                         float dstToTarget = Vector3.Distance(transform.position, userTf.position);
                         // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
-                        if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
+                        if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
                         {
                             aIBaseController.OnDetectUser(userTf);
                             return userTf;
@@ -182,9 +181,9 @@ namespace Assets.Scripts.Creatures.Detections
                 return null;
             }
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
-            List<Collider2D> targetsInViewRadius = new List<Collider2D>();
-            targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask));
-            //targetsInViewRadius.AddRange(Physics2D.OverlapCircleAll(transform.position, InGameStatus.User.Detection.Sight., GlobalStatus.Constant.creatureMask));
+            List<Collider> targetsInViewRadius = new List<Collider>();
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask));
+            //targetsInViewRadius.AddRange(Physics.OverlapCircleAll(transform.position, InGameStatus.User.Detection.Sight., GlobalStatus.Constant.creatureMask));
             for (int i = 0; i < targetsInViewRadius.Count; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
@@ -196,7 +195,7 @@ namespace Assets.Scripts.Creatures.Detections
                     float dstToTarget = Vector3.Distance(transform.position, target.transform.position);
 
                     // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
-                    if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
+                    if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
                     {
                         try
                         {

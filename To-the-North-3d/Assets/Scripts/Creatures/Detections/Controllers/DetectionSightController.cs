@@ -42,7 +42,7 @@ namespace Assets.Scripts.Creatures.Detections
         }
 
         /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */
-        public override DetectionSightInfo SightCast(float globalAngle)
+        public override DetectionSightInfo SightCast(float globalAngle, float heightDistort = 0f)
         {
             Vector3 dir = DirFromAngle(globalAngle, true);
             if (Physics.Raycast(transform.position, dir, out RaycastHit hit,

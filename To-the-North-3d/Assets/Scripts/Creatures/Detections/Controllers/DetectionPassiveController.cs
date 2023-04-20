@@ -1,8 +1,8 @@
+using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Events.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Events.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Detections
@@ -22,6 +22,8 @@ namespace Assets.Scripts.Creatures.Detections
                 float angle = transform.eulerAngles.y - (360 / 2) + stepAngleSize * i;
 
                 DetectionSightInfo newViewCast = SightCast(angle);
+                viewPoints.Add(newViewCast.point);
+                newViewCast = SightCast(angle, .5f);
                 viewPoints.Add(newViewCast.point);
             }
 
@@ -84,22 +86,32 @@ namespace Assets.Scripts.Creatures.Detections
             }
             return null;
         }
-        public override DetectionSightInfo SightCast(float globalAngle)
+        public override DetectionSightInfo SightCast(float globalAngle, float heightDistort = 0f)
         {
-            Vector3 dir = DirFromAngle(globalAngle, true);
-            if (Physics.Raycast(transform.position, dir, out RaycastHit hit,
-                (isAI ? range : (int)InGameStatus.User.Detection.Instinct.range),
+            Vector3 dir = DirFromAngle(globalAngle, true), movedTrPos = new Vector3(transform.position.x, transform.position.y + heightDistort, transform.position.z);
+            if (Physics.Raycast(movedTrPos, dir, out RaycastHit hit,
+                (isAI ? range : (int)GetRangeByDegree(globalAngle)),
                 GlobalStatus.Constant.obstacleMask))
             {
                 return new DetectionSightInfo(true, hit.point, hit.distance, globalAngle);
             }
             else
             {
-                return new DetectionSightInfo(false, transform.position + dir *
-                    (isAI ? range : InGameStatus.User.Detection.Instinct.range),
-                    (isAI ? range : InGameStatus.User.Detection.Instinct.range),
+                return new DetectionSightInfo(false, movedTrPos + dir *
+                    (isAI ? range : GetRangeByDegree(globalAngle)),
+                    (isAI ? range : GetRangeByDegree(globalAngle)),
                     globalAngle);
             }
+        }
+
+        private static float GetRangeByDegree(float degree)
+        {
+            //float radian = degree * Mathf.Deg2Rad;
+            //float a = InGameStatus.User.Detection.Instinct.range; // Major axis
+            //float b = InGameStatus.User.Detection.Instinct.range * 1.2f;
+            //float r = (a * b) / Mathf.Sqrt(Mathf.Pow(a * Mathf.Sin(radian), 2) + Mathf.Pow(b * Mathf.Cos(radian), 2));
+
+            return InGameStatus.User.Detection.Instinct.range;
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Assets.Scripts.Creatures.Detections
         }
 
         /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */
-        public abstract DetectionSightInfo SightCast(float globalAngle);
+        public abstract DetectionSightInfo SightCast(float globalAngle, float heightDistort = 0f);
         /** 시야 시각화 */
         public abstract void DrawSightArea();
 
