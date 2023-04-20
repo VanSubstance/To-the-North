@@ -66,14 +66,30 @@ namespace Assets.Scripts.Creatures.Detections
             int stepCount = Mathf.RoundToInt((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) * meshResolution);
             float stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / stepCount;
             List<Vector3> viewPoints = new List<Vector3>();
+            Vector3 t = new();
 
+            // 아랫면
             for (int i = 0; i <= stepCount; i++)
             {
                 float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
 
                 DetectionSightInfo newViewCast = SightCast(angle, 0f);
                 viewPoints.Add(newViewCast.point);
+                if (i == 0) t = newViewCast.point;
             }
+
+            // 윗면 (반시계로)
+            for (int i = 0; i <= stepCount; i++)
+            {
+                float angle = transform.eulerAngles.y + ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) - stepAngleSize * i;
+
+                DetectionSightInfo newViewCast = SightCast(angle, 1f);
+                viewPoints.Add(newViewCast.point);
+            }
+
+            // 오른면 (위 -> 아래) = triangle 하나면 될듯
+            // 0, 윗면 마지막, 아랫면 시작
+            viewPoints.Add(t);
 
             int vertexCount = viewPoints.Count + 1;
             Vector3[] vertices = new Vector3[vertexCount];
