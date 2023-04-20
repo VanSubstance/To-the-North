@@ -26,6 +26,7 @@ public class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
         bool toOpen = purpose == 1 ? true : purpose == 2 ? false :
             gameObject.activeSelf ? false : true;
         ;
+        transform.SetAsLastSibling();
         gameObject.SetActive(toOpen);
     }
 }
