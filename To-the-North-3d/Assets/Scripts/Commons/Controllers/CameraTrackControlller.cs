@@ -4,6 +4,7 @@ using Assets.Scripts.Users;
 
 public class CameraTrackControlller : MonoBehaviour
 {
+    public static Vector3 MousePosOnTerrain;
     public static Vector3
         targetPos = Vector3.zero,
         headHorPos = Vector3.zero, headVerPos = Vector3.zero;
@@ -48,6 +49,7 @@ public class CameraTrackControlller : MonoBehaviour
         if (!InGameStatus.User.isPause)
         {
             TrackZoom();
+            TrackMousePosOnTerrain();
         }
     }
 
@@ -72,5 +74,14 @@ public class CameraTrackControlller : MonoBehaviour
         Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * 3;
         if (Camera.main.orthographicSize < 6) Camera.main.orthographicSize = 6;
         if (Camera.main.orthographicSize > 10) Camera.main.orthographicSize = 10;
+    }
+
+    private void TrackMousePosOnTerrain()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (Physics.Raycast(mousePos, Camera.main.transform.forward, out RaycastHit hit, 100, 1 << 19))
+        {
+            MousePosOnTerrain = hit.point;
+        }
     }
 }

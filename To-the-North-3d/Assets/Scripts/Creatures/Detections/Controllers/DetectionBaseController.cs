@@ -45,7 +45,7 @@ namespace Assets.Scripts.Creatures.Detections
         {
             if (!angleIsGlobal)
             {
-                angleDegrees += transform.eulerAngles.y;
+                angleDegrees += transform.eulerAngles.z;
             }
             return CalculationFunctions.DirFromAngle(angleDegrees);
         }

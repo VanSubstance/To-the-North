@@ -30,7 +30,7 @@ namespace Assets.Scripts.Creatures.Detections
         public void SetRotationDegree(float degree = 0)
         {
             if (isAI) curDegree = degree;
-            transform.localRotation = Quaternion.Euler(0, 0, isAI ? curDegree : InGameStatus.User.Movement.curdegree);
+            transform.localRotation = Quaternion.Euler(0, isAI ? curDegree : InGameStatus.User.Movement.curdegree, 0);
         }
 
         public void AddRotationDegree(float degreeToAdd)
@@ -97,7 +97,7 @@ namespace Assets.Scripts.Creatures.Detections
 
             for (int i = 0; i <= stepCount; i++)
             {
-                float angle = transform.eulerAngles.z - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
+                float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
 
                 DetectionSightInfo newViewCast = SightCast(angle);
                 viewPoints.Add(newViewCast.point);

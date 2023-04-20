@@ -44,16 +44,14 @@ namespace Assets.Scripts.Battles
         {
             trajectory = TrajectoryManager.Instance.GetNewTrajectory();
             owner = _owner;
-            targetDir.z = 0f;
-
             this.startPos = startPos;
 
             info = ProjectileInfo.GetClone(_info);
-            GetComponent<BoxCollider2D>().size = new Vector2(0.2f, info.Height);
+            GetComponent<BoxCollider>().size = new Vector2(0.2f, info.Height);
             transform.localRotation = Quaternion.Euler(0f, 0f, CalculationFunctions.AngleFromDir(targetDir));
             transform.position = startPos;
             gameObject.SetActive(true);
-            GetComponent<Rigidbody2D>().velocity = targetDir.normalized * info.Spd;
+            GetComponent<Rigidbody>().velocity = targetDir.normalized * info.Spd;
             targetPos = startPos + targetDir.normalized * _info.Range;
             isAffected = false;
             isReady = true;

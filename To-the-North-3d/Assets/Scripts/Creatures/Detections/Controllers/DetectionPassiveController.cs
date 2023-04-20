@@ -19,7 +19,7 @@ namespace Assets.Scripts.Creatures.Detections
 
             for (int i = 0; i <= stepCount; i++)
             {
-                float angle = transform.eulerAngles.z - (360 / 2) + stepAngleSize * i;
+                float angle = transform.eulerAngles.y - (360 / 2) + stepAngleSize * i;
 
                 DetectionSightInfo newViewCast = SightCast(angle);
                 viewPoints.Add(newViewCast.point);

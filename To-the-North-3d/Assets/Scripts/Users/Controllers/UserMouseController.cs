@@ -2,6 +2,7 @@ using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Items;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Assets.Scripts.Commons.Functions;
 
 namespace Assets.Scripts.Users.Controllers
 {
@@ -19,17 +20,17 @@ namespace Assets.Scripts.Users.Controllers
         {
             if (!InGameStatus.User.isPause)
             {
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                TrackMousePosition(mousePos);
-                TrackAim(mousePos);
-                TrackAttack(mousePos);
+                TrackMousePosition(CameraTrackControlller.MousePosOnTerrain);
+                TrackAim(CameraTrackControlller.MousePosOnTerrain);
+                TrackAttack(CameraTrackControlller.MousePosOnTerrain);
             }
         }
 
         private void TrackMousePosition(Vector3 mousePos)
         {
-            InGameStatus.User.Movement.curdegree = (int)
-            Vector3.SignedAngle(Vector3.right, new Vector3(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized, transform.forward);
+            Vector2 t = new Vector2(mousePos.x - transform.position.x, mousePos.z - 2 - transform.position.z);
+
+            InGameStatus.User.Movement.curdegree = (int)CalculationFunctions.AngleFromDir(t);
         }
 
         private void TrackAim(Vector3 mousePos)

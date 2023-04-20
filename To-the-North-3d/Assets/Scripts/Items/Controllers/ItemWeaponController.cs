@@ -110,7 +110,8 @@ namespace Assets.Scripts.Items
                 else
                 {
                     ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, transform.position,
-                        CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(targetDir) + UnityEngine.Random.Range(-InGameStatus.User.Detection.Sight.DegreeError, InGameStatus.User.Detection.Sight.DegreeError))
+                        CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)) + UnityEngine.Random.Range(-InGameStatus.User.Detection.Sight.DegreeError,
+                        InGameStatus.User.Detection.Sight.DegreeError))
                         , owner);
                 }
                 delayAmongFire = 0f;
