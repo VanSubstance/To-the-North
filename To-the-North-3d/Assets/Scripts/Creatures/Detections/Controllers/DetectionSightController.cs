@@ -44,6 +44,7 @@ namespace Assets.Scripts.Creatures.Detections
         private void Update()
         {
             ControlGaze();
+            ControlGaze();
         }
 
         /// <summary>
@@ -165,7 +166,7 @@ namespace Assets.Scripts.Creatures.Detections
                         // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
                         if (!Physics.Raycast(transform.position, new Vector2(dirToTarget.x, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
                         {
-                            aIBaseController.OnDetectUser(userTf);
+                            aIBaseController.OnDetectUser(userTf.position);
                             return userTf;
                         }
                         else

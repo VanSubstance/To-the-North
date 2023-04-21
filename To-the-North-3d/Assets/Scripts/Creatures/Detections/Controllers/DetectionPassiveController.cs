@@ -66,7 +66,7 @@ namespace Assets.Scripts.Creatures.Detections
                 Collider[] userCol = Physics.OverlapSphere(transform.position, range, GlobalStatus.Constant.userMask);
                 if (userCol != null && userCol.Length > 0 && userCol[0] != null)
                 {
-                    aIBaseController.OnDetectUser(userCol[0].transform);
+                    aIBaseController.OnDetectUser(userCol[0].transform.position);
                     return userCol[0].transform;
                 }
                 else

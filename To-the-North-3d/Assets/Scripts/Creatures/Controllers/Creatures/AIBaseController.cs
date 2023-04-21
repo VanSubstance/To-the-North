@@ -9,7 +9,7 @@ using UnityEngine.AI;
 
 namespace Assets.Scripts.Creatures.Bases
 {
-    internal abstract class AIBaseController : MonoBehaviour, ICreatureBattle
+    public abstract class AIBaseController : MonoBehaviour, ICreatureBattle
     {
         [SerializeField]
         private CreatureInfo info;
@@ -32,12 +32,19 @@ namespace Assets.Scripts.Creatures.Bases
 
         private NavMeshAgent agent;
 
+        /// <summary>
+        /// agent가 추적할 위치 설정 (절대 좌표)
+        /// </summary>
         private Vector3 TargetMove
         {
             set
             {
                 agent.SetDestination(value);
                 agent.stoppingDistance = WeaponRange * 0.8f;
+            }
+            get
+            {
+                return agent.destination;
             }
         }
 
@@ -68,17 +75,21 @@ namespace Assets.Scripts.Creatures.Bases
         }
 
         /// <summary>
-        /// 현재 목표 타겟 좌표 설정
+        /// 현재 목표 타겟 좌표 (절대 좌표) 설정
         /// 이동 종료 후 대기 시간 설정
+        /// 이동 시, 해당 방향을 무조건 바라봄
         /// </summary>
-        /// <param name="target">목표 좌표</param>
+        /// <param name="target">목표 좌표: 절대 좌표 기준</param>
         /// <param name="timeToStay">도착 후 대기 시간</param>
         /// <param name="isRandom">무작위성이 있는지</param>
         public void SetTargetToMove(Vector3? target, float timeToStay, bool isRandom = false)
         {
+            if (target == null) return;
+            Debug.DrawLine(transform.position, (Vector3)target, Color.green, 10f);
             TargetMove = CalculationFunctions.GetDetouredPositionIfInCollider(transform.position, (Vector3)target);
             isMoveOrderDone = false;
             timeStayAfterMove = timeToStay;
+            SetTargetToGaze(TargetMove - transform.position, 0, false);
         }
 
         [SerializeField]
@@ -117,9 +128,9 @@ namespace Assets.Scripts.Creatures.Bases
         private bool isGazeOrderDone = false;
 
         /// <summary>
-        /// 바라볼 방향 (절대 좌표) 설정 함수
+        /// 바라볼 방향 (상대 좌표) 설정 함수
         /// </summary>
-        /// <param name="target">바라볼 방향 (절대 좌표)</param>
+        /// <param name="target">바라볼 방향 (상대 좌표)</param>
         /// <param name="timeToStay">바라볼 시간</param>
         /// <param name="isRandom">무작위성이 있는지</param>
         public void SetTargetToGaze(Vector3 target, float timeToStay, bool isRandom = false)
@@ -148,7 +159,7 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
-        public AIStatusType statusType = AIStatusType.None;
+        public AIStatusType statusType;
         private bool isPause = false;
         public bool IsPause
         {
@@ -180,6 +191,7 @@ namespace Assets.Scripts.Creatures.Bases
 
         public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
         {
+            hitDir = hitDir.normalized;
             transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
             switch (partType)
             {
@@ -206,9 +218,11 @@ namespace Assets.Scripts.Creatures.Bases
             if (IsRunaway)
             {
 
-            } else
+            }
+            else
             {
-                SetTargetToGaze(hitDir, 3f, false);
+                statusType = AIStatusType.Combat;
+                OnDetectUser(hitDir + transform.position);
             }
             //if (isRunAway)
             //{
@@ -237,8 +251,20 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
-        private void Awake()
+        /// <summary>
+        /// 예하 행동 컨트롤러들
+        /// </summary>
+        protected AbsAIStatusController[] statusCtrls;
+
+        protected void Awake()
         {
+            statusCtrls = GetComponents<AbsAIStatusController>();
+            foreach (AbsAIStatusController ctrl in statusCtrls)
+            {
+                ctrl.BaseCtrl = this;
+            }
+
+            statusType = AIStatusType.None;
             agent = GetComponent<NavMeshAgent>();
 
             equipableBodies[EquipBodyType.Helmat] = hitTf.GetChild(0).GetChild(0).GetComponent<ItemArmorController>();
@@ -276,7 +302,11 @@ namespace Assets.Scripts.Creatures.Bases
             isInit = false;
         }
 
-        public abstract void OnDetectUser(Transform targetTf);
+        /// <summary>
+        /// 감지된 위치 절대 좌표 기준
+        /// </summary>
+        /// <param name="targetPos"></param>
+        public abstract void OnDetectUser(Vector3? targetPos);
     }
 }
 

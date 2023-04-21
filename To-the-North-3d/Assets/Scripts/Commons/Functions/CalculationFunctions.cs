@@ -43,8 +43,9 @@ namespace Assets.Scripts.Commons.Functions
         /// <param name="moverPos">움직일 대상의 현재 위치</param>
         /// <param name="originPos">테스트 위치</param>
         /// <returns></returns>
-        public static Vector2 GetDetouredPositionIfInCollider(Vector2 moverPos, Vector2 originPos)
+        public static Vector2 GetDetouredPositionIfInCollider(Vector3 moverPos, Vector3 originPos)
         {
+            Debug.DrawLine(moverPos, originPos, Color.red, 10f);
             Collider2D obsCol;
             if (obsCol = Physics2D.OverlapPoint(originPos, GlobalStatus.Constant.obstacleMask))
             {
