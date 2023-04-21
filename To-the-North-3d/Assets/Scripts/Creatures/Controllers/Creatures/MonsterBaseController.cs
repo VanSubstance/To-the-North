@@ -3,6 +3,7 @@ using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Bases;
 using Assets.Scripts.Creatures.Conductions;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Assets.Scripts.Creatures.Controllers.Creatures
 {
