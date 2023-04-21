@@ -342,6 +342,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2653556367817440977}
+  - component: {fileID: 7371961724816905429}
   m_Layer: 0
   m_Name: Detection Controller
   m_TagString: Untagged
@@ -365,6 +366,21 @@ Transform:
   m_Father: {fileID: 1033182082222604192}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7371961724816905429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2551572246751325006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8d0f8569ac21494ea9482a55c1122ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detections:
+  - {fileID: 9214550898711274295}
+  targetTf: {fileID: 0}
 --- !u!1 &3438761165235799517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,6 +1300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f42e5165a7c3441409ece1fbaeafdd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aIBaseController: {fileID: 7865440330523968143}
   isAI: 1
   meshResolution: 1
   viewMesh: {fileID: 0}

@@ -231,7 +231,6 @@ namespace Assets.Scripts.Creatures.Bases
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
-            sightCtrl.SetAIBaseController(this);
 
             equipableBodies[EquipBodyType.Helmat] = hitTf.GetChild(0).GetChild(0).GetComponent<ItemArmorController>();
             equipableBodies[EquipBodyType.Mask] = hitTf.GetChild(1).GetChild(0).GetComponent<ItemArmorController>();

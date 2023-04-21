@@ -10,6 +10,7 @@ namespace Assets.Scripts.Creatures.Detections
 {
     internal abstract class DetectionBaseController : MonoBehaviour
     {
+        [SerializeField]
         protected AIBaseController aIBaseController;
         public bool isAI = true;
         public float meshResolution;
@@ -33,11 +34,6 @@ namespace Assets.Scripts.Creatures.Detections
         public void LateUpdate()
         {
             DrawSightArea();
-        }
-
-        public void SetAIBaseController(AIBaseController aIBaseController)
-        {
-            this.aIBaseController = aIBaseController;
         }
 
         /** 0도 위치에서부터 angleDegree 기준 방향 벡터 (Vector3) */

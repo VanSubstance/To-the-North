@@ -159,11 +159,11 @@ namespace Assets.Scripts.Creatures.Detections
                 {
                     Transform userTf = userCol[0].transform;
                     Vector3 dirToTarget = (userTf.position - transform.position).normalized;
-                    if (Math.Abs(Vector3.SignedAngle(transform.right, dirToTarget, Vector3.forward)) * 2 < degree)
+                    if (Math.Abs(CalculationFunctions.AngleFromDir(new Vector2(dirToTarget.x, dirToTarget.z)) - curDegree) * 2 < degree)
                     {
                         float dstToTarget = Vector3.Distance(transform.position, userTf.position);
                         // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
-                        if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
+                        if (!Physics.Raycast(transform.position, new Vector2(dirToTarget.x, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
                         {
                             aIBaseController.OnDetectUser(userTf);
                             return userTf;
@@ -187,12 +187,12 @@ namespace Assets.Scripts.Creatures.Detections
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
 
                 // (플레이어와 forward와 target이 이루는 각 - 마우스 회전각)이 설정한 각도 내라면
-                if (Math.Abs(Vector3.SignedAngle(transform.right, dirToTarget, Vector3.forward)) * 2 < InGameStatus.User.Detection.Sight.Degree)
+                if (Math.Abs(Vector3.SignedAngle(transform.right, new Vector2(dirToTarget.x, dirToTarget.z), Vector3.forward)) * 2 < InGameStatus.User.Detection.Sight.Degree)
                 {
                     float dstToTarget = Vector3.Distance(transform.position, target.transform.position);
 
                     // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
-                    if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
+                    if (!Physics.Raycast(transform.position, new Vector2(dirToTarget.x, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
                     {
                         try
                         {

@@ -1111,7 +1111,7 @@ GameObject:
   - component: {fileID: 2420854514163520099}
   - component: {fileID: 1399138213108615271}
   - component: {fileID: 6688062200060723648}
-  m_Layer: 20
+  m_Layer: 13
   m_Name: User Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
