@@ -15,6 +15,7 @@ namespace Assets.Scripts.Commons.Functions
         }
         /// <summary>
         /// 벡터의 방향으로부터 각도 추출 (Vector3)
+        /// 0 ~ 360
         /// </summary>
         /// <param name="angleDegrees"></param>
         /// <returns></returns>
@@ -44,9 +45,9 @@ namespace Assets.Scripts.Commons.Functions
         public static Vector2 GetDetouredPositionIfInCollider(Vector2 moverPos, Vector2 originPos)
         {
             Collider2D obsCol;
-            if (obsCol = Physics2D.OverlapPoint(originPos, GlobalStatus.Constant.compositeObstacleMask))
+            if (obsCol = Physics2D.OverlapPoint(originPos, GlobalStatus.Constant.obstacleMask))
             {
-                RaycastHit2D[] hits = Physics2D.RaycastAll(moverPos, originPos - moverPos, 20, GlobalStatus.Constant.compositeObstacleMask);
+                RaycastHit2D[] hits = Physics2D.RaycastAll(moverPos, originPos - moverPos, 20, GlobalStatus.Constant.obstacleMask);
                 foreach (RaycastHit2D hit in hits)
                 {
                     if (hit.collider.Equals(obsCol))

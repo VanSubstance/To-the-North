@@ -120,6 +120,7 @@ namespace Assets.Scripts.Items
 
         public float Range()
         {
+            if (info == null) return 0;
             return info.range;
         }
 

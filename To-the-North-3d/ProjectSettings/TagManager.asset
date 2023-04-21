@@ -23,7 +23,7 @@ TagManager:
   - Item
   - ItemSlot
   - User
-  - Composite Collider
+  - 
   - Npc
   - Projectile
   - Hit

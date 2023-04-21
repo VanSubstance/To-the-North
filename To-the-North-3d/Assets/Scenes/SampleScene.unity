@@ -1755,6 +1755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testTargetPos: {x: 25.36, y: 0, z: 9.13}
+  agent: {fileID: 0}
 --- !u!1001 &727744621
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12461,6 +12462,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1689596484}
     m_Modifications:
+    - target: {fileID: 1070078780410703675, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2551572246751325006, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -12513,22 +12518,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 7249881556927368019, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7865440330523968143, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
       propertyPath: info
       value: 
       objectReference: {fileID: 11400000, guid: abe18b6cfa722824ba68ab9ac5ff7750, type: 2}
     - target: {fileID: 7865440330523968143, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2844125861306491779, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
-    - {fileID: 8821249586427688319, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
-    - {fileID: 1782565532728971554, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
-    - {fileID: 3984194926472984288, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
-    - {fileID: 1070078780410703675, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
-    - {fileID: 7865440330523968143, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
-    - {fileID: 5930805339340001714, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
 --- !u!4 &1960141633 stripped
 Transform:

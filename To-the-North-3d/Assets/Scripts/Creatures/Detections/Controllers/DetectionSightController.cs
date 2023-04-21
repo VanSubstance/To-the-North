@@ -1,9 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Events.Interfaces;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Detections
@@ -11,34 +10,67 @@ namespace Assets.Scripts.Creatures.Detections
     internal class DetectionSightController : DetectionBaseController
     {
         public float range = 3f, degree = 60f, curDegree = 0;
-        private new void Start()
-        {
-            base.Start();
-            if (!isAI)
-                StartCoroutine(CheckCurRotation(0.01f));
-        }
+        private bool isForce = false;
 
-        private IEnumerator CheckCurRotation(float delay)
+        private Vector3 target;
+        /// <summary>
+        /// 절대 좌표 기준
+        /// 타겟 설정 함수
+        /// </summary>
+        public Vector3 Target
         {
-            while (true)
+            set
             {
-                yield return new WaitForSeconds(delay);
-                SetRotationDegree();
+                target = value;
             }
         }
 
-        public void SetRotationDegree(float degree = 0)
+        public void SetTrackInstant(Vector3 _target)
         {
-            if (isAI) curDegree = degree;
-            transform.localRotation = Quaternion.Euler(0, isAI ? curDegree : InGameStatus.User.Movement.curdegree, 0);
+            isForce = true;
+            transform.localRotation = Quaternion.Euler(0, CalculationFunctions.AngleFromDir(_target - transform.position), 0);
+        }
+
+        public bool IsGazeDone
+        {
+            get
+            {
+                float d = CalculationFunctions.AngleFromDir(target - transform.position);
+                return Mathf.Abs(curDegree - d) < 1f;
+            }
+        }
+
+        private void Update()
+        {
+            ControlGaze();
+        }
+
+        /// <summary>
+        /// 타겟 방향으로 고개 돌리기
+        /// 타겟에 도착했다 = 암것도 안함
+        /// </summary>
+        private void ControlGaze()
+        {
+            if (isForce) return;
+            float d = CalculationFunctions.AngleFromDir(target - transform.position);
+            if (Mathf.Abs(curDegree - d) < 1f) return;
+            if (d < 180)
+            {
+                // 반시계
+                AddRotationDegree(1f);
+            }
+            else
+            {
+                // 시계
+                AddRotationDegree(-1f);
+            }
         }
 
         public void AddRotationDegree(float degreeToAdd)
         {
-            if (!isAI) return;
-            curDegree += degreeToAdd;
+            curDegree += 360 + degreeToAdd;
             curDegree %= 360;
-            transform.localRotation = Quaternion.Euler(0, 0, curDegree);
+            transform.localRotation = Quaternion.Euler(0, curDegree, 0);
         }
 
         /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */
@@ -172,15 +204,6 @@ namespace Assets.Scripts.Creatures.Detections
                 }
             }
             return null;
-        }
-
-        /// <summary>
-        /// 현재 Transform이 바라보고 있는 방향을 기준으로 angle 방향 정규 벡터 + Transform 위치 Vector3
-        /// </summary>
-        /// <param name="angle"></param>
-        public Vector3 GetPositionOfLooking(float angle)
-        {
-            return transform.position + CalculationFunctions.DirFromAngle(curDegree + angle).normalized;
         }
     }
 }
