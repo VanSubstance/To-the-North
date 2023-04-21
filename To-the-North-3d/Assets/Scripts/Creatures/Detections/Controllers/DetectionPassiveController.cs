@@ -29,7 +29,7 @@ namespace Assets.Scripts.Creatures.Detections
             {
                 float angle = transform.eulerAngles.y - (360 / 2) + stepAngleSize * i;
 
-                DetectionSightInfo newViewCast = SightCast(angle, 1);
+                DetectionSightInfo newViewCast = SightCast(angle, .7f);
                 viewPoints.Add(newViewCast.point);
             }
 

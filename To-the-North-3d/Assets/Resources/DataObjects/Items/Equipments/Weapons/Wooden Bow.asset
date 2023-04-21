@@ -20,14 +20,17 @@ MonoBehaviour:
     \uBD80\uB7EC\uC9C8 \uAC83 \uAC19\uB2E4."
   price: 100
   equipmentType: 5
+  durability: 1
   handType: 1
   bulletType: 2
   range: 20
-  spd: 16
+  spd: 4
   damagePenetration: 13
   damageImpact: 2
   delayAmongFire: 2
   timeReload: 2.5
   headHeight: 0.25
   powerKnockback: 0
+  powerPenetration: 0
+  powerImpact: 0
   trajectoryType: 0

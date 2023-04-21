@@ -21,7 +21,7 @@ namespace Assets.Scripts.Users
         }
 
         [SerializeField]
-        Transform sightTf, hitTf;
+        Transform sightTf, hitTf, handTf;
 
         private void Awake()
         {
@@ -272,8 +272,9 @@ namespace Assets.Scripts.Users
         {
             if (isCrouching) return;
             isCrouching = true;
-            hitTf.transform.localPosition = new Vector3(0, -.2f, 0);
+            hitTf.transform.localPosition = new Vector3(0, -.3f, 0);
             sightTf.transform.localPosition = new Vector3(0, -.3f, 0);
+            handTf.localPosition = new Vector3(0, -.1f, -.1f);
         }
 
         private void Stand()
@@ -282,6 +283,7 @@ namespace Assets.Scripts.Users
             isCrouching = false;
             hitTf.transform.localPosition = Vector3.zero;
             sightTf.transform.localPosition = Vector3.zero;
+            handTf.localPosition = new Vector3(0, .1f, -.1f);
         }
 
         private void Dodge(Vector3 dir)

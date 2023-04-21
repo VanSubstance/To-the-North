@@ -24,9 +24,8 @@ namespace Assets.Scripts.Creatures.Bases
             timeLiveMemory += Time.deltaTime;
         }
 
-        public override void DetectUser(Vector3? detectPos)
+        public override void DetectUser(Vector3 detectPos)
         {
-            if (detectPos == null) return;
             if (timeLiveMemory != 0) timeLiveMemory = 0;
             baseCtrl.SetTargetToMove(detectPos, 0, false);
         }

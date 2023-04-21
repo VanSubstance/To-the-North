@@ -8,6 +8,7 @@ TagManager:
   - Item
   - Attack
   - User
+  - Attack Low
   layers:
   - Default
   - TransparentFX
@@ -51,11 +52,11 @@ TagManager:
   - name: Objects Beneath MAp
     uniqueID: 1245178655
     locked: 0
-  - name: Trajectory
-    uniqueID: 84144153
-    locked: 0
   - name: Detection
     uniqueID: 70050035
+    locked: 0
+  - name: Trajectory
+    uniqueID: 84144153
     locked: 0
   - name: Objects on Map
     uniqueID: 873360415

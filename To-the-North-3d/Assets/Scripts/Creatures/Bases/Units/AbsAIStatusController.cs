@@ -18,6 +18,6 @@ namespace Assets.Scripts.Creatures.Bases
         /// 절대 좌표 기준
         /// </summary>
         /// <param name="detectPos">적발한 위치</param>
-        public abstract void DetectUser(Vector3? detectPos);
+        public abstract void DetectUser(Vector3 detectPos);
     }
 }

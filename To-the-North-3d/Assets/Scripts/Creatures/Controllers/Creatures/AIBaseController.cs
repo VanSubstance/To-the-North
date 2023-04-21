@@ -71,6 +71,7 @@ namespace Assets.Scripts.Creatures.Bases
                 isMoveOrderDone = true;
                 return;
             }
+            // 안끝남
             timeStayAfterMove -= Time.deltaTime;
         }
 
@@ -86,9 +87,11 @@ namespace Assets.Scripts.Creatures.Bases
         {
             if (target == null) return;
             Debug.DrawLine(transform.position, (Vector3)target, Color.green, 10f);
-            TargetMove = CalculationFunctions.GetDetouredPositionIfInCollider(transform.position, (Vector3)target);
+            //TargetMove = CalculationFunctions.GetDetouredPositionIfInCollider(transform.position, (Vector3)target);
+            TargetMove = (Vector3)target;
             isMoveOrderDone = false;
             timeStayAfterMove = timeToStay;
+            // 진행방향 응시
             SetTargetToGaze(TargetMove - transform.position, 0, false);
         }
 

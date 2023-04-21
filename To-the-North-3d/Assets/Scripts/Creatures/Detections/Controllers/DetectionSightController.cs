@@ -117,7 +117,7 @@ namespace Assets.Scripts.Creatures.Detections
             {
                 float angle = transform.eulerAngles.y + ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) - stepAngleSize * i;
 
-                DetectionSightInfo newViewCast = SightCast(angle, 1f);
+                DetectionSightInfo newViewCast = SightCast(angle, .7f);
                 viewPoints.Add(newViewCast.point);
             }
 
@@ -160,7 +160,8 @@ namespace Assets.Scripts.Creatures.Detections
                 {
                     Transform userTf = userCol[0].transform;
                     Vector3 dirToTarget = (userTf.position - transform.position).normalized;
-                    if (Math.Abs(CalculationFunctions.AngleFromDir(new Vector2(dirToTarget.x, dirToTarget.z)) - curDegree) * 2 < degree)
+                    float d = Math.Abs(CalculationFunctions.AngleFromDir(new Vector2(dirToTarget.x, dirToTarget.z)) - curDegree);
+                    if (d < degree / 2 || (360 - d) < degree / 2)
                     {
                         float dstToTarget = Vector3.Distance(transform.position, userTf.position);
                         // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add

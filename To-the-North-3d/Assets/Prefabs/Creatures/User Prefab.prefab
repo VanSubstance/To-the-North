@@ -494,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b1b69d9811dccb4e940dfd0e3efee8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aIBaseController: {fileID: 0}
   isAI: 0
   meshResolution: 1
   viewMesh: {fileID: 0}
@@ -870,6 +871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05de53f3476845b4fafbbcff83399de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aIBaseController: {fileID: 0}
   isAI: 0
   meshResolution: 1
   viewMesh: {fileID: 0}
@@ -954,6 +956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f42e5165a7c3441409ece1fbaeafdd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aIBaseController: {fileID: 0}
   isAI: 0
   meshResolution: 1
   viewMesh: {fileID: 0}
@@ -1163,6 +1166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sightTf: {fileID: 7249881556030676200}
   hitTf: {fileID: 7249881556285147604}
+  handTf: {fileID: 1096704350664617787}
 --- !u!114 &3251740218194836106
 MonoBehaviour:
   m_ObjectHideFlags: 0

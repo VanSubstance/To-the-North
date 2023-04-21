@@ -45,7 +45,7 @@ namespace Assets.Scripts.Commons.Functions
         /// <returns></returns>
         public static Vector2 GetDetouredPositionIfInCollider(Vector3 moverPos, Vector3 originPos)
         {
-            Debug.DrawLine(moverPos, originPos, Color.red, 10f);
+            return originPos;
             Collider2D obsCol;
             if (obsCol = Physics2D.OverlapPoint(originPos, GlobalStatus.Constant.obstacleMask))
             {
@@ -59,7 +59,6 @@ namespace Assets.Scripts.Commons.Functions
                 }
                 // 이동 불가 위치
             }
-            return originPos;
         }
     }
 }
