@@ -233,7 +233,7 @@ namespace Assets.Scripts.Creatures.Bases
             }
             else
             {
-                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                GetComponent<Rigidbody>().velocity = Vector2.zero;
             }
             if (vectorToMove != null)
             {

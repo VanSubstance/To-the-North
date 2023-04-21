@@ -36,6 +36,14 @@ namespace Assets.Scripts.Users
         {
             if (!InGameStatus.User.isPause)
             {
+                TrackStamina();
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if (!InGameStatus.User.isPause)
+            {
                 if (isDodging)
                 {
                     TrackDodge();
@@ -46,7 +54,6 @@ namespace Assets.Scripts.Users
                     TrackDirection();
                     TrackMovementType();
                 }
-                TrackStamina();
             }
         }
 
