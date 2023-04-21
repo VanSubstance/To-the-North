@@ -158,7 +158,11 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
+        /// <summary>
+        /// 현재 행동 상태
+        /// </summary>
         public AIStatusType statusType;
+
         private bool isPause = false;
         public bool IsPause
         {
@@ -311,6 +315,15 @@ namespace Assets.Scripts.Creatures.Bases
             {
                 CheckMove();
                 CheckGaze();
+                CheckStatus();
+            }
+        }
+
+        private void CheckStatus()
+        {
+            if (statusType == AIStatusType.None)
+            {
+                statusType = AIStatusType.Wander;
             }
         }
 

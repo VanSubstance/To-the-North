@@ -23,6 +23,7 @@ namespace Assets.Scripts.Creatures.Bases
                 timeLiveMemory = 0;
                 return;
             }
+            OnDetectionUpdate();
             timeLiveMemory += Time.deltaTime;
         }
 
