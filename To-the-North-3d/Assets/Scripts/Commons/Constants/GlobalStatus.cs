@@ -9,7 +9,6 @@ public static class GlobalStatus
     {
         public static LayerMask
             obstacleMask = 1 << 7,
-            compositeObstacleMask = 1 << 14,
             blockingSightMask = 1 << 18,
             eventMask = 1 << 9,
             creatureMask = 1 << 8,

@@ -15,6 +15,5 @@ MonoBehaviour:
   maxHp: 100
   isActiveBehaviour: 1
   isRunAway: 0
-  sightRange: 20
-  moveSpd: 3
-  moveDis: 3
+  sightRange: 10
+  moveSpd: 1.5

@@ -1,3 +1,4 @@
+using Assets.Scripts.Creatures.Detections;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Items;
 using UnityEngine;
@@ -8,14 +9,10 @@ namespace Assets.Scripts.Users.Controllers
 {
     internal class UserMouseController : MonoBehaviour
     {
+        [SerializeField]
+        private DetectionSightController sightCtrl;
+        [SerializeField]
         private ItemWeaponController weaponL, weaponR;
-
-        private void Awake()
-        {
-            Transform temp = transform.Find("Hands");
-            weaponR = temp.GetChild(0).GetChild(0).GetComponent<ItemWeaponController>();
-            weaponL = temp.GetChild(1).GetChild(0).GetComponent<ItemWeaponController>();
-        }
         private void Update()
         {
             if (!InGameStatus.User.isPause)
@@ -31,6 +28,8 @@ namespace Assets.Scripts.Users.Controllers
             Vector2 t = new Vector2(mousePos.x - transform.position.x, mousePos.z - 2 - transform.position.z);
 
             InGameStatus.User.Movement.curdegree = (int)CalculationFunctions.AngleFromDir(t);
+
+            sightCtrl.SetTrackByDegree(InGameStatus.User.Movement.curdegree);
         }
 
         private void TrackAim(Vector3 mousePos)

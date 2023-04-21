@@ -8,7 +8,10 @@ namespace Assets.Scripts.Battles
 {
     class CreatureHitController : MonoBehaviour
     {
+        [SerializeField]
+        private Transform vibrateTf;
         private ICreatureBattle battleFunction;
+        [SerializeField]
         private Transform ownerTf;
         public Transform Owner
         {
@@ -21,8 +24,7 @@ namespace Assets.Scripts.Battles
 
         private void Awake()
         {
-            ownerTf = transform.parent;
-            battleFunction = transform.parent.GetComponent<ICreatureBattle>();
+            battleFunction = ownerTf.GetComponent<ICreatureBattle>();
         }
 
         /// <summary>
@@ -72,11 +74,11 @@ namespace Assets.Scripts.Battles
             while (timeLeft >= 0)
             {
                 timeLeft -= Time.deltaTime;
-                transform.localPosition = CalculationFunctions.DirFromAngle(UnityEngine.Random.Range(0, 360)) * powerVib;
+                vibrateTf.localPosition = CalculationFunctions.DirFromAngle(UnityEngine.Random.Range(0, 360)) * powerVib;
                 powerVib *= 0.7f;
                 yield return new WaitForSeconds(Time.deltaTime);
             }
-            transform.localPosition = Vector3.zero;
+            vibrateTf.localPosition = Vector3.zero;
             timeLeft = 0;
             powerVib = 0f;
         }

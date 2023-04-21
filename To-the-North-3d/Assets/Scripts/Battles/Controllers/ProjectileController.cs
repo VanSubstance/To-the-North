@@ -1,5 +1,6 @@
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Items;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Battles
@@ -9,6 +10,11 @@ namespace Assets.Scripts.Battles
         [SerializeField]
         private ProjectileInfo info;
         private bool isReady;
+
+        [SerializeField]
+        private Transform lowHit;
+
+        private SubHitDetectController subHit;
 
         public bool isAffected = false;
 
@@ -42,22 +48,29 @@ namespace Assets.Scripts.Battles
 
         public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner)
         {
+            float h = startPos.y;
+            bool isStand = h > .475f;
             trajectory = TrajectoryManager.Instance.GetNewTrajectory();
             owner = _owner;
+            startPos = new Vector3(startPos.x, 0, startPos.z);
+            targetDir = new Vector3(targetDir.x, 0, targetDir.z); ;
             this.startPos = startPos;
 
             info = ProjectileInfo.GetClone(_info);
-            GetComponent<BoxCollider>().size = new Vector2(0.2f, info.Height);
-            transform.localRotation = Quaternion.Euler(0f, 0f, CalculationFunctions.AngleFromDir(targetDir));
-            transform.position = startPos;
+            subHit.size = GetComponent<BoxCollider>().size = new Vector3(0.2f, info.Height, .2f);
+            subHit.SetActive(true);
+
+            transform.localRotation = Quaternion.Euler(0f, 0f, CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)));
+            transform.position = new Vector3(startPos.x, isStand ? 1f : .7f, startPos.z);
             gameObject.SetActive(true);
-            GetComponent<Rigidbody>().velocity = targetDir.normalized * info.Spd;
+            GetComponent<Rigidbody>().velocity = new Vector3(targetDir.x, 0, targetDir.z).normalized * info.Spd;
             targetPos = startPos + targetDir.normalized * _info.Range;
+            targetPos = new Vector3(targetPos.x, isStand ? 1f : .7f, targetPos.z);
             isAffected = false;
             isReady = true;
             if (info.TrajectoryType == TrajectoryType.Curve)
             {
-                trajectory.PlayCurve(startPos, CalculationFunctions.AngleFromDir(targetDir), 45, _info.Range);
+                trajectory.PlayCurve(startPos, CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)), 45, _info.Range);
                 trajectory = null;
             }
         }
@@ -70,11 +83,18 @@ namespace Assets.Scripts.Battles
             {
                 trajectory.Finish();
             }
+            subHit.SetActive(false);
             gameObject.SetActive(false);
         }
 
         private void Awake()
         {
+            if ((subHit = lowHit.GetComponent<SubHitDetectController>()) == null)
+            {
+                subHit = lowHit.AddComponent<SubHitDetectController>();
+            }
+            subHit.Parent = this;
+            subHit.SetActive(false);
             gameObject.SetActive(false);
         }
 
@@ -100,7 +120,6 @@ namespace Assets.Scripts.Battles
             switch (collision.gameObject.layer)
             {
                 case 7:
-                case 14:
                     Arrive();
                     break;
             }
@@ -113,6 +132,56 @@ namespace Assets.Scripts.Battles
             isReady = false;
             transform.position = Vector3.zero;
             trajectory = null;
+        }
+
+        public class SubHitDetectController : MonoBehaviour
+        {
+            private BoxCollider hit;
+            private ProjectileController parent;
+
+            public Vector3 size
+            {
+                set
+                {
+                    hit.size = value;
+                }
+            }
+
+            public ProjectileController Parent
+            {
+                set
+                {
+                    parent = value;
+                }
+                get
+                {
+                    return parent;
+                }
+            }
+
+            public void SetActive(bool active)
+            {
+                gameObject.SetActive(active);
+            }
+
+            private void Awake()
+            {
+                hit = GetComponent<BoxCollider>();
+            }
+            private void OnCollisionEnter(Collision collision)
+            {
+                switch (collision.gameObject.layer)
+                {
+                    case 7:
+                        gameObject.SetActive(false);
+                        break;
+                }
+            }
+
+            private void Update()
+            {
+                transform.position = parent.transform.position + Vector3.down * .5f;
+            }
         }
     }
 }

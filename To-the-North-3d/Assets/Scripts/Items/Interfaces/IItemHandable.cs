@@ -13,12 +13,15 @@ namespace Assets.Scripts.Items
         /// <returns></returns>
         public float Range();
         /// <summary>
-        /// 해당 아이템 사용
+        /// 해당 방향으로 아이템 사용
+        /// 상대 좌표
         /// </summary>
         /// <param name="targetDir"></param>
         public void Use(Vector3 targetDir);
+
         /// <summary>
         /// 해당 아이템 조준
+        /// 상대 좌표
         /// </summary>
         /// <param name="targetDir"></param>
         public void Aim(Vector3 targetDir);

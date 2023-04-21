@@ -1,5 +1,6 @@
 using Assets.Scripts.Items;
 using UnityEngine;
+using static Assets.Scripts.Battles.ProjectileController;
 
 namespace Assets.Scripts.Battles
 {
@@ -58,9 +59,17 @@ namespace Assets.Scripts.Battles
 
         private void OnTriggerEnter(Collider collision)
         {
+            ProjectileController prj = null;
+            if (collision.CompareTag("Attack Low"))
+            {
+                prj = collision.GetComponent<SubHitDetectController>().Parent;
+            }
             if (collision.CompareTag("Attack"))
             {
-                ProjectileController prj = collision.GetComponent<ProjectileController>();
+                prj = collision.GetComponent<ProjectileController>();
+            }
+            if (prj != null)
+            {
                 if (prj.isAffected) return;
                 if (prj.Owner.Equals(hitController.Owner)) return;
                 hitController.OnHit(partType, info, prj.Info.AttackInfo, (prj.startPos - transform.position));

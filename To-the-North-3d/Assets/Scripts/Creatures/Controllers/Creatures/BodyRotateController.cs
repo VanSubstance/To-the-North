@@ -9,16 +9,12 @@ namespace Assets.Scripts.Creatures
         [SerializeField]
         Transform body, handL, handR;
 
+        [SerializeField]
         private AIBaseController aiBase;
-
-        private void Awake()
-        {
-            aiBase = GetComponent<AIBaseController>();
-        }
 
         private void Update()
         {
-            float curDegree = aiBase ? aiBase.curDegree : InGameStatus.User.Movement.curdegree;
+            float curDegree = aiBase ? aiBase.CurDegree : InGameStatus.User.Movement.curdegree;
             // 시야를 따라 회전
             handL.localRotation = Quaternion.Euler(0, 0, curDegree);
             handR.localRotation = Quaternion.Euler(0, 0, curDegree);

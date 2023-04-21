@@ -8,6 +8,7 @@ TagManager:
   - Item
   - Attack
   - User
+  - Attack Low
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Item
   - ItemSlot
   - User
-  - Composite Collider
+  - 
   - Npc
   - Projectile
   - Hit
@@ -45,14 +46,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Field
+    uniqueID: 1778392365
+    locked: 0
   - name: Objects Beneath MAp
     uniqueID: 1245178655
     locked: 0
-  - name: Trajectory
-    uniqueID: 84144153
-    locked: 0
   - name: Detection
     uniqueID: 70050035
+    locked: 0
+  - name: Trajectory
+    uniqueID: 84144153
     locked: 0
   - name: Objects on Map
     uniqueID: 873360415

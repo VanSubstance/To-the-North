@@ -1,13 +1,12 @@
-using System.Collections.Generic;
-using Assets.Scripts.Battles;
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Items;
 using UnityEngine;
 
 namespace Assets.Scripts.Users
 {
-    public class UserBaseController : MonoBehaviour, ICreatureBattle
+    public class UserBaseController : AbsCreatureBaseController
     {
 
         public Vector3 position
@@ -23,8 +22,6 @@ namespace Assets.Scripts.Users
         {
             get => transform.position.z;
         }
-
-        private Dictionary<EquipBodyType, IItemEquipable> equipableBodies = new Dictionary<EquipBodyType, IItemEquipable>();
 
         private float tickHealthCondition;
 
@@ -47,7 +44,7 @@ namespace Assets.Scripts.Users
             }
         }
 
-        private void Awake()
+        private new void Awake()
         {
             if (_instance == null)
             {
@@ -61,15 +58,7 @@ namespace Assets.Scripts.Users
             // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
             DontDestroyOnLoad(gameObject);
 
-            Transform temp = transform.Find("Hits");
-            equipableBodies[EquipBodyType.Helmat] = temp.GetChild(0).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Mask] = temp.GetChild(1).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Head] = temp.GetChild(2).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Body] = temp.GetChild(3).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Leg] = temp.GetChild(4).GetChild(0).GetComponent<ItemArmorController>();
-            temp = transform.Find("Hands");
-            equipableBodies[EquipBodyType.Right] = temp.GetChild(0).GetChild(0).GetComponent<ItemWeaponController>();
-            equipableBodies[EquipBodyType.Left] = temp.GetChild(1).GetChild(0).GetComponent<ItemWeaponController>();
+            base.Awake();
             tickHealthCondition = 0;
         }
 
@@ -101,7 +90,7 @@ namespace Assets.Scripts.Users
             equipableBodies[targetType].ChangeEquipment(itemInfo);
         }
 
-        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
+        public override void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
         {
             switch (partType)
             {
@@ -119,7 +108,7 @@ namespace Assets.Scripts.Users
             // 상태 이상 부여 심사
 
             // 테스트 효과 활성화
-            OccurCondition(ConditionType.Test);
+            //OccurCondition(ConditionType.Test);
 
             if (damage[1] > 0)
             {
@@ -150,7 +139,7 @@ namespace Assets.Scripts.Users
             }
 
             // 화면 피격 이벤트 처리
-            CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(hitDir), damage);
+            CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(new Vector2(hitDir.x, hitDir.z)), damage);
             return;
         }
 

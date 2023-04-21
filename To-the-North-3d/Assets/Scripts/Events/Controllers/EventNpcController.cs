@@ -45,7 +45,7 @@ namespace Assets.Scripts.Events.Controllers
         /// </summary>
         public override void OnInteraction()
         {
-            baseController.PauseOrResumeAct(true);
+            baseController.IsPause = true;
             StartCoroutine(StartConversation());
         }
 
@@ -56,7 +56,7 @@ namespace Assets.Scripts.Events.Controllers
             {
                 yield return new WaitForSeconds(Time.deltaTime);
             }
-            baseController.PauseOrResumeAct(false);
+            baseController.IsPause = false;
         }
     }
 }

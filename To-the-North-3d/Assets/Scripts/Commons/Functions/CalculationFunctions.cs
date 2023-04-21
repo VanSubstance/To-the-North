@@ -15,6 +15,8 @@ namespace Assets.Scripts.Commons.Functions
         }
         /// <summary>
         /// 벡터의 방향으로부터 각도 추출 (Vector3)
+        /// Vector3.right 기준 반시계 방향
+        /// 0 ~ 360
         /// </summary>
         /// <param name="angleDegrees"></param>
         /// <returns></returns>
@@ -41,21 +43,13 @@ namespace Assets.Scripts.Commons.Functions
         /// <param name="moverPos">움직일 대상의 현재 위치</param>
         /// <param name="originPos">테스트 위치</param>
         /// <returns></returns>
-        public static Vector2 GetDetouredPositionIfInCollider(Vector2 moverPos, Vector2 originPos)
+        public static Vector3 GetDetouredPositionIfInCollider(Vector3 moverPos, Vector3 originPos)
         {
-            Collider2D obsCol;
-            if (obsCol = Physics2D.OverlapPoint(originPos, GlobalStatus.Constant.compositeObstacleMask))
+            Collider[] cols = Physics.OverlapSphere(originPos, 0.1f, GlobalStatus.Constant.obstacleMask);
+            if (cols.Length > 0 && cols[0] != null)
             {
-                RaycastHit2D[] hits = Physics2D.RaycastAll(moverPos, originPos - moverPos, 20, GlobalStatus.Constant.compositeObstacleMask);
-                foreach (RaycastHit2D hit in hits)
-                {
-                    if (hit.collider.Equals(obsCol))
-                    {
-                        Debug.DrawLine(obsCol.bounds.center, hit.point, Color.green, 1f);
-                        return hit.point;
-                    }
-                }
-                // 이동 불가 위치
+                Vector3 t = cols[0].ClosestPointOnBounds(moverPos);
+                return new Vector3(t.x, originPos.y, t.z);
             }
             return originPos;
         }
