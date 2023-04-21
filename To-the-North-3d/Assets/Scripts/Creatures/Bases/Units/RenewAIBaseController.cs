@@ -19,7 +19,7 @@ namespace Assets.Scripts.Creatures.Bases.Units
             agent = GetComponent<NavMeshAgent>();
         }
 
-        private void Update()
+        private void Start()
         {
             agent.SetDestination(testTargetPos);
         }
