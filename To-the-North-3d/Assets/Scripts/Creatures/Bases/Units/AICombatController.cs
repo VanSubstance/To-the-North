@@ -24,10 +24,17 @@ namespace Assets.Scripts.Creatures.Bases
             timeLiveMemory += Time.deltaTime;
         }
 
-        public override void DetectUser(Vector3 detectPos)
+        public override void DetectPosition(Vector3 detectPos)
         {
             if (timeLiveMemory != 0) timeLiveMemory = 0;
             baseCtrl.SetTargetToMove(detectPos, 0, false);
+        }
+
+        public override void DetectUser(Transform userTf)
+        {
+            if (timeLiveMemory != 0) timeLiveMemory = 0;
+            baseCtrl.SetTargetToMove(userTf.position, 0, false);
+            baseCtrl.SetTargetToAttack(userTf);
         }
     }
 }

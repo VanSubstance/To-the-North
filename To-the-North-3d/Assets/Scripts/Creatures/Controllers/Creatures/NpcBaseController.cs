@@ -6,9 +6,14 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
     internal class NpcBaseController : AIBaseController
     {
 
-        public override void OnDetectUser(Vector3? targetPos)
+        public override void OnDetectPosition(Vector3 targetPos)
         {
-            Debug.Log("User Detect!!");
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnDetectUser(Transform userTf)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

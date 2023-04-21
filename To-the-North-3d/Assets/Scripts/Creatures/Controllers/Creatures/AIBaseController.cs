@@ -1,10 +1,7 @@
-using Assets.Scripts.Battles;
-using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Detections;
 using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Items;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -41,7 +38,7 @@ namespace Assets.Scripts.Creatures.Bases
             set
             {
                 agent.SetDestination(value);
-                agent.stoppingDistance = WeaponRange * 0.8f;
+                agent.stoppingDistance = 1;
             }
             get
             {
@@ -84,12 +81,10 @@ namespace Assets.Scripts.Creatures.Bases
         /// <param name="target">목표 좌표: 절대 좌표 기준</param>
         /// <param name="timeToStay">도착 후 대기 시간</param>
         /// <param name="isRandom">무작위성이 있는지</param>
-        public void SetTargetToMove(Vector3? target, float timeToStay, bool isRandom = false)
+        public void SetTargetToMove(Vector3 target, float timeToStay, bool isRandom = false)
         {
-            if (target == null) return;
-            Debug.DrawLine(transform.position, (Vector3)target, Color.green, 10f);
             //TargetMove = CalculationFunctions.GetDetouredPositionIfInCollider(transform.position, (Vector3)target);
-            TargetMove = (Vector3)target;
+            TargetMove = target;
             isMoveOrderDone = false;
             timeStayAfterMove = timeToStay;
             // 진행방향 응시
@@ -189,7 +184,6 @@ namespace Assets.Scripts.Creatures.Bases
 
         public override void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
         {
-            hitDir = hitDir.normalized;
             transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
             switch (partType)
             {
@@ -220,7 +214,7 @@ namespace Assets.Scripts.Creatures.Bases
             else
             {
                 statusType = AIStatusType.Combat;
-                OnDetectUser(hitDir + transform.position);
+                OnDetectPosition(hitDir + transform.position);
             }
             //if (isRunAway)
             //{
@@ -249,12 +243,46 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
+        public Transform targetTf;
+
+        /// <summary>
+        /// 공격할 대상 설정 함수
+        /// </summary>
+        /// <param name="_targetTf"></param>
+        public void SetTargetToAttack(Transform _targetTf)
+        {
+            targetTf = _targetTf;
+        }
+
+        /// <summary>
+        /// 공격 가능 여부 판단 함수
+        /// </summary>
+        private void CheckAim()
+        {
+            if (targetTf == null)
+            {
+                Debug.Log("유저 시야 안에 없음");
+                return;
+            }
+            if (Physics.Raycast(transform.position, targetTf.position, WeaponRange, GlobalStatus.Constant.obstacleMask))
+            {
+                Debug.Log("유저 놓침!");
+                targetTf= null;
+                return;
+            }
+            if (Vector3.Distance(transform.position, targetTf.position) < Mathf.Min(WeaponRange, Info.sightRange))
+            {
+                Debug.Log("공격 가능!");
+                return;
+            }
+        }
+
         /// <summary>
         /// 예하 행동 컨트롤러들
         /// </summary>
         protected AbsAIStatusController[] statusCtrls;
 
-        protected void Awake()
+        protected new void Awake()
         {
             statusCtrls = GetComponents<AbsAIStatusController>();
             foreach (AbsAIStatusController ctrl in statusCtrls)
@@ -277,6 +305,7 @@ namespace Assets.Scripts.Creatures.Bases
             {
                 CheckMove();
                 CheckGaze();
+                CheckAim();
             }
         }
 
@@ -298,7 +327,13 @@ namespace Assets.Scripts.Creatures.Bases
         /// 감지된 위치 절대 좌표 기준
         /// </summary>
         /// <param name="targetPos"></param>
-        public abstract void OnDetectUser(Vector3? targetPos);
+        public abstract void OnDetectPosition(Vector3 targetPos);
+
+        /// <summary>
+        /// 감지된 유저
+        /// </summary>
+        /// <param name="userTf"></param>
+        public abstract void OnDetectUser(Transform userTf);
     }
 }
 

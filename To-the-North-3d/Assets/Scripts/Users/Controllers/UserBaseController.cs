@@ -44,7 +44,7 @@ namespace Assets.Scripts.Users
             }
         }
 
-        private void Awake()
+        private new void Awake()
         {
             if (_instance == null)
             {

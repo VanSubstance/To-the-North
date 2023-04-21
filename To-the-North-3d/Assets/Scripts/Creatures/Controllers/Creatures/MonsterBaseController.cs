@@ -6,13 +6,22 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
 {
     internal class MonsterBaseController : AIBaseController
     {
-        public override void OnDetectUser(Vector3? targetPos)
+
+        public override void OnDetectPosition(Vector3 targetPos)
         {
-            if (targetPos == null) return;
             statusType = Interfaces.AIStatusType.Combat;
             foreach (AbsAIStatusController statusCtrl in statusCtrls)
             {
-                statusCtrl.DetectUser((Vector3)targetPos);
+                statusCtrl.DetectPosition(targetPos);
+            }
+        }
+
+        public override void OnDetectUser(Transform userTf)
+        {
+            statusType = Interfaces.AIStatusType.Combat;
+            foreach (AbsAIStatusController statusCtrl in statusCtrls)
+            {
+                statusCtrl.DetectUser(userTf);
             }
         }
     }

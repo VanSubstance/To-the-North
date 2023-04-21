@@ -66,14 +66,10 @@ namespace Assets.Scripts.Creatures.Detections
                 Collider[] userCol = Physics.OverlapSphere(transform.position, range, GlobalStatus.Constant.userMask);
                 if (userCol != null && userCol.Length > 0 && userCol[0] != null)
                 {
-                    aIBaseController.OnDetectUser(userCol[0].transform.position);
+                    aIBaseController.OnDetectPosition(userCol[0].transform.position);
                     return userCol[0].transform;
                 }
-                else
-                {
-                    aIBaseController.OnDetectUser(null);
-                    return null;
-                }
+                return null;
             }
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
             List<Collider> targetsInViewRadius = Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask).ToList();

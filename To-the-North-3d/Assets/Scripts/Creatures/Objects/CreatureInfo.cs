@@ -11,7 +11,7 @@ namespace Assets.Scripts.Creatures
         [SerializeField]
         private bool isActiveBehaviour, isRunAway;
 
-        public float sightRange = 5f, moveSpd = 3f, moveDis = 3f;
+        public float sightRange = 5f, moveSpd = 3f;
         public ProgressInfo hp = null;
 
         public int LiveHp
@@ -49,7 +49,6 @@ namespace Assets.Scripts.Creatures
             res.hp = new ProgressInfo(_data.maxHp);
             res.sightRange = _data.sightRange;
             res.moveSpd = _data.moveSpd;
-            res.moveDis = _data.moveDis;
             res.isActiveBehaviour = _data.isActiveBehaviour;
             res.isRunAway = _data.isRunAway;
             return res;

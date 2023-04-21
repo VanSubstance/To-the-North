@@ -20,8 +20,10 @@ namespace Assets.Scripts.Users
             }
         }
 
+        //[SerializeField]
+        //Transform sightTf, hitTf, handTf;
         [SerializeField]
-        Transform sightTf, hitTf, handTf;
+        private Transform heightTf;
 
         private void Awake()
         {
@@ -272,18 +274,20 @@ namespace Assets.Scripts.Users
         {
             if (isCrouching) return;
             isCrouching = true;
-            hitTf.transform.localPosition = new Vector3(0, -.4f, 0);
-            sightTf.transform.localPosition = new Vector3(0, -.4f, 0);
-            handTf.localPosition = new Vector3(0, -.05f, .15f);
+            heightTf.localPosition = Vector3.down * .1f;
+            //hitTf.transform.localPosition = new Vector3(0, -.4f, 0);
+            //sightTf.transform.localPosition = new Vector3(0, -.4f, 0);
+            //handTf.localPosition = new Vector3(0, -.05f, .15f);
         }
 
         private void Stand()
         {
             if (!isCrouching) return;
             isCrouching = false;
-            hitTf.transform.localPosition = Vector3.zero;
-            sightTf.transform.localPosition = Vector3.zero;
-            handTf.localPosition = new Vector3(0, 0, .2f);
+            heightTf.localPosition = Vector3.up * .5f;
+            //hitTf.transform.localPosition = Vector3.zero;
+            //sightTf.transform.localPosition = Vector3.zero;
+            //handTf.localPosition = new Vector3(0, 0, .2f);
         }
 
         private void Dodge(Vector3 dir)

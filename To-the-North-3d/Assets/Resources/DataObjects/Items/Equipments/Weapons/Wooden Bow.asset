@@ -23,7 +23,7 @@ MonoBehaviour:
   durability: 1
   handType: 1
   bulletType: 2
-  range: 20
+  range: 10
   spd: 4
   damagePenetration: 13
   damageImpact: 2

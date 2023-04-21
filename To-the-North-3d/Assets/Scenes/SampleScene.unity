@@ -983,6 +983,10 @@ PrefabInstance:
       propertyPath: timeMaxMemory
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5274098472320849051, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
+      propertyPath: info
+      value: 
+      objectReference: {fileID: 11400000, guid: 634a05cc713186c439c43cb18187bbca, type: 2}
     - target: {fileID: 7249881556927368018, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1785,7 +1789,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 953080142591831872, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 953080142591831872, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4227,7 +4231,7 @@ Transform:
   m_Children:
   - {fileID: 390293014}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1692226146 stripped
 Transform:
