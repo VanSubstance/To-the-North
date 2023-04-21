@@ -9,12 +9,8 @@ namespace Assets.Scripts.Creatures
         [SerializeField]
         Transform body, handL, handR;
 
+        [SerializeField]
         private AIBaseController aiBase;
-
-        private void Awake()
-        {
-            aiBase = GetComponent<AIBaseController>();
-        }
 
         private void Update()
         {

@@ -64,6 +64,7 @@ namespace Assets.Scripts.Creatures.Bases
             timeStayAfterMove = timeToStay;
         }
 
+        [SerializeField]
         private DetectionSightController sightCtrl;
 
         private Vector3 TargetGaze
@@ -144,7 +145,10 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
+        [SerializeField]
+        private Transform hitTf;
         private Dictionary<EquipBodyType, IItemEquipable> equipableBodies = new Dictionary<EquipBodyType, IItemEquipable>();
+        [SerializeField]
         private ItemWeaponController weaponL, weaponR;
 
         public CreatureInfo Info
@@ -162,55 +166,6 @@ namespace Assets.Scripts.Creatures.Bases
                 float l = weaponL.Range(), r = weaponR.Range();
                 return Mathf.Max(l, r);
             }
-        }
-
-        private void Awake()
-        {
-            agent = GetComponent<NavMeshAgent>();
-            Transform temp = transform.Find("Detection Controller");
-            sightCtrl = temp.Find("Sight").GetComponent<DetectionSightController>();
-            sightCtrl.SetAIBaseController(this);
-
-            temp = transform.Find("Hands");
-            weaponR = temp.GetChild(0).GetChild(0).GetComponent<ItemWeaponController>();
-            weaponL = temp.GetChild(1).GetChild(0).GetComponent<ItemWeaponController>();
-
-            temp = transform.Find("Hits");
-            equipableBodies[EquipBodyType.Helmat] = temp.GetChild(0).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Mask] = temp.GetChild(1).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Head] = temp.GetChild(2).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Body] = temp.GetChild(3).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Leg] = temp.GetChild(4).GetChild(0).GetComponent<ItemArmorController>();
-            temp = transform.Find("Hands");
-            equipableBodies[EquipBodyType.Right] = temp.GetChild(0).GetChild(0).GetComponent<ItemWeaponController>();
-            equipableBodies[EquipBodyType.Left] = temp.GetChild(1).GetChild(0).GetComponent<ItemWeaponController>();
-
-            if (info == null) OnDisable();
-            else OnEnable();
-        }
-
-        private void Update()
-        {
-            if (!isPause)
-            {
-                CheckMove();
-                CheckGaze();
-            }
-        }
-
-        private void OnEnable()
-        {
-            if (isInit) return;
-            info = CreatureInfo.GetClone(info);
-            sightCtrl.range = info.sightRange;
-            isInit = true;
-        }
-
-        private void OnDisable()
-        {
-            sightCtrl.range = 0;
-            info = null;
-            isInit = false;
         }
 
         public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
@@ -238,6 +193,14 @@ namespace Assets.Scripts.Creatures.Bases
                     gameObject.SetActive(false);
                 }
             }
+            Debug.DrawLine(transform.position, hitDir + transform.position, Color.red, 10f);
+            if (IsRunaway)
+            {
+
+            } else
+            {
+                SetTargetToGaze(hitDir, 3f, false);
+            }
             //if (isRunAway)
             //{
             //    // 피격 반대 방향으로 개같이 런
@@ -255,6 +218,55 @@ namespace Assets.Scripts.Creatures.Bases
             {
                 // 관통당했다
             }
+        }
+
+        private bool IsRunaway
+        {
+            get
+            {
+                return info.IsRunAway;
+            }
+        }
+
+        private void Awake()
+        {
+            agent = GetComponent<NavMeshAgent>();
+            sightCtrl.SetAIBaseController(this);
+
+            equipableBodies[EquipBodyType.Helmat] = hitTf.GetChild(0).GetChild(0).GetComponent<ItemArmorController>();
+            equipableBodies[EquipBodyType.Mask] = hitTf.GetChild(1).GetChild(0).GetComponent<ItemArmorController>();
+            equipableBodies[EquipBodyType.Head] = hitTf.GetChild(2).GetChild(0).GetComponent<ItemArmorController>();
+            equipableBodies[EquipBodyType.Body] = hitTf.GetChild(3).GetChild(0).GetComponent<ItemArmorController>();
+            equipableBodies[EquipBodyType.Leg] = hitTf.GetChild(4).GetChild(0).GetComponent<ItemArmorController>();
+            equipableBodies[EquipBodyType.Right] = weaponL;
+            equipableBodies[EquipBodyType.Left] = weaponR;
+
+            if (info == null) OnDisable();
+            else OnEnable();
+        }
+
+        private void Update()
+        {
+            if (!isPause)
+            {
+                CheckMove();
+                CheckGaze();
+            }
+        }
+
+        private void OnEnable()
+        {
+            if (isInit) return;
+            info = CreatureInfo.GetClone(info);
+            sightCtrl.range = info.sightRange;
+            isInit = true;
+        }
+
+        private void OnDisable()
+        {
+            sightCtrl.range = 0;
+            info = null;
+            isInit = false;
         }
 
         public abstract void OnDetectUser(Transform targetTf);

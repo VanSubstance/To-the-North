@@ -14,7 +14,7 @@ namespace Assets.Scripts.Creatures.Detections
 
         private Vector3 target;
         /// <summary>
-        /// 절대 좌표 기준
+        /// 상대 좌표 기준
         /// 타겟 설정 함수
         /// </summary>
         public Vector3 Target
@@ -25,17 +25,18 @@ namespace Assets.Scripts.Creatures.Detections
             }
         }
 
-        public void SetTrackInstant(Vector3 _target)
+        public void SetTrackByDegree(float targetDegree)
         {
             isForce = true;
-            transform.localRotation = Quaternion.Euler(0, CalculationFunctions.AngleFromDir(_target - transform.position), 0);
+            curDegree = targetDegree;
+            transform.localRotation = Quaternion.Euler(0, targetDegree, 0);
         }
 
         public bool IsGazeDone
         {
             get
             {
-                float d = CalculationFunctions.AngleFromDir(target - transform.position);
+                float d = CalculationFunctions.AngleFromDir(new Vector2(target.x, target.z));
                 return Mathf.Abs(curDegree - d) < 1f;
             }
         }
@@ -52,17 +53,17 @@ namespace Assets.Scripts.Creatures.Detections
         private void ControlGaze()
         {
             if (isForce) return;
-            float d = CalculationFunctions.AngleFromDir(target - transform.position);
+            float d = CalculationFunctions.AngleFromDir(new Vector2(target.x, target.z));
             if (Mathf.Abs(curDegree - d) < 1f) return;
-            if (d < 180)
-            {
-                // 반시계
-                AddRotationDegree(1f);
-            }
-            else
+            if ((d - curDegree + 360) % 360 > 180)
             {
                 // 시계
                 AddRotationDegree(-1f);
+            }
+            else
+            {
+                // 반시계
+                AddRotationDegree(1f);
             }
         }
 

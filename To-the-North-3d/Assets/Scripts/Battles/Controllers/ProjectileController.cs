@@ -48,7 +48,7 @@ namespace Assets.Scripts.Battles
 
             info = ProjectileInfo.GetClone(_info);
             GetComponent<BoxCollider>().size = new Vector2(0.2f, info.Height);
-            transform.localRotation = Quaternion.Euler(0f, 0f, CalculationFunctions.AngleFromDir(targetDir));
+            transform.localRotation = Quaternion.Euler(0f, 0f, CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)));
             transform.position = startPos;
             gameObject.SetActive(true);
             GetComponent<Rigidbody>().velocity = targetDir.normalized * info.Spd;
@@ -57,7 +57,7 @@ namespace Assets.Scripts.Battles
             isReady = true;
             if (info.TrajectoryType == TrajectoryType.Curve)
             {
-                trajectory.PlayCurve(startPos, CalculationFunctions.AngleFromDir(targetDir), 45, _info.Range);
+                trajectory.PlayCurve(startPos, CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)), 45, _info.Range);
                 trajectory = null;
             }
         }

@@ -1010,6 +1010,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae608f49bc4a2743a5c33337e67d6bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vibrateTf: {fileID: 5769804315114174393}
+  ownerTf: {fileID: 7249881556927368018}
 --- !u!1 &7249881556289987574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,6 +1191,7 @@ MonoBehaviour:
   body: {fileID: 7249881556285147604}
   handL: {fileID: 8728397256870694550}
   handR: {fileID: 8427379005130797500}
+  aiBase: {fileID: 0}
 --- !u!114 &2420854514163520099
 MonoBehaviour:
   m_ObjectHideFlags: 0

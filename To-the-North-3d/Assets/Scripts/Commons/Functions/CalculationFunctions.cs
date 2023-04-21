@@ -15,6 +15,7 @@ namespace Assets.Scripts.Commons.Functions
         }
         /// <summary>
         /// 벡터의 방향으로부터 각도 추출 (Vector3)
+        /// Vector3.right 기준 반시계 방향
         /// 0 ~ 360
         /// </summary>
         /// <param name="angleDegrees"></param>
@@ -52,7 +53,6 @@ namespace Assets.Scripts.Commons.Functions
                 {
                     if (hit.collider.Equals(obsCol))
                     {
-                        Debug.DrawLine(obsCol.bounds.center, hit.point, Color.green, 1f);
                         return hit.point;
                     }
                 }

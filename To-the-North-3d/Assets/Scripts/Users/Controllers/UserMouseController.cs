@@ -35,7 +35,7 @@ namespace Assets.Scripts.Users.Controllers
 
             InGameStatus.User.Movement.curdegree = (int)CalculationFunctions.AngleFromDir(t);
 
-            sightCtrl.SetTrackInstant(t);
+            sightCtrl.SetTrackByDegree(InGameStatus.User.Movement.curdegree);
         }
 
         private void TrackAim(Vector3 mousePos)
