@@ -43,22 +43,15 @@ namespace Assets.Scripts.Commons.Functions
         /// <param name="moverPos">움직일 대상의 현재 위치</param>
         /// <param name="originPos">테스트 위치</param>
         /// <returns></returns>
-        public static Vector2 GetDetouredPositionIfInCollider(Vector3 moverPos, Vector3 originPos)
+        public static Vector3 GetDetouredPositionIfInCollider(Vector3 moverPos, Vector3 originPos)
         {
-            return originPos;
-            Collider2D obsCol;
-            if (obsCol = Physics2D.OverlapPoint(originPos, GlobalStatus.Constant.obstacleMask))
+            Collider[] cols = Physics.OverlapSphere(originPos, 0.1f, GlobalStatus.Constant.obstacleMask);
+            if (cols.Length > 0 && cols[0] != null)
             {
-                RaycastHit2D[] hits = Physics2D.RaycastAll(moverPos, originPos - moverPos, 20, GlobalStatus.Constant.obstacleMask);
-                foreach (RaycastHit2D hit in hits)
-                {
-                    if (hit.collider.Equals(obsCol))
-                    {
-                        return hit.point;
-                    }
-                }
-                // 이동 불가 위치
+                Vector3 t = cols[0].ClosestPointOnBounds(moverPos);
+                return new Vector3(t.x, originPos.y, t.z);
             }
+            return originPos;
         }
     }
 }

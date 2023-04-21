@@ -12345,10 +12345,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall1
       objectReference: {fileID: 0}
-    - target: {fileID: 4660675564350497559, guid: e337f90eca6970b439fee813cf9f9274, type: 3}
-      propertyPath: m_Carve
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8119229184848739822, guid: e337f90eca6970b439fee813cf9f9274, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8

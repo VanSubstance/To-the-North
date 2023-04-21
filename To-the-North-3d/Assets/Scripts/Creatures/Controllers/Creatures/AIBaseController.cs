@@ -1,3 +1,4 @@
+using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Detections;
 using Assets.Scripts.Creatures.Interfaces;
@@ -83,8 +84,7 @@ namespace Assets.Scripts.Creatures.Bases
         /// <param name="isRandom">무작위성이 있는지</param>
         public void SetTargetToMove(Vector3 target, float timeToStay, bool isRandom = false)
         {
-            //TargetMove = CalculationFunctions.GetDetouredPositionIfInCollider(transform.position, (Vector3)target);
-            TargetMove = target;
+            TargetMove = CalculationFunctions.GetDetouredPositionIfInCollider(transform.position, target);
             isMoveOrderDone = false;
             timeStayAfterMove = timeToStay;
             // 진행방향 응시
