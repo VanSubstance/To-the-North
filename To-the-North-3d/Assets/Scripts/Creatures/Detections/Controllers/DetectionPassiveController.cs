@@ -64,7 +64,7 @@ namespace Assets.Scripts.Creatures.Detections
                 // AI의 경우: 유저가 있는지만 체크
                 // 유저가 있다 ? 유저 식별 시 행동 호출
                 Collider[] userCol = Physics.OverlapSphere(transform.position, range, GlobalStatus.Constant.userMask);
-                if (userCol != null)
+                if (userCol != null && userCol.Length > 0 && userCol[0] != null)
                 {
                     aIBaseController.OnDetectUser(userCol[0].transform);
                     return userCol[0].transform;

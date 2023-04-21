@@ -13,6 +13,23 @@ namespace Assets.Scripts.Creatures.Bases
     {
         [SerializeField]
         private CreatureInfo info;
+
+        public CreatureInfo Info
+        {
+            set
+            {
+                info = CreatureInfo.GetClone(value);
+                if (info == null) return;
+                sightCtrl.range = Info.sightRange;
+                agent.speed = info.moveSpd;
+                agent.stoppingDistance = WeaponRange - 0.5f;
+            }
+            get
+            {
+                return info;
+            }
+        }
+
         private NavMeshAgent agent;
 
         private Vector3 TargetMove
@@ -151,13 +168,6 @@ namespace Assets.Scripts.Creatures.Bases
         [SerializeField]
         private ItemWeaponController weaponL, weaponR;
 
-        public CreatureInfo Info
-        {
-            get
-            {
-                return info;
-            }
-        }
         private float WeaponRange
         {
             get
@@ -185,15 +195,14 @@ namespace Assets.Scripts.Creatures.Bases
                     break;
             }
             // 계산 처리
-            if (info)
+            if (Info)
             {
-                info.LiveHp = -damage[0];
-                if (info.LiveHp <= 0)
+                Info.LiveHp = -damage[0];
+                if (Info.LiveHp <= 0)
                 {
                     gameObject.SetActive(false);
                 }
             }
-            Debug.DrawLine(transform.position, hitDir + transform.position, Color.red, 10f);
             if (IsRunaway)
             {
 
@@ -240,7 +249,7 @@ namespace Assets.Scripts.Creatures.Bases
             equipableBodies[EquipBodyType.Right] = weaponL;
             equipableBodies[EquipBodyType.Left] = weaponR;
 
-            if (info == null) OnDisable();
+            if (Info == null) OnDisable();
             else OnEnable();
         }
 
@@ -256,15 +265,14 @@ namespace Assets.Scripts.Creatures.Bases
         private void OnEnable()
         {
             if (isInit) return;
-            info = CreatureInfo.GetClone(info);
-            sightCtrl.range = info.sightRange;
+            Info = info;
             isInit = true;
         }
 
         private void OnDisable()
         {
             sightCtrl.range = 0;
-            info = null;
+            Info = null;
             isInit = false;
         }
 
