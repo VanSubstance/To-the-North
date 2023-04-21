@@ -108,7 +108,9 @@ namespace Assets.Scripts.Users
             // 상태 이상 부여 심사
 
             // 테스트 효과 활성화
-            //OccurCondition(ConditionType.Test);
+            OccurCondition(ConditionType.Bleeding_Heavy);
+            OccurCondition(ConditionType.Bleeding_Light);
+            OccurCondition(ConditionType.Fracture);
 
             if (damage[1] > 0)
             {

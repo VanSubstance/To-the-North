@@ -9,6 +9,10 @@ namespace Assets.Scripts.Battles
         [SerializeField]
         private EquipBodyType partType;
         private CreatureHitController hitController;
+        public Transform Owner
+        {
+            get { return hitController.Owner; }
+        }
         private ItemArmorInfo info;
         public ItemArmorInfo Info
         {

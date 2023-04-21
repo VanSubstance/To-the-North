@@ -14,7 +14,8 @@ public static class GlobalStatus
             creatureMask = 1 << 8,
             itemMask = 1 << 11,
             slotMask = 1 << 12,
-            userMask = 1 << 13
+            userMask = 1 << 13,
+            hitMask = 1 << 17
             ;
     }
 

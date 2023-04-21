@@ -274,7 +274,7 @@ namespace Assets.Scripts.Users
         {
             if (isCrouching) return;
             isCrouching = true;
-            heightTf.localPosition = Vector3.down * .1f;
+            heightTf.localPosition = Vector3.up * .1f;
             //hitTf.transform.localPosition = new Vector3(0, -.4f, 0);
             //sightTf.transform.localPosition = new Vector3(0, -.4f, 0);
             //handTf.localPosition = new Vector3(0, -.05f, .15f);

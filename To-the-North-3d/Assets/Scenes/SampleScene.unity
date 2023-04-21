@@ -1038,7 +1038,7 @@ PrefabInstance:
     - target: {fileID: 7865440330523968143, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
       propertyPath: info
       value: 
-      objectReference: {fileID: 11400000, guid: 558405b0e4329ce4a8a9acb3afd64c5b, type: 2}
+      objectReference: {fileID: 11400000, guid: abe18b6cfa722824ba68ab9ac5ff7750, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c359046caac5cd5409aca6405d288a5e, type: 3}
 --- !u!4 &390293014 stripped
@@ -3753,7 +3753,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438300788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 5}
+  m_LocalPosition: {x: 5, y: -0.25, z: 5}
   m_LocalScale: {x: 3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
