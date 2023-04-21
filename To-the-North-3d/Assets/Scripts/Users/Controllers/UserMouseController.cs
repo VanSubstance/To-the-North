@@ -11,14 +11,8 @@ namespace Assets.Scripts.Users.Controllers
     {
         [SerializeField]
         private DetectionSightController sightCtrl;
+        [SerializeField]
         private ItemWeaponController weaponL, weaponR;
-
-        private void Awake()
-        {
-            Transform temp = transform.Find("Hands");
-            weaponR = temp.GetChild(0).GetChild(0).GetComponent<ItemWeaponController>();
-            weaponL = temp.GetChild(1).GetChild(0).GetComponent<ItemWeaponController>();
-        }
         private void Update()
         {
             if (!InGameStatus.User.isPause)

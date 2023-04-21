@@ -272,9 +272,9 @@ namespace Assets.Scripts.Users
         {
             if (isCrouching) return;
             isCrouching = true;
-            hitTf.transform.localPosition = new Vector3(0, -.3f, 0);
-            sightTf.transform.localPosition = new Vector3(0, -.3f, 0);
-            handTf.localPosition = new Vector3(0, -.1f, -.1f);
+            hitTf.transform.localPosition = new Vector3(0, -.4f, 0);
+            sightTf.transform.localPosition = new Vector3(0, -.4f, 0);
+            handTf.localPosition = new Vector3(0, -.05f, .15f);
         }
 
         private void Stand()
@@ -283,7 +283,7 @@ namespace Assets.Scripts.Users
             isCrouching = false;
             hitTf.transform.localPosition = Vector3.zero;
             sightTf.transform.localPosition = Vector3.zero;
-            handTf.localPosition = new Vector3(0, .1f, -.1f);
+            handTf.localPosition = new Vector3(0, 0, .2f);
         }
 
         private void Dodge(Vector3 dir)

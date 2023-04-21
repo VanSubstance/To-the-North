@@ -12,13 +12,20 @@ namespace Assets.Scripts.Items
     /// <summary>
     /// 손에 장착 가능 + 무기 컨트롤러
     /// </summary>
-    internal class ItemWeaponController : MonoBehaviour, IItemHandable, IItemEquipable
+    public class ItemWeaponController : MonoBehaviour, IItemHandable, IItemEquipable
     {
         [SerializeField]
         private ItemWeaponInfo info;
         [SerializeField]
         private bool isAI = true, isMagazineEmpty;
         private Transform owner;
+        public Transform Owner
+        {
+            set
+            {
+                owner= value;
+            }
+        }
 
         private float delayAmongFire, timeFocusFull = 3f;
         private float timeFocus;
@@ -47,7 +54,6 @@ namespace Assets.Scripts.Items
                 TimeFocus = 0f;
                 isAiming = false;
                 isReloading = false;
-                owner = transform.parent.parent.parent;
                 if (info)
                 {
                     sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
@@ -139,7 +145,6 @@ namespace Assets.Scripts.Items
                     info = (ItemWeaponInfo)_info;
                     TimeFocus = 0f;
                     isAiming = false;
-                    owner = transform.parent.parent.parent;
                     sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
                     delayAmongFire = info.delayAmongFire;
                     Debug.Log("장비 착용함");

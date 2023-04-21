@@ -49,7 +49,7 @@ namespace Assets.Scripts.Battles
         public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner)
         {
             float h = startPos.y;
-            bool isStand = h > .5f;
+            bool isStand = h > .475f;
             trajectory = TrajectoryManager.Instance.GetNewTrajectory();
             owner = _owner;
             startPos = new Vector3(startPos.x, 0, startPos.z);

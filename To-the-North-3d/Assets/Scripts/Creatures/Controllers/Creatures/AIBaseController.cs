@@ -1,5 +1,6 @@
 using Assets.Scripts.Battles;
 using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Detections;
 using Assets.Scripts.Creatures.Interfaces;
 using Assets.Scripts.Items;
@@ -9,7 +10,7 @@ using UnityEngine.AI;
 
 namespace Assets.Scripts.Creatures.Bases
 {
-    public abstract class AIBaseController : MonoBehaviour, ICreatureBattle
+    public abstract class AIBaseController : AbsCreatureBaseController
     {
         [SerializeField]
         private CreatureInfo info;
@@ -176,12 +177,6 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
-        [SerializeField]
-        private Transform hitTf;
-        private Dictionary<EquipBodyType, IItemEquipable> equipableBodies = new Dictionary<EquipBodyType, IItemEquipable>();
-        [SerializeField]
-        private ItemWeaponController weaponL, weaponR;
-
         private float WeaponRange
         {
             get
@@ -192,7 +187,7 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
-        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
+        public override void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
         {
             hitDir = hitDir.normalized;
             transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
@@ -270,13 +265,7 @@ namespace Assets.Scripts.Creatures.Bases
             statusType = AIStatusType.None;
             agent = GetComponent<NavMeshAgent>();
 
-            equipableBodies[EquipBodyType.Helmat] = hitTf.GetChild(0).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Mask] = hitTf.GetChild(1).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Head] = hitTf.GetChild(2).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Body] = hitTf.GetChild(3).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Leg] = hitTf.GetChild(4).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Right] = weaponL;
-            equipableBodies[EquipBodyType.Left] = weaponR;
+            base.Awake();
 
             if (Info == null) OnDisable();
             else OnEnable();
