@@ -120,7 +120,6 @@ namespace Assets.Scripts.Battles
             switch (collision.gameObject.layer)
             {
                 case 7:
-                    Debug.Log("위쪽 장애물에 막힘");
                     Arrive();
                     break;
             }
@@ -174,7 +173,6 @@ namespace Assets.Scripts.Battles
                 switch (collision.gameObject.layer)
                 {
                     case 7:
-                        Debug.Log("아래쪽 장애물에 막힘");
                         gameObject.SetActive(false);
                         break;
                 }

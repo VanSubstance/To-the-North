@@ -261,18 +261,23 @@ namespace Assets.Scripts.Creatures.Bases
         {
             if (targetTf == null)
             {
-                Debug.Log("유저 시야 안에 없음");
                 return;
             }
             if (Physics.Raycast(transform.position, targetTf.position, WeaponRange, GlobalStatus.Constant.obstacleMask))
             {
-                Debug.Log("유저 놓침!");
-                targetTf= null;
+                targetTf = null;
                 return;
             }
             if (Vector3.Distance(transform.position, targetTf.position) < Mathf.Min(WeaponRange, Info.sightRange))
             {
-                Debug.Log("공격 가능!");
+                if (!weaponL.IsEmpty())
+                {
+                    weaponL.Use(targetTf.position - transform.position);
+                }
+                if (!weaponR.IsEmpty())
+                {
+                    weaponR.Use(targetTf.position - transform.position);
+                }
                 return;
             }
         }

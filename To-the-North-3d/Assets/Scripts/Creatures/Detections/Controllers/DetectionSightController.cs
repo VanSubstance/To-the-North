@@ -167,7 +167,6 @@ namespace Assets.Scripts.Creatures.Detections
                         // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
                         if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
                         {
-                            Debug.DrawRay(transform.position, dirToTarget * dstToTarget, Color.cyan, 2f);
                             aIBaseController.OnDetectUser(userTf);
                             return userTf;
                         }
