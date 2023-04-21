@@ -1,40 +1,30 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Creatures.Interfaces;
+using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Bases
 {
     public class AICombatController : AbsAIStatusController
     {
-        [SerializeField]
-        private float timeMaxMemory;
-        private float timeLiveMemory;
-        private void Awake()
-        {
-            timeLiveMemory = 0;
-        }
 
-        private void Update()
+        protected override void OnDetectPosition(Vector3 detectPos)
         {
-            if (baseCtrl.statusType != Interfaces.AIStatusType.Combat) return;
-            if (timeMaxMemory <= timeLiveMemory)
-            {
-                baseCtrl.statusType = Interfaces.AIStatusType.None;
-                timeLiveMemory = 0;
-                return;
-            }
-            timeLiveMemory += Time.deltaTime;
-        }
-
-        public override void DetectPosition(Vector3 detectPos)
-        {
-            if (timeLiveMemory != 0) timeLiveMemory = 0;
             baseCtrl.SetTargetToMove(detectPos, 0, false);
         }
 
-        public override void DetectUser(Transform userTf)
+        protected override void OnDetectUser(Transform userTf)
         {
-            if (timeLiveMemory != 0) timeLiveMemory = 0;
             baseCtrl.SetTargetToMove(userTf.position, 0, false);
             baseCtrl.SetTargetToAttack(userTf);
+        }
+
+        protected override void OnDetectionUpdate()
+        {
+            baseCtrl.CheckAim();
+        }
+
+        protected override AIStatusType AIType()
+        {
+            return AIStatusType.Combat;
         }
     }
 }

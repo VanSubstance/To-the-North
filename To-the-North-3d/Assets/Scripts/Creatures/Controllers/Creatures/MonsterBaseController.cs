@@ -9,7 +9,6 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
 
         public override void OnDetectPosition(Vector3 targetPos)
         {
-            statusType = Interfaces.AIStatusType.Combat;
             foreach (AbsAIStatusController statusCtrl in statusCtrls)
             {
                 statusCtrl.DetectPosition(targetPos);
@@ -18,7 +17,19 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
 
         public override void OnDetectUser(Transform userTf)
         {
-            statusType = Interfaces.AIStatusType.Combat;
+            if (IsRunaway)
+            {
+                statusType = Interfaces.AIStatusType.Runaway;
+            }
+            else if (Info.IsActiveBehaviour)
+            {
+                statusType = Interfaces.AIStatusType.Combat;
+            }
+            else
+            {
+
+            }
+
             foreach (AbsAIStatusController statusCtrl in statusCtrls)
             {
                 statusCtrl.DetectUser(userTf);

@@ -16,5 +16,4 @@ MonoBehaviour:
   isActiveBehaviour: 0
   isRunAway: 1
   sightRange: 20
-  moveSpd: 3
-  moveDis: 3
+  moveSpd: 5

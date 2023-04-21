@@ -28,6 +28,10 @@ namespace Assets.Scripts.Creatures
 
         public bool IsActiveBehaviour
         {
+            set
+            {
+                isActiveBehaviour = value;
+            }
             get
             {
                 return isActiveBehaviour;

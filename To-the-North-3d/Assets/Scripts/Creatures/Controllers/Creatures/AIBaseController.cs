@@ -209,13 +209,14 @@ namespace Assets.Scripts.Creatures.Bases
             }
             if (IsRunaway)
             {
-
+                statusType = AIStatusType.Runaway;
             }
             else
             {
+                if (!Info.IsActiveBehaviour) Info.IsActiveBehaviour = true;
                 statusType = AIStatusType.Combat;
-                OnDetectPosition(hitDir + transform.position);
             }
+            OnDetectPosition(hitDir + transform.position);
             //if (isRunAway)
             //{
             //    // 피격 반대 방향으로 개같이 런
@@ -235,7 +236,7 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
-        private bool IsRunaway
+        public bool IsRunaway
         {
             get
             {
@@ -257,7 +258,7 @@ namespace Assets.Scripts.Creatures.Bases
         /// <summary>
         /// 공격 가능 여부 판단 함수
         /// </summary>
-        private void CheckAim()
+        public void CheckAim()
         {
             if (targetTf == null)
             {
@@ -310,7 +311,6 @@ namespace Assets.Scripts.Creatures.Bases
             {
                 CheckMove();
                 CheckGaze();
-                CheckAim();
             }
         }
 
