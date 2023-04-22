@@ -1,8 +1,6 @@
-using System;
+using Assets.Scripts.Commons.Constants;
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Events.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Detections
@@ -14,7 +12,7 @@ namespace Assets.Scripts.Creatures.Detections
         private new void Start()
         {
             base.Start();
-            sprite = viewMeshFilter.GetComponent<MeshRenderer>();
+            sprite = meshFilterDefault.GetComponent<MeshRenderer>();
             sprite.renderingLayerMask = 3;
             if (!isAI)
                 StartCoroutine(CheckCurRotation(Time.deltaTime));
@@ -54,25 +52,6 @@ namespace Assets.Scripts.Creatures.Detections
             transform.localRotation = Quaternion.Euler(0, 0, curDegree);
         }
 
-        /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */
-        public override DetectionSightInfo SightCast(float globalAngle, float heightDistort = 0f)
-        {
-            Vector3 dir = DirFromAngle(globalAngle, true);
-            if (Physics.Raycast(transform.position, dir, out RaycastHit hit,
-                (isAI ? range : (int)InGameStatus.User.Detection.Sight.Range),
-                GlobalStatus.Constant.obstacleMask))
-            {
-                return new DetectionSightInfo(true, hit.point, hit.distance, globalAngle);
-            }
-            else
-            {
-                return new DetectionSightInfo(false, transform.position + dir *
-                    (isAI ? range : InGameStatus.User.Detection.Sight.Range),
-                    (isAI ? range : InGameStatus.User.Detection.Sight.Range),
-                    globalAngle);
-            }
-        }
-
         /** 시야 시각화 */
         public override void DrawSightArea()
         {
@@ -86,7 +65,7 @@ namespace Assets.Scripts.Creatures.Detections
             {
                 float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.DegreeError) / 2) + stepAngleSize * i;
 
-                DetectionSightInfo newViewCast = SightCast(angle);
+                DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Sight.Range);
                 viewPoints.Add(newViewCast.point);
             }
 
@@ -105,10 +84,10 @@ namespace Assets.Scripts.Creatures.Detections
                     triangles[i * 3 + 2] = i + 2;
                 }
             }
-            viewMesh.Clear();
-            viewMesh.vertices = vertices;
-            viewMesh.triangles = triangles;
-            viewMesh.RecalculateNormals();
+            meshDefault.Clear();
+            meshDefault.vertices = vertices;
+            meshDefault.triangles = triangles;
+            meshDefault.RecalculateNormals();
         }
 
         /// <summary>

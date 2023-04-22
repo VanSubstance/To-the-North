@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Bases;
-using Assets.Scripts.Users.Objects;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Detections
@@ -11,24 +7,40 @@ namespace Assets.Scripts.Creatures.Detections
     internal abstract class DetectionBaseController : MonoBehaviour
     {
         [SerializeField]
+        private float heightForLow;
+
+        protected float HeightForLow
+        {
+            get
+            {
+                return heightForLow;
+            }
+            set
+            {
+                heightForLow = value;
+            }
+        }
+        public Mesh meshDefault, meshLower;
+        public MeshFilter meshFilterDefault, meshFilterLower;
+
+
+        [SerializeField]
         protected AIBaseController aIBaseController;
         public bool isAI = true;
         public float meshResolution;
-        public Mesh viewMesh;
-        public MeshFilter viewMeshFilter;
         private void Awake()
         {
         }
 
         public void Start()
         {
-            viewMesh = new Mesh();
-            viewMesh.name = "View Mesh";
-            viewMeshFilter.mesh = viewMesh;
-            viewMeshFilter.GetComponent<Renderer>().sortingLayerName = "Detection";
-            //viewMeshForVisualization = new Mesh();
-            //viewMeshForVisualization.name = "View Mesh";
-            //visualizationFilter.mesh = viewMeshForVisualization;
+            meshDefault = new Mesh();
+            meshDefault.name = "Default Mesh";
+            meshFilterDefault.mesh = meshDefault;
+
+            meshLower = new Mesh();
+            meshLower.name = "Lower Mesh";
+            meshFilterLower.mesh = meshLower;
         }
 
         public void LateUpdate()
@@ -46,8 +58,27 @@ namespace Assets.Scripts.Creatures.Detections
             return CalculationFunctions.DirFromAngle(angleDegrees);
         }
 
-        /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */
-        public abstract DetectionSightInfo SightCast(float globalAngle, float heightDistort = 0f);
+        /// <summary>
+        /// 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 함수
+        /// </summary>
+        /// <param name="globalAngle">목표 각도</param>
+        /// <param name="heightFromOrigin">높이 수정값</param>
+        /// <param name="_range">사거리</param>
+        /// <returns></returns>
+        public DetectionSightInfo SightCast(float globalAngle, float _range, float heightFromOrigin = 0f)
+        {
+            Vector3 dir = DirFromAngle(globalAngle, true), movedTrPos = new Vector3(transform.position.x, transform.position.y + heightFromOrigin, transform.position.z);
+            if (Physics.Raycast(movedTrPos, dir, out RaycastHit hit,
+                _range,
+                GlobalStatus.Constant.obstacleMask))
+            {
+                return new DetectionSightInfo(true, hit.point, hit.distance, globalAngle);
+            }
+            else
+            {
+                return new DetectionSightInfo(false, movedTrPos + dir * _range, _range, globalAngle);
+            }
+        }
         /** 시야 시각화 */
         public abstract void DrawSightArea();
 

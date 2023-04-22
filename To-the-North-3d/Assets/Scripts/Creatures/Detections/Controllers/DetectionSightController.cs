@@ -75,55 +75,21 @@ namespace Assets.Scripts.Creatures.Detections
             transform.localRotation = Quaternion.Euler(0, curDegree, 0);
         }
 
-        /** 해당 각도의 방향으로 쏘았을 때, 도달한 최종점 정보 반환 */
-        public override DetectionSightInfo SightCast(float globalAngle, float heightDistort = 0f)
-        {
-            Vector3 dir = DirFromAngle(globalAngle, true), movedTrPos = new Vector3(transform.position.x, transform.position.y + heightDistort, transform.position.z); ;
-            if (Physics.Raycast(movedTrPos, dir, out RaycastHit hit,
-                (isAI ? range : (int)InGameStatus.User.Detection.Sight.Range),
-                GlobalStatus.Constant.obstacleMask))
-            {
-                return new DetectionSightInfo(true, hit.point, hit.distance, globalAngle);
-            }
-            else
-            {
-                return new DetectionSightInfo(false, movedTrPos + dir *
-                    (isAI ? range : InGameStatus.User.Detection.Sight.Range),
-                    (isAI ? range : InGameStatus.User.Detection.Sight.Range),
-                    globalAngle);
-            }
-        }
-
         /** 시야 시각화 */
         public override void DrawSightArea()
         {
             int stepCount = Mathf.RoundToInt((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) * meshResolution);
             float stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / stepCount;
             List<Vector3> viewPoints = new List<Vector3>();
-            Vector3 t = new();
 
             // 아랫면
             for (int i = 0; i <= stepCount; i++)
             {
                 float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
 
-                DetectionSightInfo newViewCast = SightCast(angle, 0f);
-                viewPoints.Add(newViewCast.point);
-                if (i == 0) t = newViewCast.point;
-            }
-
-            // 윗면 (반시계로)
-            for (int i = 0; i <= stepCount; i++)
-            {
-                float angle = transform.eulerAngles.y + ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) - stepAngleSize * i;
-
-                DetectionSightInfo newViewCast = SightCast(angle, .7f);
+                DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Sight.Range, 0f);
                 viewPoints.Add(newViewCast.point);
             }
-
-            // 오른면 (위 -> 아래) = triangle 하나면 될듯
-            // 0, 윗면 마지막, 아랫면 시작
-            viewPoints.Add(t);
 
             int vertexCount = viewPoints.Count + 1;
             Vector3[] vertices = new Vector3[vertexCount];
@@ -140,10 +106,43 @@ namespace Assets.Scripts.Creatures.Detections
                     triangles[i * 3 + 2] = i + 2;
                 }
             }
-            viewMesh.Clear();
-            viewMesh.vertices = vertices;
-            viewMesh.triangles = triangles;
-            viewMesh.RecalculateNormals();
+            meshDefault.Clear();
+            meshDefault.vertices = vertices;
+            meshDefault.triangles = triangles;
+            meshDefault.RecalculateNormals();
+
+            // 아래 시야
+            if (HeightForLow == 0) return;
+
+            viewPoints = new List<Vector3>();
+
+            for (int i = 0; i <= stepCount; i++)
+            {
+                float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
+
+                DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Sight.Range, -HeightForLow);
+                viewPoints.Add(newViewCast.point);
+            }
+
+            vertexCount = viewPoints.Count + 1;
+            vertices = new Vector3[vertexCount];
+            triangles = new int[(vertexCount - 2) * 3];
+            vertices[0] = Vector3.down * HeightForLow;
+
+            for (int i = 0; i < vertexCount - 1; i++)
+            {
+                vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+                if (i < vertexCount - 2)
+                {
+                    triangles[i * 3] = 0;
+                    triangles[i * 3 + 1] = i + 1;
+                    triangles[i * 3 + 2] = i + 2;
+                }
+            }
+            meshLower.Clear();
+            meshLower.vertices = vertices;
+            meshLower.triangles = triangles;
+            meshLower.RecalculateNormals();
         }
 
         /// <summary>
