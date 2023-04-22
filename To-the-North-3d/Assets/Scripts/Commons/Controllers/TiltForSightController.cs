@@ -6,6 +6,8 @@ namespace Assets.Scripts.Commons
     {
         [SerializeField]
         private float height;
+        [SerializeField]
+        private bool isDig = false;
         private static float sq2 = Mathf.Sqrt(2);
 
         private void Awake()
@@ -16,7 +18,7 @@ namespace Assets.Scripts.Commons
             transform.localPosition = new Vector3(
                 posOrigin.x,
                 height / sq2,
-                posOrigin.z + height / sq2
+                !isDig ? (posOrigin.z + height / sq2) : (posOrigin.z)
                 );
         }
     }
