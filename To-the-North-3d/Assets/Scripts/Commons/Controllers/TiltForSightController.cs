@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Commons
 {
-    public class TiltForCightController : MonoBehaviour
+    public class TiltForSightController : MonoBehaviour
     {
         [SerializeField]
         private float height;

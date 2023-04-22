@@ -82,12 +82,11 @@ namespace Assets.Scripts.Creatures.Detections
             float stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / stepCount;
             List<Vector3> viewPoints = new List<Vector3>();
 
-            // 아랫면
             for (int i = 0; i <= stepCount; i++)
             {
                 float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
 
-                DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Sight.Range, 0f);
+                DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Sight.Range, 4f);
                 viewPoints.Add(newViewCast.point);
             }
 
