@@ -25,6 +25,7 @@ Shader "Custom/EnemyDetectionShader"
 			}
 			Cull Off
 			Lighting Off
+			ZWrite Off
 			Blend One OneMinusSrcAlpha
 
 			Pass

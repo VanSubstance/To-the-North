@@ -20,8 +20,8 @@ namespace Assets.Scripts.Creatures.Detections
                 heightForLow = value;
             }
         }
-        public Mesh meshDefault, meshLower, meshBehindHalf;
-        public MeshFilter meshFilterDefault, meshFilterLower, meshFilterBehindHalf;
+        public Mesh meshDefault, meshLower;
+        public MeshFilter meshFilterDefault, meshFilterLower;
 
 
         [SerializeField]
@@ -46,12 +46,6 @@ namespace Assets.Scripts.Creatures.Detections
             meshFilterLower.mesh = meshLower;
             meshFilterLower.transform.GetComponent<MeshRenderer>().sortingLayerName = "Detection";
             meshFilterDefault.transform.GetComponent<MeshRenderer>().sortingOrder = 0;
-
-            meshBehindHalf = new Mesh();
-            meshBehindHalf.name = "Lower Mesh";
-            meshFilterBehindHalf.mesh = meshBehindHalf;
-            meshFilterBehindHalf.transform.GetComponent<MeshRenderer>().sortingLayerName = "Detection";
-            meshFilterBehindHalf.transform.GetComponent<MeshRenderer>().sortingOrder = 0;
         }
 
         public void LateUpdate()

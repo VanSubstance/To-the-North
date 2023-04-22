@@ -6,7 +6,7 @@ namespace Assets.Scripts.Commons
 {
     public class CameraHitEffectController : MonoBehaviour
     {
-        private readonly Vector3 originPos = new Vector3(0, 40, -40);
+        private readonly Vector3 originPos = new Vector3(0, 20, 0);
         private float timeVib = .5f, timeLeft, powerVib;
         /// <summary>
         /// 데미지에 따라 화면에 진동을 주는 함수

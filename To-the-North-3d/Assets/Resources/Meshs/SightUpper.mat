@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EnemyDetectionMesh
-  m_Shader: {fileID: 4800000, guid: 0d9a09e252f7a564d945c30f2b8d4c20, type: 3}
+  m_Name: SightUpper
+  m_Shader: {fileID: 4800000, guid: 80d567ad40bcbbd44a02873691dbfea8, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
@@ -82,7 +82,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 0.8820755, b: 0.8820755, a: 0.050980393}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
