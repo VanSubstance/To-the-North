@@ -24,7 +24,7 @@ MonoBehaviour:
   handType: 1
   bulletType: 2
   range: 10
-  spd: 4
+  spd: 15
   damagePenetration: 13
   damageImpact: 2
   delayAmongFire: 2

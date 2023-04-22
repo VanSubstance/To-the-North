@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 577205777368019865}
   m_Layer: 17
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: User
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 7897231171059855111}
   m_Layer: 17
   m_Name: Leg
-  m_TagString: Untagged
+  m_TagString: User
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -752,7 +752,7 @@ GameObject:
   - component: {fileID: 9056387514952304238}
   m_Layer: 17
   m_Name: Mask
-  m_TagString: Untagged
+  m_TagString: User
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -812,7 +812,7 @@ GameObject:
   - component: {fileID: 8814771738128359629}
   m_Layer: 17
   m_Name: Head
-  m_TagString: Untagged
+  m_TagString: User
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1046,7 +1046,7 @@ GameObject:
   - component: {fileID: 3456621478565511699}
   m_Layer: 13
   m_Name: User Prefab
-  m_TagString: Untagged
+  m_TagString: User
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1189,7 +1189,7 @@ GameObject:
   - component: {fileID: 2797061204950148527}
   m_Layer: 17
   m_Name: Helmat
-  m_TagString: Untagged
+  m_TagString: User
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

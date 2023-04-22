@@ -4,6 +4,7 @@ using Assets.Scripts.Events.Interfaces;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Assets.Scripts.Creatures.Detections
 {
@@ -153,25 +154,43 @@ namespace Assets.Scripts.Creatures.Detections
             {
                 // AI의 경우: 유저가 있는지만 체크
                 // 유저가 있다 ? 유저 식별 시 행동 호출
-                Collider[] userCol = Physics.OverlapSphere(transform.position, range, GlobalStatus.Constant.userMask);
-                if (userCol != null && userCol.Length > 0 && userCol[0] != null)
+
+                Collider[] hitCols = Physics.OverlapSphere(transform.position, range, GlobalStatus.Constant.hitMask);
+                foreach (Collider hitCol in hitCols)
                 {
-                    Transform userTf = userCol[0].transform;
-                    Vector3 dirToTarget = (userTf.position - transform.position).normalized;
-                    float d = Math.Abs(CalculationFunctions.AngleFromDir(new Vector2(dirToTarget.x, dirToTarget.z)) - curDegree);
-                    if (d < degree / 2 || (360 - d) < degree / 2)
+                    if (hitCol.CompareTag("User"))
                     {
-                        float dstToTarget = Vector3.Distance(transform.position, userTf.position);
-                        // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
-                        if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, GlobalStatus.Constant.obstacleMask))
+                        // 유저 식별
+                        Transform userTf = hitCol.transform;
+                        Vector3 dirToTarget = (userTf.position - transform.position).normalized;
+                        float d = Math.Abs(CalculationFunctions.AngleFromDir(new Vector2(dirToTarget.x, dirToTarget.z)) - curDegree);
+                        if (d < degree / 2 || (360 - d) < degree / 2)
                         {
-                            aIBaseController.OnDetectUser(userTf);
-                            return userTf;
-                        }
-                        else
-                        {
+                            // 시야 각도 안
+                            float dstToTarget = Vector3.Distance(transform.position, userTf.position);
+                            // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
+                            // RayCast를 두번 해서 둘중 하나라도 통과하면 OK
+                            // 1. 현재 y에서
+                            if (Physics.Raycast(transform.position, new Vector3(dirToTarget.x, 0, dirToTarget.z), out RaycastHit hitInfo, dstToTarget, GlobalStatus.Constant.obstacleMask | GlobalStatus.Constant.hitMask))
+                            {
+                                if (hitInfo.transform.CompareTag("User"))
+                                {
+                                    aIBaseController.OnDetectUser(userTf);
+                                    return userTf;
+                                }
+                            }
+                            // 2. y - HeightForLow에서
+                            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - HeightForLow, transform.position.z), new Vector3(dirToTarget.x, 0, dirToTarget.z), out RaycastHit hitInfo2, dstToTarget, GlobalStatus.Constant.obstacleMask | GlobalStatus.Constant.hitMask))
+                            {
+                                if (hitInfo2.transform.CompareTag("User"))
+                                {
+                                    aIBaseController.OnDetectUser(userTf);
+                                    return userTf;
+                                }
+                            }
                             return null;
                         }
+                        return null;
                     }
                 }
                 return null;

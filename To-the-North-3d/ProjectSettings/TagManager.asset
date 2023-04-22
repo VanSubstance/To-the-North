@@ -9,6 +9,7 @@ TagManager:
   - Attack
   - User
   - Attack Low
+  - Creature
   layers:
   - Default
   - TransparentFX
