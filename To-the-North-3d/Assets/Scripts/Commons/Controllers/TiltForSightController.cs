@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static Assets.Scripts.Commons.Constants.InGameStatus.User.Detection;
 
 namespace Assets.Scripts.Commons
 {
@@ -8,17 +9,16 @@ namespace Assets.Scripts.Commons
         private float height;
         [SerializeField]
         private bool isDig = false;
-        private static float sq2 = Mathf.Sqrt(2);
 
         private void Awake()
         {
-            height = transform.position.y;
-            transform.localRotation = Quaternion.Euler(45, 0, 0);
+            height /= 2f;
+            transform.localRotation = Quaternion.Euler(90, 0, 0);
             Vector3 posOrigin = transform.localPosition;
             transform.localPosition = new Vector3(
                 posOrigin.x,
-                height / sq2,
-                !isDig ? (posOrigin.z + height / sq2) : (posOrigin.z)
+                0,
+                !isDig ? (height) : (posOrigin.z)
                 );
         }
     }

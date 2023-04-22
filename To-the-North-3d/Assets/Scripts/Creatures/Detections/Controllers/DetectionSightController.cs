@@ -143,6 +143,9 @@ namespace Assets.Scripts.Creatures.Detections
             meshLower.vertices = vertices;
             meshLower.triangles = triangles;
             meshLower.RecalculateNormals();
+
+            // 아래 시야 중 반칸 장애물 넘어서가 있는 경우
+            
         }
 
         /// <summary>
