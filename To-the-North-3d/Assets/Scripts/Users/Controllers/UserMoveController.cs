@@ -1,9 +1,10 @@
 using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Creatures;
 using UnityEngine;
 
 namespace Assets.Scripts.Users
 {
-    internal class UserMoveController : MonoBehaviour
+    internal class UserMoveController : AbsCreatureActionController
     {
         private float secForRecoverStamina = 0;
         private Rigidbody rigid;
@@ -11,7 +12,7 @@ namespace Assets.Scripts.Users
 
         private Vector3 dodgeDir = Vector3.zero;
         private float timeLastKeyTrack, timeDodgeTrack, spdDodge = 10;
-        private bool isDodging, isCrouching;
+        private bool isDodging;
         private float WforStamina
         {
             get
@@ -19,11 +20,6 @@ namespace Assets.Scripts.Users
                 return 1 * (InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedUseStamina) ? 1.5f : 1);
             }
         }
-
-        //[SerializeField]
-        //Transform sightTf, hitTf, handTf;
-        [SerializeField]
-        private Transform heightTf;
 
         private void Awake()
         {
@@ -270,27 +266,7 @@ namespace Assets.Scripts.Users
             secForRecoverStamina += Time.deltaTime;
         }
 
-        private void Crouch()
-        {
-            if (isCrouching) return;
-            isCrouching = true;
-            heightTf.localPosition = Vector3.up * .1f;
-            //hitTf.transform.localPosition = new Vector3(0, -.4f, 0);
-            //sightTf.transform.localPosition = new Vector3(0, -.4f, 0);
-            //handTf.localPosition = new Vector3(0, -.05f, .15f);
-        }
-
-        private void Stand()
-        {
-            if (!isCrouching) return;
-            isCrouching = false;
-            heightTf.localPosition = Vector3.up * .5f;
-            //hitTf.transform.localPosition = Vector3.zero;
-            //sightTf.transform.localPosition = Vector3.zero;
-            //handTf.localPosition = new Vector3(0, 0, .2f);
-        }
-
-        private void Dodge(Vector3 dir)
+        public override void Dodge(Vector3 dir)
         {
             if (InGameStatus.User.IsConditionExist(ConditionConstraint.UtilBlock.Dodge)) return;
             if (InGameStatus.User.status.staminaBar.LiveInfo <= 0) return;
