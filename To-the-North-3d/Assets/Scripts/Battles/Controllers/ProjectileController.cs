@@ -49,7 +49,6 @@ namespace Assets.Scripts.Battles
         public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner)
         {
             float h = startPos.y;
-            bool isStand = h > .475f;
             trajectory = TrajectoryManager.Instance.GetNewTrajectory();
             owner = _owner;
             startPos = new Vector3(startPos.x, 0, startPos.z);
@@ -61,11 +60,11 @@ namespace Assets.Scripts.Battles
             subHit.SetActive(true);
 
             transform.localRotation = Quaternion.Euler(0f, 0f, CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)));
-            transform.position = new Vector3(startPos.x, isStand ? 1f : .7f, startPos.z);
+            transform.position = new Vector3(startPos.x, h, startPos.z);
             gameObject.SetActive(true);
             GetComponent<Rigidbody>().velocity = new Vector3(targetDir.x, 0, targetDir.z).normalized * info.Spd;
             targetPos = startPos + targetDir.normalized * _info.Range;
-            targetPos = new Vector3(targetPos.x, isStand ? 1f : .7f, targetPos.z);
+            targetPos = new Vector3(targetPos.x, h, targetPos.z);
             isAffected = false;
             isReady = true;
             if (info.TrajectoryType == TrajectoryType.Curve)
@@ -180,7 +179,7 @@ namespace Assets.Scripts.Battles
 
             private void Update()
             {
-                transform.position = parent.transform.position + Vector3.down * .5f;
+                transform.position = parent.transform.position + Vector3.down;
             }
         }
     }

@@ -13,6 +13,7 @@ namespace Assets.Scripts.Creatures.Detections
         /** 시야 시각화 */
         public override void DrawSightArea()
         {
+            // 기본 시야
             int stepCount = Mathf.RoundToInt(360 * meshResolution);
             float stepAngleSize = 360 / stepCount;
             List<Vector3> viewPoints = new List<Vector3>();
@@ -21,15 +22,7 @@ namespace Assets.Scripts.Creatures.Detections
             {
                 float angle = transform.eulerAngles.y - (360 / 2) + stepAngleSize * i;
 
-                DetectionSightInfo newViewCast = SightCast(angle);
-                viewPoints.Add(newViewCast.point);
-            }
-
-            for (int i = 0; i <= stepCount; i++)
-            {
-                float angle = transform.eulerAngles.y - (360 / 2) + stepAngleSize * i;
-
-                DetectionSightInfo newViewCast = SightCast(angle, .7f);
+                DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Instinct.range, 0);
                 viewPoints.Add(newViewCast.point);
             }
 
@@ -48,10 +41,43 @@ namespace Assets.Scripts.Creatures.Detections
                     triangles[i * 3 + 2] = i + 2;
                 }
             }
-            viewMesh.Clear();
-            viewMesh.vertices = vertices;
-            viewMesh.triangles = triangles;
-            viewMesh.RecalculateNormals();
+            meshDefault.Clear();
+            meshDefault.vertices = vertices;
+            meshDefault.triangles = triangles;
+            meshDefault.RecalculateNormals();
+
+            // 아래 시야
+            if (HeightForLow == 0) return;
+
+            viewPoints = new List<Vector3>();
+
+            for (int i = 0; i <= stepCount; i++)
+            {
+                float angle = transform.eulerAngles.y - (360 / 2) + stepAngleSize * i;
+
+                DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Instinct.range, -HeightForLow);
+                viewPoints.Add(newViewCast.point);
+            }
+
+            vertexCount = viewPoints.Count + 1;
+            vertices = new Vector3[vertexCount];
+            triangles = new int[(vertexCount - 2) * 3];
+            vertices[0] = Vector3.down * HeightForLow;
+
+            for (int i = 0; i < vertexCount - 1; i++)
+            {
+                vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+                if (i < vertexCount - 2)
+                {
+                    triangles[i * 3] = 0;
+                    triangles[i * 3 + 1] = i + 1;
+                    triangles[i * 3 + 2] = i + 2;
+                }
+            }
+            meshLower.Clear();
+            meshLower.vertices = vertices;
+            meshLower.triangles = triangles;
+            meshLower.RecalculateNormals();
         }
 
         /// <summary>
@@ -87,33 +113,6 @@ namespace Assets.Scripts.Creatures.Detections
                 }
             }
             return null;
-        }
-        public override DetectionSightInfo SightCast(float globalAngle, float heightDistort = 0f)
-        {
-            Vector3 dir = DirFromAngle(globalAngle, true), movedTrPos = new Vector3(transform.position.x, transform.position.y + heightDistort, transform.position.z);
-            if (Physics.Raycast(movedTrPos, dir, out RaycastHit hit,
-                (isAI ? range : (int)GetRangeByDegree(globalAngle)),
-                GlobalStatus.Constant.obstacleMask))
-            {
-                return new DetectionSightInfo(true, hit.point, hit.distance, globalAngle);
-            }
-            else
-            {
-                return new DetectionSightInfo(false, movedTrPos + dir *
-                    (isAI ? range : GetRangeByDegree(globalAngle)),
-                    (isAI ? range : GetRangeByDegree(globalAngle)),
-                    globalAngle);
-            }
-        }
-
-        private static float GetRangeByDegree(float degree)
-        {
-            //float radian = degree * Mathf.Deg2Rad;
-            //float a = InGameStatus.User.Detection.Instinct.range; // Major axis
-            //float b = InGameStatus.User.Detection.Instinct.range * 1.2f;
-            //float r = (a * b) / Mathf.Sqrt(Mathf.Pow(a * Mathf.Sin(radian), 2) + Mathf.Pow(b * Mathf.Cos(radian), 2));
-
-            return InGameStatus.User.Detection.Instinct.range;
         }
     }
 }
