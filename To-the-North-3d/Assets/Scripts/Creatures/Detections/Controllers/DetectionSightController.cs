@@ -145,11 +145,11 @@ namespace Assets.Scripts.Creatures.Detections
             meshLower.RecalculateNormals();
 
             // 아래 시야 중 반칸 장애물 넘어서가 있는 경우
-            
+
         }
 
         /// <summary>
-        /// 시야 내에서 상호작용 거리 안에 들어온 이벤트들 깨우기
+        /// 시야 내에서 상호작용 거리 안에 들어온 이벤트 또는 타겟 식별
         /// </summary>
         public override Transform CheckSight()
         {
@@ -201,7 +201,6 @@ namespace Assets.Scripts.Creatures.Detections
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
             List<Collider> targetsInViewRadius = new List<Collider>();
             targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask));
-            //targetsInViewRadius.AddRange(Physics.OverlapCircleAll(transform.position, InGameStatus.User.Detection.Sight., GlobalStatus.Constant.creatureMask));
             for (int i = 0; i < targetsInViewRadius.Count; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
@@ -224,6 +223,12 @@ namespace Assets.Scripts.Creatures.Detections
                         }
                     }
                 }
+            }
+            targetsInViewRadius.Clear();
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.Sight., GlobalStatus.Constant.creatureMask));
+            if (targetsInViewRadius.Count > 0)
+            {
+                Debug.Log("ㅅ;ㄱ별 ?");
             }
             return null;
         }
