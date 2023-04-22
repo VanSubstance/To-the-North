@@ -43,11 +43,11 @@ namespace Assets.Scripts.Items
             }
         }
         private bool isAiming, isReloading;
+        [SerializeField]
         private SpriteRenderer sprite;
 
         private void Awake()
         {
-            sprite = GetComponent<SpriteRenderer>();
             isMagazineEmpty = false;
             if (isAI)
             {

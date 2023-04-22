@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: c6a92cf3c481acf4b8621542a583023a
+guid: 53a520d36ea6f01498cff9bbdd1ceab9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -36,9 +36,9 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 1
-    wrapV: 1
-    wrapW: 1
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -47,11 +47,11 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 50
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 1
+  alphaIsTransparency: 0
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
@@ -117,106 +117,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Helmat
+      name: Structure_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 140
+        y: 195
         width: 60
-        height: 45
+        height: 30
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 380c9e4c54ec752459a6fc249662fb20
-      internalID: -272838582
+      spriteID: 4dc1c110dfd9e1c4496a737a0594ee7f
+      internalID: -1500934675
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mask
+      name: Structure_1
       rect:
         serializedVersion: 2
         x: 10
-        y: 105
+        y: 150
         width: 40
         height: 25
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af8ee4c082b25a14d8bd219637ffab8d
-      internalID: 155769632
+      spriteID: 40e30b4c694acd3488ba58d517791cd5
+      internalID: -887936133
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Head
+      name: Structure_2
       rect:
         serializedVersion: 2
         x: 5
-        y: 50
+        y: 85
         width: 50
         height: 45
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8eb455d8cbd29d344983e5771a7cdf69
-      internalID: -1834088431
+      spriteID: 83d7903c27a8ecd4399d1a6d65b54b3d
+      internalID: -1288432725
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Body
+      name: Structure_3
       rect:
         serializedVersion: 2
-        x: 15
-        y: 25
-        width: 30
-        height: 15
+        x: 10
+        y: 35
+        width: 40
+        height: 30
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 433540b1fd2e76546a325d34b6d406ea
-      internalID: -1977696338
+      spriteID: 77c5708c08373294392b142a2d23c699
+      internalID: 716674366
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Leg
+      name: Structure_4
       rect:
         serializedVersion: 2
-        x: 15
+        x: 10
         y: 0
-        width: 30
+        width: 40
         height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 083bf9af3c54318408b90fdbc3bcc407
-      internalID: -7530361
+      spriteID: c49225e005c7ae74a83700cda86f2067
+      internalID: -917976556
       vertices: []
       indices: 
       edges: []
@@ -224,7 +224,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 2af4e95b9617eb54eb7b6fe8a873ecf6
     internalID: 0
     vertices: []
     indices: 
@@ -232,11 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Head: -1834088431
-      Leg: -7530361
-      Mask: 155769632
-      Helmat: -272838582
-      Body: -1977696338
+      Structure_2: -1288432725
+      Structure_1: -887936133
+      Structure_0: -1500934675
+      Structure_3: 716674366
+      Structure_4: -917976556
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
