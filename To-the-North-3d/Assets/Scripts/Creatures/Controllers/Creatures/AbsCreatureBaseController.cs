@@ -9,7 +9,7 @@ namespace Assets.Scripts.Creatures.Controllers
     {
 
         [SerializeField]
-        protected Transform hitTf;
+        protected Transform hitTf, visualTf;
         protected Dictionary<EquipBodyType, IItemEquipable> equipableBodies = new Dictionary<EquipBodyType, IItemEquipable>();
         [SerializeField]
         protected ItemWeaponController weaponL, weaponR;

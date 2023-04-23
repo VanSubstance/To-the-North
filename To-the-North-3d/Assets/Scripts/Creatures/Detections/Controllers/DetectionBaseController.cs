@@ -37,10 +37,15 @@ namespace Assets.Scripts.Creatures.Detections
             meshDefault = new Mesh();
             meshDefault.name = "Default Mesh";
             meshFilterDefault.mesh = meshDefault;
+            meshFilterDefault.transform.GetComponent<MeshRenderer>().sortingLayerName = "Detection";
+            meshFilterDefault.transform.GetComponent<MeshRenderer>().sortingOrder = 0;
+            meshFilterDefault.transform.GetComponent<MeshRenderer>().material.color = new Color(1, 1, 1, .05f);
 
             meshLower = new Mesh();
             meshLower.name = "Lower Mesh";
             meshFilterLower.mesh = meshLower;
+            meshFilterLower.transform.GetComponent<MeshRenderer>().sortingLayerName = "Detection";
+            meshFilterDefault.transform.GetComponent<MeshRenderer>().sortingOrder = 0;
         }
 
         public void LateUpdate()

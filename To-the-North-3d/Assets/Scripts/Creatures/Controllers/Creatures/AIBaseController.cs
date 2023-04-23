@@ -352,6 +352,27 @@ namespace Assets.Scripts.Creatures.Bases
         /// </summary>
         /// <param name="userTf"></param>
         public abstract void OnDetectUser(Transform userTf);
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.CompareTag("Hide"))
+            {
+                // Get the bounds of the bush collider
+                Bounds bounds = GetComponent<Collider>().bounds;
+
+                if (bounds.Contains(other.transform.position))
+                {
+                    // 완전히 들어감 = 투명화
+                    visualTf.gameObject.SetActive(false);
+                    sightCtrl.isVisualization = false;
+                    return;
+                }
+                // 빠져나옴 = 가시화
+                visualTf.gameObject.SetActive(true);
+                sightCtrl.isVisualization = true;
+                return;
+            }
+        }
     }
 }
 

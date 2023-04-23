@@ -1,9 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.Creatures.Detections.Controllers
+namespace Assets.Scripts.Creatures.Detections
 {
-    internal class DetectionCompositeController : MonoBehaviour
+    public class DetectionCompositeController : MonoBehaviour
     {
         [SerializeField]
         private DetectionBaseController[] detections;
