@@ -9,7 +9,7 @@ using UnityEngine.AI;
 
 namespace Assets.Scripts.Creatures.Bases
 {
-    public abstract class AIBaseController : AbsCreatureBaseController, IEventInteraction
+    public abstract class AIBaseController : AbsCreatureBaseController, ICreatureInteractionWithSight
     {
         [SerializeField]
         private CreatureInfo info;
@@ -387,35 +387,20 @@ namespace Assets.Scripts.Creatures.Bases
                 timeParticle -= Time.deltaTime;
                 return;
             }
-            StopTrackingInteraction();
+        }
+        public void DetectFull()
+        {
+            throw new System.NotImplementedException();
         }
 
-        /// <summary>
-        /// 파티클 시스템 on 함수
-        /// </summary>
-        /// <param name="targetTf"></param>
-        public void StartTrackingInteraction(Transform targetTf)
+        public void DetectHalf()
         {
-            if (timeParticle <= 0)
-            {
-                particle.Play();
-            }
-            timeParticle = .5f;
+            throw new System.NotImplementedException();
         }
 
-        /// <summary>
-        /// 파티클 시스템 off 함수
-        /// </summary>
-        public void StopTrackingInteraction()
+        public void DetectNone()
         {
-            particle.Stop();
-        }
-
-        /// <summary>
-        /// 몬스터의 경우, 해당 함수 무시
-        /// </summary>
-        public void OnInteraction()
-        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -14,13 +14,6 @@ namespace Assets.Scripts.Creatures
 
         private void Awake()
         {
-            if (aiBase)
-            {
-                for (int i = 0; i < body.childCount; i++)
-                {
-                    body.GetChild(i).GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-                }
-            }
         }
 
         private void Update()
