@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitTf: {fileID: 8379434864165065241}
+  visualTf: {fileID: 0}
   weaponL: {fileID: 8391907671427950597}
   weaponR: {fileID: 5744239113335710260}
   info: {fileID: 11400000, guid: abe18b6cfa722824ba68ab9ac5ff7750, type: 2}
@@ -506,34 +507,6 @@ PrefabInstance:
     - target: {fileID: 211469029168765846, guid: 6c0a5ddcbcb3dd943aa44c308aa8cae3, type: 3}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 211469029168765846, guid: 6c0a5ddcbcb3dd943aa44c308aa8cae3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 211469029168765846, guid: 6c0a5ddcbcb3dd943aa44c308aa8cae3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 211469029168765846, guid: 6c0a5ddcbcb3dd943aa44c308aa8cae3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 211469029168765846, guid: 6c0a5ddcbcb3dd943aa44c308aa8cae3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 211469029168765846, guid: 6c0a5ddcbcb3dd943aa44c308aa8cae3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 211469029168765846, guid: 6c0a5ddcbcb3dd943aa44c308aa8cae3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 211469029168765846, guid: 6c0a5ddcbcb3dd943aa44c308aa8cae3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 211469029168765846, guid: 6c0a5ddcbcb3dd943aa44c308aa8cae3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
