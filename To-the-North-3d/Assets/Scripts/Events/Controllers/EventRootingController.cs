@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Events.Controllers
 {
-    class EventRootingController : AEventBaseController
+    class EventRootingController : AbsEventBaseController
     {
         /// <summary>
         /// 아이템 어레이?

@@ -1,10 +1,12 @@
 using UnityEngine;
 
-namespace Assets.Scripts.Events.Interfaces
+namespace Assets.Scripts.Events
 {
-    internal interface IEventInteraction
+    public interface IEventInteraction
     {
         public void StartTrackingInteraction(Transform targetTf);
+
+        public void StopTrackingInteraction();
         public void OnInteraction();
     }
 }

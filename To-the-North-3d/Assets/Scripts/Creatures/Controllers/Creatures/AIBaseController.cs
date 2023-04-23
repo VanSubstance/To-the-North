@@ -2,13 +2,14 @@ using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Detections;
 using Assets.Scripts.Creatures.Interfaces;
+using Assets.Scripts.Events;
 using Assets.Scripts.Items;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Assets.Scripts.Creatures.Bases
 {
-    public abstract class AIBaseController : AbsCreatureBaseController
+    public abstract class AIBaseController : AbsCreatureBaseController, IEventInteraction
     {
         [SerializeField]
         private CreatureInfo info;
@@ -302,7 +303,8 @@ namespace Assets.Scripts.Creatures.Bases
 
             statusType = AIStatusType.None;
             agent = GetComponent<NavMeshAgent>();
-
+            particle = GetComponent<ParticleSystem>();
+            particle.Stop();
             base.Awake();
 
             if (Info == null) OnDisable();
@@ -316,6 +318,7 @@ namespace Assets.Scripts.Creatures.Bases
                 CheckMove();
                 CheckGaze();
                 CheckStatus();
+                CheckParticle();
             }
         }
 
@@ -372,6 +375,47 @@ namespace Assets.Scripts.Creatures.Bases
                 sightCtrl.isVisualization = true;
                 return;
             }
+        }
+
+        private ParticleSystem particle;
+        private float timeParticle = 0;
+
+        private void CheckParticle()
+        {
+            if (timeParticle > 0)
+            {
+                timeParticle -= Time.deltaTime;
+                return;
+            }
+            StopTrackingInteraction();
+        }
+
+        /// <summary>
+        /// 파티클 시스템 on 함수
+        /// </summary>
+        /// <param name="targetTf"></param>
+        public void StartTrackingInteraction(Transform targetTf)
+        {
+            if (timeParticle <= 0)
+            {
+                particle.Play();
+            }
+            timeParticle = .5f;
+        }
+
+        /// <summary>
+        /// 파티클 시스템 off 함수
+        /// </summary>
+        public void StopTrackingInteraction()
+        {
+            particle.Stop();
+        }
+
+        /// <summary>
+        /// 몬스터의 경우, 해당 함수 무시
+        /// </summary>
+        public void OnInteraction()
+        {
         }
     }
 }

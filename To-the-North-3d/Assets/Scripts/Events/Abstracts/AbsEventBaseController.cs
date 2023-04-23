@@ -1,22 +1,47 @@
+using Assets.Scripts.Commons.Constants;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Events.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Events.Abstracts
 {
-    internal abstract class AEventBaseController : MonoBehaviour, IEventInteraction
+    internal abstract class AbsEventBaseController : MonoBehaviour, IEventInteraction
     {
         public bool isOnTracking = false;
         private bool isInteracted = false;
 
+        private ParticleSystem particle;
+        private float timeParticle = 0;
+
+        protected void Awake()
+        {
+            particle = GetComponent<ParticleSystem>();
+            particle.Stop();
+        }
+
+        protected void Update()
+        {
+            CheckParticle();
+        }
+
+        private void CheckParticle()
+        {
+            if (timeParticle > 0)
+            {
+                timeParticle -= Time.deltaTime;
+                return;
+            }
+            StopTrackingInteraction();
+        }
+
         public void StartTrackingInteraction(Transform targetTf)
         {
+            if (timeParticle <= 0)
+            {
+                particle.Play();
+            }
+            timeParticle = .5f;
+
             if (isOnTracking) return;
             isOnTracking = true;
             StartCoroutine(StartCoroutineInteraction(targetTf));
@@ -38,5 +63,10 @@ namespace Assets.Scripts.Events.Abstracts
         }
 
         public abstract void OnInteraction();
+
+        public void StopTrackingInteraction()
+        {
+            particle.Stop();
+        }
     }
 }
