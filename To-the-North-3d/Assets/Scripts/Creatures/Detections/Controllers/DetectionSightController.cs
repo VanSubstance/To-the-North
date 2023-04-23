@@ -13,8 +13,6 @@ namespace Assets.Scripts.Creatures.Detections
         public float range = 3f, degree = 60f, curDegree = 0;
         private bool isForce = false;
 
-        public bool isVisualization = true;
-
         private Vector3 target;
         /// <summary>
         /// 상대 좌표 기준
@@ -93,10 +91,6 @@ namespace Assets.Scripts.Creatures.Detections
             {
                 meshDefault.Clear();
                 meshLower.Clear();
-                if (!isVisualization)
-                {
-                    return;
-                }
                 stepCount = Mathf.RoundToInt((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) * meshResolution);
                 stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / stepCount;
                 viewPoints = new List<Vector3>();

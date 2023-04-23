@@ -8,11 +8,21 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
     {
         public override void DetectFull()
         {
+            if (BushHidden)
+            {
+                ChangeVisualOpacity(0);
+                return;
+            }
             ChangeVisualOpacity(1);
         }
 
         public override void DetectHalf()
         {
+            if (BushHidden)
+            {
+                ChangeVisualOpacity(0);
+                return;
+            }
             ChangeVisualOpacity(.2f);
         }
 
