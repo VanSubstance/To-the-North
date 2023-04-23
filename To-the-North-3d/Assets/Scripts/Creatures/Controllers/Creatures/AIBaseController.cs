@@ -9,7 +9,7 @@ using UnityEngine.AI;
 
 namespace Assets.Scripts.Creatures.Bases
 {
-    public abstract class AIBaseController : AbsCreatureBaseController, IEventInteraction
+    public abstract class AIBaseController : AbsCreatureBaseController, IInteractionWithSight
     {
         [SerializeField]
         private CreatureInfo info;
@@ -356,27 +356,6 @@ namespace Assets.Scripts.Creatures.Bases
         /// <param name="userTf"></param>
         public abstract void OnDetectUser(Transform userTf);
 
-        private void OnTriggerStay(Collider other)
-        {
-            if (other.CompareTag("Hide"))
-            {
-                // Get the bounds of the bush collider
-                Bounds bounds = GetComponent<Collider>().bounds;
-
-                if (bounds.Contains(other.transform.position))
-                {
-                    // 완전히 들어감 = 투명화
-                    visualTf.gameObject.SetActive(false);
-                    sightCtrl.isVisualization = false;
-                    return;
-                }
-                // 빠져나옴 = 가시화
-                visualTf.gameObject.SetActive(true);
-                sightCtrl.isVisualization = true;
-                return;
-            }
-        }
-
         private ParticleSystem particle;
         private float timeParticle = 0;
 
@@ -387,36 +366,23 @@ namespace Assets.Scripts.Creatures.Bases
                 timeParticle -= Time.deltaTime;
                 return;
             }
-            StopTrackingInteraction();
         }
-
-        /// <summary>
-        /// 파티클 시스템 on 함수
-        /// </summary>
-        /// <param name="targetTf"></param>
-        public void StartTrackingInteraction(Transform targetTf)
+        protected void ChangeVisualOpacity(float _opacity)
         {
-            if (timeParticle <= 0)
+            Color c;
+            SpriteRenderer s;
+            for (int i = 0; i < visualTf.childCount; i++)
             {
-                particle.Play();
+                c = (s = visualTf.GetChild(i).GetComponent<SpriteRenderer>()).color;
+                s.color = new Color(c.r, c.g, c.b, _opacity);
             }
-            timeParticle = .5f;
         }
 
-        /// <summary>
-        /// 파티클 시스템 off 함수
-        /// </summary>
-        public void StopTrackingInteraction()
-        {
-            particle.Stop();
-        }
+        public abstract void DetectFull();
 
-        /// <summary>
-        /// 몬스터의 경우, 해당 함수 무시
-        /// </summary>
-        public void OnInteraction()
-        {
-        }
+        public abstract void DetectHalf();
+
+        public abstract void DetectNone();
     }
 }
 

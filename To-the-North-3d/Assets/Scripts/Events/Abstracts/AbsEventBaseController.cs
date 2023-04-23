@@ -31,7 +31,6 @@ namespace Assets.Scripts.Events.Abstracts
                 timeParticle -= Time.deltaTime;
                 return;
             }
-            StopTrackingInteraction();
         }
 
         public void StartTrackingInteraction(Transform targetTf)
@@ -63,10 +62,5 @@ namespace Assets.Scripts.Events.Abstracts
         }
 
         public abstract void OnInteraction();
-
-        public void StopTrackingInteraction()
-        {
-            particle.Stop();
-        }
     }
 }

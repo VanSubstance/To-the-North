@@ -13,8 +13,6 @@ namespace Assets.Scripts.Creatures.Detections
         public float range = 3f, degree = 60f, curDegree = 0;
         private bool isForce = false;
 
-        public bool isVisualization = true;
-
         private Vector3 target;
         /// <summary>
         /// 상대 좌표 기준
@@ -81,74 +79,84 @@ namespace Assets.Scripts.Creatures.Detections
         /** 시야 시각화 */
         public override void DrawSightArea()
         {
-            meshDefault.Clear();
-            meshLower.Clear();
-            if (!isVisualization)
+            List<Vector3> viewPoints;
+            int stepCount = 0;
+            float stepAngleSize = 0;
+
+            int vertexCount;
+            Vector3[] vertices;
+            int[] triangles;
+
+            if (meshFilterDefault != null)
             {
-                return;
-            }
-            int stepCount = Mathf.RoundToInt((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) * meshResolution);
-            float stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / stepCount;
-            List<Vector3> viewPoints = new List<Vector3>();
+                meshDefault.Clear();
+                meshLower.Clear();
+                stepCount = Mathf.RoundToInt((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) * meshResolution);
+                stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / stepCount;
+                viewPoints = new List<Vector3>();
 
-            for (int i = 0; i <= stepCount; i++)
-            {
-                float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
-
-                DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Sight.Range, 4f);
-                viewPoints.Add(newViewCast.point);
-            }
-
-            int vertexCount = viewPoints.Count + 1;
-            Vector3[] vertices = new Vector3[vertexCount];
-            int[] triangles = new int[(vertexCount - 2) * 3];
-            vertices[0] = Vector3.zero;
-
-            for (int i = 0; i < vertexCount - 1; i++)
-            {
-                vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
-                if (i < vertexCount - 2)
+                for (int i = 0; i <= stepCount; i++)
                 {
-                    triangles[i * 3] = 0;
-                    triangles[i * 3 + 1] = i + 1;
-                    triangles[i * 3 + 2] = i + 2;
+                    float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
+
+                    DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Sight.Range, 0);
+                    viewPoints.Add(newViewCast.point);
                 }
+
+                vertexCount = viewPoints.Count + 1;
+                vertices = new Vector3[vertexCount];
+                triangles = new int[(vertexCount - 2) * 3];
+                vertices[0] = Vector3.zero;
+
+                for (int i = 0; i < vertexCount - 1; i++)
+                {
+                    vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+                    if (i < vertexCount - 2)
+                    {
+                        triangles[i * 3] = 0;
+                        triangles[i * 3 + 1] = i + 1;
+                        triangles[i * 3 + 2] = i + 2;
+                    }
+                }
+                meshDefault.vertices = vertices;
+                meshDefault.triangles = triangles;
+                meshDefault.RecalculateNormals();
             }
-            meshDefault.vertices = vertices;
-            meshDefault.triangles = triangles;
-            meshDefault.RecalculateNormals();
 
             // 아래 시야
             if (HeightForLow == 0) return;
 
-            viewPoints = new List<Vector3>();
-
-            for (int i = 0; i <= stepCount; i++)
+            if (meshFilterLower != null)
             {
-                float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
+                viewPoints = new List<Vector3>();
 
-                DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Sight.Range, -HeightForLow);
-                viewPoints.Add(newViewCast.point);
-            }
-
-            vertexCount = viewPoints.Count + 1;
-            vertices = new Vector3[vertexCount];
-            triangles = new int[(vertexCount - 2) * 3];
-            vertices[0] = Vector3.down * HeightForLow;
-
-            for (int i = 0; i < vertexCount - 1; i++)
-            {
-                vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
-                if (i < vertexCount - 2)
+                for (int i = 0; i <= stepCount; i++)
                 {
-                    triangles[i * 3] = 0;
-                    triangles[i * 3 + 1] = i + 1;
-                    triangles[i * 3 + 2] = i + 2;
+                    float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
+
+                    DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Sight.Range, -HeightForLow);
+                    viewPoints.Add(newViewCast.point);
                 }
+
+                vertexCount = viewPoints.Count + 1;
+                vertices = new Vector3[vertexCount];
+                triangles = new int[(vertexCount - 2) * 3];
+                vertices[0] = Vector3.down * HeightForLow;
+
+                for (int i = 0; i < vertexCount - 1; i++)
+                {
+                    vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+                    if (i < vertexCount - 2)
+                    {
+                        triangles[i * 3] = 0;
+                        triangles[i * 3 + 1] = i + 1;
+                        triangles[i * 3 + 2] = i + 2;
+                    }
+                }
+                meshLower.vertices = vertices;
+                meshLower.triangles = triangles;
+                meshLower.RecalculateNormals();
             }
-            meshLower.vertices = vertices;
-            meshLower.triangles = triangles;
-            meshLower.RecalculateNormals();
 
             // 아래 시야 중 반칸 장애물 넘어서가 있는 경우
 
@@ -220,7 +228,6 @@ namespace Assets.Scripts.Creatures.Detections
                     if (Physics.Raycast(transform.position, new Vector3(dirToTarget.x, 0, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
                     {
                         // 해당 이벤트 반짝반짝 on
-                        target.GetComponent<IEventInteraction>().StopTrackingInteraction();
                     }
                     else
                     {
@@ -236,29 +243,40 @@ namespace Assets.Scripts.Creatures.Detections
                 }
             }
             targetsInViewRadius.Clear();
-            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.Sight.Range, GlobalStatus.Constant.creatureMask | GlobalStatus.Constant.eventMask));
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.Sight.Range, GlobalStatus.Constant.creatureMask));
             if (targetsInViewRadius.Count > 0)
             {
+                // 주변 반경 안에 크리쳐 식별
+                IInteractionWithSight iSight;
                 foreach (Collider col in targetsInViewRadius)
                 {
+                    iSight = col.GetComponent<IInteractionWithSight>();
                     Vector3 dirToTarget = (col.transform.position - transform.position).normalized;
                     float d = Math.Abs(CalculationFunctions.AngleFromDir(new Vector2(dirToTarget.x, dirToTarget.z)) - curDegree);
                     if (d < InGameStatus.User.Detection.Sight.Degree / 2 || (360 - d) < InGameStatus.User.Detection.Sight.Degree / 2)
                     {
+                        // 시야 각도 안에서 식별
                         float dstToTarget = Vector3.Distance(transform.position, col.transform.transform.position);
-
-                        // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리면 안보이는거지만 대략은 보여야 함
                         if (Physics.Raycast(transform.position, new Vector3(dirToTarget.x, 0, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
                         {
-                            col.transform.GetComponent<IEventInteraction>().StartTrackingInteraction(transform);
-                            // 해당 몬스터 반짝반짝 on
+                            // 사이에 완전 장애물 존재
+                            iSight.DetectNone();
+                            return null;
                         }
-                        else
+
+                        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - HeightForLow, transform.position.z), new Vector3(dirToTarget.x, 0, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
                         {
-                            col.transform.GetComponent<IEventInteraction>().StopTrackingInteraction();
-                            // 해당 몬스터 반짝반짝 off
+                            // 사이에 절반 장애물 존재
+                            iSight.DetectHalf();
+                            return null;
                         }
+
+                        // 사이에 장애물 존재하지 않음
+                        iSight.DetectFull();
+                        return null;
                     }
+                    // 시야 각도 밖에서 식별
+                    iSight.DetectNone();
                 }
             }
             return null;

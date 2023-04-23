@@ -27,6 +27,37 @@ namespace Assets.Scripts.Creatures.Controllers
             weaponR.Owner = transform;
         }
 
+        private Collider bushHidden = null;
+        public Collider BushHidden
+        {
+            get
+            {
+                return bushHidden;
+            }
+        }
+
+        /// <summary>
+        /// 부쉬 상태 체크
+        /// </summary>
+        /// <param name="other"></param>
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.CompareTag("Hide"))
+            {
+                Bounds bounds = other.bounds;
+                if (bounds.Contains(transform.position))
+                {
+                    bushHidden = other;
+                    return;
+                }
+                if (bushHidden != null && bushHidden.Equals(other))
+                {
+                    bushHidden = null;
+                }
+                return;
+            }
+        }
+
         public abstract void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir);
     }
 }
