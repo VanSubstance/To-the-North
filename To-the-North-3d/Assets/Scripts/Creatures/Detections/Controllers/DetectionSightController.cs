@@ -13,6 +13,8 @@ namespace Assets.Scripts.Creatures.Detections
         public float range = 3f, degree = 60f, curDegree = 0;
         private bool isForce = false;
 
+        public bool isVisualization = true;
+
         private Vector3 target;
         /// <summary>
         /// 상대 좌표 기준
@@ -79,6 +81,12 @@ namespace Assets.Scripts.Creatures.Detections
         /** 시야 시각화 */
         public override void DrawSightArea()
         {
+            meshDefault.Clear();
+            meshLower.Clear();
+            if (!isVisualization)
+            {
+                return;
+            } 
             int stepCount = Mathf.RoundToInt((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) * meshResolution);
             float stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / stepCount;
             List<Vector3> viewPoints = new List<Vector3>();
@@ -106,7 +114,6 @@ namespace Assets.Scripts.Creatures.Detections
                     triangles[i * 3 + 2] = i + 2;
                 }
             }
-            meshDefault.Clear();
             meshDefault.vertices = vertices;
             meshDefault.triangles = triangles;
             meshDefault.RecalculateNormals();
@@ -139,7 +146,6 @@ namespace Assets.Scripts.Creatures.Detections
                     triangles[i * 3 + 2] = i + 2;
                 }
             }
-            meshLower.Clear();
             meshLower.vertices = vertices;
             meshLower.triangles = triangles;
             meshLower.RecalculateNormals();
@@ -178,6 +184,7 @@ namespace Assets.Scripts.Creatures.Detections
                             {
                                 if (hitInfo.transform.CompareTag("User"))
                                 {
+                                    Debug.DrawRay(transform.position, new Vector3(dirToTarget.x, 0, dirToTarget.z) * dstToTarget, Color.red, 10f);
                                     aIBaseController.OnDetectUser(userTf);
                                     return userTf;
                                 }
@@ -187,6 +194,7 @@ namespace Assets.Scripts.Creatures.Detections
                             {
                                 if (hitInfo2.transform.CompareTag("User"))
                                 {
+                                    Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - HeightForLow, transform.position.z), new Vector3(dirToTarget.x, 0, dirToTarget.z) * dstToTarget, Color.blue, 10f);
                                     aIBaseController.OnDetectUser(userTf);
                                     return userTf;
                                 }
@@ -224,12 +232,12 @@ namespace Assets.Scripts.Creatures.Detections
                     }
                 }
             }
-            targetsInViewRadius.Clear();
-            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.Sight., GlobalStatus.Constant.creatureMask));
-            if (targetsInViewRadius.Count > 0)
-            {
-                Debug.Log("ㅅ;ㄱ별 ?");
-            }
+            //targetsInViewRadius.Clear();
+            //targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.Sight.Range, GlobalStatus.Constant.creatureMask));
+            //if (targetsInViewRadius.Count > 0)
+            //{
+            //    Debug.Log("ㅅ;ㄱ별 ?");
+            //}
             return null;
         }
     }

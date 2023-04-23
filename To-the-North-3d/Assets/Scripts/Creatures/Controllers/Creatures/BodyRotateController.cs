@@ -12,6 +12,17 @@ namespace Assets.Scripts.Creatures
         [SerializeField]
         private AIBaseController aiBase;
 
+        private void Awake()
+        {
+            if (aiBase)
+            {
+                for (int i = 0; i < body.childCount; i++)
+                {
+                    body.GetChild(i).GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+                }
+            }
+        }
+
         private void Update()
         {
             float curDegree = aiBase ? aiBase.CurDegree : InGameStatus.User.Movement.curdegree;

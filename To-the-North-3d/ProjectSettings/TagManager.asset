@@ -10,6 +10,7 @@ TagManager:
   - User
   - Attack Low
   - Creature
+  - Hide
   layers:
   - Default
   - TransparentFX
