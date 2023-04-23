@@ -356,37 +356,6 @@ namespace Assets.Scripts.Creatures.Bases
         /// <param name="userTf"></param>
         public abstract void OnDetectUser(Transform userTf);
 
-        private Collider bushHidden = null;
-        public Collider BushHidden
-        {
-            get
-            {
-                return bushHidden;
-            }
-        }
-
-        /// <summary>
-        /// 부쉬 상태 체크
-        /// </summary>
-        /// <param name="other"></param>
-        private void OnTriggerStay(Collider other)
-        {
-            if (other.CompareTag("Hide"))
-            {
-                Bounds bounds = other.bounds;
-                if (bounds.Contains(transform.position))
-                {
-                    bushHidden = other;
-                    return;
-                }
-                if (bushHidden != null && bushHidden.Equals(other))
-                {
-                    bushHidden = null;
-                }
-                return;
-            }
-        }
-
         private ParticleSystem particle;
         private float timeParticle = 0;
 

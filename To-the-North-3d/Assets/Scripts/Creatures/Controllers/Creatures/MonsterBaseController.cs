@@ -1,5 +1,5 @@
 using Assets.Scripts.Creatures.Bases;
-using System.Collections;
+using Assets.Scripts.Users;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Controllers.Creatures
@@ -8,7 +8,7 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
     {
         public override void DetectFull()
         {
-            if (BushHidden)
+            if (BushHidden && !BushHidden.Equals(UserBaseController.Instance.BushHidden))
             {
                 ChangeVisualOpacity(0);
                 return;
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
 
         public override void DetectHalf()
         {
-            if (BushHidden)
+            if (BushHidden && !BushHidden.Equals(UserBaseController.Instance.BushHidden))
             {
                 ChangeVisualOpacity(0);
                 return;
