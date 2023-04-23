@@ -9,7 +9,7 @@ using UnityEngine.AI;
 
 namespace Assets.Scripts.Creatures.Bases
 {
-    public abstract class AIBaseController : AbsCreatureBaseController, ICreatureInteractionWithSight
+    public abstract class AIBaseController : AbsCreatureBaseController, IInteractionWithSight
     {
         [SerializeField]
         private CreatureInfo info;
@@ -388,20 +388,22 @@ namespace Assets.Scripts.Creatures.Bases
                 return;
             }
         }
-        public void DetectFull()
+        protected void ChangeVisualOpacity(float _opacity)
         {
-            throw new System.NotImplementedException();
+            Color c;
+            SpriteRenderer s;
+            for (int i = 0; i < visualTf.childCount; i++)
+            {
+                c = (s = visualTf.GetChild(i).GetComponent<SpriteRenderer>()).color;
+                s.color = new Color(c.r, c.g, c.b, _opacity);
+            }
         }
 
-        public void DetectHalf()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract void DetectFull();
 
-        public void DetectNone()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract void DetectHalf();
+
+        public abstract void DetectNone();
     }
 }
 

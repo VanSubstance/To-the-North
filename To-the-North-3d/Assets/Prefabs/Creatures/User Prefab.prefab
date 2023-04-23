@@ -620,6 +620,10 @@ PrefabInstance:
       propertyPath: meshFilterBehindHalf
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6130706709510173070, guid: 76928a74c34424345a30fdccffe0d6da, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 992cafa352fdbbe4c935130060e66d87, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76928a74c34424345a30fdccffe0d6da, type: 3}
 --- !u!4 &7249881556233970596 stripped

@@ -41,7 +41,7 @@ namespace Assets.Scripts.Creatures.Detections
                 meshFilterDefault.mesh = meshDefault;
                 meshFilterDefault.transform.GetComponent<MeshRenderer>().sortingLayerName = "Detection";
                 meshFilterDefault.transform.GetComponent<MeshRenderer>().sortingOrder = 0;
-                meshFilterDefault.transform.GetComponent<MeshRenderer>().material.color = new Color(1, 1, 1, .05f);
+                //meshFilterDefault.transform.GetComponent<MeshRenderer>().material.color = new Color(1, 1, 1, .05f);
             }
 
             if (meshFilterLower != null)

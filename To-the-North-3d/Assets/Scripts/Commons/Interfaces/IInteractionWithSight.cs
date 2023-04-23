@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Creatures
 {
-    public interface ICreatureInteractionWithSight
+    public interface IInteractionWithSight
     {
         public void DetectFull();
         public void DetectHalf();

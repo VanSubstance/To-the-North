@@ -6,6 +6,20 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
 {
     internal class MonsterBaseController : AIBaseController
     {
+        public override void DetectFull()
+        {
+            ChangeVisualOpacity(1);
+        }
+
+        public override void DetectHalf()
+        {
+            ChangeVisualOpacity(.2f);
+        }
+
+        public override void DetectNone()
+        {
+            ChangeVisualOpacity(0);
+        }
 
         public override void OnDetectPosition(Vector3 targetPos)
         {

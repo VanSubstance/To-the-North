@@ -105,7 +105,7 @@ namespace Assets.Scripts.Creatures.Detections
                 {
                     float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
 
-                    DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Sight.Range, 4f);
+                    DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Sight.Range, 0);
                     viewPoints.Add(newViewCast.point);
                 }
 
@@ -249,27 +249,40 @@ namespace Assets.Scripts.Creatures.Detections
                 }
             }
             targetsInViewRadius.Clear();
-            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.Sight.Range, GlobalStatus.Constant.creatureMask | GlobalStatus.Constant.eventMask));
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.Sight.Range, GlobalStatus.Constant.creatureMask));
             if (targetsInViewRadius.Count > 0)
             {
+                // 주변 반경 안에 크리쳐 식별
+                IInteractionWithSight iSight;
                 foreach (Collider col in targetsInViewRadius)
                 {
+                    iSight = col.GetComponent<IInteractionWithSight>();
                     Vector3 dirToTarget = (col.transform.position - transform.position).normalized;
                     float d = Math.Abs(CalculationFunctions.AngleFromDir(new Vector2(dirToTarget.x, dirToTarget.z)) - curDegree);
                     if (d < InGameStatus.User.Detection.Sight.Degree / 2 || (360 - d) < InGameStatus.User.Detection.Sight.Degree / 2)
                     {
+                        // 시야 각도 안에서 식별
                         float dstToTarget = Vector3.Distance(transform.position, col.transform.transform.position);
-
-                        // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리면 안보이는거지만 대략은 보여야 함
                         if (Physics.Raycast(transform.position, new Vector3(dirToTarget.x, 0, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
                         {
-                            // 해당 몬스터 반짝반짝 on
+                            // 사이에 완전 장애물 존재
+                            iSight.DetectNone();
+                            return null;
                         }
-                        else
+
+                        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - HeightForLow, transform.position.z), new Vector3(dirToTarget.x, 0, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
                         {
-                            // 해당 몬스터 반짝반짝 off
+                            // 사이에 절반 장애물 존재
+                            iSight.DetectHalf();
+                            return null;
                         }
+
+                        // 사이에 장애물 존재하지 않음
+                        iSight.DetectFull();
+                        return null;
                     }
+                    // 시야 각도 밖에서 식별
+                    iSight.DetectNone();
                 }
             }
             return null;
