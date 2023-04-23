@@ -1,6 +1,6 @@
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Commons.Functions;
-using Assets.Scripts.Events.Interfaces;
+using Assets.Scripts.Events;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -86,7 +86,7 @@ namespace Assets.Scripts.Creatures.Detections
             if (!isVisualization)
             {
                 return;
-            } 
+            }
             int stepCount = Mathf.RoundToInt((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) * meshResolution);
             float stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / stepCount;
             List<Vector3> viewPoints = new List<Vector3>();
@@ -184,7 +184,6 @@ namespace Assets.Scripts.Creatures.Detections
                             {
                                 if (hitInfo.transform.CompareTag("User"))
                                 {
-                                    Debug.DrawRay(transform.position, new Vector3(dirToTarget.x, 0, dirToTarget.z) * dstToTarget, Color.red, 10f);
                                     aIBaseController.OnDetectUser(userTf);
                                     return userTf;
                                 }
@@ -194,7 +193,6 @@ namespace Assets.Scripts.Creatures.Detections
                             {
                                 if (hitInfo2.transform.CompareTag("User"))
                                 {
-                                    Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - HeightForLow, transform.position.z), new Vector3(dirToTarget.x, 0, dirToTarget.z) * dstToTarget, Color.blue, 10f);
                                     aIBaseController.OnDetectUser(userTf);
                                     return userTf;
                                 }
@@ -213,15 +211,20 @@ namespace Assets.Scripts.Creatures.Detections
             {
                 Transform target = targetsInViewRadius[i].transform;
                 Vector3 dirToTarget = (target.position - transform.position).normalized;
-
-                // (플레이어와 forward와 target이 이루는 각 - 마우스 회전각)이 설정한 각도 내라면
-                if (Math.Abs(Vector3.SignedAngle(transform.right, new Vector2(dirToTarget.x, dirToTarget.z), Vector3.forward)) * 2 < InGameStatus.User.Detection.Sight.Degree)
+                float d = Math.Abs(CalculationFunctions.AngleFromDir(new Vector2(dirToTarget.x, dirToTarget.z)) - curDegree);
+                if (d < InGameStatus.User.Detection.Sight.Degree / 2 || (360 - d) < InGameStatus.User.Detection.Sight.Degree / 2)
                 {
                     float dstToTarget = Vector3.Distance(transform.position, target.transform.position);
 
                     // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
-                    if (!Physics.Raycast(transform.position, new Vector2(dirToTarget.x, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
+                    if (Physics.Raycast(transform.position, new Vector3(dirToTarget.x, 0, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
                     {
+                        // 해당 이벤트 반짝반짝 on
+                        target.GetComponent<IEventInteraction>().StopTrackingInteraction();
+                    }
+                    else
+                    {
+                        // 해당 이벤트 반짝반짝 off
                         try
                         {
                             target.GetComponent<IEventInteraction>().StartTrackingInteraction(transform);
@@ -232,12 +235,32 @@ namespace Assets.Scripts.Creatures.Detections
                     }
                 }
             }
-            //targetsInViewRadius.Clear();
-            //targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.Sight.Range, GlobalStatus.Constant.creatureMask));
-            //if (targetsInViewRadius.Count > 0)
-            //{
-            //    Debug.Log("ㅅ;ㄱ별 ?");
-            //}
+            targetsInViewRadius.Clear();
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.Sight.Range, GlobalStatus.Constant.creatureMask | GlobalStatus.Constant.eventMask));
+            if (targetsInViewRadius.Count > 0)
+            {
+                foreach (Collider col in targetsInViewRadius)
+                {
+                    Vector3 dirToTarget = (col.transform.position - transform.position).normalized;
+                    float d = Math.Abs(CalculationFunctions.AngleFromDir(new Vector2(dirToTarget.x, dirToTarget.z)) - curDegree);
+                    if (d < InGameStatus.User.Detection.Sight.Degree / 2 || (360 - d) < InGameStatus.User.Detection.Sight.Degree / 2)
+                    {
+                        float dstToTarget = Vector3.Distance(transform.position, col.transform.transform.position);
+
+                        // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리면 안보이는거지만 대략은 보여야 함
+                        if (Physics.Raycast(transform.position, new Vector3(dirToTarget.x, 0, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
+                        {
+                            col.transform.GetComponent<IEventInteraction>().StartTrackingInteraction(transform);
+                            // 해당 몬스터 반짝반짝 on
+                        }
+                        else
+                        {
+                            col.transform.GetComponent<IEventInteraction>().StopTrackingInteraction();
+                            // 해당 몬스터 반짝반짝 off
+                        }
+                    }
+                }
+            }
             return null;
         }
     }

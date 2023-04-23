@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Events.Controllers
 {
-    internal class EventNpcController : AEventBaseController
+    internal class EventNpcController : AbsEventBaseController
     {
         private AIBaseController baseController;
         private List<ConvInfo> convInfos;

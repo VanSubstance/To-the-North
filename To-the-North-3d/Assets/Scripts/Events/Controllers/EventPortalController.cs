@@ -3,15 +3,16 @@ using UnityEngine;
 
 namespace Assets.Scripts.Events.Controllers
 {
-    internal class EventPortalController : AEventBaseController
+    internal class EventPortalController : AbsEventBaseController
     {
         [SerializeField]
         private string targetSection;
         [SerializeField]
         private float[] targetInitLocation;
 
-        private void Awake()
+        private new void Awake()
         {
+            base.Awake();
             if (targetSection == null || targetSection.Length == 0) Destroy(gameObject);
         }
         public override void OnInteraction()
