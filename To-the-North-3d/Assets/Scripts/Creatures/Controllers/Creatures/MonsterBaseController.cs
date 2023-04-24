@@ -10,7 +10,7 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
         {
             if (BushHidden && !BushHidden.Equals(UserBaseController.Instance.BushHidden))
             {
-                ChangeVisualOpacity(0);
+                ChangeVisualOpacity(.2f);
                 return;
             }
             ChangeVisualOpacity(1);
@@ -20,7 +20,7 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
         {
             if (BushHidden && !BushHidden.Equals(UserBaseController.Instance.BushHidden))
             {
-                ChangeVisualOpacity(0);
+                ChangeVisualOpacity(.2f);
                 return;
             }
             ChangeVisualOpacity(.2f);
