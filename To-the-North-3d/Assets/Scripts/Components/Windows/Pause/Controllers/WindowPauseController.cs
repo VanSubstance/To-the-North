@@ -1,4 +1,4 @@
-namespace Assets.Scripts.Components.Windows
+namespace Assets.Scripts.Components.Windows.Pause
 {
     internal class WindowPauseController : WindowBaseController
     {
