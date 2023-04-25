@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using TMPro;
+using Assets.Scripts.Commons.Constants;
+using Assets.Scripts.Items;
 using UnityEngine;
 
 namespace Assets.Scripts.Components.Windows.Inventory
@@ -7,18 +8,51 @@ namespace Assets.Scripts.Components.Windows.Inventory
     public class WindowInventoryController : WindowBaseController
     {
         [SerializeField]
-        private Transform containerBlank, containerSlots;
-        //private Dictionary<ContainerType, ContainerBaseController<ContentBaseController>> containerByType;
-        private Dictionary<ContentType, ContentBaseController> contentByType;
-        private Dictionary<Side, ContentBaseController> contentsVisual;
+        private Transform containerBlank, containerSlots, itemPrefab;
+        private static Dictionary<ContentType, ContentBaseController> contentByType;
+        private static Dictionary<Side, ContentBaseController> contentsVisual;
 
-        private Transform visualTf, storeTf;
+        private Transform visualTf, storeTf, itemTf;
+        public static InventorySlotController[,] InventorySlots
+        {
+            get
+            {
+                return ((ContentSlotController)contentByType[ContentType.Inventory]).slots;
+            }
+        }
+        public static InventorySlotController[,] LootSlots
+        {
+            get
+            {
+                return ((ContentSlotController)contentByType[ContentType.Looting]).slots;
+            }
+        }
+
+        public static List<ItemBaseInfo> items = new List<ItemBaseInfo>();
+        public static List<ItemBaseInfo> rootItems = new List<ItemBaseInfo>();
+
+        private static WindowInventoryController _instance;
+        public static WindowInventoryController Instance
+        {
+            get
+            {
+                if (!_instance)
+                {
+                    _instance = FindObjectOfType(typeof(WindowInventoryController)) as WindowInventoryController;
+
+                    if (_instance == null)
+                        Debug.Log("no Singleton obj");
+                }
+                return _instance;
+            }
+        }
 
         protected new void Awake()
         {
             base.Awake();
             visualTf = transform.GetChild(0);
             storeTf = transform.GetChild(1);
+            itemTf = transform.GetChild(2);
 
             contentByType = new Dictionary<ContentType, ContentBaseController>();
 
@@ -40,15 +74,19 @@ namespace Assets.Scripts.Components.Windows.Inventory
             };
 
             // 풀링: 각각의 컨테이너 생성 및 보관
-            contentByType[ContentType.Inventory] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>("인벤토리");
-            contentByType[ContentType.Rooting] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>("루팅");
+            contentByType[ContentType.Inventory] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Inventory);
+            contentByType[ContentType.Looting] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Looting);
+
+
+            // 테스트용 아이템들 생성
+            testItemInit();
 
             /**
              * 테스트
              * I키 -> 인벤토리
              * L : 루팅 | C: 장착 | R: 인벤토리(배낭)
              */
-            CallContent(Side.L, ContentType.Rooting);
+            CallContent(Side.L, ContentType.Looting);
             CallContent(Side.R, ContentType.Inventory);
         }
 
@@ -62,6 +100,42 @@ namespace Assets.Scripts.Components.Windows.Inventory
             contentsVisual[side].Container.SetParent(storeTf);
             (contentsVisual[side] = contentByType[_targetType]).Container.SetParent(visualTf);
             contentsVisual[side].Container.SetSiblingIndex((int)side);
+        }
+
+        /// <summary>
+        /// 테스트용 아이템 객체들 생성
+        /// </summary>
+        private void testItemInit()
+        {
+            ItemGenerateController tempGenerator;
+            foreach (ItemInventoryInfo info in InGameStatus.Item.inventory)
+            {
+                GenerateItemObject(ContentType.Inventory, info);
+            }
+        }
+
+        /// <summary>
+        /// 아이템 오브젝트 생성 함수
+        /// </summary>
+        /// <param name="_type">해당 컨테이너: 인벤토리? 루팅? ...</param>
+        /// <param name="_info">생성할 아이템 정보</param>
+        public void GenerateItemObject(ContentType _type, ItemInventoryInfo _info)
+        {
+            ItemGenerateController g = Instantiate(itemPrefab, itemTf).GetComponent<ItemGenerateController>();
+            switch (_type)
+            {
+                case ContentType.Inventory:
+                    ((ContentSlotController)contentByType[ContentType.Inventory]).GenerateItem(g, _info);
+                    break;
+                case ContentType.Looting:
+                    ((ContentSlotController)contentByType[ContentType.Looting]).GenerateItem(g, _info);
+                    break;
+                case ContentType.None_L:
+                case ContentType.None_C:
+                case ContentType.None_R:
+                case ContentType.Undefined:
+                    break;
+            }
         }
 
         private enum Side

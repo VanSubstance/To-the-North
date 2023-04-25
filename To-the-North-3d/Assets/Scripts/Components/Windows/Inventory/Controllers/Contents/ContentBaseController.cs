@@ -11,5 +11,12 @@ namespace Assets.Scripts.Components.Windows.Inventory
                 return transform.parent.parent;
             }
         }
+        public ContentType ContentType
+        {
+            get
+            {
+                return Container.GetComponent<ContainerBaseController>().ContentType;
+            }
+        }
     }
 }

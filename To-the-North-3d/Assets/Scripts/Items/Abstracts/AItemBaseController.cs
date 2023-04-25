@@ -1,6 +1,7 @@
 using System;
 using Assets.Scripts.Commons;
 using Unity.VisualScripting;
+using Assets.Scripts.Components.Windows.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,7 +38,7 @@ namespace Assets.Scripts.Items
         private Vector2 rayPos;
         private Vector2 mousePos;
         private RectTransform objTF;
-        private BoxCollider2D objCollider;
+        private BoxCollider objCollider;
         private Image image;
 
         protected ItemBaseInfo baseInfo
@@ -58,7 +59,7 @@ namespace Assets.Scripts.Items
         {
             image = GetComponentInChildren<Image>();
             objTF = GetComponent<RectTransform>();
-            objCollider = GetComponent<BoxCollider2D>();
+            objCollider = GetComponent<BoxCollider>();
         }
 
         /// <summary>
@@ -72,8 +73,6 @@ namespace Assets.Scripts.Items
             // RectTransform 변경
             objTF.sizeDelta = baseInfo.size * 60f;
             // BoxCollider2D에 RectTransform 사이즈 대입
-            objCollider.size = objTF.sizeDelta;
-            objCollider.offset = new Vector2(objTF.sizeDelta.x / 2f, objTF.sizeDelta.y / -2f);
             // Image 사이즈 변경
             image.rectTransform.sizeDelta = objTF.sizeDelta;
             // 시작 curSlot 초기화 (OverLapPoint 사용, rayPos = 게임오브젝트 좌상단 기준 30f, -30f)
@@ -82,7 +81,7 @@ namespace Assets.Scripts.Items
             localRow = itemSizeRow;
             localCol = itemSizeCol;
             // 첫 부착
-            curSlot = InventoryManager.inventorySlots[(int)info.pos.x, (int)info.pos.y];
+            curSlot = WindowInventoryController.InventorySlots[(int)info.pos.x, (int)info.pos.y];
             ItemAttach(curSlot);
             /*
             Collider2D hit;
@@ -110,14 +109,14 @@ namespace Assets.Scripts.Items
                     {
                         if (destSlot.slotType == SlotType.Inventory)
                         {
-                            if (InventoryManager.inventorySlots[destSlot.row + j, destSlot.column + i].isAttached == true)
+                            if (WindowInventoryController.InventorySlots[destSlot.row + j, destSlot.column + i].isAttached == true)
                             {
                                 return false;
                             }
                         }
                         else if (destSlot.slotType == SlotType.Rooting)
                         {
-                            if (InventoryManager.rootSlots[destSlot.row + j, destSlot.column + i].isAttached == true)
+                            if (WindowInventoryController.LootSlots[destSlot.row + j, destSlot.column + i].isAttached == true)
                             {
                                 return false;
                             }
@@ -143,10 +142,10 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void ItemAttach(InventorySlotController attachSlot)
         {
-            if (attachSlot.slotType == SlotType.Inventory)
-                transform.SetParent(InventoryManager.rightInventoryTF);
-            if (attachSlot.slotType == SlotType.Shop || attachSlot.slotType == SlotType.Rooting)
-                transform.SetParent(InventoryManager.leftInventoryTF);
+            //if (attachSlot.slotType == SlotType.Inventory)
+            //    transform.SetParent(InventoryManager.rightInventoryTF);
+            //if (attachSlot.slotType == SlotType.Shop || attachSlot.slotType == SlotType.Rooting)
+            //    transform.SetParent(InventoryManager.leftInventoryTF);
             if (attachSlot.slotType == SlotType.Equipment)
             {
                 transform.SetParent(attachSlot.itemTF);
@@ -162,11 +161,11 @@ namespace Assets.Scripts.Items
                 {
                     if (attachSlot.slotType == SlotType.Inventory)
                     {
-                        InventoryManager.inventorySlots[attachSlot.row + j, attachSlot.column + i].isAttached = true;
+                        WindowInventoryController.InventorySlots[attachSlot.row + j, attachSlot.column + i].isAttached = true;
                     }
                     else if (attachSlot.slotType == SlotType.Rooting)
                     {
-                        InventoryManager.rootSlots[attachSlot.row + j, attachSlot.column + i].isAttached = true;
+                        WindowInventoryController.LootSlots[attachSlot.row + j, attachSlot.column + i].isAttached = true;
                     }
                 }
             }
@@ -187,18 +186,18 @@ namespace Assets.Scripts.Items
                 equipmentSlot.UnEquipItem();
             }
             if (info == null) return;
-            transform.SetParent(InventoryManager.movingSpaceTF);
+            //transform.SetParent(InventoryManager.movingSpaceTF);
             for (int i = 0; i < localCol; i++)
             {
                 for (int j = 0; j < localRow; j++)
                 {
                     if (detachSlot.slotType == SlotType.Inventory)
                     {
-                        InventoryManager.inventorySlots[detachSlot.row + j, detachSlot.column + i].isAttached = false;
+                        WindowInventoryController.InventorySlots[detachSlot.row + j, detachSlot.column + i].isAttached = false;
                     }
                     else if (detachSlot.slotType == SlotType.Rooting)
                     {
-                        InventoryManager.rootSlots[detachSlot.row + j, detachSlot.column + i].isAttached = false;
+                        WindowInventoryController.LootSlots[detachSlot.row + j, detachSlot.column + i].isAttached = false;
                     }
                 }
             }
@@ -216,11 +215,11 @@ namespace Assets.Scripts.Items
                 {
                     if (readySlot.slotType == SlotType.Inventory)
                     {
-                        InventoryManager.inventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
+                        WindowInventoryController.InventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
                     }
                     else if (readySlot.slotType == SlotType.Rooting)
                     {
-                        InventoryManager.rootSlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
+                        WindowInventoryController.LootSlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
                     }
                     else if (readySlot.slotType == SlotType.Equipment || isGridOn == false)
                     {
@@ -245,12 +244,12 @@ namespace Assets.Scripts.Items
                     {
                         if (readySlot.slotType == SlotType.Inventory)
                         {
-                            InventoryManager.inventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
+                            WindowInventoryController.InventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
 
                         }
                         else if (readySlot.slotType == SlotType.Rooting)
                         {
-                            InventoryManager.rootSlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
+                            WindowInventoryController.LootSlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
                         }
                         else if (readySlot.slotType == SlotType.Equipment)
                         {
@@ -305,10 +304,6 @@ namespace Assets.Scripts.Items
             localRow = tempSize;
             // recttransform.sizeDelta 변경
             objTF.sizeDelta = new Vector2(objTF.sizeDelta.y, objTF.sizeDelta.x);
-            // BoxCollider2D.size 변경
-            objCollider.size = objTF.sizeDelta;
-            // BoxCollider2D.offset 변경
-            objCollider.offset = new Vector2(objTF.sizeDelta.x / 2f, objTF.sizeDelta.y / -2f);
             // isRotate 변경
             isRotate = !isRotate;
         }

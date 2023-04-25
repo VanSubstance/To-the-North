@@ -8,6 +8,14 @@ namespace Assets.Scripts.Components.Windows.Inventory
     {
         private TextMeshProUGUI titleUGUI;
         private ContentBaseController content;
+        private ContentType contentType;
+        public ContentType ContentType
+        {
+            get
+            {
+                return contentType;
+            }
+        }
 
         protected void Awake()
         {
@@ -19,6 +27,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
             if (content != null) return;
             titleUGUI = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             content = transform.GetChild(1).GetChild(0).GetComponent<ContentBaseController>();
+            contentType = ContentType.Undefined;
         }
 
         /// <summary>
@@ -28,12 +37,22 @@ namespace Assets.Scripts.Components.Windows.Inventory
         /// <typeparam name="TContent">컨텐츠의 반환 타입</typeparam>
         /// <param name="_newTitle">새로운 제목</param>
         /// <returns></returns>
-        public TContent GetContent<TContent>(string _newTitle = null)
+        public TContent GetContent<TContent>(ContentType _contentType = ContentType.Undefined)
         {
             InitContent();
-            if (!string.IsNullOrEmpty(_newTitle))
+            switch (contentType = _contentType)
             {
-                SetTitle(_newTitle);
+                case ContentType.Inventory:
+                    SetTitle("인벤토리");
+                    break;
+                case ContentType.Looting:
+                    SetTitle("루팅");
+                    break;
+                case ContentType.None_L:
+                case ContentType.None_C:
+                case ContentType.None_R:
+                case ContentType.Undefined:
+                    break;
             }
             try
             {

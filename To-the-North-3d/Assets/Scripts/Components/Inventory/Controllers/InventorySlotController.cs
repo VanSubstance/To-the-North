@@ -1,4 +1,5 @@
 using Assets.Scripts.Items;
+using Assets.Scripts.Components.Windows.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,10 +11,19 @@ public class InventorySlotController : MonoBehaviour
     public bool isAttachReady = false;
     public SlotType slotType;
     public EquipBodyType equipType;
-    public Sprite normal;
-    public Sprite ready;
     protected Image slotImage;
     public Transform itemTF;
+
+    [SerializeField]
+    private Sprite normal, ready;
+    public ContentType ContainerType
+    {
+        get
+        {
+            return transform.parent.GetComponent<ContentBaseController>().ContentType;
+        }
+    }
+
     protected void Awake()
     {
         Init();

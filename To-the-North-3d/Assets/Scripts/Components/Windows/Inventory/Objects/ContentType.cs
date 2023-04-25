@@ -6,6 +6,8 @@
         None_C,
         None_R,
         Inventory,
-        Rooting,
+        Looting,
+
+        Undefined,
     }
 }
