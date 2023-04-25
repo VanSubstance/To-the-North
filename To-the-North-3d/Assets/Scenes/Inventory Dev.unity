@@ -677,6 +677,7 @@ MonoBehaviour:
   marginToRatio: {x: 1, y: 1}
   containerBlank: {fileID: 6665553555747466124, guid: c9802a3fe1ddb18478c0399be967f75d, type: 3}
   containerSlots: {fileID: 6665553555747466124, guid: 419b69b070f77b2459a5a9cba78c343e, type: 3}
+  containerEquipment: {fileID: 6665553555747466124, guid: b68b087d140fa69459451b7accc1e8b4, type: 3}
   itemPrefab: {fileID: 8958241393174041182, guid: be82d8c9375f27e48b0e889cc2c68a8a, type: 3}
 --- !u!1 &493467388
 GameObject:

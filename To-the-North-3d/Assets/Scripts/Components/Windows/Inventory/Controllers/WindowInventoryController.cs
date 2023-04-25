@@ -8,7 +8,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
     public class WindowInventoryController : WindowBaseController
     {
         [SerializeField]
-        private Transform containerBlank, containerSlots, itemPrefab;
+        private Transform containerBlank, containerSlots, containerEquipment, itemPrefab;
         private static Dictionary<ContentType, ContentBaseController> contentByType;
         private static Dictionary<Side, ContentBaseController> contentsVisual;
 
@@ -83,6 +83,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
             // 풀링: 각각의 컨테이너 생성 및 보관
             contentByType[ContentType.Inventory] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Inventory);
             contentByType[ContentType.Looting] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Looting);
+            contentByType[ContentType.Equipment] = Instantiate(containerEquipment, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentEquipmentController>(ContentType.Equipment);
 
 
             // 테스트용 아이템들 생성
@@ -95,6 +96,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
              */
             CallContent(Side.L, ContentType.Looting);
             CallContent(Side.R, ContentType.Inventory);
+            CallContent(Side.C, ContentType.Equipment);
         }
 
         /// <summary>

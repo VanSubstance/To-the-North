@@ -5,8 +5,11 @@
         None_L,
         None_C,
         None_R,
+
         Inventory,
         Looting,
+
+        Equipment,
 
         Undefined,
     }
