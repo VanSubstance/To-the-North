@@ -26,13 +26,18 @@ namespace Assets.Scripts.Items
             set => baseInfo.size.y = value;
             get => (int)baseInfo.size.y;
         }
-        public bool isRotate;
-        public bool isGridOn;
+        public bool isRotate, prevRotate;
 
         private int localRow;
         private int localCol;
-        private Vector3 rayPos;
         private Vector3 mousePos;
+        private Vector3 VectorCorr
+        {
+            get
+            {
+                return new Vector3(objTF.sizeDelta.x / 2 - 25, -objTF.sizeDelta.y / 2 + 25, 0);
+            }
+        }
         private RectTransform objTF;
         private BoxCollider objCollider;
         private Image image;
@@ -96,20 +101,13 @@ namespace Assets.Scripts.Items
         /// <param name="isOn"></param>
         private void ConsiderTargetSlot(InventorySlotController _targetSlot, bool isOn)
         {
-            switch (nextSlot.ContainerType)
+            if (_targetSlot == null) return;
+            ApplyActionForOnlyContentWithSlots(_targetSlot, (_slot) =>
             {
-                case ContentType.Inventory:
-                    ApplyActionForAllSlots(_targetSlot, (r, c) =>
-                    {
-                        WindowInventoryController.InventorySlots[r, c].IsConsidered = isOn;
-                    });
-                    return;
-                case ContentType.Looting:
-                    ApplyActionForAllSlots(_targetSlot, (r, c) =>
-                    {
-                        WindowInventoryController.LootSlots[r, c].IsConsidered = isOn;
-                    });
-                    return;
+                _slot.IsConsidered = isOn;
+            });
+            switch (_targetSlot.ContainerType)
+            {
                 case ContentType.None_L:
                 case ContentType.None_C:
                 case ContentType.None_R:
@@ -129,29 +127,26 @@ namespace Assets.Scripts.Items
             curSlot = attachSlot;
             nextSlot = prevSlot = null;
             attachSlot.ItemTf = transform;
+            ApplyActionForOnlyContentWithSlots(attachSlot, (_slot) =>
+            {
+                _slot.ItemTf = transform;
+            }, () =>
+            {
+                // 위치 잡기: 출발점: 0, 0, -1
+                Vector3 pos = new Vector3(0, 0, -1);
+                if (!isRotate)
+                {
+                    pos += VectorCorr;
+                } else
+                {
+                    pos.x -= VectorCorr.y;
+                    pos.y -= VectorCorr.x;
+                }
+                objTF.localPosition = pos;
+            });
             // 부착하려고 하는 컨테이너의 타입?
             switch (attachSlot.ContainerType)
             {
-                case ContentType.Inventory:
-                    // 위치 잡기
-                    objTF.localPosition = new Vector3(-25, 25, -1);
-                    objTF.anchoredPosition = Vector2.zero;
-                    // 부착
-                    ApplyActionForAllSlots(attachSlot, (row, col) =>
-                    {
-                        WindowInventoryController.InventorySlots[row, col].ItemTf = transform;
-                    });
-                    break;
-                case ContentType.Looting:
-                    // 위치 잡기
-                    objTF.localPosition = new Vector3(-25, 25, -1);
-                    objTF.anchoredPosition = Vector2.zero;
-                    // 부착
-                    ApplyActionForAllSlots(attachSlot, (row, col) =>
-                    {
-                        WindowInventoryController.LootSlots[row, col].ItemTf = transform;
-                    });
-                    break;
                 case ContentType.None_L:
                 case ContentType.None_C:
                 case ContentType.None_R:
@@ -165,20 +160,12 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void ItemDetach()
         {
+            ApplyActionForOnlyContentWithSlots(curSlot, (_slot) =>
+            {
+                _slot.ItemTf = null;
+            });
             switch (curSlot.ContainerType)
             {
-                case ContentType.Inventory:
-                    ApplyActionForAllSlots(curSlot, (row, col) =>
-                    {
-                        WindowInventoryController.InventorySlots[row, col].ItemTf = null;
-                    });
-                    break;
-                case ContentType.Looting:
-                    ApplyActionForAllSlots(curSlot, (row, col) =>
-                    {
-                        WindowInventoryController.LootSlots[row, col].ItemTf = null;
-                    });
-                    break;
                 case ContentType.None_L:
                 case ContentType.None_C:
                 case ContentType.None_R:
@@ -199,16 +186,17 @@ namespace Assets.Scripts.Items
                 return;
             // 아이템 하단의 흰색 칸 헤제
             ConsiderTargetSlot(nextSlot, false);
+            nextSlot = null;
             // 현재 돌아가 있는지 확인해서 방향 결정
             if (isRotate)
             {
-                image.rectTransform.localRotation = Quaternion.Euler(0, 0, 0);
-                image.rectTransform.anchoredPosition = Vector2.zero;
+                objTF.localRotation = Quaternion.Euler(0, 0, 0);
+                //image.rectTransform.anchoredPosition = Vector2.zero;
             }
             else
             {
-                image.rectTransform.localRotation = Quaternion.Euler(0, 0, 90);
-                image.rectTransform.anchoredPosition = Vector2.one * 25;
+                objTF.localRotation = Quaternion.Euler(0, 0, 90);
+                //image.rectTransform.anchoredPosition = Vector2.one * 25;
             }
             // itemsize 변경
             int tempSize;
@@ -216,37 +204,17 @@ namespace Assets.Scripts.Items
             localCol = localRow;
             localRow = tempSize;
             // recttransform.sizeDelta 변경
-            objTF.sizeDelta = new Vector2(objTF.sizeDelta.y, objTF.sizeDelta.x);
+            //objTF.sizeDelta = new Vector2(objTF.sizeDelta.y, objTF.sizeDelta.x);
+            //objTF.transform.position -= new Vector3(objTF.sizeDelta.x / 2, objTF.sizeDelta.y / 2, 0);
             // isRotate 변경
             isRotate = !isRotate;
             OnDraggingSkipRotate();
         }
 
-        /// <summary>
-        /// 아이템이 그리드 위에 있는지 확인
-        /// </summary>
-        public void GridOnCheck(InventorySlotController checkSlot)
-        {
-            switch (checkSlot.ContainerType)
-            {
-                case ContentType.Inventory:
-                case ContentType.Looting:
-                    isGridOn = true;
-                    break;
-                case ContentType.None_L:
-                    break;
-                case ContentType.None_C:
-                    break;
-                case ContentType.None_R:
-                    break;
-                case ContentType.Undefined:
-                    break;
-            }
-        }
-
         protected override void OnDown()
         {
             ItemDetach();
+            prevRotate = isRotate;
             transform.SetParent(WindowInventoryController.Instance.ItemTf);
             objTF.SetAsLastSibling();
             OnHoverExit();
@@ -264,47 +232,27 @@ namespace Assets.Scripts.Items
 
         private void OnDraggingSkipRotate()
         {
-            //// 드래그 중 I키 누르면 놓아버림
-            //if (Input.GetKeyDown(KeyCode.I))
-            //{
-            //    Debug.Log("작동 됨");
-            //    OnUp();
-            //    isMouseDown = false;
-            //    return;
-            //}
-            //// 마우스 드래그 이벤트
-            objTF.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            objTF.localPosition = new Vector3(
-                objTF.localPosition.x - (transform.GetComponent<BoxCollider>().size.x / 2),
-                objTF.localPosition.y + (transform.GetComponent<BoxCollider>().size.y / 2),
-                0f
-                );
+            // 드래그 중 I키 누르면 놓아버림
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                OnUp();
+                isMouseDown = false;
+                return;
+            }
+            // 마우스 드래그 이벤트
+            Vector3 t = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            t.y = 10f;
+            objTF.position = t;
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // 마우스 위치 기준으로 아래 그리드인지 아닌지 확인
-            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out RaycastHit hit, 2f, GlobalStatus.Constant.slotMask))
+            // 보정값 적용
+            t = objTF.TransformVector(VectorCorr);
+            if (Physics.Raycast(new Vector3(transform.position.x - t.x, transform.position.y + 1, transform.position.z + (isRotate ? t.z : -t.z)), Vector3.down, out RaycastHit hit, 2f, GlobalStatus.Constant.slotMask))
             {
-                InventorySlotController tempSlot;
-                tempSlot = hit.transform.GetComponent<InventorySlotController>();
-                GridOnCheck(tempSlot);
-            }
-            else
-            {
-                isGridOn = false;
-            }
-            if (isGridOn)
-            {
-                rayPos = transform.TransformPoint(new Vector3(25, -25, -1));
-            }
-            else
-            {
-                rayPos = mousePos;
-            }
-            if (Physics.Raycast(rayPos, Vector3.down, out RaycastHit hitValid, 2f, GlobalStatus.Constant.slotMask))
-            {
-                // 아래에 후보 슬롯 존재
-                InventorySlotController candidateSlot = hitValid.transform.GetComponent<InventorySlotController>();
-
-                // 배치 가능 여부 판단
+                // 슬롯 위에 있음
+                // = 후보 존재
+                InventorySlotController candidateSlot;
+                candidateSlot = hit.transform.GetComponent<InventorySlotController>();
                 if (ItemSizeCheck(candidateSlot))
                 {
                     // 배치 가능
@@ -361,60 +309,14 @@ namespace Assets.Scripts.Items
             {
                 // 없음
                 // = 이전 위치로 롤백
+                if (isRotate != prevRotate)
+                {
+                    ItemRotate();
+                }
                 ItemAttach(prevSlot);
             }
-            //Collider2D hit;
-            //// 마우스 위치 기준으로 아래 그리드인지 아닌지 확인
-            //if (hit = Physics2D.OverlapPoint(mousePos, GlobalStatus.Constant.slotMask))
-            //{
-            //    InventorySlotController tempSlot;
-            //    tempSlot = hit.transform.GetComponent<InventorySlotController>();
-            //    GridOnCheck(tempSlot);
-            //    if (tempSlot.isAttached)
-            //    {
-            //        GridOnCheckIfItemExist(tempSlot);
-            //    }
-            //}
-            //// 슬롯 미감지시 그리드 위는 어차피 아님
-            //else
-            //{
-            //    isGridOn = false;
-            //}
-            //// 앞서 체크 결과, Grid 위에 있으면
-            //if (isGridOn)
-            //{
-            //    rayPos = transform.TransformPoint(new Vector2(30f, -30f));
-            //}
-            //else
-            //{
-            //    rayPos = mousePos;
-            //}
-            //if (hit = Physics2D.OverlapPoint(rayPos, GlobalStatus.Constant.slotMask))
-            //{
-            //    // 아이템 사이즈 체크
-            //    if (ItemSizeCheck(hit.transform.GetComponent<InventorySlotController>()))
-            //    {
-            //        // 슬롯 타입 체크
-            //        if (CheckItemTag(hit.transform.GetComponent<InventorySlotController>(), isGridOn))
-            //        {
-            //            ItemAttach(hit.transform.GetComponent<InventorySlotController>());
-            //        }
-            //        else
-            //        {
-            //            ReturnToPost();
-            //            UnCheckReady(readySlot);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        ReturnToPost();
-            //    }
-            //}
-            //else
-            //{
-            //    ReturnToPost();
-            //}
         }
+
         /// <summary>
         /// 종류에 맞는 데이터 할당 함수
         /// </summary>
@@ -437,21 +339,15 @@ namespace Assets.Scripts.Items
 
         private void ResizeOnPurpose(ContentType _type)
         {
+            ApplyActionForOnlyContentWithSlots(null, null, () =>
+            {
+                image.rectTransform.sizeDelta = objCollider.size = objTF.sizeDelta = baseInfo.size * 50f;
+            });
             switch (_type)
             {
-                case ContentType.Inventory:
-                case ContentType.Looting:
-                    // 인벤토리 또는 루팅
-                    // = 사이즈: 50 * 50
-                    image.rectTransform.sizeDelta = objCollider.size = objTF.sizeDelta = baseInfo.size * 50f;
-                    objCollider.center = new Vector3(objCollider.size.x / 2, -objCollider.size.y / 2, 0);
-                    break;
                 case ContentType.None_L:
-                    break;
                 case ContentType.None_C:
-                    break;
                 case ContentType.None_R:
-                    break;
                 case ContentType.Undefined:
                     break;
             }
@@ -505,6 +401,36 @@ namespace Assets.Scripts.Items
                 }
             }
             return true;
+        }
+
+        /// <summary>
+        /// ContentSlotController인 경우에만 적용하는 함수
+        /// </summary>
+        /// <param name="_targetSlot"></param>
+        /// <param name="actionToLoop"></param>
+        private void ApplyActionForOnlyContentWithSlots(InventorySlotController _targetSlot, Action<InventorySlotController> actionToLoop = null, Action actionBeforeLoop = null)
+        {
+            if (actionBeforeLoop != null)
+                actionBeforeLoop();
+            if (_targetSlot == null) return;
+            if (_targetSlot.ContainerType == ContentType.Inventory)
+            {
+                if (actionToLoop != null)
+                    ApplyActionForAllSlots(_targetSlot, (r, c) =>
+                    {
+                        actionToLoop(WindowInventoryController.InventorySlots[r, c]);
+                    });
+                return;
+            }
+            if (_targetSlot.ContainerType == ContentType.Looting)
+            {
+                if (actionToLoop != null)
+                    ApplyActionForAllSlots(_targetSlot, (r, c) =>
+                {
+                    actionToLoop(WindowInventoryController.LootSlots[r, c]);
+                });
+                return;
+            }
         }
 
         /// <summary>
