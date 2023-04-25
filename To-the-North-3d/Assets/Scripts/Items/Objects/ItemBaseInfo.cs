@@ -16,5 +16,16 @@ namespace Assets.Scripts.Items
         public string title;
         public string description;
         public int price;
+
+        /// <summary>
+        /// 장비로 착용이 가능한지 여부 반환
+        /// </summary>
+        public bool IsEquipment
+        {
+            get
+            {
+                return this is ItemArmorInfo || this is ItemWeaponInfo;
+            }
+        }
     }
 }

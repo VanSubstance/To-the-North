@@ -138,7 +138,7 @@ namespace Assets.Scripts.Commons.Constants
                             // 목표 착용 부위와 장비가 안맞음
                         }
                         break;
-                    case EquipBodyType.Back:
+                    case EquipBodyType.BackPack:
                         break;
                     case EquipBodyType.Right:
                     case EquipBodyType.Left:
@@ -185,7 +185,7 @@ namespace Assets.Scripts.Commons.Constants
                     case EquipBodyType.Right:
                     case EquipBodyType.Left:
                         return (ItemWeaponInfo)curEquipments[targetPartType];
-                    case EquipBodyType.Back:
+                    case EquipBodyType.BackPack:
                         return (ItemEquipmentInfo)curEquipments[targetPartType];
                 }
                 return null;

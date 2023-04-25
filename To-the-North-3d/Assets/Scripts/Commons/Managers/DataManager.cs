@@ -69,7 +69,7 @@ namespace Assets.Scripts.Commons
             InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Mask, mask ? Instantiate(mask) : null);
             InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Body, body ? Instantiate(body) : null);
             InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Leg, leg ? Instantiate(leg) : null);
-            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Back, back ? Instantiate(back) : null);
+            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.BackPack, back ? Instantiate(back) : null);
 
             InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Right, right ? Instantiate(right) : null);
             InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Left, left ? Instantiate(left) : null);

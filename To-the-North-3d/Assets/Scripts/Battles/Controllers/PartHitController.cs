@@ -56,7 +56,7 @@ namespace Assets.Scripts.Battles
                     break;
                 case EquipBodyType.Leg:
                     break;
-                case EquipBodyType.Back:
+                case EquipBodyType.BackPack:
                     break;
             }
         }

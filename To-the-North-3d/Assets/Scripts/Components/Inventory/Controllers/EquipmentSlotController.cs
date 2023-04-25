@@ -1,12 +1,17 @@
 using Assets.Scripts.Commons;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
-using UnityEngine;
-using static GlobalComponent.Common;
 
 public class EquipmentSlotController : InventorySlotController
 {
-    public ItemEquipmentInfo equipItem;
+    private ItemEquipmentInfo equipItem;
+    public bool IsEquipped
+    {
+        get
+        {
+            return equipItem != null;
+        }
+    }
 
     public void EquipItem()
     {
@@ -36,9 +41,9 @@ public class EquipmentSlotController : InventorySlotController
                         DataManager.Instance.leg = armorInfo;
                         UserBaseController.Instance.ChangeEquipment(EquipBodyType.Leg, armorInfo);
                         break;
-                    case EquipBodyType.Back:
+                    case EquipBodyType.BackPack:
                         DataManager.Instance.back = armorInfo;
-                        UserBaseController.Instance.ChangeEquipment(EquipBodyType.Back, armorInfo);
+                        UserBaseController.Instance.ChangeEquipment(EquipBodyType.BackPack, armorInfo);
                         break;
                 }
                 break;
@@ -86,9 +91,9 @@ public class EquipmentSlotController : InventorySlotController
                         DataManager.Instance.leg = null;
                         UserBaseController.Instance.ChangeEquipment(EquipBodyType.Leg, null);
                         break;
-                    case EquipBodyType.Back:
+                    case EquipBodyType.BackPack:
                         DataManager.Instance.back = null;
-                        UserBaseController.Instance.ChangeEquipment(EquipBodyType.Back, null);
+                        UserBaseController.Instance.ChangeEquipment(EquipBodyType.BackPack, null);
                         break;
                 }
                 break;

@@ -39,7 +39,8 @@ public class InventorySlotController : MonoBehaviour
             if (itemTf != null)
             {
                 slotImage.sprite = ready;
-            } else
+            }
+            else
             {
                 slotImage.sprite = normal;
             }
@@ -61,7 +62,16 @@ public class InventorySlotController : MonoBehaviour
     {
         get
         {
-            return transform.parent.GetComponent<ContentBaseController>().ContentType;
+            ContentBaseController t;
+            if ((t = transform.parent.GetComponent<ContentBaseController>()) != null)
+            {
+                return transform.parent.GetComponent<ContentBaseController>().ContentType;
+            }
+            if ((t = transform.parent.parent.GetComponent<ContentBaseController>()) != null)
+            {
+                return transform.parent.parent.GetComponent<ContentBaseController>().ContentType;
+            }
+            return ContentType.Undefined;
         }
     }
 
