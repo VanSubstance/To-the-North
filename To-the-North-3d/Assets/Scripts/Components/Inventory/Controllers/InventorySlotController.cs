@@ -14,9 +14,9 @@ public class InventorySlotController : MonoBehaviour
     public Sprite ready;
     protected Image slotImage;
     public Transform itemTF;
-    protected void Start()
+    protected void Awake()
     {
-        slotImage = GetComponent<Image>();
+        Init();
     }
     protected void Update()
     {
@@ -31,6 +31,20 @@ public class InventorySlotController : MonoBehaviour
     }
 
     public ItemBaseInfo attachedInfo;
+
+    public void SetLocation(int _r, int _c)
+    {
+        Init();
+        row = _r;
+        column = _c;
+    }
+
+    private void Init()
+    {
+        if (slotImage != null) return;
+        slotImage = GetComponent<Image>();
+        GetComponent<BoxCollider>().size = new Vector3(50, 50, 1);
+    }
 }
 
 public enum SlotType

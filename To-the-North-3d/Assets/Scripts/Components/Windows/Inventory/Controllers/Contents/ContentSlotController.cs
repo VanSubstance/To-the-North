@@ -5,7 +5,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
     public class ContentSlotController : ContentBaseController
     {
         [SerializeField]
-        private Transform slotTf;
+        private InventorySlotController slotTf;
         private readonly Vector2 sizeSlot = new Vector2(10, 14);
         protected void Awake()
         {
@@ -13,7 +13,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
             {
                 for (int j = 0; j < sizeSlot.x; j++)
                 {
-                    Instantiate(slotTf, transform);
+                    Instantiate(slotTf, transform).SetLocation(i, j);
                 }
             }
         }
