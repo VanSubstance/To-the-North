@@ -31,10 +31,10 @@ public class InventoryContentController : AWindowBaseContentController
             // 풀링 시스템이 고안되고 나면, 여기서 인스턴시에이트가 아닌 존재하는 오브젝트를 불러와야 함
             tempGenerator = Instantiate(itemPrefab, rightGridTF).GetComponent<ItemGenerateController>();
             tempGenerator.transform.position = new Vector3
-            (WindowInventoryController.InventorySlots[info.x, info.y].transform.position.x,
-            WindowInventoryController.InventorySlots[info.x, info.y].transform.position.y,
+            (WindowInventoryController.InventorySlots[info.row, info.col].transform.position.x,
+            WindowInventoryController.InventorySlots[info.row, info.col].transform.position.y,
             rightGridTF.transform.position.z);
-            tempGenerator.InitItem(info.itemInfo, info);
+            //tempGenerator.InitItem(info.itemInfo, info);
         }
     }
 

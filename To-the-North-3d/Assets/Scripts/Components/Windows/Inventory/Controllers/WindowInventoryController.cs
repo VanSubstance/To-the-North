@@ -13,6 +13,13 @@ namespace Assets.Scripts.Components.Windows.Inventory
         private static Dictionary<Side, ContentBaseController> contentsVisual;
 
         private Transform visualTf, storeTf, itemTf;
+        public Transform ItemTf
+        {
+            get
+            {
+                return itemTf;
+            }
+        }
         public static InventorySlotController[,] InventorySlots
         {
             get
@@ -107,7 +114,6 @@ namespace Assets.Scripts.Components.Windows.Inventory
         /// </summary>
         private void testItemInit()
         {
-            ItemGenerateController tempGenerator;
             foreach (ItemInventoryInfo info in InGameStatus.Item.inventory)
             {
                 GenerateItemObject(ContentType.Inventory, info);

@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using Assets.Scripts.Components.Windows.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Items
 {
@@ -16,9 +17,7 @@ namespace Assets.Scripts.Items
     /// </summary>
     public abstract class AItemBaseController<TItemInfo> : AbsItemController
     {
-        [SerializeField]
-        InventorySlotController curSlot;
-        InventorySlotController readySlot;
+        private InventorySlotController curSlot, prevSlot, nextSlot;
 
         public int itemSizeRow
         {
@@ -35,13 +34,13 @@ namespace Assets.Scripts.Items
 
         private int localRow;
         private int localCol;
-        private Vector2 rayPos;
-        private Vector2 mousePos;
+        private Vector3 rayPos;
+        private Vector3 mousePos;
         private RectTransform objTF;
         private BoxCollider objCollider;
         private Image image;
 
-        protected ItemBaseInfo baseInfo
+        public ItemBaseInfo baseInfo
         {
             get
             {
@@ -57,84 +56,77 @@ namespace Assets.Scripts.Items
 
         private void Awake()
         {
+            Init();
+        }
+
+        private void Init()
+        {
+            if (image != null) return;
             image = GetComponentInChildren<Image>();
             objTF = GetComponent<RectTransform>();
             objCollider = GetComponent<BoxCollider>();
         }
 
         /// <summary>
-        /// 오브젝트 생성 후 데이터 할당 후 최초로 부착하는 함수
+        ///  ItemSize만큼 destSlot 주변의 Slot들 검사
         /// </summary>
-        private void AttachInitially(ItemInventoryInfo info)
+        private bool ItemSizeCheck(InventorySlotController destSlot)
         {
-            isGridOn = true;
-            // 게임오브젝트 이름 변경
-            gameObject.name = baseInfo.name;
-            // RectTransform 변경
-            objTF.sizeDelta = baseInfo.size * 60f;
-            // BoxCollider2D에 RectTransform 사이즈 대입
-            // Image 사이즈 변경
-            image.rectTransform.sizeDelta = objTF.sizeDelta;
-            // 시작 curSlot 초기화 (OverLapPoint 사용, rayPos = 게임오브젝트 좌상단 기준 30f, -30f)
-            rayPos = transform.TransformPoint(new Vector2(30f, -30f));
-            // 로컬 사이즈 설정
-            localRow = itemSizeRow;
-            localCol = itemSizeCol;
-            // 첫 부착
-            curSlot = WindowInventoryController.InventorySlots[(int)info.pos.x, (int)info.pos.y];
-            ItemAttach(curSlot);
-            /*
-            Collider2D hit;
-            if (hit = Physics2D.OverlapPoint(rayPos, GlobalStatus.Constant.slotMask))
+            switch (destSlot.ContainerType)
             {
-                curSlot = hit.transform.GetComponent<InventorySlotController>();
-                ItemAttach(curSlot);
+                case ContentType.Inventory:
+                    if (ApplyActionForAllSlots(destSlot, (row, col) =>
+                    {
+                        return WindowInventoryController.InventorySlots[row, col].ItemTf != null;
+                    }))
+                    {
+                        return false;
+                    }
+                    return true;
+                case ContentType.Looting:
+                    if (ApplyActionForAllSlots(destSlot, (row, col) =>
+                    {
+                        return WindowInventoryController.LootSlots[row, col].ItemTf != null;
+                    }))
+                    {
+                        return false;
+                    }
+                    return true;
+                case ContentType.None_L:
+                case ContentType.None_C:
+                case ContentType.None_R:
+                case ContentType.Undefined:
+                    break;
             }
-            else
-            {
-            }
-            */
+            return true;
         }
 
         /// <summary>
-        ///  ItemSize만큼 destSlot 주변의 Slot들 검사
+        /// 임시로 가능성 있는 타일 불 켜기/끄기 함수
         /// </summary>
-        public bool ItemSizeCheck(InventorySlotController destSlot)
+        /// <param name="isOn"></param>
+        private void ConsiderNextSlot(bool isOn)
         {
-            for (int i = 0; i < localCol; i++)
+            switch (nextSlot.ContainerType)
             {
-                for (int j = 0; j < localRow; j++)
-                {
-                    try
+                case ContentType.Inventory:
+                    ApplyActionForAllSlots(nextSlot, (r, c) =>
                     {
-                        if (destSlot.slotType == SlotType.Inventory)
-                        {
-                            if (WindowInventoryController.InventorySlots[destSlot.row + j, destSlot.column + i].isAttached == true)
-                            {
-                                return false;
-                            }
-                        }
-                        else if (destSlot.slotType == SlotType.Rooting)
-                        {
-                            if (WindowInventoryController.LootSlots[destSlot.row + j, destSlot.column + i].isAttached == true)
-                            {
-                                return false;
-                            }
-                        }
-                        else if (destSlot.slotType == SlotType.Equipment)
-                        {
-                            // EquipmentType은 사이즈체크 스킵
-                            return true;
-                        }
-                    }
-                    catch (System.IndexOutOfRangeException)
+                        WindowInventoryController.InventorySlots[r, c].IsConsidered = isOn;
+                    });
+                    return;
+                case ContentType.Looting:
+                    ApplyActionForAllSlots(nextSlot, (r, c) =>
                     {
-                        // 아이템 체크 시 인벤토리 범위를 넘어서면
-                        return false;
-                    }
-                }
+                        WindowInventoryController.LootSlots[r, c].IsConsidered = isOn;
+                    });
+                    return;
+                case ContentType.None_L:
+                case ContentType.None_C:
+                case ContentType.None_R:
+                case ContentType.Undefined:
+                    break;
             }
-            return true;
         }
 
         /// <summary>
@@ -142,144 +134,68 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void ItemAttach(InventorySlotController attachSlot)
         {
-            //if (attachSlot.slotType == SlotType.Inventory)
-            //    transform.SetParent(InventoryManager.rightInventoryTF);
-            //if (attachSlot.slotType == SlotType.Shop || attachSlot.slotType == SlotType.Rooting)
-            //    transform.SetParent(InventoryManager.leftInventoryTF);
-            if (attachSlot.slotType == SlotType.Equipment)
-            {
-                transform.SetParent(attachSlot.itemTF);
-                EquipmentSlotController equipmentSlot = attachSlot as EquipmentSlotController;
-                equipmentSlot.EquipItem();
-            }
-            Vector3 destPos;
-            destPos = new Vector3(attachSlot.transform.localPosition.x, attachSlot.transform.localPosition.y, -1f);
-            objTF.localPosition = destPos;
-            for (int i = 0; i < localCol; i++)
-            {
-                for (int j = 0; j < localRow; j++)
-                {
-                    if (attachSlot.slotType == SlotType.Inventory)
-                    {
-                        WindowInventoryController.InventorySlots[attachSlot.row + j, attachSlot.column + i].isAttached = true;
-                    }
-                    else if (attachSlot.slotType == SlotType.Rooting)
-                    {
-                        WindowInventoryController.LootSlots[attachSlot.row + j, attachSlot.column + i].isAttached = true;
-                    }
-                }
-            }
+            transform.SetParent(attachSlot.transform);
+            // 리사이징
+            ResizeOnPurpose(attachSlot.ContainerType);
             curSlot = attachSlot;
-            UnCheckReady(attachSlot);
-            attachSlot.attachedInfo = baseInfo;
-        }
-
-        /// <summary>
-        /// detachSlot에서 Item 분리
-        /// </summary>
-        /// <param name="detachSlot"></param>
-        public void ItemDetach(InventorySlotController detachSlot)
-        {
-            if (curSlot.slotType == SlotType.Equipment)
+            nextSlot = prevSlot = null;
+            attachSlot.ItemTf = transform;
+            // 부착하려고 하는 컨테이너의 타입?
+            switch (attachSlot.ContainerType)
             {
-                EquipmentSlotController equipmentSlot = curSlot as EquipmentSlotController;
-                equipmentSlot.UnEquipItem();
-            }
-            if (info == null) return;
-            //transform.SetParent(InventoryManager.movingSpaceTF);
-            for (int i = 0; i < localCol; i++)
-            {
-                for (int j = 0; j < localRow; j++)
-                {
-                    if (detachSlot.slotType == SlotType.Inventory)
+                case ContentType.Inventory:
+                    // 위치 잡기
+                    objTF.localPosition = new Vector3(-25, 25, -1);
+                    // 부착
+                    ApplyActionForAllSlots(attachSlot, (row, col) =>
                     {
-                        WindowInventoryController.InventorySlots[detachSlot.row + j, detachSlot.column + i].isAttached = false;
-                    }
-                    else if (detachSlot.slotType == SlotType.Rooting)
+                        WindowInventoryController.InventorySlots[row, col].ItemTf = transform;
+                    });
+                    break;
+                case ContentType.Looting:
+                    // 위치 잡기
+                    objTF.localPosition = new Vector3(-25, 25, -1);
+                    // 부착
+                    ApplyActionForAllSlots(attachSlot, (row, col) =>
                     {
-                        WindowInventoryController.LootSlots[detachSlot.row + j, detachSlot.column + i].isAttached = false;
-                    }
-                }
+                        WindowInventoryController.LootSlots[row, col].ItemTf = transform;
+                    });
+                    break;
+                case ContentType.None_L:
+                case ContentType.None_C:
+                case ContentType.None_R:
+                case ContentType.Undefined:
+                    break;
             }
         }
 
         /// <summary>
-        /// itemSize만큼 slot들의 isAttachReady True로
+        /// 기존 슬롯에서 Item 분리
         /// </summary>
-        /// <param name="detachSlot"></param>
-        public void CheckReady(InventorySlotController readySlot)
+        public void ItemDetach()
         {
-            for (int i = 0; i < localCol; i++)
+            switch (curSlot.ContainerType)
             {
-                for (int j = 0; j < localRow; j++)
-                {
-                    if (readySlot.slotType == SlotType.Inventory)
+                case ContentType.Inventory:
+                    ApplyActionForAllSlots(curSlot, (row, col) =>
                     {
-                        WindowInventoryController.InventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
-                    }
-                    else if (readySlot.slotType == SlotType.Rooting)
+                        WindowInventoryController.InventorySlots[row, col].ItemTf = null;
+                    });
+                    break;
+                case ContentType.Looting:
+                    ApplyActionForAllSlots(curSlot, (row, col) =>
                     {
-                        WindowInventoryController.LootSlots[readySlot.row + j, readySlot.column + i].isAttachReady = true;
-                    }
-                    else if (readySlot.slotType == SlotType.Equipment || isGridOn == false)
-                    {
-                        readySlot.isAttachReady = true;
-                    }
-                }
+                        WindowInventoryController.LootSlots[row, col].ItemTf = null;
+                    });
+                    break;
+                case ContentType.None_L:
+                case ContentType.None_C:
+                case ContentType.None_R:
+                case ContentType.Undefined:
+                    break;
             }
-        }
-
-        /// <summary>
-        /// itemSize만큼 slot들의 isAttachReady False로
-        /// </summary>
-        /// <param name="detachSlot"></param>
-        public void UnCheckReady(InventorySlotController readySlot)
-        {
-
-            for (int i = 0; i < localCol; i++)
-            {
-                for (int j = 0; j < localRow; j++)
-                {
-                    try
-                    {
-                        if (readySlot.slotType == SlotType.Inventory)
-                        {
-                            WindowInventoryController.InventorySlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
-
-                        }
-                        else if (readySlot.slotType == SlotType.Rooting)
-                        {
-                            WindowInventoryController.LootSlots[readySlot.row + j, readySlot.column + i].isAttachReady = false;
-                        }
-                        else if (readySlot.slotType == SlotType.Equipment)
-                        {
-                            readySlot.isAttachReady = false;
-                            return;
-                        }
-                    }
-                    catch (System.NullReferenceException)
-                    {
-                        // Slot이 없는 경우
-                        return;
-                    }
-                    catch (System.IndexOutOfRangeException)
-                    {
-                        // Slot에 사이즈가 없는 경우
-                        return;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// curSlot으로 복귀
-        /// </summary>
-        public void ReturnToPost()
-        {
-            Vector3 postPos;
-            postPos = new Vector3(curSlot.transform.localPosition.x, curSlot.transform.localPosition.y, 0f);
-            objTF.localPosition = postPos;
-            ItemAttach(curSlot);
+            prevSlot = curSlot;
+            curSlot = null;
         }
 
         /// <summary>
@@ -287,25 +203,25 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void ItemRotate()
         {
-            // 돌리는 의미가 없는 아이템이면 return
-            if (localRow == localCol)
-                return;
-            // 아이템 하단의 흰색 칸 헤제
-            UnCheckReady(readySlot);
-            // 현재 돌아가 있는지 확인해서 방향 결정
-            if (isRotate)
-                image.rectTransform.rotation = Quaternion.Euler(0, 0, 0);
-            else
-                image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f);
-            // itemsize 변경
-            int tempSize;
-            tempSize = localCol;
-            localCol = localRow;
-            localRow = tempSize;
-            // recttransform.sizeDelta 변경
-            objTF.sizeDelta = new Vector2(objTF.sizeDelta.y, objTF.sizeDelta.x);
-            // isRotate 변경
-            isRotate = !isRotate;
+            //// 돌리는 의미가 없는 아이템이면 return
+            //if (localRow == localCol)
+            //    return;
+            //// 아이템 하단의 흰색 칸 헤제
+            //UnCheckReady(readySlot);
+            //// 현재 돌아가 있는지 확인해서 방향 결정
+            //if (isRotate)
+            //    image.rectTransform.rotation = Quaternion.Euler(0, 0, 0);
+            //else
+            //    image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f);
+            //// itemsize 변경
+            //int tempSize;
+            //tempSize = localCol;
+            //localCol = localRow;
+            //localRow = tempSize;
+            //// recttransform.sizeDelta 변경
+            //objTF.sizeDelta = new Vector2(objTF.sizeDelta.y, objTF.sizeDelta.x);
+            //// isRotate 변경
+            //isRotate = !isRotate;
         }
 
         /// <summary>
@@ -313,191 +229,275 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void GridOnCheck(InventorySlotController checkSlot)
         {
-            if (!isGridOn)
+            switch (checkSlot.ContainerType)
             {
-                switch (checkSlot.slotType)
-                {
-                    case SlotType.Inventory:
-                    case SlotType.Ground:
-                    case SlotType.Rooting:
-                    case SlotType.Shop:
-                        isGridOn = true;
-                        break;
-                    case SlotType.Equipment:
-                        break;
-                    case SlotType.Quick:
-                        break;
-                }
+                case ContentType.Inventory:
+                case ContentType.Looting:
+                    isGridOn = true;
+                    break;
+                case ContentType.None_L:
+                    break;
+                case ContentType.None_C:
+                    break;
+                case ContentType.None_R:
+                    break;
+                case ContentType.Undefined:
+                    break;
             }
         }
 
         protected override void OnDown()
         {
-            ItemDetach(curSlot);
+            ItemDetach();
+            transform.SetParent(WindowInventoryController.Instance.ItemTf);
             objTF.SetAsLastSibling();
             OnHoverExit();
         }
 
         protected override void OnDraging()
         {
-            Debug.Log("드래그");
             // 드래그 중 R키 누르면 아이템 회전
             if (Input.GetKeyDown(KeyCode.R))
             {
                 ItemRotate();
             }
-            // 드래그 중 I키 누르면 놓아버림
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                Debug.Log("작동 됨");
-                OnUp();
-                isMouseDown = false;
-                return;
-            }
-            // 마우스 드래그 이벤트
+            //// 드래그 중 I키 누르면 놓아버림
+            //if (Input.GetKeyDown(KeyCode.I))
+            //{
+            //    Debug.Log("작동 됨");
+            //    OnUp();
+            //    isMouseDown = false;
+            //    return;
+            //}
+            //// 마우스 드래그 이벤트
             objTF.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             objTF.localPosition = new Vector3(
-                objTF.localPosition.x - (transform.GetComponent<BoxCollider2D>().size.x / 2),
-                objTF.localPosition.y + (transform.GetComponent<BoxCollider2D>().size.y / 2),
+                objTF.localPosition.x - (transform.GetComponent<BoxCollider>().size.x / 2),
+                objTF.localPosition.y + (transform.GetComponent<BoxCollider>().size.y / 2),
                 0f
                 );
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Collider2D hit;
             // 마우스 위치 기준으로 아래 그리드인지 아닌지 확인
-            if (hit = Physics2D.OverlapPoint(mousePos, GlobalStatus.Constant.slotMask))
+            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out RaycastHit hit, 2f, GlobalStatus.Constant.slotMask))
             {
                 InventorySlotController tempSlot;
                 tempSlot = hit.transform.GetComponent<InventorySlotController>();
                 GridOnCheck(tempSlot);
             }
-            // 슬롯 미감지시 그리드 위는 어차피 아님
             else
             {
                 isGridOn = false;
             }
-            // 앞서 체크 결과, Grid 위에 있으면
             if (isGridOn)
             {
-                rayPos = transform.TransformPoint(new Vector2(30f, -30f));
+                rayPos = transform.TransformPoint(new Vector3(25, -25, -1));
             }
             else
             {
                 rayPos = mousePos;
             }
-            // Slot이 감지되면
-            if (hit = Physics2D.OverlapPoint(rayPos, GlobalStatus.Constant.slotMask))
+            if (Physics.Raycast(rayPos, Vector3.down, out RaycastHit hitValid, 2f, GlobalStatus.Constant.slotMask))
             {
-                InventorySlotController tempSlot;
-                tempSlot = hit.transform.GetComponent<InventorySlotController>();
-                // 이전 Slot과 같고(가만히 있는 경우), readyslot이 이미 ready상태인경우
-                if (readySlot == tempSlot && readySlot.isAttachReady == true)
+                // 아래에 후보 슬롯 존재
+                InventorySlotController candidateSlot = hitValid.transform.GetComponent<InventorySlotController>();
+
+                // 배치 가능 여부 판단
+                if (ItemSizeCheck(candidateSlot))
                 {
-                    return;
-                }
-                // Slot이 달라졌거나 현재 Slot이 ready가 아닌경우
-                else
-                {
-                    // 사이즈 체크
-                    if (ItemSizeCheck(tempSlot))
+                    // 배치 가능
+                    if (nextSlot != null && nextSlot.Equals(candidateSlot))
                     {
-                        // 슬롯타입 체크
-                        if (CheckItemTag(tempSlot, isGridOn))
+                        // 이전 배치 가능 슬롯하고 동일
+                        // = 별거 안함
+                    } else
+                    {
+                        if (nextSlot != null)
                         {
-                            // 이전 Slot이 있으면
-                            if (readySlot != null)
-                            {
-                                // 그 곳의 Check를 해제
-                                UnCheckReady(readySlot);
-                            }
-                            // Slot 변경하고
-                            readySlot = tempSlot;
-                            // Check
-                            CheckReady(readySlot);
+                            nextSlot.IsConsidered = false;
+                            ConsiderNextSlot(false);
                         }
+                        // 신규 배치 가능 슬롯임
+                        // = 후보 등록 + 활성화
+                        nextSlot = candidateSlot;
+                        nextSlot.IsConsidered = true;
+                        ConsiderNextSlot(true);
                     }
-                    else
-                    {
-                        UnCheckReady(readySlot);
-                    }
-                }
-            }
-            // 슬롯이 감지 되지 않았을 때
-            else
-            {
-                // 이전 readySlot이 있으면
-                if (readySlot != null)
+                } else
                 {
-                    // 거기서 check 해제하고 null 대입
-                    UnCheckReady(readySlot);
-                    readySlot = null;
+                    // 배치 불가
+                    if (nextSlot != null)
+                    {
+                        nextSlot.IsConsidered = false;
+                        ConsiderNextSlot(false);
+                    }
+                    nextSlot = null;
                 }
+            } else
+            {
+                // 아래에 후보 슬롯 없음
+                // 배치 불가
+                if (nextSlot != null)
+                {
+                    nextSlot.IsConsidered = false;
+                    ConsiderNextSlot(false);
+                }
+                nextSlot = null;
             }
         }
 
         protected override void OnUp()
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Collider2D hit;
-            // 마우스 위치 기준으로 아래 그리드인지 아닌지 확인
-            if (hit = Physics2D.OverlapPoint(mousePos, GlobalStatus.Constant.slotMask))
+            // nextSlot이 있는지 확인
+            if (nextSlot != null)
             {
-                InventorySlotController tempSlot;
-                tempSlot = hit.transform.GetComponent<InventorySlotController>();
-                GridOnCheck(tempSlot);
-                if (tempSlot.isAttached)
-                {
-                    GridOnCheckIfItemExist(tempSlot);
-                }
-            }
-            // 슬롯 미감지시 그리드 위는 어차피 아님
-            else
+                // 있음
+                // = 장착
+                ItemAttach(nextSlot);
+            } else
             {
-                isGridOn = false;
+                // 없음
+                // = 이전 위치로 롤백
+                ItemAttach(prevSlot);
             }
-            // 앞서 체크 결과, Grid 위에 있으면
-            if (isGridOn)
-            {
-                rayPos = transform.TransformPoint(new Vector2(30f, -30f));
-            }
-            else
-            {
-                rayPos = mousePos;
-            }
-            if (hit = Physics2D.OverlapPoint(rayPos, GlobalStatus.Constant.slotMask))
-            {
-                // 아이템 사이즈 체크
-                if (ItemSizeCheck(hit.transform.GetComponent<InventorySlotController>()))
-                {
-                    // 슬롯 타입 체크
-                    if (CheckItemTag(hit.transform.GetComponent<InventorySlotController>(), isGridOn))
-                    {
-                        ItemAttach(hit.transform.GetComponent<InventorySlotController>());
-                    }
-                    else
-                    {
-                        ReturnToPost();
-                        UnCheckReady(readySlot);
-                    }
-                }
-                else
-                {
-                    ReturnToPost();
-                }
-            }
-            else
-            {
-                ReturnToPost();
-            }
+            //Collider2D hit;
+            //// 마우스 위치 기준으로 아래 그리드인지 아닌지 확인
+            //if (hit = Physics2D.OverlapPoint(mousePos, GlobalStatus.Constant.slotMask))
+            //{
+            //    InventorySlotController tempSlot;
+            //    tempSlot = hit.transform.GetComponent<InventorySlotController>();
+            //    GridOnCheck(tempSlot);
+            //    if (tempSlot.isAttached)
+            //    {
+            //        GridOnCheckIfItemExist(tempSlot);
+            //    }
+            //}
+            //// 슬롯 미감지시 그리드 위는 어차피 아님
+            //else
+            //{
+            //    isGridOn = false;
+            //}
+            //// 앞서 체크 결과, Grid 위에 있으면
+            //if (isGridOn)
+            //{
+            //    rayPos = transform.TransformPoint(new Vector2(30f, -30f));
+            //}
+            //else
+            //{
+            //    rayPos = mousePos;
+            //}
+            //if (hit = Physics2D.OverlapPoint(rayPos, GlobalStatus.Constant.slotMask))
+            //{
+            //    // 아이템 사이즈 체크
+            //    if (ItemSizeCheck(hit.transform.GetComponent<InventorySlotController>()))
+            //    {
+            //        // 슬롯 타입 체크
+            //        if (CheckItemTag(hit.transform.GetComponent<InventorySlotController>(), isGridOn))
+            //        {
+            //            ItemAttach(hit.transform.GetComponent<InventorySlotController>());
+            //        }
+            //        else
+            //        {
+            //            ReturnToPost();
+            //            UnCheckReady(readySlot);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        ReturnToPost();
+            //    }
+            //}
+            //else
+            //{
+            //    ReturnToPost();
+            //}
         }
         /// <summary>
         /// 종류에 맞는 데이터 할당 함수
         /// </summary>
         /// <param name="_info">데이터</param>
-        public void InitInfo(TItemInfo _info, ItemInventoryInfo inventoryInfo)
+        public void InitInfo(TItemInfo _info, InventorySlotController slotToAttach = null)
         {
+            Init();
             info = _info;
             image.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(baseInfo));
-            AttachInitially(inventoryInfo);
+            image.GetComponent<Canvas>().sortingLayerName = "UI Covering Map";
+            // 게임오브젝트 이름 변경
+            gameObject.name = baseInfo.name;
+            localRow = itemSizeRow;
+            localCol = itemSizeCol;
+            if (slotToAttach != null)
+            {
+                ItemAttach(slotToAttach);
+            }
+        }
+
+        private void ResizeOnPurpose(ContentType _type)
+        {
+            switch (_type)
+            {
+                case ContentType.Inventory:
+                case ContentType.Looting:
+                    // 인벤토리 또는 루팅
+                    // = 사이즈: 50 * 50
+                    image.rectTransform.sizeDelta = objCollider.size = objTF.sizeDelta = baseInfo.size * 50f;
+                    objCollider.center = new Vector3(objCollider.size.x / 2, -objCollider.size.y / 2, 0);
+                    break;
+                case ContentType.None_L:
+                    break;
+                case ContentType.None_C:
+                    break;
+                case ContentType.None_R:
+                    break;
+                case ContentType.Undefined:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 아래 모든 슬롯에 액션 반복 함수: 반환 없음
+        /// </summary>
+        /// <param name="actionToApply"></param>
+        private void ApplyActionForAllSlots(InventorySlotController startSlot, Action<int, int> actionToApply)
+        {
+            for (int i = 0; i < localCol; i++)
+            {
+                for (int j = 0; j < localRow; j++)
+                {
+                    try
+                    {
+                        actionToApply(startSlot.row + i, startSlot.column + j);
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        // 넘어감
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 아래 모든 슬롯에 액션 반복 함수: 반환 있음
+        /// </summary>
+        /// <param name="actionToApply"></param>
+        private TReturn ApplyActionForAllSlots<TReturn>(InventorySlotController startSlot, Func<int, int, TReturn> actionToApply)
+        {
+            for (int i = 0; i < localCol; i++)
+            {
+                for (int j = 0; j < localRow; j++)
+                {
+                    try
+                    {
+                        return actionToApply(startSlot.row + i, startSlot.column + j);
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        return (TReturn)(object)false;
+                    }
+                }
+            }
+            return (TReturn)(object)false;
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ public class EquipmentSlotController : InventorySlotController
 
     public void EquipItem()
     {
-        equipItem = itemTF.GetChild(2).GetComponent<ItemEquipmentController>().info;
+        equipItem = ItemTf.GetChild(2).GetComponent<ItemEquipmentController>().info;
         switch (equipItem)
         {
             case ItemArmorInfo armorInfo:

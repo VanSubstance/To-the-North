@@ -8,6 +8,9 @@ namespace Assets.Scripts.Items
     {
         [HideInInspector]
         public ItemType itemType;
+        /// <summary>
+        /// x: row, y: col
+        /// </summary>
         public Vector2 size;
         public string imagePath;
         public string title;

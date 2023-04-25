@@ -8,7 +8,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         public InventorySlotController[,] slots;
         [SerializeField]
         private InventorySlotController slotTf;
-        private readonly Vector2 sizeSlot = new Vector2(10, 14);
+        private readonly Vector2 sizeSlot = new Vector2(14, 10);
 
         protected void Awake()
         {
@@ -19,12 +19,14 @@ namespace Assets.Scripts.Components.Windows.Inventory
         {
             if (slots != null) return;
             slots = new InventorySlotController[(int)sizeSlot.x, (int)sizeSlot.y];
-            for (int i = 0; i < sizeSlot.y; i++)
+            // i = x = row
+            for (int i = 0; i < sizeSlot.x; i++)
             {
-                for (int j = 0; j < sizeSlot.x; j++)
+                // j = y = column
+                for (int j = 0; j < sizeSlot.y; j++)
                 {
-                    slots[j, i] = Instantiate(slotTf, transform);
-                    slots[j, i].SetLocation(i, j);
+                    slots[i, j] = Instantiate(slotTf, transform);
+                    slots[i, j].SetLocation(i, j);
                 }
             }
         }
@@ -36,12 +38,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         public void GenerateItem(ItemGenerateController gen, ItemInventoryInfo _info)
         {
             Init();
-            Debug.Log(slots);
-            gen.transform.position = new Vector3
-            (slots[_info.x, _info.y].transform.position.x,
-            slots[_info.x, _info.y].transform.position.y,
-            transform.position.z);
-            gen.InitItem(_info.itemInfo, _info);
+            gen.InitItem(_info.itemInfo, slots[_info.row, _info.col]);
         }
     }
 }
