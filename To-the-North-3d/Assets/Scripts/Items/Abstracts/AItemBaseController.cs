@@ -1,10 +1,7 @@
-using System;
-using Assets.Scripts.Commons;
-using Unity.VisualScripting;
 using Assets.Scripts.Components.Windows.Inventory;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 
 namespace Assets.Scripts.Items
 {
@@ -75,48 +72,40 @@ namespace Assets.Scripts.Items
             switch (destSlot.ContainerType)
             {
                 case ContentType.Inventory:
-                    if (ApplyActionForAllSlots(destSlot, (row, col) =>
+                    return ApplyActionForAllSlots(destSlot, (row, col) =>
                     {
-                        return WindowInventoryController.InventorySlots[row, col].ItemTf != null;
-                    }))
-                    {
-                        return false;
-                    }
-                    return true;
+                        return WindowInventoryController.InventorySlots[row, col].ItemTf == null;
+                    });
                 case ContentType.Looting:
-                    if (ApplyActionForAllSlots(destSlot, (row, col) =>
+                    return ApplyActionForAllSlots(destSlot, (row, col) =>
                     {
-                        return WindowInventoryController.LootSlots[row, col].ItemTf != null;
-                    }))
-                    {
-                        return false;
-                    }
-                    return true;
+                        return WindowInventoryController.LootSlots[row, col].ItemTf == null;
+                    });
                 case ContentType.None_L:
                 case ContentType.None_C:
                 case ContentType.None_R:
                 case ContentType.Undefined:
                     break;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
         /// 임시로 가능성 있는 타일 불 켜기/끄기 함수
         /// </summary>
         /// <param name="isOn"></param>
-        private void ConsiderNextSlot(bool isOn)
+        private void ConsiderTargetSlot(InventorySlotController _targetSlot, bool isOn)
         {
             switch (nextSlot.ContainerType)
             {
                 case ContentType.Inventory:
-                    ApplyActionForAllSlots(nextSlot, (r, c) =>
+                    ApplyActionForAllSlots(_targetSlot, (r, c) =>
                     {
                         WindowInventoryController.InventorySlots[r, c].IsConsidered = isOn;
                     });
                     return;
                 case ContentType.Looting:
-                    ApplyActionForAllSlots(nextSlot, (r, c) =>
+                    ApplyActionForAllSlots(_targetSlot, (r, c) =>
                     {
                         WindowInventoryController.LootSlots[r, c].IsConsidered = isOn;
                     });
@@ -205,25 +194,32 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void ItemRotate()
         {
-            //// 돌리는 의미가 없는 아이템이면 return
-            //if (localRow == localCol)
-            //    return;
-            //// 아이템 하단의 흰색 칸 헤제
-            //UnCheckReady(readySlot);
-            //// 현재 돌아가 있는지 확인해서 방향 결정
-            //if (isRotate)
-            //    image.rectTransform.rotation = Quaternion.Euler(0, 0, 0);
-            //else
-            //    image.rectTransform.rotation = Quaternion.Euler(0, 0, 90f);
-            //// itemsize 변경
-            //int tempSize;
-            //tempSize = localCol;
-            //localCol = localRow;
-            //localRow = tempSize;
-            //// recttransform.sizeDelta 변경
-            //objTF.sizeDelta = new Vector2(objTF.sizeDelta.y, objTF.sizeDelta.x);
-            //// isRotate 변경
-            //isRotate = !isRotate;
+            // 돌리는 의미가 없는 아이템이면 return
+            if (localRow == localCol)
+                return;
+            // 아이템 하단의 흰색 칸 헤제
+            ConsiderTargetSlot(nextSlot, false);
+            // 현재 돌아가 있는지 확인해서 방향 결정
+            if (isRotate)
+            {
+                image.rectTransform.localRotation = Quaternion.Euler(0, 0, 0);
+                image.rectTransform.anchoredPosition = Vector2.zero;
+            }
+            else
+            {
+                image.rectTransform.localRotation = Quaternion.Euler(0, 0, 90);
+                image.rectTransform.anchoredPosition = Vector2.one * 25;
+            }
+            // itemsize 변경
+            int tempSize;
+            tempSize = localCol;
+            localCol = localRow;
+            localRow = tempSize;
+            // recttransform.sizeDelta 변경
+            objTF.sizeDelta = new Vector2(objTF.sizeDelta.y, objTF.sizeDelta.x);
+            // isRotate 변경
+            isRotate = !isRotate;
+            OnDraggingSkipRotate();
         }
 
         /// <summary>
@@ -263,6 +259,11 @@ namespace Assets.Scripts.Items
             {
                 ItemRotate();
             }
+            OnDraggingSkipRotate();
+        }
+
+        private void OnDraggingSkipRotate()
+        {
             //// 드래그 중 I키 누르면 놓아버림
             //if (Input.GetKeyDown(KeyCode.I))
             //{
@@ -311,37 +312,36 @@ namespace Assets.Scripts.Items
                     {
                         // 이전 배치 가능 슬롯하고 동일
                         // = 별거 안함
-                    } else
+                    }
+                    else
                     {
                         if (nextSlot != null)
                         {
-                            nextSlot.IsConsidered = false;
-                            ConsiderNextSlot(false);
+                            ConsiderTargetSlot(nextSlot, false);
                         }
                         // 신규 배치 가능 슬롯임
                         // = 후보 등록 + 활성화
                         nextSlot = candidateSlot;
-                        nextSlot.IsConsidered = true;
-                        ConsiderNextSlot(true);
+                        ConsiderTargetSlot(nextSlot, true);
                     }
-                } else
+                }
+                else
                 {
                     // 배치 불가
                     if (nextSlot != null)
                     {
-                        nextSlot.IsConsidered = false;
-                        ConsiderNextSlot(false);
+                        ConsiderTargetSlot(nextSlot, false);
                     }
                     nextSlot = null;
                 }
-            } else
+            }
+            else
             {
                 // 아래에 후보 슬롯 없음
                 // 배치 불가
                 if (nextSlot != null)
                 {
-                    nextSlot.IsConsidered = false;
-                    ConsiderNextSlot(false);
+                    ConsiderTargetSlot(nextSlot, false);
                 }
                 nextSlot = null;
             }
@@ -356,7 +356,8 @@ namespace Assets.Scripts.Items
                 // 있음
                 // = 장착
                 ItemAttach(nextSlot);
-            } else
+            }
+            else
             {
                 // 없음
                 // = 이전 위치로 롤백
@@ -480,10 +481,11 @@ namespace Assets.Scripts.Items
 
 
         /// <summary>
-        /// 아래 모든 슬롯에 액션 반복 함수: 반환 있음
+        /// 아래 모든 슬롯에 액션 반복 검사 함수:
+        /// 모든 슬롯에 대해서 true일 때 true 반환
         /// </summary>
         /// <param name="actionToApply"></param>
-        private TReturn ApplyActionForAllSlots<TReturn>(InventorySlotController startSlot, Func<int, int, TReturn> actionToApply)
+        private bool ApplyActionForAllSlots(InventorySlotController startSlot, Func<int, int, bool> actionToApply)
         {
             for (int i = 0; i < localCol; i++)
             {
@@ -491,15 +493,18 @@ namespace Assets.Scripts.Items
                 {
                     try
                     {
-                        return actionToApply(startSlot.row + i, startSlot.column + j);
+                        if (!actionToApply(startSlot.row + i, startSlot.column + j))
+                        {
+                            return false;
+                        }
                     }
                     catch (IndexOutOfRangeException)
                     {
-                        return (TReturn)(object)false;
+                        return false;
                     }
                 }
             }
-            return (TReturn)(object)false;
+            return true;
         }
 
         /// <summary>
