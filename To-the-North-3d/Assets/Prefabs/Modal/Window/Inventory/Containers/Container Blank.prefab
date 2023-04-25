@@ -145,7 +145,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC81C\uBAA9"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5952dae53a9c274488cf9397cee1d4a2, type: 2}
   m_sharedMaterial: {fileID: -5839447905667109973, guid: 5952dae53a9c274488cf9397cee1d4a2, type: 2}
@@ -223,8 +223,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6665553555716210809}
+  - component: {fileID: 5611724920310445987}
   m_Layer: 5
-  m_Name: Content Container
+  m_Name: Content Blank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -250,6 +251,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5611724920310445987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6665553555716210810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79b4e633266b23d4f98606c08bc025dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6665553555747466125
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6665553555747466124}
   - component: {fileID: 6665553555747466131}
-  - component: {fileID: -3727345416673420259}
+  - component: {fileID: 4759192621604572024}
   m_Layer: 5
   m_Name: Container Blank
   m_TagString: Untagged
@@ -316,7 +329,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &-3727345416673420259
+--- !u!114 &4759192621604572024
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -328,5 +341,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a16ba958ff95dd24093afeb039337be3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: 
-  content: {fileID: 0}
