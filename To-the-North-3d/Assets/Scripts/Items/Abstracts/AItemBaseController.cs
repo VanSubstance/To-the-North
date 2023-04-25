@@ -146,6 +146,7 @@ namespace Assets.Scripts.Items
                 case ContentType.Inventory:
                     // 위치 잡기
                     objTF.localPosition = new Vector3(-25, 25, -1);
+                    objTF.anchoredPosition = Vector2.zero;
                     // 부착
                     ApplyActionForAllSlots(attachSlot, (row, col) =>
                     {
@@ -155,6 +156,7 @@ namespace Assets.Scripts.Items
                 case ContentType.Looting:
                     // 위치 잡기
                     objTF.localPosition = new Vector3(-25, 25, -1);
+                    objTF.anchoredPosition = Vector2.zero;
                     // 부착
                     ApplyActionForAllSlots(attachSlot, (row, col) =>
                     {
