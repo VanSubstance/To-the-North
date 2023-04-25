@@ -140,9 +140,6 @@ public class CommonGameManager : MonoBehaviour
 
             // esc 모달 추가
             Transform windowForPause = Instantiate(pauseWindowPrefab, uiTf);
-            windowForPause.localPosition = Vector3.zero;
-            KeyToggleManager keyAdded = uiTf.AddComponent<KeyToggleManager>();
-            keyAdded.InitContent(KeyCode.Escape, windowForPause.GetComponent<IControllByKey>());
 
             // 인벤토리 모달 추가
             //Transform windowForInventory = Instantiate(inventoryWindowPrefab, uiTf);
@@ -151,7 +148,7 @@ public class CommonGameManager : MonoBehaviour
             //keyAdded.InitContent(KeyCode.I, windowForInventory.GetComponent<IControllByKey>());
 
             Transform hovering = Instantiate(hoveringItemInfo, uiTf);
-            keyAdded = uiTf.AddComponent<KeyToggleManager>();
+            KeyToggleManager keyAdded = uiTf.AddComponent<KeyToggleManager>();
             keyAdded.InitContent(KeyCode.I, hovering.GetComponent<IControllByKey>());
 
             // 화면 필터 이미지 추가
