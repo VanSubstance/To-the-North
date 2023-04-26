@@ -1,5 +1,3 @@
-using Assets.Scripts.Commons.Constants;
-using System;
 using System.Collections;
 using UnityEngine;
 

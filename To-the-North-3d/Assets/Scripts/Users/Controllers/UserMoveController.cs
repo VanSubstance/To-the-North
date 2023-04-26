@@ -1,4 +1,3 @@
-using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Creatures;
 using UnityEngine;
 

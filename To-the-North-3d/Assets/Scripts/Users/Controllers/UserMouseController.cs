@@ -1,9 +1,8 @@
+using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Detections;
-using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Items;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Assets.Scripts.Commons.Functions;
 
 namespace Assets.Scripts.Users.Controllers
 {

@@ -1,10 +1,8 @@
-using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Commons.Functions;
-using Assets.Scripts.Events;
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Events;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Assets.Scripts.Creatures.Detections
 {

@@ -45,6 +45,11 @@ namespace Assets.Scripts.Items
 
         public ItemBaseInfo info;
 
+        /// <summary>
+        /// 마우스 이벤트가 중간에 종료되어야 할 때 후속 이벤트 방지용
+        /// </summary>
+        /// 
+        private bool IsMouseEventDone;
         private new void Update()
         {
             base.Update();
@@ -183,6 +188,7 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void ItemDetach()
         {
+            info.InvenInfo = null;
             ApplyActionForOnlyContentWithSlots(curSlot, (_slot) =>
             {
                 _slot.ItemTf = null;
@@ -240,6 +246,26 @@ namespace Assets.Scripts.Items
 
         protected override void OnDown()
         {
+            IsMouseEventDone = false;
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                // 왼쪽 ctrl 누른 상태로 클릭 시
+                if (curSlot.ContainerType != ContentType.Inventory)
+                {
+                    // 인벤토리가 아닐 시
+                    // -> 바로 인벤토리로 이동
+                    IsMouseEventDone = true;
+                    // 기존의 슬롯에서 떼기
+                    ItemDetach();
+                    // 만약 회전 상태다 -> 회전 풀기
+                    if (isRotate)
+                        ItemRotate();
+
+                    // 자동 정렬로 이동
+                    InitInfo(info, null, ContentType.Inventory);
+                    return;
+                }
+            }
             ItemDetach();
             prevRotate = isRotate;
             transform.SetParent(WindowInventoryController.Instance.ItemTf);
@@ -249,6 +275,7 @@ namespace Assets.Scripts.Items
 
         protected override void OnDraging()
         {
+            if (IsMouseEventDone) return;
             // 드래그 중 R키 누르면 아이템 회전
             if (Input.GetKeyDown(KeyCode.R))
             {
@@ -259,6 +286,7 @@ namespace Assets.Scripts.Items
 
         private void OnDraggingSkipRotate()
         {
+            if (IsMouseEventDone) return;
             // 드래그 중 I키 누르면 놓아버림
             if (Input.GetKeyDown(KeyCode.I))
             {
@@ -321,6 +349,11 @@ namespace Assets.Scripts.Items
 
         protected override void OnUp()
         {
+            if (IsMouseEventDone)
+            {
+                IsMouseEventDone = false;
+                return;
+            }
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // nextSlot이 있는지 확인
             if (nextSlot != null)
@@ -339,6 +372,7 @@ namespace Assets.Scripts.Items
                 }
                 ItemAttach(prevSlot);
             }
+            IsMouseEventDone = false;
         }
 
         /// <summary>

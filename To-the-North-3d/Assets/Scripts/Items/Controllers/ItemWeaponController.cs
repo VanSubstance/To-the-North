@@ -1,9 +1,8 @@
-using Assets.Scripts.Battles;
-using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Commons.Functions;
-using Assets.Scripts.Users;
 using System;
 using System.Collections;
+using Assets.Scripts.Battles;
+using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Users;
 using UnityEngine;
 
 namespace Assets.Scripts.Items

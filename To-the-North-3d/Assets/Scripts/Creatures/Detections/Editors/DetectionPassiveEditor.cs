@@ -1,5 +1,3 @@
-using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Users.Controllers;
 using UnityEditor;
 using UnityEngine;
 

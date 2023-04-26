@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Items;
 using UnityEngine;
 

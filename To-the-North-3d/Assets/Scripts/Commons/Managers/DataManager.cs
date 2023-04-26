@@ -1,6 +1,5 @@
-using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Items;
 using Assets.Scripts.Components.Windows.Inventory;
+using Assets.Scripts.Items;
 using UnityEngine;
 
 namespace Assets.Scripts.Commons

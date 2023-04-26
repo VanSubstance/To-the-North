@@ -18,13 +18,30 @@ namespace Assets.Scripts.Items
         public int price;
 
         /// <summary>
-        /// Àåºñ·Î Âø¿ëÀÌ °¡´ÉÇÑÁö ¿©ºÎ ¹İÈ¯
+        /// ì¥ë¹„ë¡œ ì°©ìš©ì´ ê°€ëŠ¥í•œì§€ ì—¬ë¶€ ë°˜í™˜
         /// </summary>
         public bool IsEquipment
         {
             get
             {
                 return this is ItemArmorInfo || this is ItemWeaponInfo;
+            }
+        }
+
+        /// <summary>
+        /// ì•„ì´í…œì´ í˜„ì¬ ì¥ì°©ëœ ì¸ë²¤í† ë¦¬ ì •ë³´:
+        /// ì—­ì¶”ì ì´ í•„ìš”í•¨
+        /// </summary>
+        private ItemInventoryInfo invenInfo;
+        public ItemInventoryInfo InvenInfo
+        {
+            get
+            {
+                return invenInfo;
+            }
+            set
+            {
+                invenInfo = value;
             }
         }
     }
