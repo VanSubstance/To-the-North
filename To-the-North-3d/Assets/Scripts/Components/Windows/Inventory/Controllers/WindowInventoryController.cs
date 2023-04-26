@@ -34,6 +34,14 @@ namespace Assets.Scripts.Components.Windows.Inventory
             }
         }
 
+        public static ContentEquipmentController equipmentCtrl
+        {
+            get
+            {
+                return (ContentEquipmentController)contentByType[ContentType.Equipment];
+            }
+        }
+
         public static List<ItemBaseInfo> items = new List<ItemBaseInfo>();
         public static List<ItemBaseInfo> rootItems = new List<ItemBaseInfo>();
 

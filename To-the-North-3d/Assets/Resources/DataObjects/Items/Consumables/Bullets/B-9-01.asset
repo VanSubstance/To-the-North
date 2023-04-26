@@ -19,6 +19,7 @@ MonoBehaviour:
   description: 
   price: 7
   consumbableType: 0
+  amountCurrent: 60
   bulletType: 1
   powerPenetration: 3
   powerImpact: 3
@@ -26,4 +27,3 @@ MonoBehaviour:
   powerSpd: 1
   damagePenetration: 4
   damageImpact: 5
-  amountCurrent: 60

@@ -1,6 +1,7 @@
 using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Items;
 using UnityEngine;
+using System;
 
 namespace Assets.Scripts.Commons
 {
@@ -66,7 +67,7 @@ namespace Assets.Scripts.Commons
         {
             foreach (ItemBaseInfo _info in itemsAutoAlign)
             {
-                WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Inventory, _info);
+                WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Inventory, Instantiate(_info));
             }
         }
 

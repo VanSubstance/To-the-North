@@ -28,6 +28,7 @@ namespace Assets.Scripts.Items
         private int powerPenetration, powerImpact;
         [SerializeField]
         private TrajectoryType trajectoryType;
+        [SerializeField]
         private ItemMagazineInfo magazine;
 
         public float PowerKnockback

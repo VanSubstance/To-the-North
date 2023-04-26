@@ -268,6 +268,61 @@ namespace Assets.Scripts.Items
                     // 자동 정렬로 이동
                     InitInfo(info, null, ContentType.Inventory);
                     return;
+                } else
+                {
+                    // 인벤토리일 시
+                    if (info is ItemEquipmentInfo & info is not ItemMagazineInfo)
+                    {
+                        // 장착 가능 장비일 시
+                        switch (((ItemEquipmentInfo)info).equipmentType)
+                        {
+                            case EquipmentType.Armor:
+                                switch (((ItemArmorInfo)info).equipPartType)
+                                {
+                                    case EquipBodyType.Helmat:
+                                        if (!WindowInventoryController.equipmentCtrl.helmetCtrl.IsEquipped)
+                                        {
+                                            // 장착 가능
+                                        }
+                                        break;
+                                    case EquipBodyType.Mask:
+                                        if (!WindowInventoryController.equipmentCtrl.maskCtrl.IsEquipped)
+                                        {
+                                            // 장착 가능
+                                        }
+                                        break;
+                                    case EquipBodyType.Body:
+                                        if (!WindowInventoryController.equipmentCtrl.bodyCtrl.IsEquipped)
+                                        {
+                                            // 장착 가능
+                                        }
+                                        break;
+                                    case EquipBodyType.BackPack:
+                                        if (!WindowInventoryController.equipmentCtrl.backpackCtrl.IsEquipped)
+                                        {
+                                            // 장착 가능
+                                        }
+                                        break;
+                                    case EquipBodyType.Right:
+                                        break;
+                                    case EquipBodyType.Left:
+                                        break;
+                                }
+                                break;
+                            case EquipmentType.Weapon:
+                                if (!WindowInventoryController.equipmentCtrl.handRCtrl.IsEquipped)
+                                {
+                                    // 양손일 경우 여기서 걸러야 함
+                                }
+                                if (!WindowInventoryController.equipmentCtrl.handLCtrl.IsEquipped)
+                                {
+
+                                }
+                                break;
+                            case EquipmentType.Magazine:
+                                break;
+                        }
+                    }
                 }
             }
             ItemDetach();
@@ -359,6 +414,26 @@ namespace Assets.Scripts.Items
                 return;
             }
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            
+            // 탄환의 경우, 아래에 탄창이 있으면 삽탄해야 함
+            if (info is ItemBulletInfo)
+            {
+                // 탄환임
+                if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out RaycastHit hitItem, 2f, GlobalStatus.Constant.itemMask))
+                {
+                    ItemEquipmentController c;
+                    if ((c = hitItem.transform.GetComponent<ItemEquipmentController>()) != null)
+                    {
+                        if (c.info is ItemMagazineInfo)
+                        {
+                            // 아래에 탄창 있음
+                            // 삽탄
+                            info = ((ItemMagazineInfo)c.info).LoadMagazine((ItemBulletInfo)info);
+                        }
+                    }
+                }
+            }
+            
             // nextSlot이 있는지 확인
             if (nextSlot != null)
             {
