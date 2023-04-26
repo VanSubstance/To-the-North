@@ -1,9 +1,10 @@
-using Assets.Scripts.Components.Windows.Inventory;
 using System;
 using System.Linq;
+using Assets.Scripts.Components.Windows.Inventory;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace Assets.Scripts.Items
 {
@@ -32,7 +33,6 @@ namespace Assets.Scripts.Items
 
         private int localRow;
         private int localCol;
-        private Vector3 mousePos;
         private Vector3 VectorCorr
         {
             get
@@ -104,10 +104,7 @@ namespace Assets.Scripts.Items
                     {
                         return WindowInventoryController.LootSlots[row, col].ItemTf == null;
                     });
-                case ContentType.None_L:
-                case ContentType.None_C:
-                case ContentType.None_R:
-                case ContentType.Undefined:
+                default:
                     break;
             }
             return false;
@@ -127,14 +124,6 @@ namespace Assets.Scripts.Items
             if (_targetSlot is EquipmentSlotController)
             {
                 _targetSlot.IsConsidered = isOn;
-            }
-            switch (_targetSlot.ContainerType)
-            {
-                case ContentType.None_L:
-                case ContentType.None_C:
-                case ContentType.None_R:
-                case ContentType.Undefined:
-                    break;
             }
         }
 
@@ -168,22 +157,15 @@ namespace Assets.Scripts.Items
                 objTF.localPosition = pos;
             });
             // 부착하려고 하는 컨테이너의 타입?
-            switch (attachSlot.ContainerType)
+            if (attachSlot is EquipmentSlotController)
             {
-                case ContentType.Equipment:
-                    if (isRotate)
-                    {
-                        ItemRotate();
-                    }
-                    Vector3 pos = new Vector3(0, 0, -1);
-                    objTF.localPosition = pos;
-                    ((EquipmentSlotController)attachSlot).EquipItemInfo = (ItemEquipmentInfo)info;
-                    break;
-                case ContentType.None_L:
-                case ContentType.None_C:
-                case ContentType.None_R:
-                case ContentType.Undefined:
-                    break;
+                if (isRotate)
+                {
+                    ItemRotate();
+                }
+                Vector3 pos = new Vector3(0, 0, -1);
+                objTF.localPosition = pos;
+                ((EquipmentSlotController)attachSlot).EquipItemInfo = (ItemEquipmentInfo)info;
             }
         }
 
@@ -203,10 +185,7 @@ namespace Assets.Scripts.Items
                     ((EquipmentSlotController)curSlot).EquipItemInfo = null;
                     curSlot.ItemTf = null;
                     break;
-                case ContentType.None_L:
-                case ContentType.None_C:
-                case ContentType.None_R:
-                case ContentType.Undefined:
+                default:
                     break;
             }
             prevSlot = curSlot;
@@ -228,21 +207,16 @@ namespace Assets.Scripts.Items
             if (isRotate)
             {
                 objTF.localRotation = Quaternion.Euler(0, 0, 0);
-                //image.rectTransform.anchoredPosition = Vector2.zero;
             }
             else
             {
                 objTF.localRotation = Quaternion.Euler(0, 0, 90);
-                //image.rectTransform.anchoredPosition = Vector2.one * 25;
             }
             // itemsize 변경
             int tempSize;
             tempSize = localCol;
             localCol = localRow;
             localRow = tempSize;
-            // recttransform.sizeDelta 변경
-            //objTF.sizeDelta = new Vector2(objTF.sizeDelta.y, objTF.sizeDelta.x);
-            //objTF.transform.position -= new Vector3(objTF.sizeDelta.x / 2, objTF.sizeDelta.y / 2, 0);
             // isRotate 변경
             isRotate = !isRotate;
             OnDraggingSkipRotate();
@@ -268,59 +242,74 @@ namespace Assets.Scripts.Items
                     // 자동 정렬로 이동
                     InitInfo(info, null, ContentType.Inventory);
                     return;
-                } else
+                }
+                else
                 {
                     // 인벤토리일 시
                     if (info is ItemEquipmentInfo & info is not ItemMagazineInfo)
                     {
-                        // 장착 가능 장비일 시
-                        switch (((ItemEquipmentInfo)info).equipmentType)
+                        bool Equip(EquipmentSlotController _targetSlot)
                         {
-                            case EquipmentType.Armor:
-                                switch (((ItemArmorInfo)info).equipPartType)
+                            IsMouseEventDone = true;
+                            if (!_targetSlot.IsEquipped)
+                            {
+                                ItemDetach();
+                                if (isRotate)
+                                    ItemRotate();
+                                InitInfo(info, _targetSlot);
+                                return true;
+                            }
+                            return false;
+                        }
+                        // 장착 가능 장비일 시
+                        if (info is ItemArmorInfo)
+                        {
+                            // 방어구
+                            switch (((ItemArmorInfo)info).equipPartType)
+                            {
+                                case EquipBodyType.Helmat:
+                                    if (Equip(WindowInventoryController.equipmentCtrl.helmetCtrl)) return;
+                                    break;
+                                case EquipBodyType.Mask:
+                                    if (Equip(WindowInventoryController.equipmentCtrl.maskCtrl)) return;
+                                    break;
+                                case EquipBodyType.Body:
+                                    if (Equip(WindowInventoryController.equipmentCtrl.bodyCtrl)) return;
+                                    break;
+                                case EquipBodyType.BackPack:
+                                    if (Equip(WindowInventoryController.equipmentCtrl.backpackCtrl)) return;
+                                    break;
+                                case EquipBodyType.Right:
+                                    break;
+                                case EquipBodyType.Left:
+                                    break;
+                            }
+                            return;
+                        }
+                        if (info is ItemWeaponInfo)
+                        {
+                            // 무기
+                            if (!WindowInventoryController.equipmentCtrl.handRCtrl.IsEquipped)
+                            {
+                                if (((ItemWeaponInfo)info).handType == EquipHandType.Multiple)
                                 {
-                                    case EquipBodyType.Helmat:
-                                        if (!WindowInventoryController.equipmentCtrl.helmetCtrl.IsEquipped)
-                                        {
-                                            // 장착 가능
-                                        }
-                                        break;
-                                    case EquipBodyType.Mask:
-                                        if (!WindowInventoryController.equipmentCtrl.maskCtrl.IsEquipped)
-                                        {
-                                            // 장착 가능
-                                        }
-                                        break;
-                                    case EquipBodyType.Body:
-                                        if (!WindowInventoryController.equipmentCtrl.bodyCtrl.IsEquipped)
-                                        {
-                                            // 장착 가능
-                                        }
-                                        break;
-                                    case EquipBodyType.BackPack:
-                                        if (!WindowInventoryController.equipmentCtrl.backpackCtrl.IsEquipped)
-                                        {
-                                            // 장착 가능
-                                        }
-                                        break;
-                                    case EquipBodyType.Right:
-                                        break;
-                                    case EquipBodyType.Left:
-                                        break;
+                                    // 양손 무기
+                                    Equip(WindowInventoryController.equipmentCtrl.handRCtrl);
                                 }
-                                break;
-                            case EquipmentType.Weapon:
-                                if (!WindowInventoryController.equipmentCtrl.handRCtrl.IsEquipped)
+                                else
                                 {
-                                    // 양손일 경우 여기서 걸러야 함
+                                    // 한손 무기
+                                    Equip(WindowInventoryController.equipmentCtrl.handRCtrl);
                                 }
-                                if (!WindowInventoryController.equipmentCtrl.handLCtrl.IsEquipped)
-                                {
-
-                                }
-                                break;
-                            case EquipmentType.Magazine:
-                                break;
+                                return;
+                            }
+                            if (!WindowInventoryController.equipmentCtrl.handLCtrl.IsEquipped)
+                            {
+                                // 한손 무기
+                                Equip(WindowInventoryController.equipmentCtrl.handLCtrl);
+                                return;
+                            }
+                            return;
                         }
                     }
                 }
@@ -357,7 +346,6 @@ namespace Assets.Scripts.Items
             Vector3 t = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             t.y = 10f;
             objTF.position = t;
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             InventorySlotController candidateSlot = null;
 
@@ -413,8 +401,7 @@ namespace Assets.Scripts.Items
                 IsMouseEventDone = false;
                 return;
             }
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            
+
             // 탄환의 경우, 아래에 탄창이 있으면 삽탄해야 함
             if (info is ItemBulletInfo)
             {
@@ -433,7 +420,7 @@ namespace Assets.Scripts.Items
                     }
                 }
             }
-            
+
             // nextSlot이 있는지 확인
             if (nextSlot != null)
             {
