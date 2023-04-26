@@ -1,6 +1,7 @@
 using System.Linq;
 using Assets.Scripts.Battles;
 using UnityEngine;
+using TMPro;
 
 namespace Assets.Scripts.Items
 {
@@ -60,6 +61,14 @@ namespace Assets.Scripts.Items
             get
             {
                 return powerImpact >= 0 ? powerImpact : 0;
+            }
+        }
+        public TextMeshProUGUI AmountDisplay
+        {
+            set
+            {
+                if (magazine)
+                    magazine.AmountDisplay = value;
             }
         }
 

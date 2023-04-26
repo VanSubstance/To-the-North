@@ -45,23 +45,5 @@ namespace Assets.Scripts.Items
         /// 기본값: 0
         /// </summary>
         public int damageImpact;
-        [SerializeField]
-        /// <summary>
-        /// 현재 잔여량
-        /// 최대치: 60
-        /// </summary>
-        private int amountCurrent = 60;
-
-        public int AmountCount
-        {
-            get
-            {
-                return amountCurrent;
-            }
-            set
-            {
-                amountCurrent = value >= 0 ? value : 0;
-            }
-        }
     }
 }

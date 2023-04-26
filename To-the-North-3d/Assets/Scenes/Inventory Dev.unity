@@ -710,7 +710,7 @@ PrefabInstance:
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: right
       value: 
-      objectReference: {fileID: 11400000, guid: 634a05cc713186c439c43cb18187bbca, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.size
       value: 0

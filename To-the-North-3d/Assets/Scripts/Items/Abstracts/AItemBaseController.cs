@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Assets.Scripts.Items
 {
@@ -42,6 +43,7 @@ namespace Assets.Scripts.Items
         private RectTransform objTF;
         private BoxCollider objCollider;
         private Image image;
+        private TextMeshProUGUI amountUGUI;
 
         public ItemBaseInfo info;
 
@@ -64,6 +66,8 @@ namespace Assets.Scripts.Items
         {
             if (image != null) return;
             image = GetComponentInChildren<Image>();
+            amountUGUI = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            amountUGUI.text = string.Empty;
             objTF = GetComponent<RectTransform>();
             objCollider = GetComponent<BoxCollider>();
         }
@@ -384,6 +388,18 @@ namespace Assets.Scripts.Items
             Init();
             info = _info;
             image.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
+            switch (info)
+            {
+                case ItemConsumableInfo amountInfo:
+                    amountInfo.AmountDisplay = amountUGUI;
+                    break;
+                case ItemMagazineInfo amountInfo:
+                    amountInfo.AmountDisplay = amountUGUI;
+                    break;
+                case ItemWeaponInfo amountInfo:
+                    amountInfo.AmountDisplay = amountUGUI;
+                    break;
+            }
             image.GetComponent<Canvas>().sortingLayerName = "UI Covering Map";
             // 게임오브젝트 이름 변경
             gameObject.name = info.name;
@@ -445,19 +461,19 @@ namespace Assets.Scripts.Items
                     // = 최대: 216 * 108
                     case EquipBodyType.Right:
                     case EquipBodyType.Left:
-                        if (l == w)
-                        {
-                            // 가로가 더 김
-                            // 가로: 216; k = 216 / w;
-                            // 세로: h * k = h * 216 / w
-                            objCollider.size = objTF.sizeDelta = new Vector2(216, h * 216 / w);
-                        }
-                        else
+                        if (l == h)
                         {
                             // 세로가 더 김
                             // 세로: 108; k = 108 / h
                             // 가로: w * = w * 108 / h
                             objCollider.size = objTF.sizeDelta = new Vector2(w * 108 / h, 108);
+                        }
+                        else
+                        {
+                            // 가로가 더 김
+                            // 가로: 216; k = 216 / w;
+                            // 세로: h * k = h * 216 / w
+                            objCollider.size = objTF.sizeDelta = new Vector2(216, h * 216 / w);
                         }
                         break;
                 }
