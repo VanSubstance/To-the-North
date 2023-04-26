@@ -7,12 +7,13 @@ namespace Assets.Scripts.Items
     public class ItemInventoryInfo
     {
         public ItemBaseInfo itemInfo;
+        // {row, col}
         public Vector2 pos;
-        public int x
+        public int row
         {
             get => (int)pos.x;
         }
-        public int y
+        public int col
         {
             get => (int)pos.y;
         }

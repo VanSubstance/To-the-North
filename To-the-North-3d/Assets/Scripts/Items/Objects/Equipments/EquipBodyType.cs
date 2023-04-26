@@ -7,7 +7,7 @@ namespace Assets.Scripts.Items
         Mask,
         Body,
         Leg,
-        Back,
+        BackPack,
 
         Right,
         Left,

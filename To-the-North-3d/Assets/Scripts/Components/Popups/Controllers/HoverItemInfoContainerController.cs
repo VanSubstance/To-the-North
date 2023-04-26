@@ -35,6 +35,7 @@ namespace Assets.Scripts.Components.Popups
             {
                 Destroy(gameObject);
             }
+            GetComponent<Canvas>().sortingLayerName = "UI Covering Map";
             gameObject.SetActive(false);
             isOccupied = false;
             prevH = 0;

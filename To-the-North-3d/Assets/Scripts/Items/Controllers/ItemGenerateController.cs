@@ -11,13 +11,13 @@ namespace Assets.Scripts.Items
         /// 아이템의 정보가 넘어왔을 때, 해당 아이템의 타입에 맞게끔 오브젝트 초기화
         /// </summary>
         /// <param name="itemInfo">아이템 정보</param>
-        public void InitItem(ItemBaseInfo itemInfo, ItemInventoryInfo inventoryInfo)
+        public void InitItem(ItemBaseInfo itemInfo, InventorySlotController slotToAttach = null)
         {
             try
             {
                 // 재료 아이템
                 ItemMaterialInfo info = (ItemMaterialInfo)itemInfo;
-                transform.AddComponent<ItemMaterialController>().InitInfo(info, inventoryInfo);
+                transform.AddComponent<ItemMaterialController>().InitInfo(info, slotToAttach);
             }
             catch (InvalidCastException)
             {
@@ -25,7 +25,7 @@ namespace Assets.Scripts.Items
                 {
                     // 장비 아이템
                     ItemEquipmentInfo info = (ItemEquipmentInfo)itemInfo;
-                    transform.AddComponent<ItemEquipmentController>().InitInfo(info, inventoryInfo);
+                    transform.AddComponent<ItemEquipmentController>().InitInfo(info, slotToAttach);
                 }
                 catch (InvalidCastException)
                 {
@@ -33,7 +33,7 @@ namespace Assets.Scripts.Items
                     {
                         // 소모성 아이템
                         ItemConsumableInfo info = (ItemConsumableInfo)itemInfo;
-                        transform.AddComponent<ItemConsumableController>().InitInfo(info, inventoryInfo);
+                        transform.AddComponent<ItemConsumableController>().InitInfo(info, slotToAttach);
                     }
                     catch (InvalidCastException)
                     {

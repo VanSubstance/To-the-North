@@ -135,7 +135,6 @@ namespace Assets.Scripts.Items
             {
                 info = null;
                 sprite.sprite = null;
-                Debug.Log("장비 뺌 or null 들어옴");
             }
             else
             {
@@ -146,12 +145,10 @@ namespace Assets.Scripts.Items
                     isAiming = false;
                     sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
                     delayAmongFire = info.delayAmongFire;
-                    Debug.Log("장비 착용함");
                 }
                 catch (InvalidCastException)
                 {
                     // 장비 정보가 오염됨
-                    Debug.Log("장비 정보가 오염 됨");
                 }
             }
         }
