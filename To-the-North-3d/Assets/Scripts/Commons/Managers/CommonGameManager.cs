@@ -142,7 +142,7 @@ public class CommonGameManager : MonoBehaviour
             Transform windowForPause = Instantiate(pauseWindowPrefab, uiTf);
 
             // 인벤토리 모달 추가
-            //Transform windowForInventory = Instantiate(inventoryWindowPrefab, uiTf);
+            Transform windowForInventory = Instantiate(inventoryWindowPrefab, uiTf);
             //windowForPause.localPosition = Vector3.zero;
             //keyAdded = uiTf.AddComponent<KeyToggleManager>();
             //keyAdded.InitContent(KeyCode.I, windowForInventory.GetComponent<IControllByKey>());

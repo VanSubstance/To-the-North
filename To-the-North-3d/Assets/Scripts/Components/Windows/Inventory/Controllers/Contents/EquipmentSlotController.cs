@@ -1,7 +1,6 @@
 using Assets.Scripts.Commons;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
-using UnityEngine;
 
 public class EquipmentSlotController : InventorySlotController
 {
