@@ -34,7 +34,7 @@ namespace Assets.Scripts.Items
 
         public override void GridOnCheckIfItemExist(InventorySlotController slotController)
         {
-            if (info.consumbableType == ConsumbableType.Bullet)
+            if (((ItemConsumableInfo)info).consumbableType == ConsumbableType.Bullet)
             {
                 Debug.Log("옮기는 것: 탄환");
                 Debug.Log("강 민 준:: 정확히 붙어있는 칸 빼고 다른 칸에 올리면 Null 뜸");

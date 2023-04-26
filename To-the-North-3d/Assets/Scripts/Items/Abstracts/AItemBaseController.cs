@@ -19,13 +19,13 @@ namespace Assets.Scripts.Items
 
         public int itemSizeRow
         {
-            set => baseInfo.size.x = value;
-            get => (int)baseInfo.size.x;
+            set => info.size.x = value;
+            get => (int)info.size.x;
         }
         public int itemSizeCol
         {
-            set => baseInfo.size.y = value;
-            get => (int)baseInfo.size.y;
+            set => info.size.y = value;
+            get => (int)info.size.y;
         }
         public bool isRotate, prevRotate;
 
@@ -43,14 +43,7 @@ namespace Assets.Scripts.Items
         private BoxCollider objCollider;
         private Image image;
 
-        public ItemBaseInfo baseInfo
-        {
-            get
-            {
-                return (ItemBaseInfo)(object)info;
-            }
-        }
-        public TItemInfo info;
+        public ItemBaseInfo info;
 
         private new void Update()
         {
@@ -76,16 +69,16 @@ namespace Assets.Scripts.Items
         private bool CheckItemAttachable(InventorySlotController destSlot)
         {
             if (destSlot == null) return false;
-            if (destSlot is EquipmentSlotController && baseInfo is ItemEquipmentInfo)
+            if (destSlot is EquipmentSlotController && info is ItemEquipmentInfo)
             {
                 // 슬롯칸이 아닌 장비칸임
-                return baseInfo.IsEquipment && !((EquipmentSlotController)destSlot).IsEquipped &&
+                return info.IsEquipment && !((EquipmentSlotController)destSlot).IsEquipped &&
                     (
                         (
-                            info is ItemArmorInfo &&  ((EquipmentSlotController)destSlot).equipType.Equals(((ItemArmorInfo)baseInfo).equipPartType)
+                            info is ItemArmorInfo && ((EquipmentSlotController)destSlot).equipType.Equals(((ItemArmorInfo)info).equipPartType)
                         ) ||
                         (
-                            info is ItemWeaponInfo && new EquipBodyType[] {EquipBodyType.Left, EquipBodyType.Right }.Contains(((EquipmentSlotController)destSlot).equipType)
+                            info is ItemWeaponInfo && new EquipBodyType[] { EquipBodyType.Left, EquipBodyType.Right }.Contains(((EquipmentSlotController)destSlot).equipType)
                         )
                     )
                     ;
@@ -175,7 +168,7 @@ namespace Assets.Scripts.Items
                     }
                     Vector3 pos = new Vector3(0, 0, -1);
                     objTF.localPosition = pos;
-                    ((EquipmentSlotController)attachSlot).EquipItemInfo = (ItemEquipmentInfo)baseInfo;
+                    ((EquipmentSlotController)attachSlot).EquipItemInfo = (ItemEquipmentInfo)info;
                     break;
                 case ContentType.None_L:
                 case ContentType.None_C:
@@ -282,7 +275,8 @@ namespace Assets.Scripts.Items
             InventorySlotController candidateSlot = null;
 
             // 장비 체크용
-            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out RaycastHit hitEquip, 2f, GlobalStatus.Constant.slotMask)) {
+            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out RaycastHit hitEquip, 2f, GlobalStatus.Constant.slotMask))
+            {
                 candidateSlot = hitEquip.transform.GetComponent<EquipmentSlotController>();
             }
             // 인벤토리 슬롯 체크용
@@ -351,27 +345,33 @@ namespace Assets.Scripts.Items
         /// 종류에 맞는 데이터 할당 함수
         /// </summary>
         /// <param name="_info">데이터</param>
-        public void InitInfo(TItemInfo _info, InventorySlotController slotToAttach = null)
+        public ItemInventoryInfo InitInfo(ItemBaseInfo _info, InventorySlotController slotToAttach = null, ContentType type = ContentType.Undefined)
         {
             Init();
             info = _info;
-            image.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(baseInfo));
+            image.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
             image.GetComponent<Canvas>().sortingLayerName = "UI Covering Map";
             // 게임오브젝트 이름 변경
-            gameObject.name = baseInfo.name;
+            gameObject.name = info.name;
             localRow = itemSizeRow;
             localCol = itemSizeCol;
             if (slotToAttach != null)
             {
+                // 자동 정렬이 아닌 경우
                 ItemAttach(slotToAttach);
+                return null;
             }
+            // 자동 정렬인 경우
+            SeekSlotAttachable(type, info, out InventorySlotController slotQualified, out ItemInventoryInfo ret);
+            ItemAttach(slotQualified);
+            return ret;
         }
 
         private void ResizeOnPurpose(InventorySlotController _slot = null)
         {
             if (_slot == null)
             {
-                image.rectTransform.sizeDelta = objCollider.size = objTF.sizeDelta = baseInfo.size * 50f;
+                image.rectTransform.sizeDelta = objCollider.size = objTF.sizeDelta = info.size * 50f;
                 return;
             }
             if (_slot is EquipmentSlotController)
@@ -386,7 +386,7 @@ namespace Assets.Scripts.Items
                     // = 최대 크기: 108 * 108
                     case EquipBodyType.Helmat:
                     case EquipBodyType.Mask:
-                        objCollider.size = objTF.sizeDelta = baseInfo.size * 110f;
+                        objCollider.size = objTF.sizeDelta = info.size * 110f;
                         break;
                     // 120 * 180
                     // = 최대: 108 * 162
@@ -398,12 +398,13 @@ namespace Assets.Scripts.Items
                             // 가로: 108; k = 108 / w;
                             // 세로: h * k = h * 108 / w
                             objCollider.size = objTF.sizeDelta = new Vector2(108, h * 108 / w);
-                        } else
+                        }
+                        else
                         {
                             // 세로가 더 김
                             // 세로: 162; k = 162 / h
                             // 가로: w * = w * 162 / h
-                            objCollider.size = objTF.sizeDelta = new Vector2(w * 162/ h, 162);
+                            objCollider.size = objTF.sizeDelta = new Vector2(w * 162 / h, 162);
                         }
                         break;
                     // 240 * 120
@@ -431,7 +432,7 @@ namespace Assets.Scripts.Items
             }
             ApplyActionForOnlyContentWithSlots(null, null, () =>
             {
-                image.rectTransform.sizeDelta = objCollider.size = objTF.sizeDelta = baseInfo.size * 50f;
+                image.rectTransform.sizeDelta = objCollider.size = objTF.sizeDelta = info.size * 50f;
             });
             switch (_slot.ContainerType)
             {
@@ -521,6 +522,60 @@ namespace Assets.Scripts.Items
                 });
                 return;
             }
+        }
+
+        /// <summary>
+        /// 위치가 정해지지 않은 아이템 설치 가능 위치 및 신규 인벤토리 객체 반환 함수
+        /// </summary>
+        /// <param name="type">컨텐츠 타입</param>
+        /// <param name="_info">아이템 정보</param>
+        /// <param name="slotQualified">반환할 설치 가능 슬롯</param>
+        /// <param name="newInventoryInfo">반환할 심규 인벤로티 객체</param>
+        private void SeekSlotAttachable(ContentType type, ItemBaseInfo _info, out InventorySlotController slotQualified, out ItemInventoryInfo newInventoryInfo)
+        {
+            InventorySlotController cur = null;
+            for (int i = 0; i < 14; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    switch (type)
+                    {
+                        case ContentType.Inventory:
+                            cur = WindowInventoryController.InventorySlots[i, j];
+                            if (CheckItemAttachable(cur))
+                            {
+                                // 남는칸 있음
+                                slotQualified = cur;
+                                newInventoryInfo = new()
+                                {
+                                    itemInfo = _info,
+                                    pos = new Vector2(cur.row, cur.column)
+                                };
+                                return;
+                            }
+                            continue;
+                        case ContentType.Looting:
+                            cur = WindowInventoryController.LootSlots[i, j];
+                            if (CheckItemAttachable(cur))
+                            {
+                                slotQualified = cur;
+                                newInventoryInfo = new()
+                                {
+                                    itemInfo = _info,
+                                    pos = new Vector2(cur.row, cur.column)
+                                };
+                                return;
+                            }
+                            continue;
+                        default:
+                            break;
+                    }
+                }
+            }
+            // 남는칸 없음
+            slotQualified = null;
+            newInventoryInfo = null;
+            return;
         }
 
         /// <summary>

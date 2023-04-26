@@ -1,13 +1,17 @@
 using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Items;
+using Assets.Scripts.Components.Windows.Inventory;
 using UnityEngine;
 
 namespace Assets.Scripts.Commons
 {
     internal class DataManager : MonoBehaviour
     {
-        [SerializeField]
+        // 위치를 지정하는 아이템 리스트
         public ItemInventoryInfo[] inventoryInfo;
+        [SerializeField]
+        // 자동 정렬되는 아이템 리스트
+        public ItemBaseInfo[] itemsAutoAlign;
         [SerializeField]
         public ItemArmorInfo helmat, mask, body, leg, back;
         [SerializeField]
@@ -29,9 +33,10 @@ namespace Assets.Scripts.Commons
                 return _instance;
             }
         }
-        private void Awake()
+        private void Start()
         {
             LoadInventory();
+            LoadInventoryWithAuto();
         }
 
         private void Update()
@@ -54,7 +59,15 @@ namespace Assets.Scripts.Commons
                     pos = inf.pos,
                     itemInfo = Instantiate(inf.itemInfo)
                 };
-                InGameStatus.Item.inventory.Add(c);
+                WindowInventoryController.Instance.GenerateItemObject(ContentType.Inventory, c);
+            }
+        }
+
+        private void LoadInventoryWithAuto()
+        {
+            foreach (ItemBaseInfo _info in itemsAutoAlign)
+            {
+                WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Inventory, _info);
             }
         }
 

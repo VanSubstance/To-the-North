@@ -73,6 +73,7 @@ public class CommonGameManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
+            StartCoroutine(GenerateInitialComponents());
         }
         else if (_instance != this)
         {
