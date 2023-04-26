@@ -8,7 +8,6 @@ public class InventorySlotController : MonoBehaviour
     public int row;
     public int column;
     public SlotType slotType;
-    public EquipBodyType equipType;
     protected Image slotImage;
 
     /// <summary>
@@ -128,7 +127,14 @@ public class InventorySlotController : MonoBehaviour
         itemTf = null;
         slotImage = GetComponent<Image>();
         slotImage.sprite = normal;
-        GetComponent<BoxCollider>().size = new Vector3(50, 50, 1);
+        if (transform.parent.GetComponent<GridLayoutGroup>())
+        {
+            GetComponent<BoxCollider>().size = new Vector3(50, 50, 1);
+        } else
+        {
+            Vector2 t = GetComponent<RectTransform>().sizeDelta;
+            GetComponent<BoxCollider>().size = new Vector3(t.x, t.y, 1);
+        }
         IsConsidered = false;
     }
 }

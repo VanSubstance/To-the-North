@@ -1,10 +1,32 @@
 using Assets.Scripts.Commons;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
+using UnityEngine;
 
 public class EquipmentSlotController : InventorySlotController
 {
     private ItemEquipmentInfo equipItem;
+    public ItemEquipmentInfo EquipItemInfo
+    {
+        set
+        {
+            if (value != null)
+            {
+                EquipItem(value);
+                return;
+            }
+            if (equipItem != null)
+            {
+                UnEquipItem();
+                return;
+            }
+        }
+        get
+        {
+            return equipItem;
+        }
+    }
+    public EquipBodyType equipType;
     public bool IsEquipped
     {
         get
@@ -13,9 +35,9 @@ public class EquipmentSlotController : InventorySlotController
         }
     }
 
-    public void EquipItem()
+    public void EquipItem(ItemEquipmentInfo _equipInfo)
     {
-        equipItem = ItemTf.GetChild(2).GetComponent<ItemEquipmentController>().info;
+        equipItem = _equipInfo;
         switch (equipItem)
         {
             case ItemArmorInfo armorInfo:

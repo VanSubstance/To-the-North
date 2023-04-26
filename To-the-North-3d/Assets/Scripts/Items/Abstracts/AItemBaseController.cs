@@ -1,5 +1,6 @@
 using Assets.Scripts.Components.Windows.Inventory;
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -75,10 +76,19 @@ namespace Assets.Scripts.Items
         private bool CheckItemAttachable(InventorySlotController destSlot)
         {
             if (destSlot == null) return false;
-            if (destSlot is EquipmentSlotController)
+            if (destSlot is EquipmentSlotController && baseInfo is ItemEquipmentInfo)
             {
                 // 슬롯칸이 아닌 장비칸임
-                return baseInfo.IsEquipment && !((EquipmentSlotController)destSlot).IsEquipped;
+                return baseInfo.IsEquipment && !((EquipmentSlotController)destSlot).IsEquipped &&
+                    (
+                        (
+                            info is ItemArmorInfo &&  ((EquipmentSlotController)destSlot).equipType.Equals(((ItemArmorInfo)baseInfo).equipPartType)
+                        ) ||
+                        (
+                            info is ItemWeaponInfo && new EquipBodyType[] {EquipBodyType.Left, EquipBodyType.Right }.Contains(((EquipmentSlotController)destSlot).equipType)
+                        )
+                    )
+                    ;
             }
             switch (destSlot.ContainerType)
             {
@@ -158,6 +168,15 @@ namespace Assets.Scripts.Items
             // 부착하려고 하는 컨테이너의 타입?
             switch (attachSlot.ContainerType)
             {
+                case ContentType.Equipment:
+                    if (isRotate)
+                    {
+                        ItemRotate();
+                    }
+                    Vector3 pos = new Vector3(0, 0, -1);
+                    objTF.localPosition = pos;
+                    ((EquipmentSlotController)attachSlot).EquipItemInfo = (ItemEquipmentInfo)baseInfo;
+                    break;
                 case ContentType.None_L:
                 case ContentType.None_C:
                 case ContentType.None_R:
@@ -177,6 +196,10 @@ namespace Assets.Scripts.Items
             });
             switch (curSlot.ContainerType)
             {
+                case ContentType.Equipment:
+                    ((EquipmentSlotController)curSlot).EquipItemInfo = null;
+                    curSlot.ItemTf = null;
+                    break;
                 case ContentType.None_L:
                 case ContentType.None_C:
                 case ContentType.None_R:
@@ -357,7 +380,7 @@ namespace Assets.Scripts.Items
                 w = objTF.sizeDelta.x;
                 h = objTF.sizeDelta.y;
                 l = Mathf.Max(w, h);
-                switch (_slot.equipType)
+                switch (((EquipmentSlotController)_slot).equipType)
                 {
                     // 120 * 120
                     // = 최대 크기: 108 * 108
