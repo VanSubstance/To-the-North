@@ -2,7 +2,6 @@ using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Detections;
 using Assets.Scripts.Creatures.Interfaces;
-using Assets.Scripts.Events;
 using Assets.Scripts.Items;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,6 +10,9 @@ namespace Assets.Scripts.Creatures.Bases
 {
     public abstract class AIBaseController : AbsCreatureBaseController, IInteractionWithSight
     {
+
+        [SerializeField]
+        protected Transform visualTf;
         [SerializeField]
         private CreatureInfo info;
 

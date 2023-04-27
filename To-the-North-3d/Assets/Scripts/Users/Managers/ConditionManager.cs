@@ -54,5 +54,11 @@ namespace Assets.Scripts.Users
             controllers[targetType].transform.SetParent(visualizationTf, false);
             controllers[targetType].gameObject.SetActive(true);
         }
+
+        public void AsleepCondition(ConditionType targetType)
+        {
+            controllers[targetType].transform.SetParent(sleepTf, false);
+            controllers[targetType].gameObject.SetActive(false);
+        }
     }
 }

@@ -1,5 +1,6 @@
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Controllers;
+using Assets.Scripts.Components.Progress;
 using Assets.Scripts.Items;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace Assets.Scripts.Users
 {
     public class UserBaseController : AbsCreatureBaseController
     {
+        public ProgressBarSpriteController progress;
 
         public Vector3 position
         {
@@ -61,6 +63,15 @@ namespace Assets.Scripts.Users
             tickHealthCondition = 0;
         }
 
+        private void Start()
+        {
+            // 테스트 효과 활성화
+            Debug.Log("테스트 효과 활성화");
+            OccurCondition(ConditionType.Bleeding_Heavy);
+            OccurCondition(ConditionType.Bleeding_Light);
+            OccurCondition(ConditionType.Fracture);
+        }
+
         private void Update()
         {
             tickHealthCondition += Time.deltaTime;
@@ -106,11 +117,6 @@ namespace Assets.Scripts.Users
             }
             // 상태 이상 부여 심사
 
-            // 테스트 효과 활성화
-            OccurCondition(ConditionType.Bleeding_Heavy);
-            OccurCondition(ConditionType.Bleeding_Light);
-            OccurCondition(ConditionType.Fracture);
-
             if (damage[1] > 0)
             {
                 // 관통당함
@@ -152,6 +158,16 @@ namespace Assets.Scripts.Users
         {
             InGameStatus.User.conditions[targetCondition]++;
             ConditionManager.Instance.AwakeCondition(targetCondition);
+        }
+
+        public void CureCondition(ConditionType targetCondition, int cnt)
+        {
+            InGameStatus.User.conditions[targetCondition] -= cnt;
+            if (InGameStatus.User.conditions[targetCondition] <= 0) 
+            {
+                InGameStatus.User.conditions[targetCondition] = 0;
+                ConditionManager.Instance.AsleepCondition(targetCondition);
+            }
         }
     }
 }

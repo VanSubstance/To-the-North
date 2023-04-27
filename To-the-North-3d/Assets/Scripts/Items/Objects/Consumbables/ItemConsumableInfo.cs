@@ -23,6 +23,16 @@ namespace Assets.Scripts.Items
         /// </summary>
         private int amountCurrent = 60;
 
+        [SerializeField]
+        protected int secondConsume;
+        public int SecondConsume
+        {
+            get
+            {
+                return secondConsume;
+            }
+        }
+
         /// <summary>
         /// 표기되는 잔여량
         /// </summary>
@@ -54,6 +64,11 @@ namespace Assets.Scripts.Items
                     amountDisplay.gameObject.SetActive(true);
                 }
             }
+        }
+
+        public void Use(int quantity)
+        {
+            AmountCount -= quantity;
         }
     }
 }

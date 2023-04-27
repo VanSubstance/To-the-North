@@ -54,6 +54,7 @@ MonoBehaviour:
   panelForHpSp: {fileID: 3041732497763416503, guid: f2a42ee29987fc24885b1c99d9609683, type: 3}
   panelForCondition: {fileID: 494773574426074147, guid: 573efa761f8c06342885d9a318ad1a5d, type: 3}
   panelForWelfare: {fileID: 3041732497763416503, guid: 93767e255079d3840a00e3319de57b6c, type: 3}
+  panelForQuick: {fileID: 116562907496683509, guid: a02aa0803f9149a4ca65e0a4ae6c5dd9, type: 3}
   projectileManager: {fileID: 6797039164899244637, guid: 0ff4ad75001fbb94c8df1644f56e58a5, type: 3}
   trajectoryManager: {fileID: 1156111675789889954, guid: 7cd18979ce57a5a47aa4b489829589dd, type: 3}
   screenHitManager: {fileID: 2903384632904630330, guid: fe2e1c5a5ac949e49ad1d8490e15af12, type: 3}
@@ -102,6 +103,7 @@ MonoBehaviour:
     pos: {x: 5, y: 4}
   - itemInfo: {fileID: 11400000, guid: d221bc8af54aedd48bd56169c0d48950, type: 2}
     pos: {x: 0, y: 7}
+  itemsAutoAlign: []
   helmat: {fileID: 0}
   mask: {fileID: 0}
   body: {fileID: 0}

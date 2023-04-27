@@ -1,5 +1,5 @@
-using Assets.Scripts.Items;
 using Assets.Scripts.Components.Windows.Inventory;
+using Assets.Scripts.Items;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +7,6 @@ public class InventorySlotController : MonoBehaviour
 {
     public int row;
     public int column;
-    public SlotType slotType;
     protected Image slotImage;
 
     /// <summary>
@@ -129,7 +128,13 @@ public class InventorySlotController : MonoBehaviour
         slotImage.sprite = normal;
         if (transform.parent.GetComponent<GridLayoutGroup>())
         {
-            GetComponent<BoxCollider>().size = new Vector3(50, 50, 1);
+            if (transform.CompareTag("HotKeySlot"))
+            {
+                GetComponent<BoxCollider>().size = new Vector3(100, 100, 1);
+            } else
+            {
+                GetComponent<BoxCollider>().size = new Vector3(50, 50, 1);
+            }
         } else
         {
             Vector2 t = GetComponent<RectTransform>().sizeDelta;
@@ -137,14 +142,4 @@ public class InventorySlotController : MonoBehaviour
         }
         IsConsidered = false;
     }
-}
-
-public enum SlotType
-{
-    Inventory,
-    Rooting,
-    Equipment,
-    Shop,
-    Quick,
-    Ground
 }

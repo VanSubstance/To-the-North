@@ -14,5 +14,29 @@ namespace Assets.Scripts.Items
                 return ConsumbableType.Food;
             }
         }
+
+        [SerializeField]
+        private int hunger, thirst, temperature;
+        public int Hunger
+        {
+            get
+            {
+                return hunger;
+            }
+        }
+        public int Thirst
+        {
+            get
+            {
+                return thirst;
+            }
+        }
+        public int Temperature
+        {
+            get
+            {
+                return temperature;
+            }
+        }
     }
 }

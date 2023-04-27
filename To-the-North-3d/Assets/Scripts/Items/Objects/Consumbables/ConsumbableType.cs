@@ -5,5 +5,7 @@ namespace Assets.Scripts.Items
         Bullet,
 
         Food,
+
+        Medicine,
     }
 }

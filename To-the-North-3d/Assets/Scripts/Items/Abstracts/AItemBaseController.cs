@@ -73,19 +73,25 @@ namespace Assets.Scripts.Items
         private bool CheckItemAttachable(InventorySlotController destSlot)
         {
             if (destSlot == null) return false;
-            if (destSlot is EquipmentSlotController && info is ItemEquipmentInfo)
+            if (destSlot is EquipmentSlotController eSlot && info is ItemEquipmentInfo eInfo)
             {
                 // 슬롯칸이 아닌 장비칸임
-                return info.IsEquipment && !((EquipmentSlotController)destSlot).IsEquipped &&
+                return info.IsEquipment && !eSlot.IsEquipped &&
                     (
                         (
-                            info is ItemArmorInfo && ((EquipmentSlotController)destSlot).equipType.Equals(((ItemArmorInfo)info).equipPartType)
+                            eInfo is ItemArmorInfo aInfo && eSlot.equipType.Equals(aInfo.equipPartType)
                         ) ||
                         (
-                            info is ItemWeaponInfo && new EquipBodyType[] { EquipBodyType.Left, EquipBodyType.Right }.Contains(((EquipmentSlotController)destSlot).equipType)
+                            eInfo is ItemWeaponInfo wInfo && new EquipBodyType[] { EquipBodyType.Left, EquipBodyType.Right }.Contains(eSlot.equipType)
                         )
                     )
                     ;
+            }
+            if (destSlot is QuickSlotController qSlot && info.IsQuickable && !qSlot.IsEquipped)
+            {
+                // 퀵슬롯 등록 가능한 아이템 + 퀵슬롯 + 퀵슬롯 비었음
+                // = 등록 가능
+                return true;
             }
             switch (destSlot.ContainerType)
             {
@@ -116,7 +122,8 @@ namespace Assets.Scripts.Items
             {
                 _slot.IsConsidered = isOn;
             });
-            if (_targetSlot is EquipmentSlotController)
+            if (_targetSlot is EquipmentSlotController || 
+                _targetSlot is QuickSlotController)
             {
                 _targetSlot.IsConsidered = isOn;
             }
@@ -152,7 +159,8 @@ namespace Assets.Scripts.Items
                 objTF.localPosition = pos;
             });
             // 부착하려고 하는 컨테이너의 타입?
-            if (attachSlot is EquipmentSlotController equipSlot)
+            if (attachSlot is EquipmentSlotController equipSlot ||
+                attachSlot is QuickSlotController)
             {
                 if (isRotate)
                 {
@@ -285,7 +293,7 @@ namespace Assets.Scripts.Items
 
             InventorySlotController candidateSlot = null;
 
-            // 장비 체크용
+            // 중앙 레이 = 장비 체크용
             if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out RaycastHit hitEquip, 2f, GlobalStatus.Constant.slotMask))
             {
                 candidateSlot = hitEquip.transform.GetComponent<EquipmentSlotController>();
@@ -399,62 +407,60 @@ namespace Assets.Scripts.Items
 
         private void ResizeOnPurpose(InventorySlotController _slot = null)
         {
+            float w, h, l;
+            w = objTF.sizeDelta.x;
+            h = objTF.sizeDelta.y;
+            l = Mathf.Max(w, h);
+            void ApplyResize(int maxW, int maxH)
+            {
+                if (l == w)
+                {
+                    // 가로가 더 김
+                    // 가로: 108; k = 108 / w;
+                    // 세로: h * k = h * 108 / w
+                    objCollider.size = objTF.sizeDelta = new Vector2(maxW, h * maxW / w);
+                }
+                else
+                {
+                    // 세로가 더 김
+                    // 세로: 162; k = 162 / h
+                    // 가로: w * = w * 162 / h
+                    objCollider.size = objTF.sizeDelta = new Vector2(w * maxH / h, maxH);
+                }
+            }
             if (_slot == null)
             {
-                image.rectTransform.sizeDelta = objCollider.size = objTF.sizeDelta = info.size * 50f;
+                // = 최대 크기: 50 * 50
+                ApplyResize(50, 50);
                 return;
             }
-            if (_slot is EquipmentSlotController)
+            if (_slot is QuickSlotController hSlot)
             {
-                float w, h, l;
-                w = objTF.sizeDelta.x;
-                h = objTF.sizeDelta.y;
-                l = Mathf.Max(w, h);
-                switch (((EquipmentSlotController)_slot).equipType)
+                // = 최대 크기: 70 * 70
+                ApplyResize(70, 70);
+                return;
+            }
+            if (_slot is EquipmentSlotController eSlot)
+            {
+                switch (eSlot.equipType)
                 {
                     // 120 * 120
                     // = 최대 크기: 108 * 108
                     case EquipBodyType.Helmat:
                     case EquipBodyType.Mask:
-                        objCollider.size = objTF.sizeDelta = info.size * 110f;
+                        ApplyResize(108, 108);
                         break;
                     // 120 * 180
                     // = 최대: 108 * 162
                     case EquipBodyType.Body:
                     case EquipBodyType.BackPack:
-                        if (l == w)
-                        {
-                            // 가로가 더 김
-                            // 가로: 108; k = 108 / w;
-                            // 세로: h * k = h * 108 / w
-                            objCollider.size = objTF.sizeDelta = new Vector2(108, h * 108 / w);
-                        }
-                        else
-                        {
-                            // 세로가 더 김
-                            // 세로: 162; k = 162 / h
-                            // 가로: w * = w * 162 / h
-                            objCollider.size = objTF.sizeDelta = new Vector2(w * 162 / h, 162);
-                        }
+                        ApplyResize(108, 162);
                         break;
                     // 240 * 120
                     // = 최대: 216 * 108
                     case EquipBodyType.Right:
                     case EquipBodyType.Left:
-                        if (l == h)
-                        {
-                            // 세로가 더 김
-                            // 세로: 108; k = 108 / h
-                            // 가로: w * = w * 108 / h
-                            objCollider.size = objTF.sizeDelta = new Vector2(w * 108 / h, 108);
-                        }
-                        else
-                        {
-                            // 가로가 더 김
-                            // 가로: 216; k = 216 / w;
-                            // 세로: h * k = h * 216 / w
-                            objCollider.size = objTF.sizeDelta = new Vector2(216, h * 216 / w);
-                        }
+                        ApplyResize(216, 108);
                         break;
                 }
                 image.rectTransform.sizeDelta = objCollider.size;
