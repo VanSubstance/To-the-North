@@ -5,7 +5,7 @@ namespace Assets.Scripts.Items
     public abstract class AbsItemController : MonoBehaviour
     {
         protected KeyCode keyToPress = KeyCode.LeftControl;
-        protected float timeHover = .5f, timeClick = 0.5f;
+        protected float timeHover = 0, timeClick = 0.5f;
         protected bool isMouseDown = false;
         private float liveTimeHover = 0, liveTimeClick = 0;
         private bool

@@ -1,3 +1,4 @@
+using Assets.Scripts.Components.Infos;
 using Assets.Scripts.Components.Popups;
 using Assets.Scripts.Components.Windows.Inventory;
 using UnityEngine;
@@ -16,6 +17,20 @@ namespace Assets.Scripts.Items
             }
         }
 
+        private void ReplaceWithQuickSlot(QuickSlotController qSlot)
+        {
+            if (qSlot.IsEquipped)
+            {
+                AItemBaseController b = qSlot.AttachedInfo.Ctrl;
+                // 기존 퀵슬롯 아이템 인벤토리로 보내기
+                b.ItemDetach();
+                b.SendToInventory();
+            }
+            // 아이템 퀵슬롯에 장착
+            ItemDetach();
+            ItemAttach(qSlot);
+        }
+
         protected override void OnDoubleClick()
         {
             CommonGameManager.Instance.ApplyConsumable(Info);
@@ -24,6 +39,28 @@ namespace Assets.Scripts.Items
         protected override void OnHover()
         {
             HoverItemInfoContainerController.Instance.OnHoverEnter(info);
+            if (Info.consumableType == ConsumbableType.Bullet) return;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (Input.GetKey(KeyCode.Alpha1))
+                {
+                    ReplaceWithQuickSlot(UIQuickController.Instance.Quicks[0]);
+                    HoverItemInfoContainerController.Instance.OnHoverExit();
+                    return;
+                }
+                if (Input.GetKey(KeyCode.Alpha2))
+                {
+                    ReplaceWithQuickSlot(UIQuickController.Instance.Quicks[1]);
+                    HoverItemInfoContainerController.Instance.OnHoverExit();
+                    return;
+                }
+                if (Input.GetKey(KeyCode.Alpha3))
+                {
+                    ReplaceWithQuickSlot(UIQuickController.Instance.Quicks[2]);
+                    HoverItemInfoContainerController.Instance.OnHoverExit();
+                    return;
+                }
+            }
         }
 
         protected override void OnHoverExit()
@@ -54,14 +91,7 @@ namespace Assets.Scripts.Items
                 case ConsumbableType.Medicine:
                     if (_targetItemInfo.Ctrl.CurSlot is QuickSlotController qSlot)
                     {
-                        // 퀵슬롯에 옮겼는데 퀵슬롯에 기존 아이템이 있다
-                        // = 두개 자리 바꾸기
-                        // 1. 기존 퀵슬롯 아이템 해제
-                        _targetItemInfo.Ctrl.ItemDetach();
-                        // 2. 인벤토리에 자동정렬로 넣기
-                        _targetItemInfo.Ctrl.SendToInventory();
-                        // 3. 현재 이 아이템 퀵슬롯에 등록
-                        ItemAttach(qSlot);
+                        ReplaceWithQuickSlot(qSlot);
                         return false;
                     }
                     return true;

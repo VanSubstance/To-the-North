@@ -5,6 +5,7 @@ namespace Assets.Scripts.Components.Infos
 {
     public class UIQuickController : MonoBehaviour
     {
+        private bool isCtrlPressed;
         private QuickSlotController[] quicks;
         public QuickSlotController[] Quicks
         {
@@ -15,6 +16,7 @@ namespace Assets.Scripts.Components.Infos
         }
         private void Awake()
         {
+            isCtrlPressed = false;
             quicks = new QuickSlotController[transform.childCount];
             for (int i = 0; i < transform.childCount; i++)
             {
@@ -40,6 +42,7 @@ namespace Assets.Scripts.Components.Infos
 
         private void Update()
         {
+            if (Input.GetKey(KeyCode.LeftControl)) return;
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 // 1번 핫키 사용

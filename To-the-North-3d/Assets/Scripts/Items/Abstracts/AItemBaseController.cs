@@ -176,6 +176,7 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void ItemDetach()
         {
+            if (curSlot == null) return;
             info.InvenInfo = null;
             ApplyActionForOnlyContentWithSlots(curSlot, (_slot) =>
             {
