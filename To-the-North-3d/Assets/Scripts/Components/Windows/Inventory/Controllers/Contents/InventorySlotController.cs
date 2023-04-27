@@ -11,15 +11,15 @@ public class InventorySlotController : MonoBehaviour
     protected Image slotImage;
 
     /// <summary>
-    /// ¾ÆÀÌÅÛ ¿ÀºêÁ§Æ®
-    /// ¾ÆÀÌÅÛÀÌ Á¤È®È÷ ÇØ´ç ½½·Ô¿¡ ºÎÂøµÇ¾îÀÖÀ» ¶§: ¾ÆÀÌÅÛ TransformÀ» º¸°ü
-    /// ¾ÆÀÌÅÛÀÌ ´Ù¸¥ ½½·Ô¿¡ ºÎÅ¹µÇ¾îÀÖ´Âµ¥ ÇØ´ç ½½·ÔÀ» µ¤À» ¶§: Á¤È®È÷ ºÎÂøµÇ¾îÀÖ´Â ½½·ÔÀÇ TransformÀ» º¸°ü 
+    /// ì•„ì´í…œ ì˜¤ë¸Œì íŠ¸
+    /// ì•„ì´í…œì´ ì •í™•íˆ í•´ë‹¹ ìŠ¬ë¡¯ì— ë¶€ì°©ë˜ì–´ìˆì„ ë•Œ: ì•„ì´í…œ Transformì„ ë³´ê´€
+    /// ì•„ì´í…œì´ ë‹¤ë¥¸ ìŠ¬ë¡¯ì— ë¶€íƒë˜ì–´ìˆëŠ”ë° í•´ë‹¹ ìŠ¬ë¡¯ì„ ë®ì„ ë•Œ: ì •í™•íˆ ë¶€ì°©ë˜ì–´ìˆëŠ” ìŠ¬ë¡¯ì˜ Transformì„ ë³´ê´€ 
     /// </summary>
     private Transform itemTf;
 
     /// <summary>
-    /// ÇöÀç ÇØ´ç ½½·Ô¿¡ ºÎÂøµÇ¾îÀÖ´Â/µ¤´Â ¾ÆÀÌÅÛ ¿ÀºêÁ§Æ® ¹İÈ¯
-    /// ¾øÀ» ½Ã: null
+    /// í˜„ì¬ í•´ë‹¹ ìŠ¬ë¡¯ì— ë¶€ì°©ë˜ì–´ìˆëŠ”/ë®ëŠ” ì•„ì´í…œ ì˜¤ë¸Œì íŠ¸ ë°˜í™˜
+    /// ì—†ì„ ì‹œ: null
     /// </summary>
     public Transform ItemTf
     {
@@ -51,7 +51,7 @@ public class InventorySlotController : MonoBehaviour
         get
         {
             if (ItemTf == null) return null;
-            return ItemTf.GetComponent<AItemBaseController<object>>().info;
+            return ItemTf.GetComponent<AItemBaseController>().info;
         }
     }
 
@@ -107,7 +107,7 @@ public class InventorySlotController : MonoBehaviour
     }
 
     /// <summary>
-    /// °İÀÚ ÄÁÅ×ÀÌ³Ê¿¡¼­ ÇØ´ç Ä­ÀÇ row, column °ªÀ» ¼±¾ğÇÏ´Â ÇÔ¼ö
+    /// ê²©ì ì»¨í…Œì´ë„ˆì—ì„œ í•´ë‹¹ ì¹¸ì˜ row, column ê°’ì„ ì„ ì–¸í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
     /// <param name="_r">row</param>
     /// <param name="_c">column</param>
@@ -119,7 +119,7 @@ public class InventorySlotController : MonoBehaviour
     }
 
     /// <summary>
-    /// ÃÊ±âÈ­ ÇÔ¼ö
+    /// ì´ˆê¸°í™” í•¨ìˆ˜
     /// </summary>
     private void Init()
     {

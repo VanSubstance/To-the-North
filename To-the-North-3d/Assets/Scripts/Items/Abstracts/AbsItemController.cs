@@ -14,6 +14,12 @@ namespace Assets.Scripts.Items
             isMouseClickedJustNow = false,
             isHovering = false;
 
+        /// <summary>
+        /// 마우스 이벤트가 중간에 종료되어야 할 때 후속 이벤트 방지용
+        /// </summary>
+        /// 
+        private bool IsMouseEventDone;
+
         private void OnDisable()
         {
             isKeyPressed = false;
@@ -21,6 +27,7 @@ namespace Assets.Scripts.Items
             isMouseDown = false;
             isMouseClickedJustNow = false;
             isHovering = false;
+            IsMouseEventDone = false;
         }
 
         protected void Update()
@@ -51,11 +58,20 @@ namespace Assets.Scripts.Items
         {
             liveTimeClick = 0f;
             isMouseDown = true;
+            IsMouseEventDone = false;
+            if (isKeyPressed)
+            {
+                // 키를 눌렀다 = 후속 함수 전부 블락
+                IsMouseEventDone = true;
+                OnDownWithKeyPress();
+                return;
+            }
             OnDown();
         }
 
         private void OnMouseDrag()
         {
+            if (IsMouseEventDone) return;
             if (isMouseDown)
             {
                 OnDraging();
@@ -65,6 +81,11 @@ namespace Assets.Scripts.Items
         private void OnMouseUp()
         {
             isMouseDown = false;
+            if (IsMouseEventDone)
+            {
+                IsMouseEventDone = false;
+                return;
+            }
             OnUp();
             if (liveTimeClick < timeClick)
             {
@@ -77,6 +98,7 @@ namespace Assets.Scripts.Items
                 }
                 isMouseClickedJustNow = true;
             }
+            IsMouseEventDone = false;
         }
 
         private void TrackHover()
@@ -126,6 +148,11 @@ namespace Assets.Scripts.Items
         /// 드래그중에 실행되어야 할 함수
         /// </summary>
         protected abstract void OnDraging();
+        /// <summary>
+        /// 특정 키 누른 상태 + 마우스 버튼을 눌렀을 때 실행되어야 하는 함수:
+        /// 해당 함수가 실행되면 후속 마우스 함수들은 실행되지 않는다
+        /// </summary>
+        protected abstract void OnDownWithKeyPress();
         /// <summary>
         /// 마우스 버튼을 눌렀을 때 실행되어야 할 함수 (onMouseDown)
         /// </summary>

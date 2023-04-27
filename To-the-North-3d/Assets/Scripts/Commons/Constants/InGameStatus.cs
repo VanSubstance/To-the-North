@@ -195,7 +195,10 @@ public static class InGameStatus
             {
                 if (inven.itemInfo is ItemBulletInfo)
                 {
-                    if (((ItemBulletInfo)inven.itemInfo).AmountCount > 0)
+                    if  (
+                            ((ItemBulletInfo)inven.itemInfo).bulletType.Equals(type) &&
+                            ((ItemBulletInfo)inven.itemInfo).AmountCount > 0
+                        )
                     {
                         return (ItemBulletInfo)inven.itemInfo;
                     }

@@ -12,8 +12,9 @@ namespace Assets.Scripts.Events.Controllers
     {
         private AIBaseController baseController;
         private List<ConvInfo> convInfos;
-        private void Awake()
+        private new void Awake()
         {
+            base.Awake();
             baseController = GetComponent<AIBaseController>();
             convInfos = new List<ConvInfo>() {
                     new ConvInfo(

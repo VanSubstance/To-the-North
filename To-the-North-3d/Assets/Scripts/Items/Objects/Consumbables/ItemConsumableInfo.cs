@@ -23,6 +23,9 @@ namespace Assets.Scripts.Items
         /// </summary>
         private int amountCurrent = 60;
 
+        /// <summary>
+        /// 표기되는 잔여량
+        /// </summary>
         public int AmountCount
         {
             get
