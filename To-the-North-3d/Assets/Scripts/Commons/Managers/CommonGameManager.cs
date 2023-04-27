@@ -1,13 +1,12 @@
 using System.Collections;
+using Assets.Scripts.Commons;
+using Assets.Scripts.Components.Infos;
+using Assets.Scripts.Users;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
-using Unity.VisualScripting;
-using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Components.Infos;
-using Assets.Scripts.Commons;
-using Assets.Scripts.Users;
 
 public class CommonGameManager : MonoBehaviour
 {
@@ -73,6 +72,7 @@ public class CommonGameManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
+            StartCoroutine(GenerateInitialComponents());
         }
         else if (_instance != this)
         {

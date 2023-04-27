@@ -1,4 +1,3 @@
-using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Items;

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Assets.Scripts.Items;
 
 namespace Assets.Scripts.Components.Windows.Inventory
@@ -39,6 +39,18 @@ namespace Assets.Scripts.Components.Windows.Inventory
         {
             Init();
             gen.InitItem(_info.itemInfo, slots[_info.row, _info.col]);
+        }
+
+        /// <summary>
+        /// 아이템 오브젝트 생성 함수:
+        /// 슬롯 없음
+        /// </summary>
+        /// <param name="_info">아이템 정보</param>
+        public ItemInventoryInfo GenerateItemWithAuto(ItemGenerateController gen, ItemBaseInfo _info = null, ContentType _type = ContentType.Undefined)
+        {
+            Init();
+            // 슬롯 지정이 없을 경우 = 자동 정렬 필요
+            return gen.InitItem(_info, type: _type);
         }
     }
 }

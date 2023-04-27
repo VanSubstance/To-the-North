@@ -1,7 +1,7 @@
 using System.Linq;
 using Assets.Scripts.Battles;
-using Assets.Scripts.Commons.Constants;
 using UnityEngine;
+using TMPro;
 
 namespace Assets.Scripts.Items
 {
@@ -28,6 +28,7 @@ namespace Assets.Scripts.Items
         private int powerPenetration, powerImpact;
         [SerializeField]
         private TrajectoryType trajectoryType;
+        [SerializeField]
         private ItemMagazineInfo magazine;
 
         public float PowerKnockback
@@ -61,6 +62,14 @@ namespace Assets.Scripts.Items
             get
             {
                 return powerImpact >= 0 ? powerImpact : 0;
+            }
+        }
+        public TextMeshProUGUI AmountDisplay
+        {
+            set
+            {
+                if (magazine)
+                    magazine.AmountDisplay = value;
             }
         }
 

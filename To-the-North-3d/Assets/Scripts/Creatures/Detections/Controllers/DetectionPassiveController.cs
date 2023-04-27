@@ -1,8 +1,7 @@
-using Assets.Scripts.Commons.Constants;
-using Assets.Scripts.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Events;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Detections

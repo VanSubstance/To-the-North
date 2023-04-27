@@ -1,5 +1,4 @@
-
-using System;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -16,5 +15,42 @@ namespace Assets.Scripts.Items
         }
         [HideInInspector]
         public ConsumbableType consumbableType;
+
+        [SerializeField]
+        /// <summary>
+        /// 현재 잔여량
+        /// 최대치: 60
+        /// </summary>
+        private int amountCurrent = 60;
+
+        public int AmountCount
+        {
+            get
+            {
+                return amountCurrent;
+            }
+            set
+            {
+                amountCurrent = value >= 0 ? value : 0;
+                if (amountDisplay)
+                {
+                    amountDisplay.text = amountCurrent.ToString();
+                }
+            }
+        }
+
+        private TextMeshProUGUI amountDisplay;
+        public TextMeshProUGUI AmountDisplay
+        {
+            set
+            {
+                amountDisplay = value;
+                if (amountDisplay)
+                {
+                    amountDisplay.text = amountCurrent.ToString();
+                    amountDisplay.gameObject.SetActive(true);
+                }
+            }
+        }
     }
 }

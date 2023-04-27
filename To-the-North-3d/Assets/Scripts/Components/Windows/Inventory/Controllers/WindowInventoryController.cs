@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Assets.Scripts.Commons.Constants;
+using System.Collections.Generic;
 using Assets.Scripts.Items;
 using UnityEngine;
 
@@ -32,6 +31,14 @@ namespace Assets.Scripts.Components.Windows.Inventory
             get
             {
                 return ((ContentSlotController)contentByType[ContentType.Looting]).slots;
+            }
+        }
+
+        public static ContentEquipmentController equipmentCtrl
+        {
+            get
+            {
+                return (ContentEquipmentController)contentByType[ContentType.Equipment];
             }
         }
 
@@ -126,7 +133,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         /// 아이템 오브젝트 생성 함수
         /// </summary>
         /// <param name="_type">해당 컨테이너: 인벤토리? 루팅? ...</param>
-        /// <param name="_info">생성할 아이템 정보</param>
+        /// <param name="_info">생성할 아이템 정보: 위치 정보 O</param>
         public void GenerateItemObject(ContentType _type, ItemInventoryInfo _info)
         {
             ItemGenerateController g = Instantiate(itemPrefab, itemTf).GetComponent<ItemGenerateController>();
@@ -143,7 +150,39 @@ namespace Assets.Scripts.Components.Windows.Inventory
                 case ContentType.None_R:
                 case ContentType.Undefined:
                     break;
+                case ContentType.Equipment:
+                    break;
             }
+            InGameStatus.Item.inventory.Add(_info);
+        }
+
+        /// <summary>
+        /// 아이템 오브젝트 생성 함수:
+        /// 위치 데이터 없음 = 자동 정렬
+        /// </summary>
+        /// <param name="_Type">목표 컨테이너</param>
+        /// <param name="_info">생성할 아이템 정보</param>
+        public void GenerateItemObjectWithAuto(ContentType _type, ItemBaseInfo _info)
+        {
+            ItemGenerateController g = Instantiate(itemPrefab, itemTf).GetComponent<ItemGenerateController>();
+            ItemInventoryInfo s = null;
+            switch (_type)
+            {
+                case ContentType.Inventory:
+                    s = ((ContentSlotController)contentByType[ContentType.Inventory]).GenerateItemWithAuto(g, _info, ContentType.Inventory);
+                    break;
+                case ContentType.Looting:
+                    s = ((ContentSlotController)contentByType[ContentType.Looting]).GenerateItemWithAuto(g, _info, ContentType.Looting);
+                    break;
+                case ContentType.None_L:
+                case ContentType.None_C:
+                case ContentType.None_R:
+                case ContentType.Undefined:
+                    break;
+                case ContentType.Equipment:
+                    break;
+            }
+            InGameStatus.Item.inventory.Add(s);
         }
 
         private enum Side

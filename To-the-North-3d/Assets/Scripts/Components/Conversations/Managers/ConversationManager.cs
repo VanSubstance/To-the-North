@@ -1,9 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Commons.Constants;
 using Assets.Scripts.Components.Conversations.Controllers;
 using Assets.Scripts.Components.Conversations.Objects;
 using UnityEngine;

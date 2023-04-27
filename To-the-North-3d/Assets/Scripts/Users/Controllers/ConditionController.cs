@@ -1,9 +1,8 @@
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using Assets.Scripts.Commons.Constants;
 
 namespace Assets.Scripts.Users
 {

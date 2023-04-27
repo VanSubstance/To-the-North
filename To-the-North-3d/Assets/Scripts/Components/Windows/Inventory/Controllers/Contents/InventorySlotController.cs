@@ -51,7 +51,7 @@ public class InventorySlotController : MonoBehaviour
         get
         {
             if (ItemTf == null) return null;
-            return ItemTf.GetComponent<AItemBaseController<object>>().baseInfo;
+            return ItemTf.GetComponent<AItemBaseController<object>>().info;
         }
     }
 

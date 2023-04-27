@@ -1,4 +1,3 @@
-﻿using Assets.Scripts.Commons.Constants;
 using UnityEngine;
 
 namespace Assets.Scripts.Components.Windows

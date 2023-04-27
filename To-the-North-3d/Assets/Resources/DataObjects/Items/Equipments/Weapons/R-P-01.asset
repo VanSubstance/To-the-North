@@ -33,3 +33,4 @@ MonoBehaviour:
   powerPenetration: 13
   powerImpact: 3
   trajectoryType: 0
+  magazine: {fileID: 0}

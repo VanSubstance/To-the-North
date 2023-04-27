@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 namespace Assets.Scripts.Items
 {
@@ -18,8 +19,38 @@ namespace Assets.Scripts.Items
         [SerializeField]
         private int maxCount;
         private int curCount = 0;
+        private int CurCount
+        {
+
+            get
+            {
+                return curCount;
+            }
+            set
+            {
+                curCount = value;
+                if (amountDisplay)
+                {
+                    amountDisplay.text = curCount.ToString();
+                }
+            }
+        }
         private Queue<ItemBulletInfo> bullets = new Queue<ItemBulletInfo>();
         private ItemBulletInfo currentBullet;
+
+        private TextMeshProUGUI amountDisplay;
+        public TextMeshProUGUI AmountDisplay
+        {
+            set
+            {
+                amountDisplay = value;
+                if (amountDisplay)
+                {
+                    amountDisplay.text = curCount.ToString();
+                    amountDisplay.gameObject.SetActive(true);
+                }
+            }
+        }
 
         /// <summary>
         /// 장전 함수
@@ -30,14 +61,14 @@ namespace Assets.Scripts.Items
         {
             if (bulletInfo.bulletType != bulletType) return bulletInfo; // 탄창과 호환되지 않음
             // 삽입 가능 최대 탄환수
-            int availableCount = maxCount - curCount;
+            int availableCount = maxCount - CurCount;
             if (availableCount == 0) return bulletInfo;
             ItemBulletInfo bulletToLoad = Instantiate(bulletInfo);
             if (availableCount >= bulletInfo.AmountCount)
             {
                 // 전부 장전
                 bulletToLoad.AmountCount = bulletInfo.AmountCount;
-                curCount = bulletToLoad.AmountCount;
+                CurCount = bulletToLoad.AmountCount;
                 bullets.Enqueue(bulletToLoad);
                 bulletInfo.AmountCount = 0;
                 return null;
@@ -46,7 +77,7 @@ namespace Assets.Scripts.Items
             {
                 // 일부 장전
                 bulletToLoad.AmountCount = availableCount;
-                curCount += bulletToLoad.AmountCount;
+                CurCount += bulletToLoad.AmountCount;
                 bullets.Enqueue(bulletToLoad);
                 bulletInfo.AmountCount -= availableCount;
                 return bulletInfo;
@@ -71,7 +102,7 @@ namespace Assets.Scripts.Items
                     return false;
                 }
             }
-            curCount--;
+            CurCount--;
             currentBullet.AmountCount--;
             bullet = currentBullet;
             return true;

@@ -9,7 +9,6 @@ namespace Assets.Scripts.Items
 
         protected override void OnDoubleClick()
         {
-            Debug.Log($"{TAG}더블클릭!");
         }
 
         protected override void OnHover()
@@ -24,12 +23,10 @@ namespace Assets.Scripts.Items
 
         protected override void OnMouseClickWithKeyPress()
         {
-            Debug.Log($"{TAG}키 누른 상태로 클릭");
         }
 
         protected override void OnMouseEnterWithKeyPress()
         {
-            Debug.Log($"{TAG}키 누른 상태로 진입");
         }
 
         public override void GridOnCheckIfItemExist(InventorySlotController slotController)

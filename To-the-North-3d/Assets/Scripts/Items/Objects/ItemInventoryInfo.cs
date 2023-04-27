@@ -27,6 +27,7 @@ namespace Assets.Scripts.Items
         public ItemInventoryInfo(ItemBaseInfo _itemInfo)
         {
             itemInfo = _itemInfo;
+            itemInfo.InvenInfo = this;
             pos = Vector2.zero;
         }
     }
