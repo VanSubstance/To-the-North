@@ -202,11 +202,6 @@ namespace Assets.Scripts.Users
 
         private float GetMovementSpd()
         {
-            if (InGameStatus.User.Detection.Sight.isControllInRealTime)
-            {
-                // 시선 집중 중일때는 무조건 잠복 속도로
-                return InGameStatus.User.Movement.weightCrouch;
-            }
             switch (InGameStatus.User.Movement.curMovement)
             {
                 case Objects.MovementType.WALK:
@@ -228,6 +223,13 @@ namespace Assets.Scripts.Users
 
         private void TrackMovementType()
         {
+            if (InGameStatus.User.Detection.Sight.isControllInRealTime ||
+                InGameStatus.User.isInAction
+                )
+            {
+                InGameStatus.User.Movement.curMovement = Objects.MovementType.CROUCH;
+                return;
+            }
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 if (InGameStatus.User.IsConditionExist(ConditionConstraint.UtilBlock.Run))

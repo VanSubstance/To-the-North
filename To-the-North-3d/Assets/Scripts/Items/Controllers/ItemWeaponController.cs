@@ -22,7 +22,7 @@ namespace Assets.Scripts.Items
         {
             set
             {
-                owner= value;
+                owner = value;
             }
         }
 
@@ -157,18 +157,27 @@ namespace Assets.Scripts.Items
 
         private void TryReload(ItemMagazineInfo newMagazine)
         {
+            if (InGameStatus.User.isInAction) return;
             StartCoroutine(CoroutineReload(newMagazine));
         }
 
         private IEnumerator CoroutineReload(ItemMagazineInfo newMagazine)
         {
-            Debug.Log("Reload Starts ...");
+            InGameStatus.User.isInAction = true;
+            UserBaseController.Instance.progress.CurProgress = 0;
             float w = 1;
             if (!isAI && InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedReload))
             {
                 w *= 1.5f;
             }
-            yield return new WaitForSeconds(info.timeReload * w);
+            float tRemaining = info.timeReload * w, p = 1;
+            while (tRemaining > 0f)
+            {
+                yield return new WaitForSeconds(Time.deltaTime);
+                p = Time.deltaTime / tRemaining;
+                UserBaseController.Instance.progress.CurProgress += p;
+                tRemaining -= Time.deltaTime;
+            }
             ItemMagazineInfo oldMagazine = info.ReloadMagazine(newMagazine);
             if (oldMagazine != null)
             {
@@ -176,12 +185,13 @@ namespace Assets.Scripts.Items
                 // = 인벤토리에 넣어야 함
                 // -> 풀링에서 하나 가져와서 신규 생성 및 넣어주기
                 WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Inventory, oldMagazine);
-            } else
+            }
+            else
             {
                 // 꽃혀있던 탄창이 없음
             }
             isReloading = false;
-            Debug.Log("Reload Complete!");
+            InGameStatus.User.isInAction = false;
         }
     }
 }

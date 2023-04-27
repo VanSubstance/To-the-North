@@ -336,12 +336,12 @@ public class CommonGameManager : MonoBehaviour
     /// <param name="_info"></param>
     public void ApplyConsumable(ItemConsumableInfo _info)
     {
-        if (InGameStatus.User.isInConsume) return;
+        if (InGameStatus.User.isInAction) return;
         StartCoroutine(CoroutineConsume(_info));
     }
     private IEnumerator CoroutineConsume(ItemConsumableInfo _info)
     {
-        InGameStatus.User.isInConsume = true;
+        InGameStatus.User.isInAction = true;
         _info.Use(1);
         UserBaseController.Instance.progress.CurProgress = 0;
         float tRemaining = _info.SecondConsume, p = 1;
@@ -383,6 +383,6 @@ public class CommonGameManager : MonoBehaviour
                 UserBaseController.Instance.CureCondition(effect.targetCondition, effect.countToRemove);
             }
         }
-        InGameStatus.User.isInConsume = false;
+        InGameStatus.User.isInAction = false;
     }
 }
