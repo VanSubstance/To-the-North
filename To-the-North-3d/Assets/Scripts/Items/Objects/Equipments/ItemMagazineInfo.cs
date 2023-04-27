@@ -80,8 +80,6 @@ namespace Assets.Scripts.Items
                 bullets.Enqueue(bulletToLoad);
                 bulletInfo.AmountCount -= availableCount;
             }
-            Debug.Log($"탄창 잔여:: {bulletToLoad.AmountCount}");
-            Debug.Log($"탄창 잔여:: {bulletInfo.AmountCount}");
         }
 
         /// <summary>

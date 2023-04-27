@@ -66,7 +66,7 @@ namespace Assets.Scripts.Items
             if (info == null) return;
             TrackReleaseAiming();
             isAiming = false;
-            if (Input.GetKey(KeyCode.R) && !isAI && isMagazineEmpty && !isReloading)
+            if (Input.GetKey(KeyCode.R) && !isAI && !isReloading)
             {
                 // 재장전
                 isReloading = true;
