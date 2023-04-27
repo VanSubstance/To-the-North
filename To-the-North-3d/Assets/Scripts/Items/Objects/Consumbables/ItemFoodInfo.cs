@@ -16,26 +16,38 @@ namespace Assets.Scripts.Items
         }
 
         [SerializeField]
-        private int hunger, thirst, temperature;
-        public int Hunger
+        private float hunger, thirst, temperature;
+        public float Hunger
         {
             get
             {
                 return hunger;
             }
+            set
+            {
+                hunger = value;
+            }
         }
-        public int Thirst
+        public float Thirst
         {
             get
             {
                 return thirst;
             }
+            set
+            {
+                thirst = value;
+            }
         }
-        public int Temperature
+        public float Temperature
         {
             get
             {
                 return temperature;
+            }
+            set
+            {
+                temperature = value;
             }
         }
     }

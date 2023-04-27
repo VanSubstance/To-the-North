@@ -20,6 +20,65 @@ public static class InGameStatus
             public static BarBaseController hungerBar;
             public static BarBaseController thirstBar;
             public static BarBaseController temperatureBar;
+
+            /// <summary>
+            /// 체력 조절 함수:
+            /// 기본적으로 해당 수치만큼 "깎인다"
+            /// </summary>
+            /// <param name="amount">"깎을" 수치</param>
+            public static void ApplyDamage(float amount)
+            {
+                hpBar.LiveInfo = -amount;
+                if (hpBar.LiveInfo <= 0)
+                {
+                    //InGameStatus.User.isPause = true;
+                }
+            }
+
+
+            /// <summary>
+            /// 체력 조절 함수:
+            /// 기본적으로 해당 수치만큼 "오른다"
+            /// </summary>
+            /// <param name="amount">"오를" 수치</param>
+            public static void ApplyHunger(float amount)
+            {
+                hungerBar.LiveInfo = amount;
+                if (hungerBar.LiveInfo <= 0)
+                {
+                    //InGameStatus.User.isPause = true;
+                }
+            }
+
+
+            /// <summary>
+            /// 체력 조절 함수:
+            /// 기본적으로 해당 수치만큼 "오른다"
+            /// </summary>
+            /// <param name="amount">"오를" 수치</param>
+            public static void ApplyThirst(float amount)
+            {
+                thirstBar.LiveInfo = amount;
+                if (thirstBar.LiveInfo <= 0)
+                {
+                    //InGameStatus.User.isPause = true;
+                }
+            }
+
+
+            /// <summary>
+            /// 체력 조절 함수:
+            /// 기본적으로 해당 수치만큼 "오른다"
+            /// </summary>
+            /// <param name="amount">"오를" 수치</param>
+            public static void ApplyTemperature(float amount)
+            {
+                temperatureBar.LiveInfo = amount;
+                if (temperatureBar.LiveInfo <= 0)
+                {
+                    //InGameStatus.User.isPause = true;
+                }
+            }
         }
 
         public static Dictionary<ConditionType, int> conditions = new Dictionary<ConditionType, int>() {

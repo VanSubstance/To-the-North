@@ -67,9 +67,9 @@ namespace Assets.Scripts.Users
         {
             // 테스트 효과 활성화
             Debug.Log("테스트 효과 활성화");
-            OccurCondition(ConditionType.Bleeding_Heavy);
             OccurCondition(ConditionType.Bleeding_Light);
-            OccurCondition(ConditionType.Fracture);
+            OccurCondition(ConditionType.Bleeding_Light);
+            OccurCondition(ConditionType.Bleeding_Light);
         }
 
         private void Update()
@@ -84,10 +84,10 @@ namespace Assets.Scripts.Users
 
         private void TickHealthCondition()
         {
-            InGameStatus.User.status.hungerBar.LiveInfo = -.2f;
-            InGameStatus.User.status.thirstBar.LiveInfo = -.2f;
+            InGameStatus.User.status.ApplyHunger(-2);
+            InGameStatus.User.status.ApplyThirst(-2);
             // 온도의 경우, 주변 환경에 따라서 오르거나 내리거나 유지되어야 할 듯
-            InGameStatus.User.status.temperatureBar.LiveInfo = +.5f;
+            //InGameStatus.User.status.temperatureBar.LiveInfo = +.5f;
         }
 
         /// <summary>

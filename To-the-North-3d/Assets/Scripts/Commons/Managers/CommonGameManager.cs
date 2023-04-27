@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static GlobalComponent.Common;
 
 public class CommonGameManager : MonoBehaviour
 {
@@ -323,19 +324,10 @@ public class CommonGameManager : MonoBehaviour
     public void OnHit(float degree, int[] damage)
     {
         // 데미지 계산
-        ApplyDamage(damage[0]);
+        InGameStatus.User.status.ApplyDamage(damage[0]);
         _screenHitManager.OnHit(degree);
         _cameraHitController.OnHit(damage[2]);
         _screenHitFilterController.OnHit(damage[1]);
-    }
-
-    public void ApplyDamage(float amount)
-    {
-        InGameStatus.User.status.hpBar.LiveInfo = -amount;
-        if (InGameStatus.User.status.hpBar.LiveInfo <= 0)
-        {
-            //InGameStatus.User.isPause = true;
-        }
     }
 
     /// <summary>
@@ -357,7 +349,6 @@ public class CommonGameManager : MonoBehaviour
         {
             ItemFoodInfo fInfo = Instantiate((ItemFoodInfo)_info);
             // 음식일 경우
-            Debug.Log("음식");
             while (tRemaining > 0)
             {
                 yield return new WaitForSeconds(Time.deltaTime);
@@ -365,7 +356,12 @@ public class CommonGameManager : MonoBehaviour
                 UserBaseController.Instance.progress.CurProgress += p;
                 tRemaining -= Time.deltaTime;
                 // 초당 적용
-                Debug.Log($"허기: {fInfo.Hunger * p} | 갈증: {fInfo.Thirst * p} | 체온: {fInfo.Temperature * p}");
+                InGameStatus.User.status.ApplyHunger(fInfo.Hunger * p);
+                InGameStatus.User.status.ApplyThirst(fInfo.Thirst * p);
+                InGameStatus.User.status.ApplyTemperature(fInfo.Temperature * p);
+                fInfo.Hunger *= (1 - p);
+                fInfo.Thirst *= (1 - p);
+                fInfo.Temperature *= (1 - p);
             }
         }
         else if (_info is ItemMedicineInfo)
@@ -379,7 +375,7 @@ public class CommonGameManager : MonoBehaviour
                 UserBaseController.Instance.progress.CurProgress += p;
                 tRemaining -= Time.deltaTime;
                 // 초당 적용
-                ApplyDamage(-mInfo.Hp * p);
+                InGameStatus.User.status.ApplyDamage(-mInfo.Hp * p);
                 mInfo.Hp *= (1 - p);
             }
             foreach (MedicineConditionEffect effect in mInfo.effects)
