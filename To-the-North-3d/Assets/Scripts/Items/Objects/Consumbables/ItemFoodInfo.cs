@@ -6,14 +6,6 @@ namespace Assets.Scripts.Items
     [CreateAssetMenu(fileName = "Food Info", menuName = "Data Objects/Items/Consumable/Food", order = int.MaxValue)]
     public class ItemFoodInfo : ItemConsumableInfo
     {
-        [HideInInspector]
-        public new ConsumbableType consumbableType
-        {
-            get
-            {
-                return ConsumbableType.Food;
-            }
-        }
 
         [SerializeField]
         private float hunger, thirst, temperature;

@@ -18,7 +18,7 @@ MonoBehaviour:
   title: "\uD5E4\uC9C4 \uCC9C"
   description: 
   price: 0
-  consumbableType: 0
+  consumableType: 2
   amountCurrent: 60
   secondConsume: 2
   hp: 4

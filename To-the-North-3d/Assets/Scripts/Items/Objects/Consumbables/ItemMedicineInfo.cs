@@ -8,7 +8,7 @@ namespace Assets.Scripts.Items
     public class ItemMedicineInfo : ItemConsumableInfo
     {
         [HideInInspector]
-        public new ConsumbableType consumbableType
+        public new ConsumbableType consumableType
         {
             get
             {

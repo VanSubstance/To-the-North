@@ -18,7 +18,7 @@ MonoBehaviour:
   title: "\uAF2C\uAC08\uCF58"
   description: "\uAF2C\uAE54\uCF58 \uB9DB\uC5C6\uC5C9"
   price: 20
-  consumbableType: 0
+  consumableType: 1
   amountCurrent: 60
   secondConsume: 2
   hunger: 10
