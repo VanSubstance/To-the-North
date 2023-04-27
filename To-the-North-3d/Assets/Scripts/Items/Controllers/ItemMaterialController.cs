@@ -30,8 +30,9 @@ namespace Assets.Scripts.Items
         {
         }
 
-        public override void OnItemOnOtherItem(ItemBaseInfo _targetItemInfo)
+        public override bool OnItemOnOtherItem(ItemBaseInfo _targetItemInfo)
         {
+            return true;
         }
 
         public override void OnItemDownWithKeyPress()

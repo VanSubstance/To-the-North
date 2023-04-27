@@ -1,19 +1,21 @@
 using System.Collections;
 using Assets.Scripts.Commons;
 using Assets.Scripts.Components.Infos;
+using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static GlobalComponent.Common;
 
 public class CommonGameManager : MonoBehaviour
 {
     [SerializeField]
     private Transform fadeImagePrefab, userPrefab, filterForScreenPrefab,
         pauseWindowPrefab, inventoryWindowPrefab,
-        panelForHpSp, panelForCondition, panelForWelfare,
+        panelForHpSp, panelForCondition, panelForWelfare, panelForQuick,
         projectileManager, trajectoryManager,
         screenHitManager,
         hoveringItemInfo
@@ -166,7 +168,6 @@ public class CommonGameManager : MonoBehaviour
             // 체력 UI
             Transform panelLeftTop = Instantiate(panelForHpSp, uiTf);
             panelLeftTop.localScale = Vector3.one;
-            panelLeftTop.localPosition = new Vector3(-960, 540, 0);
             InGameStatus.User.status.hpBar = panelLeftTop.GetComponent<UIHpSpController>().barForHp;
             InGameStatus.User.status.staminaBar = panelLeftTop.GetComponent<UIHpSpController>().barForStamina;
             //panelLeftTop.SetAsFirstSibling();
@@ -174,17 +175,18 @@ public class CommonGameManager : MonoBehaviour
             // 상태 이상 표기용 UI
             Transform panelCondition = Instantiate(panelForCondition, uiTf);
             panelCondition.localScale = Vector3.one;
-            panelCondition.localPosition = new Vector3(-960, 340, 0);
 
             // 건강 UI
             Transform PanelForWelfare = Instantiate(panelForWelfare, uiTf);
             PanelForWelfare.localScale = Vector3.one;
-            PanelForWelfare.localPosition = new Vector3(-960, -540, 0);
             InGameStatus.User.status.hungerBar = PanelForWelfare.GetComponent<UIWelfareController>().barForHunger;
             InGameStatus.User.status.thirstBar = PanelForWelfare.GetComponent<UIWelfareController>().barForThirst;
             InGameStatus.User.status.temperatureBar = PanelForWelfare.GetComponent<UIWelfareController>().barForTemperature;
             InGameStatus.User.status.temperatureBar.LiveInfo = -50;
-            //PanelForWelfare.SetAsFirstSibling();
+
+            // 퀵슬롯 UI
+            Transform PanelForQuick = Instantiate(panelForQuick, uiTf);
+            PanelForQuick.localScale = Vector3.one;
 
             // 투사체 풀
             if (GameObject.Find("Projectiles") == null)
@@ -322,18 +324,65 @@ public class CommonGameManager : MonoBehaviour
     public void OnHit(float degree, int[] damage)
     {
         // 데미지 계산
-        ApplyDamage(damage[0]);
+        InGameStatus.User.status.ApplyDamage(damage[0]);
         _screenHitManager.OnHit(degree);
         _cameraHitController.OnHit(damage[2]);
         _screenHitFilterController.OnHit(damage[1]);
     }
 
-    public void ApplyDamage(int amount)
+    /// <summary>
+    /// 소모성 아이템 (식량, 의약품) 사용 함수
+    /// </summary>
+    /// <param name="_info"></param>
+    public void ApplyConsumable(ItemConsumableInfo _info)
     {
-        InGameStatus.User.status.hpBar.LiveInfo = -amount;
-        if (InGameStatus.User.status.hpBar.LiveInfo <= 0)
+        if (InGameStatus.User.isInConsume) return;
+        StartCoroutine(CoroutineConsume(_info));
+    }
+    private IEnumerator CoroutineConsume(ItemConsumableInfo _info)
+    {
+        InGameStatus.User.isInConsume = true;
+        _info.Use(1);
+        UserBaseController.Instance.progress.CurProgress = 0;
+        float tRemaining = _info.SecondConsume, p = 1;
+        if (_info is ItemFoodInfo)
         {
-            //InGameStatus.User.isPause = true;
+            ItemFoodInfo fInfo = Instantiate((ItemFoodInfo)_info);
+            // 음식일 경우
+            while (tRemaining > 0)
+            {
+                yield return new WaitForSeconds(Time.deltaTime);
+                p = Time.deltaTime / tRemaining;
+                UserBaseController.Instance.progress.CurProgress += p;
+                tRemaining -= Time.deltaTime;
+                // 초당 적용
+                InGameStatus.User.status.ApplyHunger(fInfo.Hunger * p);
+                InGameStatus.User.status.ApplyThirst(fInfo.Thirst * p);
+                InGameStatus.User.status.ApplyTemperature(fInfo.Temperature * p);
+                fInfo.Hunger *= (1 - p);
+                fInfo.Thirst *= (1 - p);
+                fInfo.Temperature *= (1 - p);
+            }
         }
+        else if (_info is ItemMedicineInfo)
+        {
+            ItemMedicineInfo mInfo = Instantiate((ItemMedicineInfo)_info);
+            // 의약품일 경우
+            while (tRemaining > 0)
+            {
+                yield return new WaitForSeconds(Time.deltaTime);
+                p = Time.deltaTime / tRemaining;
+                UserBaseController.Instance.progress.CurProgress += p;
+                tRemaining -= Time.deltaTime;
+                // 초당 적용
+                InGameStatus.User.status.ApplyDamage(-mInfo.Hp * p);
+                mInfo.Hp *= (1 - p);
+            }
+            foreach (MedicineConditionEffect effect in mInfo.effects)
+            {
+                UserBaseController.Instance.CureCondition(effect.targetCondition, effect.countToRemove);
+            }
+        }
+        InGameStatus.User.isInConsume = false;
     }
 }

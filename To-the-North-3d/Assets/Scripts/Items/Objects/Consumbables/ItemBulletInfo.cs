@@ -5,14 +5,6 @@ namespace Assets.Scripts.Items
     [CreateAssetMenu(fileName = "Bullet Info", menuName = "Data Objects/Items/Consumable/Bullet", order = int.MaxValue)]
     public class ItemBulletInfo : ItemConsumableInfo
     {
-        [HideInInspector]
-        public new ConsumbableType consumbableType
-        {
-            get
-            {
-                return ConsumbableType.Bullet;
-            }
-        }
 
         public ItemBulletType bulletType;
         /// <summary>

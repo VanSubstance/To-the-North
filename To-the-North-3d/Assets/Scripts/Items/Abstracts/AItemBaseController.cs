@@ -8,16 +8,16 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Items
 {
-    /// <summary>
-    /// 아이템 베이스 컨트롤러
-    /// 드래그 앤 드롭: 이동
-    ///     !! 드래그 앤 드롭 시, 아래 있는 칸에 얘가 장착이 가능한 지 조건을 판별해야 함
-    /// 마우스 위에서 유지: 정보 뜨기
-    /// 더블클릭: 추후 추상 구현
-    /// </summary>
     public abstract class AItemBaseController : AbsItemController
     {
         private InventorySlotController curSlot, prevSlot, nextSlot;
+        public InventorySlotController CurSlot
+        {
+            get
+            {
+                return curSlot;
+            }
+        }
 
         public int itemSizeRow
         {
@@ -73,19 +73,25 @@ namespace Assets.Scripts.Items
         private bool CheckItemAttachable(InventorySlotController destSlot)
         {
             if (destSlot == null) return false;
-            if (destSlot is EquipmentSlotController && info is ItemEquipmentInfo)
+            if (destSlot is EquipmentSlotController eSlot && info is ItemEquipmentInfo eInfo)
             {
                 // 슬롯칸이 아닌 장비칸임
-                return info.IsEquipment && !((EquipmentSlotController)destSlot).IsEquipped &&
+                return info.IsEquipment && !eSlot.IsEquipped &&
                     (
                         (
-                            info is ItemArmorInfo && ((EquipmentSlotController)destSlot).equipType.Equals(((ItemArmorInfo)info).equipPartType)
+                            eInfo is ItemArmorInfo aInfo && eSlot.equipType.Equals(aInfo.equipPartType)
                         ) ||
                         (
-                            info is ItemWeaponInfo && new EquipBodyType[] { EquipBodyType.Left, EquipBodyType.Right }.Contains(((EquipmentSlotController)destSlot).equipType)
+                            eInfo is ItemWeaponInfo wInfo && new EquipBodyType[] { EquipBodyType.Left, EquipBodyType.Right }.Contains(eSlot.equipType)
                         )
                     )
                     ;
+            }
+            if (destSlot is QuickSlotController qSlot && info.IsQuickable && !qSlot.IsEquipped)
+            {
+                // 퀵슬롯 등록 가능한 아이템 + 퀵슬롯 + 퀵슬롯 비었음
+                // = 등록 가능
+                return true;
             }
             switch (destSlot.ContainerType)
             {
@@ -116,7 +122,8 @@ namespace Assets.Scripts.Items
             {
                 _slot.IsConsidered = isOn;
             });
-            if (_targetSlot is EquipmentSlotController)
+            if (_targetSlot is EquipmentSlotController ||
+                _targetSlot is QuickSlotController)
             {
                 _targetSlot.IsConsidered = isOn;
             }
@@ -152,7 +159,8 @@ namespace Assets.Scripts.Items
                 objTF.localPosition = pos;
             });
             // 부착하려고 하는 컨테이너의 타입?
-            if (attachSlot is EquipmentSlotController equipSlot)
+            if (attachSlot is EquipmentSlotController equipSlot ||
+                attachSlot is QuickSlotController)
             {
                 if (isRotate)
                 {
@@ -168,6 +176,7 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void ItemDetach()
         {
+            if (curSlot == null) return;
             info.InvenInfo = null;
             ApplyActionForOnlyContentWithSlots(curSlot, (_slot) =>
             {
@@ -177,11 +186,11 @@ namespace Assets.Scripts.Items
             {
                 case ContentType.Equipment:
                     ((EquipmentSlotController)curSlot).EquipItemInfo = null;
-                    curSlot.ItemTf = null;
                     break;
                 default:
                     break;
             }
+            curSlot.ItemTf = null;
             prevSlot = curSlot;
             curSlot = null;
         }
@@ -280,20 +289,19 @@ namespace Assets.Scripts.Items
             }
             // 마우스 드래그 이벤트
             Vector3 t = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            t.y = 10f;
+            t.y = 12f;
             objTF.position = t;
 
             InventorySlotController candidateSlot = null;
-
-            // 장비 체크용
-            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out RaycastHit hitEquip, 2f, GlobalStatus.Constant.slotMask))
+            // 중앙 레이 = 장비 체크용
+            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 1, transform.position.z), Vector3.down, out RaycastHit hitEquip, 2f, GlobalStatus.Constant.slotMask))
             {
                 candidateSlot = hitEquip.transform.GetComponent<EquipmentSlotController>();
             }
             // 인벤토리 슬롯 체크용
             // 보정값 적용
             t = objTF.TransformVector(VectorCorr);
-            if (Physics.Raycast(new Vector3(transform.position.x - t.x, transform.position.y + 1, transform.position.z + (isRotate ? t.z : -t.z)), Vector3.down, out RaycastHit hit, 2f, GlobalStatus.Constant.slotMask))
+            if (Physics.Raycast(new Vector3(transform.position.x - t.x, transform.position.y - 1, transform.position.z + (isRotate ? t.z : -t.z)), Vector3.down, out RaycastHit hit, 2f, GlobalStatus.Constant.slotMask))
             {
                 // 슬롯 위에 있음
                 // = 후보 존재
@@ -332,10 +340,10 @@ namespace Assets.Scripts.Items
 
         protected override void OnUp()
         {
-            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out RaycastHit hitItem, 2f, GlobalStatus.Constant.itemMask))
+            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - 1, transform.position.z), Vector3.down, out RaycastHit hitItem, 2f, GlobalStatus.Constant.itemMask))
             {
                 // 아래에 아이템 있음
-                OnItemOnOtherItem(hitItem.transform.GetComponent<AItemBaseController>().info);
+                if (!OnItemOnOtherItem(hitItem.transform.GetComponent<AItemBaseController>().info)) return;
             }
 
             // nextSlot이 있는지 확인
@@ -397,64 +405,72 @@ namespace Assets.Scripts.Items
             return ret;
         }
 
+        /// <summary>
+        /// 아이템 오브젝트를 인벤토리에 넣는 함수:
+        /// 자동 정렬
+        /// </summary>
+        public void SendToInventory()
+        {
+            SeekSlotAttachable(ContentType.Inventory, info, out InventorySlotController slotQualified, out ItemInventoryInfo ret);
+            ItemAttach(slotQualified);
+        }
+
         private void ResizeOnPurpose(InventorySlotController _slot = null)
         {
+            float w, h, l;
+            w = objTF.sizeDelta.x;
+            h = objTF.sizeDelta.y;
+            l = Mathf.Max(w, h);
+            void ApplyResize(int maxW, int maxH)
+            {
+                if (l == w)
+                {
+                    // 가로가 더 김
+                    // 가로: 108; k = 108 / w;
+                    // 세로: h * k = h * 108 / w
+                    objCollider.size = objTF.sizeDelta = new Vector2(maxW, h * maxW / w);
+                }
+                else
+                {
+                    // 세로가 더 김
+                    // 세로: 162; k = 162 / h
+                    // 가로: w * = w * 162 / h
+                    objCollider.size = objTF.sizeDelta = new Vector2(w * maxH / h, maxH);
+                }
+            }
             if (_slot == null)
             {
-                image.rectTransform.sizeDelta = objCollider.size = objTF.sizeDelta = info.size * 50f;
+                // = 최대 크기: 50 * 50
+                ApplyResize(50, 50);
                 return;
             }
-            if (_slot is EquipmentSlotController)
+            if (_slot is QuickSlotController hSlot)
             {
-                float w, h, l;
-                w = objTF.sizeDelta.x;
-                h = objTF.sizeDelta.y;
-                l = Mathf.Max(w, h);
-                switch (((EquipmentSlotController)_slot).equipType)
+                // = 최대 크기: 70 * 70
+                ApplyResize(70, 70);
+                return;
+            }
+            if (_slot is EquipmentSlotController eSlot)
+            {
+                switch (eSlot.equipType)
                 {
                     // 120 * 120
                     // = 최대 크기: 108 * 108
                     case EquipBodyType.Helmat:
                     case EquipBodyType.Mask:
-                        objCollider.size = objTF.sizeDelta = info.size * 110f;
+                        ApplyResize(108, 108);
                         break;
                     // 120 * 180
                     // = 최대: 108 * 162
                     case EquipBodyType.Body:
                     case EquipBodyType.BackPack:
-                        if (l == w)
-                        {
-                            // 가로가 더 김
-                            // 가로: 108; k = 108 / w;
-                            // 세로: h * k = h * 108 / w
-                            objCollider.size = objTF.sizeDelta = new Vector2(108, h * 108 / w);
-                        }
-                        else
-                        {
-                            // 세로가 더 김
-                            // 세로: 162; k = 162 / h
-                            // 가로: w * = w * 162 / h
-                            objCollider.size = objTF.sizeDelta = new Vector2(w * 162 / h, 162);
-                        }
+                        ApplyResize(108, 162);
                         break;
                     // 240 * 120
                     // = 최대: 216 * 108
                     case EquipBodyType.Right:
                     case EquipBodyType.Left:
-                        if (l == h)
-                        {
-                            // 세로가 더 김
-                            // 세로: 108; k = 108 / h
-                            // 가로: w * = w * 108 / h
-                            objCollider.size = objTF.sizeDelta = new Vector2(w * 108 / h, 108);
-                        }
-                        else
-                        {
-                            // 가로가 더 김
-                            // 가로: 216; k = 216 / w;
-                            // 세로: h * k = h * 216 / w
-                            objCollider.size = objTF.sizeDelta = new Vector2(216, h * 216 / w);
-                        }
+                        ApplyResize(216, 108);
                         break;
                 }
                 image.rectTransform.sizeDelta = objCollider.size;
@@ -603,8 +619,8 @@ namespace Assets.Scripts.Items
         /// <summary>
         /// 아이템을 뗄 때 그 아래 다른 아이템이 있으면 실행하는 함수
         /// </summary>
-        /// <param name="slotController"></param>
-        public abstract void OnItemOnOtherItem(ItemBaseInfo _targetItemInfo);
+        /// <returns>이후 로직을 실행하지 않는다 = false | 이후 로직을 이어서 실행한다 = true</returns>
+        public abstract bool OnItemOnOtherItem(ItemBaseInfo _targetItemInfo);
 
         /// <summary>
         /// 아이템 타입 별 키 누른 상태로 마우스 다운일 때 실행되어야 하는 함수

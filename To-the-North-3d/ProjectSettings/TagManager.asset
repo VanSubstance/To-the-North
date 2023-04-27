@@ -11,6 +11,7 @@ TagManager:
   - Attack Low
   - Creature
   - Hide
+  - HotKeySlot
   layers:
   - Default
   - TransparentFX

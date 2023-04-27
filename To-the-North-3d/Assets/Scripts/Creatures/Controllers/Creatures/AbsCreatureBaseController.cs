@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Battles;
+using Assets.Scripts.Battles;
 using Assets.Scripts.Items;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +9,7 @@ namespace Assets.Scripts.Creatures.Controllers
     {
 
         [SerializeField]
-        protected Transform hitTf, visualTf;
+        protected Transform hitTf;
         protected Dictionary<EquipBodyType, IItemEquipable> equipableBodies = new Dictionary<EquipBodyType, IItemEquipable>();
         [SerializeField]
         protected ItemWeaponController weaponL, weaponR;

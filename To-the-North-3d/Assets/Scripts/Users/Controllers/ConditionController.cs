@@ -54,7 +54,7 @@ namespace Assets.Scripts.Users
             // 1. 틱 데미지가 있는 상태이상?
             if (ConditionConstraint.Tick.Damage.Contains(targetType))
             {
-                conditionControl += ApplyDamage;
+                conditionControl += InGameStatus.User.status.ApplyDamage;
             }
 
             // 2. 화면 진통이 있는 상태이상?
@@ -90,19 +90,14 @@ namespace Assets.Scripts.Users
             }
         }
 
-        private void ScreenVibrate(int amount)
+        private void ScreenVibrate(float amount)
         {
             CommonGameManager.Instance.CameraHitController.OnHit(amount);
         }
 
-        private void ScreenBlurred(int amount)
+        private void ScreenBlurred(float amount)
         {
             CommonGameManager.Instance.ScreenHitFilterController.OnHit(amount);
-        }
-
-        private void ApplyDamage(int amount)
-        {
-            CommonGameManager.Instance.ApplyDamage(amount);
         }
     }
 }

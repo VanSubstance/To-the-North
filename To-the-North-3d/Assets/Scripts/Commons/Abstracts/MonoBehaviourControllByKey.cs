@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime;
-using UnityEngine;
 using Assets.Scripts.Commons;
+using UnityEngine;
 
 public class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
 {
@@ -11,8 +8,11 @@ public class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
 
     protected void Start()
     {
-        UIManager.Instance.gameObject.AddComponent<KeyToggleManager>().InitContent(keyToToggle, this);
-        gameObject.SetActive(false);
+        if (keyToToggle != KeyCode.None)
+        {
+            UIManager.Instance.gameObject.AddComponent<KeyToggleManager>().InitContent(keyToToggle, this);
+            gameObject.SetActive(false);
+        }
     }
     /// <summary>
     /// 열기

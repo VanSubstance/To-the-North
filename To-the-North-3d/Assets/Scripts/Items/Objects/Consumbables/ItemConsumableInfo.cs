@@ -5,16 +5,7 @@ namespace Assets.Scripts.Items
 {
     public class ItemConsumableInfo : ItemBaseInfo
     {
-        [HideInInspector]
-        public new ItemType itemType
-        {
-            get
-            {
-                return ItemType.Consumable;
-            }
-        }
-        [HideInInspector]
-        public ConsumbableType consumbableType;
+        public ConsumbableType consumableType;
 
         [SerializeField]
         /// <summary>
@@ -22,6 +13,16 @@ namespace Assets.Scripts.Items
         /// 최대치: 60
         /// </summary>
         private int amountCurrent = 60;
+
+        [SerializeField]
+        protected int secondConsume;
+        public int SecondConsume
+        {
+            get
+            {
+                return secondConsume;
+            }
+        }
 
         /// <summary>
         /// 표기되는 잔여량
@@ -54,6 +55,11 @@ namespace Assets.Scripts.Items
                     amountDisplay.gameObject.SetActive(true);
                 }
             }
+        }
+
+        public void Use(int quantity)
+        {
+            AmountCount -= quantity;
         }
     }
 }

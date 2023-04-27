@@ -16,7 +16,7 @@ namespace Assets.Scripts.Items
         [SerializeField]
         private ItemWeaponInfo info;
         [SerializeField]
-        private bool isAI = true, isMagazineEmpty;
+        private bool isAI = true;
         private Transform owner;
         public Transform Owner
         {
@@ -47,7 +47,6 @@ namespace Assets.Scripts.Items
 
         private void Awake()
         {
-            isMagazineEmpty = false;
             if (isAI)
             {
                 TimeFocus = 0f;
@@ -108,8 +107,6 @@ namespace Assets.Scripts.Items
                     // = 재장전 필요
                     Debug.Log("재장전 필요!");
                     if (isAI) TryReload(GlobalComponent.Path.GetMonsterMagazineInfo(info.bulletType, 1));
-                    else
-                        isMagazineEmpty = true;
                     return;
                 }
                 else
@@ -184,10 +181,6 @@ namespace Assets.Scripts.Items
                 // 꽃혀있던 탄창이 없음
             }
             isReloading = false;
-            if (!isAI)
-            {
-                isMagazineEmpty = false;
-            }
             Debug.Log("Reload Complete!");
         }
     }
