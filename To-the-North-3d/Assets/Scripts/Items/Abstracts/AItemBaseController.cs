@@ -15,7 +15,7 @@ namespace Assets.Scripts.Items
     /// 마우스 위에서 유지: 정보 뜨기
     /// 더블클릭: 추후 추상 구현
     /// </summary>
-    public abstract class AItemBaseController<TItemInfo> : AbsItemController
+    public abstract class AItemBaseController : AbsItemController
     {
         private InventorySlotController curSlot, prevSlot, nextSlot;
 
@@ -47,11 +47,6 @@ namespace Assets.Scripts.Items
 
         public ItemBaseInfo info;
 
-        /// <summary>
-        /// 마우스 이벤트가 중간에 종료되어야 할 때 후속 이벤트 방지용
-        /// </summary>
-        /// 
-        private bool IsMouseEventDone;
         private new void Update()
         {
             base.Update();
@@ -144,7 +139,7 @@ namespace Assets.Scripts.Items
             }, () =>
             {
                 // 위치 잡기: 출발점: 0, 0, -1
-                Vector3 pos = new Vector3(0, 0, -1);
+                Vector3 pos = new(0, 0, -1);
                 if (!isRotate)
                 {
                     pos += VectorCorr;
@@ -157,15 +152,14 @@ namespace Assets.Scripts.Items
                 objTF.localPosition = pos;
             });
             // 부착하려고 하는 컨테이너의 타입?
-            if (attachSlot is EquipmentSlotController)
+            if (attachSlot is EquipmentSlotController equipSlot)
             {
                 if (isRotate)
                 {
                     ItemRotate();
                 }
-                Vector3 pos = new Vector3(0, 0, -1);
+                Vector3 pos = new(0, 0, -1);
                 objTF.localPosition = pos;
-                ((EquipmentSlotController)attachSlot).EquipItemInfo = (ItemEquipmentInfo)info;
             }
         }
 
@@ -222,98 +216,22 @@ namespace Assets.Scripts.Items
             OnDraggingSkipRotate();
         }
 
+        /// <summary>
+        /// 아이템 인벤토리에서 제거:
+        /// 오브젝트는 제너레이터만 남고 비활성화된 뒤 Items로 간다 (풀링)
+        /// </summary>
+        public void ItemTruncate()
+        {
+            info.Ctrl = null;
+            image.sprite = null;
+            amountUGUI.text = string.Empty;
+            transform.SetParent(WindowInventoryController.Instance.ItemTf);
+            gameObject.SetActive(false);
+            Destroy(this);
+        }
+
         protected override void OnDown()
         {
-            IsMouseEventDone = false;
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                // 왼쪽 ctrl 누른 상태로 클릭 시
-                if (curSlot.ContainerType != ContentType.Inventory)
-                {
-                    // 인벤토리가 아닐 시
-                    // -> 바로 인벤토리로 이동
-                    IsMouseEventDone = true;
-                    // 기존의 슬롯에서 떼기
-                    ItemDetach();
-                    // 만약 회전 상태다 -> 회전 풀기
-                    if (isRotate)
-                        ItemRotate();
-
-                    // 자동 정렬로 이동
-                    InitInfo(info, null, ContentType.Inventory);
-                    return;
-                }
-                else
-                {
-                    // 인벤토리일 시
-                    if (info is ItemEquipmentInfo & info is not ItemMagazineInfo)
-                    {
-                        bool Equip(EquipmentSlotController _targetSlot)
-                        {
-                            IsMouseEventDone = true;
-                            if (!_targetSlot.IsEquipped)
-                            {
-                                ItemDetach();
-                                if (isRotate)
-                                    ItemRotate();
-                                InitInfo(info, _targetSlot);
-                                return true;
-                            }
-                            return false;
-                        }
-                        // 장착 가능 장비일 시
-                        if (info is ItemArmorInfo)
-                        {
-                            // 방어구
-                            switch (((ItemArmorInfo)info).equipPartType)
-                            {
-                                case EquipBodyType.Helmat:
-                                    if (Equip(WindowInventoryController.equipmentCtrl.helmetCtrl)) return;
-                                    break;
-                                case EquipBodyType.Mask:
-                                    if (Equip(WindowInventoryController.equipmentCtrl.maskCtrl)) return;
-                                    break;
-                                case EquipBodyType.Body:
-                                    if (Equip(WindowInventoryController.equipmentCtrl.bodyCtrl)) return;
-                                    break;
-                                case EquipBodyType.BackPack:
-                                    if (Equip(WindowInventoryController.equipmentCtrl.backpackCtrl)) return;
-                                    break;
-                                case EquipBodyType.Right:
-                                    break;
-                                case EquipBodyType.Left:
-                                    break;
-                            }
-                            return;
-                        }
-                        if (info is ItemWeaponInfo)
-                        {
-                            // 무기
-                            if (!WindowInventoryController.equipmentCtrl.handRCtrl.IsEquipped)
-                            {
-                                if (((ItemWeaponInfo)info).handType == EquipHandType.Multiple)
-                                {
-                                    // 양손 무기
-                                    Equip(WindowInventoryController.equipmentCtrl.handRCtrl);
-                                }
-                                else
-                                {
-                                    // 한손 무기
-                                    Equip(WindowInventoryController.equipmentCtrl.handRCtrl);
-                                }
-                                return;
-                            }
-                            if (!WindowInventoryController.equipmentCtrl.handLCtrl.IsEquipped)
-                            {
-                                // 한손 무기
-                                Equip(WindowInventoryController.equipmentCtrl.handLCtrl);
-                                return;
-                            }
-                            return;
-                        }
-                    }
-                }
-            }
             ItemDetach();
             prevRotate = isRotate;
             transform.SetParent(WindowInventoryController.Instance.ItemTf);
@@ -321,9 +239,28 @@ namespace Assets.Scripts.Items
             OnHoverExit();
         }
 
+        protected override void OnDownWithKeyPress()
+        {
+            if (curSlot.ContainerType != ContentType.Inventory)
+            {
+                // 인벤토리가 아닐 시 = 공통
+                // -> 바로 인벤토리로 이동
+                // 기존의 슬롯에서 떼기
+                ItemDetach();
+                // 만약 회전 상태다 -> 회전 풀기
+                if (isRotate)
+                    ItemRotate();
+
+                // 자동 정렬로 이동
+                InitInfo(info, null, ContentType.Inventory);
+                return;
+            }
+            // 공통이 아닌 부분
+            OnItemDownWithKeyPress();
+        }
+
         protected override void OnDraging()
         {
-            if (IsMouseEventDone) return;
             // 드래그 중 R키 누르면 아이템 회전
             if (Input.GetKeyDown(KeyCode.R))
             {
@@ -334,7 +271,6 @@ namespace Assets.Scripts.Items
 
         private void OnDraggingSkipRotate()
         {
-            if (IsMouseEventDone) return;
             // 드래그 중 I키 누르면 놓아버림
             if (Input.GetKeyDown(KeyCode.I))
             {
@@ -396,29 +332,10 @@ namespace Assets.Scripts.Items
 
         protected override void OnUp()
         {
-            if (IsMouseEventDone)
+            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out RaycastHit hitItem, 2f, GlobalStatus.Constant.itemMask))
             {
-                IsMouseEventDone = false;
-                return;
-            }
-
-            // 탄환의 경우, 아래에 탄창이 있으면 삽탄해야 함
-            if (info is ItemBulletInfo)
-            {
-                // 탄환임
-                if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down, out RaycastHit hitItem, 2f, GlobalStatus.Constant.itemMask))
-                {
-                    ItemEquipmentController c;
-                    if ((c = hitItem.transform.GetComponent<ItemEquipmentController>()) != null)
-                    {
-                        if (c.info is ItemMagazineInfo)
-                        {
-                            // 아래에 탄창 있음
-                            // 삽탄
-                            info = ((ItemMagazineInfo)c.info).LoadMagazine((ItemBulletInfo)info);
-                        }
-                    }
-                }
+                // 아래에 아이템 있음
+                OnItemOnOtherItem(hitItem.transform.GetComponent<AItemBaseController>().info);
             }
 
             // nextSlot이 있는지 확인
@@ -438,7 +355,6 @@ namespace Assets.Scripts.Items
                 }
                 ItemAttach(prevSlot);
             }
-            IsMouseEventDone = false;
         }
 
         /// <summary>
@@ -449,6 +365,7 @@ namespace Assets.Scripts.Items
         {
             Init();
             info = _info;
+            info.Ctrl = this;
             image.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
             switch (info)
             {
@@ -476,6 +393,7 @@ namespace Assets.Scripts.Items
             // 자동 정렬인 경우
             SeekSlotAttachable(type, info, out InventorySlotController slotQualified, out ItemInventoryInfo ret);
             ItemAttach(slotQualified);
+            gameObject.SetActive(true);
             return ret;
         }
 
@@ -546,14 +464,6 @@ namespace Assets.Scripts.Items
             {
                 image.rectTransform.sizeDelta = objCollider.size = objTF.sizeDelta = info.size * 50f;
             });
-            switch (_slot.ContainerType)
-            {
-                case ContentType.None_L:
-                case ContentType.None_C:
-                case ContentType.None_R:
-                case ContentType.Undefined:
-                    break;
-            }
         }
 
         /// <summary>
@@ -694,6 +604,11 @@ namespace Assets.Scripts.Items
         /// 아이템을 뗄 때 그 아래 다른 아이템이 있으면 실행하는 함수
         /// </summary>
         /// <param name="slotController"></param>
-        public abstract void GridOnCheckIfItemExist(InventorySlotController slotController);
+        public abstract void OnItemOnOtherItem(ItemBaseInfo _targetItemInfo);
+
+        /// <summary>
+        /// 아이템 타입 별 키 누른 상태로 마우스 다운일 때 실행되어야 하는 함수
+        /// </summary>
+        public abstract void OnItemDownWithKeyPress();
     }
 }

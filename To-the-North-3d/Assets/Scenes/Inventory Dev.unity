@@ -717,7 +717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.size
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[0]
@@ -726,15 +726,15 @@ PrefabInstance:
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 28f7c59c66deb014f8fd4aa0a8f16213, type: 2}
+      objectReference: {fileID: 11400000, guid: e99d3967c18138e49a62359e68e464f2, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 56e6f503548491641a9db09db2368f96, type: 2}
+      objectReference: {fileID: 11400000, guid: 28f7c59c66deb014f8fd4aa0a8f16213, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 8d20d4acdd2dc7344b83086a45907951, type: 2}
+      objectReference: {fileID: 11400000, guid: 56e6f503548491641a9db09db2368f96, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[4]
       value: 
@@ -746,7 +746,7 @@ PrefabInstance:
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[6]
       value: 
-      objectReference: {fileID: 11400000, guid: 8449883dca26d474da7c005ae68d0620, type: 2}
+      objectReference: {fileID: 11400000, guid: 8d20d4acdd2dc7344b83086a45907951, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[7]
       value: 
@@ -754,7 +754,7 @@ PrefabInstance:
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[8]
       value: 
-      objectReference: {fileID: 11400000, guid: 48644ed48f3d0c14a9148fb4c9361572, type: 2}
+      objectReference: {fileID: 11400000, guid: 8449883dca26d474da7c005ae68d0620, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[9]
       value: 
@@ -762,19 +762,19 @@ PrefabInstance:
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[10]
       value: 
-      objectReference: {fileID: 11400000, guid: bfccca620c9d81a47b27d4279675b22e, type: 2}
+      objectReference: {fileID: 11400000, guid: 48644ed48f3d0c14a9148fb4c9361572, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[11]
       value: 
-      objectReference: {fileID: 11400000, guid: d221bc8af54aedd48bd56169c0d48950, type: 2}
+      objectReference: {fileID: 11400000, guid: bfccca620c9d81a47b27d4279675b22e, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[12]
       value: 
-      objectReference: {fileID: 11400000, guid: 634a05cc713186c439c43cb18187bbca, type: 2}
+      objectReference: {fileID: 11400000, guid: d221bc8af54aedd48bd56169c0d48950, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[13]
       value: 
-      objectReference: {fileID: 11400000, guid: 56e6f503548491641a9db09db2368f96, type: 2}
+      objectReference: {fileID: 11400000, guid: 634a05cc713186c439c43cb18187bbca, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[0].pos.x
       value: 0

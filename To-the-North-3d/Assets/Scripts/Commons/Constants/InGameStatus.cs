@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Components.Progress;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
@@ -195,7 +196,10 @@ public static class InGameStatus
             {
                 if (inven.itemInfo is ItemBulletInfo)
                 {
-                    if (((ItemBulletInfo)inven.itemInfo).AmountCount > 0)
+                    if  (
+                            ((ItemBulletInfo)inven.itemInfo).bulletType.Equals(type) &&
+                            ((ItemBulletInfo)inven.itemInfo).AmountCount > 0
+                        )
                     {
                         return (ItemBulletInfo)inven.itemInfo;
                     }
@@ -208,7 +212,9 @@ public static class InGameStatus
         {
             foreach (ItemInventoryInfo inven in inventory)
             {
-                if (inven.itemInfo is ItemMagazineInfo)
+                if (inven.itemInfo is ItemMagazineInfo magInfo &&
+                    magInfo.bulletType.Equals(type)
+                    )
                 {
                     return (ItemMagazineInfo)PullItemFromInventory(inven);
                 }
@@ -216,17 +222,28 @@ public static class InGameStatus
             return null;
         }
 
+        /// <summary>
+        /// 인벤토리에서 아이템 꺼내기:
+        /// 아이템 인벤토리 오브젝트 제거 후 아이템 정보만 반환
+        /// </summary>
+        /// <param name="itemFromInventory"></param>
+        /// <returns></returns>
         public static ItemBaseInfo PullItemFromInventory(ItemInventoryInfo itemFromInventory)
         {
-            UnityEngine.Debug.Log("강민준:: Inventory에 해당 아이템 찾아서 삭제하기");
+            itemFromInventory.itemInfo.Ctrl.ItemDetach();
+            itemFromInventory.itemInfo.Ctrl.ItemTruncate();
             inventory.Remove(itemFromInventory);
             return itemFromInventory.itemInfo;
         }
 
-        public static void PutItemToInventory(ItemBaseInfo _info)
+        /// <summary>
+        /// 인벤토리에 아이템 넣기:
+        /// 아이템 오브젝트 생성 후 자동정렬로 들어감
+        /// </summary>
+        /// <param name="baseInfo"></param>
+        public static void PushItemToInventory(ItemBaseInfo baseInfo)
         {
-            ItemInventoryInfo newItem = new ItemInventoryInfo(_info);
-            UnityEngine.Debug.Log("강민준:: Inventory에 알아서 빈 자리 찾아서 들어가기");
+            WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Inventory, baseInfo);
         }
     }
 }

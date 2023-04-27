@@ -1,7 +1,5 @@
-using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Items;
 using UnityEngine;
-using System;
 
 namespace Assets.Scripts.Commons
 {
@@ -35,7 +33,6 @@ namespace Assets.Scripts.Commons
         }
         private void Start()
         {
-            LoadInventory();
             LoadInventoryWithAuto();
         }
 
@@ -49,25 +46,11 @@ namespace Assets.Scripts.Commons
             }
         }
 
-        private void LoadInventory()
-        {
-            ItemInventoryInfo c;
-            foreach (ItemInventoryInfo inf in inventoryInfo)
-            {
-                c = new ItemInventoryInfo
-                {
-                    pos = inf.pos,
-                    itemInfo = Instantiate(inf.itemInfo)
-                };
-                WindowInventoryController.Instance.GenerateItemObject(ContentType.Inventory, c);
-            }
-        }
-
         private void LoadInventoryWithAuto()
         {
             foreach (ItemBaseInfo _info in itemsAutoAlign)
             {
-                WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Inventory, Instantiate(_info));
+                InGameStatus.Item.PushItemToInventory(Instantiate(_info));
             }
         }
 

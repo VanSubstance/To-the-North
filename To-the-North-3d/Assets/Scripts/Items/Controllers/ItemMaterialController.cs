@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Items
 {
-    public class ItemMaterialController : AItemBaseController<ItemMaterialInfo>
+    public class ItemMaterialController : AItemBaseController
     {
         private readonly string TAG = "재료 아이템:\n";
 
@@ -24,15 +24,17 @@ namespace Assets.Scripts.Items
 
         protected override void OnMouseClickWithKeyPress()
         {
-            Debug.unityLogger.Log(TAG, "키 누른 상태로 클릭");
         }
 
         protected override void OnMouseEnterWithKeyPress()
         {
-            Debug.unityLogger.Log(TAG, "키 누른 상태로 진입");
         }
 
-        public override void GridOnCheckIfItemExist(InventorySlotController slotController)
+        public override void OnItemOnOtherItem(ItemBaseInfo _targetItemInfo)
+        {
+        }
+
+        public override void OnItemDownWithKeyPress()
         {
         }
     }

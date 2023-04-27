@@ -140,7 +140,7 @@ namespace Assets.Scripts.Items
             ItemMagazineInfo oldMagazine = null;
             if (magazine != null)
             {
-                oldMagazine = Instantiate(magazine);
+                oldMagazine = magazine;
             }
             magazine = _magazine;
             return oldMagazine;

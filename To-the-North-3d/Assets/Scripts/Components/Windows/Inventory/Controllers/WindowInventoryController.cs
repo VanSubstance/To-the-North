@@ -67,6 +67,13 @@ namespace Assets.Scripts.Components.Windows.Inventory
             visualTf = transform.GetChild(0);
             storeTf = transform.GetChild(1);
             itemTf = transform.GetChild(2);
+            // 풀링용 아이템 객체 생성해두기:: 100개 ?
+            for (int i = 0; i < 100; i++)
+            {
+                Instantiate(itemPrefab, itemTf).gameObject.SetActive(false);
+            }
+
+
 
             contentByType = new Dictionary<ContentType, ContentBaseController>();
 
@@ -136,7 +143,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         /// <param name="_info">생성할 아이템 정보: 위치 정보 O</param>
         public void GenerateItemObject(ContentType _type, ItemInventoryInfo _info)
         {
-            ItemGenerateController g = Instantiate(itemPrefab, itemTf).GetComponent<ItemGenerateController>();
+            ItemGenerateController g = GetNewGenerator();
             switch (_type)
             {
                 case ContentType.Inventory:
@@ -164,7 +171,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         /// <param name="_info">생성할 아이템 정보</param>
         public void GenerateItemObjectWithAuto(ContentType _type, ItemBaseInfo _info)
         {
-            ItemGenerateController g = Instantiate(itemPrefab, itemTf).GetComponent<ItemGenerateController>();
+            ItemGenerateController g = GetNewGenerator();
             ItemInventoryInfo s = null;
             switch (_type)
             {
@@ -183,6 +190,20 @@ namespace Assets.Scripts.Components.Windows.Inventory
                     break;
             }
             InGameStatus.Item.inventory.Add(s);
+        }
+
+        /// <summary>
+        /// 풀링에서 신규 제네레이터 하나 가져오기
+        /// </summary>
+        /// <returns></returns>
+        private ItemGenerateController GetNewGenerator()
+        {
+            for (int i = 0; i < itemTf.childCount; i++)
+            {
+                Transform t = null;
+                if (!(t = itemTf.GetChild(i)).gameObject.activeSelf) return t.GetComponent<ItemGenerateController>();
+            }
+            return null;
         }
 
         private enum Side
