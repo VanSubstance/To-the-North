@@ -216,6 +216,20 @@ namespace Assets.Scripts.Items
             OnDraggingSkipRotate();
         }
 
+        /// <summary>
+        /// 아이템 인벤토리에서 제거:
+        /// 오브젝트는 제너레이터만 남고 비활성화된 뒤 Items로 간다 (풀링)
+        /// </summary>
+        public void ItemTruncate()
+        {
+            info.Ctrl = null;
+            image.sprite = null;
+            amountUGUI.text = string.Empty;
+            transform.SetParent(WindowInventoryController.Instance.ItemTf);
+            gameObject.SetActive(false);
+            Destroy(this);
+        }
+
         protected override void OnDown()
         {
             ItemDetach();
@@ -351,6 +365,7 @@ namespace Assets.Scripts.Items
         {
             Init();
             info = _info;
+            info.Ctrl = this;
             image.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
             switch (info)
             {
@@ -378,6 +393,7 @@ namespace Assets.Scripts.Items
             // 자동 정렬인 경우
             SeekSlotAttachable(type, info, out InventorySlotController slotQualified, out ItemInventoryInfo ret);
             ItemAttach(slotQualified);
+            gameObject.SetActive(true);
             return ret;
         }
 

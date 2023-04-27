@@ -44,5 +44,18 @@ namespace Assets.Scripts.Items
                 invenInfo = value;
             }
         }
+
+        private AItemBaseController ctrl;
+        public AItemBaseController Ctrl
+        {
+            get
+            {
+                return ctrl;
+            }
+            set
+            {
+                ctrl = value;
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Assets.Scripts.Battles;
+using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Users;
 using UnityEngine;
@@ -152,7 +153,10 @@ namespace Assets.Scripts.Items
             }
         }
 
-        public bool IsEmpty() => info == null;
+        public bool IsEmpty()
+        {
+            return info == null;
+        }
 
         private void TryReload(ItemMagazineInfo newMagazine)
         {
@@ -168,10 +172,16 @@ namespace Assets.Scripts.Items
                 w *= 1.5f;
             }
             yield return new WaitForSeconds(info.timeReload * w);
-            ItemMagazineInfo temp = info.ReloadMagazine(newMagazine);
-            if (temp != null)
+            ItemMagazineInfo oldMagazine = info.ReloadMagazine(newMagazine);
+            if (oldMagazine != null)
             {
-                InGameStatus.Item.PutItemToInventory(temp);
+                // 총에 꽃혀있던 탄창이 있음
+                // = 인벤토리에 넣어야 함
+                // -> 풀링에서 하나 가져와서 신규 생성 및 넣어주기
+                WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Inventory, oldMagazine);
+            } else
+            {
+                // 꽃혀있던 탄창이 없음
             }
             isReloading = false;
             if (!isAI)
