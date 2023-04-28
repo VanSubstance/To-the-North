@@ -19,9 +19,18 @@ namespace Assets.Scripts.Users
                 return 1 * (InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedUseStamina) ? 1.5f : 1);
             }
         }
-
-        private void Awake()
+        public bool IsMoving
         {
+            get
+            {
+                return rigid != null &&
+                    rigid.velocity != Vector3.zero;
+            }
+        }
+
+        private new void Awake()
+        {
+            base.Awake();
             rigid = GetComponent<Rigidbody>();
             keyCodeLast = KeyCode.None;
             timeDodgeTrack = 0;
@@ -50,6 +59,7 @@ namespace Assets.Scripts.Users
                     TrackLastKey();
                     TrackDirection();
                     TrackMovementType();
+                    TrackSound();
                 }
             }
         }
@@ -198,6 +208,28 @@ namespace Assets.Scripts.Users
             }
             CameraTrackControlller.headHorPos = vecHor * spdW;
             CameraTrackControlller.headVerPos = vecVer * spdW;
+        }
+
+        private void TrackSound()
+        {
+            if (!IsMoving)
+            {
+                // 움직이지 않고있음 = 소리 꺼야 함
+                StopSound();
+                return;
+            }
+            switch (InGameStatus.User.Movement.curMovement)
+            {
+                case Objects.MovementType.WALK:
+                    PlaySoundByType(SoundType.Walk);
+                    break;
+                case Objects.MovementType.RUN:
+                    PlaySoundByType(SoundType.Run);
+                    break;
+                case Objects.MovementType.CROUCH:
+                    PlaySoundByType(SoundType.Walk);
+                    break;
+            }
         }
 
         private float GetMovementSpd()

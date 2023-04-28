@@ -344,11 +344,12 @@ public class CommonGameManager : MonoBehaviour
         InGameStatus.User.isInAction = true;
         _info.Use(1);
         UserBaseController.Instance.progress.CurProgress = 0;
-        float tRemaining = _info.SecondConsume, p = 1;
+        float tRemaining = _info.SecondConsume, p;
         if (_info is ItemFoodInfo)
         {
-            ItemFoodInfo fInfo = Instantiate((ItemFoodInfo)_info);
             // 음식일 경우
+            UserBaseController.Instance.PlaySoundByType(Assets.Scripts.Creatures.SoundType.Eat);
+            ItemFoodInfo fInfo = Instantiate((ItemFoodInfo)_info);
             while (tRemaining > 0)
             {
                 yield return new WaitForSeconds(Time.deltaTime);
@@ -366,8 +367,8 @@ public class CommonGameManager : MonoBehaviour
         }
         else if (_info is ItemMedicineInfo)
         {
-            ItemMedicineInfo mInfo = Instantiate((ItemMedicineInfo)_info);
             // 의약품일 경우
+            ItemMedicineInfo mInfo = Instantiate((ItemMedicineInfo)_info);
             while (tRemaining > 0)
             {
                 yield return new WaitForSeconds(Time.deltaTime);
@@ -383,6 +384,7 @@ public class CommonGameManager : MonoBehaviour
                 UserBaseController.Instance.CureCondition(effect.targetCondition, effect.countToRemove);
             }
         }
+        UserBaseController.Instance.StopSound();
         InGameStatus.User.isInAction = false;
     }
 }

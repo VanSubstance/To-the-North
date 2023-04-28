@@ -10,6 +10,7 @@ namespace Assets.Scripts.Users
     {
         public ProgressBarSpriteController progress;
 
+
         public Vector3 position
         {
             set => transform.position = value;
