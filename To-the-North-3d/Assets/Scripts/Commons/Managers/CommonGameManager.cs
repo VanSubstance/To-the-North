@@ -368,6 +368,7 @@ public class CommonGameManager : MonoBehaviour
         else if (_info is ItemMedicineInfo)
         {
             // 의약품일 경우
+            UserBaseController.Instance.PlaySoundByType(Assets.Scripts.Creatures.SoundType.Bandage);
             ItemMedicineInfo mInfo = Instantiate((ItemMedicineInfo)_info);
             while (tRemaining > 0)
             {

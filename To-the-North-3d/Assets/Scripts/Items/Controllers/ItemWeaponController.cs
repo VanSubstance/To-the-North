@@ -65,7 +65,8 @@ namespace Assets.Scripts.Items
             if (info == null) return;
             TrackReleaseAiming();
             isAiming = false;
-            if (Input.GetKey(KeyCode.R) && !isAI && !isReloading)
+            if (!InGameStatus.User.isInAction &&
+                Input.GetKey(KeyCode.R) && !isAI && !isReloading)
             {
                 // 재장전
                 isReloading = true;
@@ -166,6 +167,7 @@ namespace Assets.Scripts.Items
         {
             InGameStatus.User.isInAction = true;
             UserBaseController.Instance.progress.CurProgress = 0;
+            UserBaseController.Instance.PlaySoundByType(Creatures.SoundType.Reload);
             float w = 1;
             if (!isAI && InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedReload))
             {
@@ -191,6 +193,7 @@ namespace Assets.Scripts.Items
             {
                 // 꽃혀있던 탄창이 없음
             }
+            UserBaseController.Instance.StopSound();
             isReloading = false;
             InGameStatus.User.isInAction = false;
         }

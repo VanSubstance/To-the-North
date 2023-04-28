@@ -6,6 +6,8 @@ namespace Assets.Scripts.Creatures
 
         Walk, Run,
         Eat, Drink,
+        Bandage,
+        Reload,
 
         GroundIn, GroundOut,
         UnderGround

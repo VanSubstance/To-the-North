@@ -511,9 +511,11 @@ MonoBehaviour:
   hitTf: {fileID: 7249881556285147604}
   weaponL: {fileID: 8391907671427950597}
   weaponR: {fileID: 5744239113335710260}
+  progress: {fileID: 1530015342128392964}
   audEat: {fileID: 8300000, guid: 3809124b38feb834db7f61afc19cfae9, type: 3}
   audDrink: {fileID: 8300000, guid: 32776f08341b1944a8292f94ae9025fa, type: 3}
-  progress: {fileID: 1530015342128392964}
+  audBandage: {fileID: 8300000, guid: 9cbab94aa986d36429733d2b5cf474eb, type: 3}
+  audReload: {fileID: 8300000, guid: e1c308b314a786c498e33e69af313f75, type: 3}
 --- !u!114 &7249881556927368017
 MonoBehaviour:
   m_ObjectHideFlags: 0
