@@ -164,7 +164,7 @@ namespace Assets.Scripts.Items
             {
                 if (isRotate)
                 {
-                    ItemRotate();
+                    ItemRotate(false);
                 }
                 Vector3 pos = new(0, 0, -1);
                 objTF.localPosition = pos;
@@ -198,7 +198,8 @@ namespace Assets.Scripts.Items
         /// <summary>
         /// 아이템 회전
         /// </summary>
-        public void ItemRotate()
+        /// <param name="isSingle">단일 행동인지: false -> 드래그 로직 실행 = 부착까지 이어서 진행</param>
+        public void ItemRotate(bool isSingle)
         {
             // 돌리는 의미가 없는 아이템이면 return
             if (localRow == localCol)
@@ -222,7 +223,10 @@ namespace Assets.Scripts.Items
             localRow = tempSize;
             // isRotate 변경
             isRotate = !isRotate;
-            OnDraggingSkipRotate();
+            if (!isSingle)
+            {
+                OnDraggingSkipRotate();
+            }
         }
 
         /// <summary>
@@ -258,7 +262,7 @@ namespace Assets.Scripts.Items
                 ItemDetach();
                 // 만약 회전 상태다 -> 회전 풀기
                 if (isRotate)
-                    ItemRotate();
+                    ItemRotate(true);
 
                 // 자동 정렬로 이동
                 InitInfo(info, null, ContentType.Inventory);
@@ -273,7 +277,7 @@ namespace Assets.Scripts.Items
             // 드래그 중 R키 누르면 아이템 회전
             if (Input.GetKeyDown(KeyCode.R))
             {
-                ItemRotate();
+                ItemRotate(true);
             }
             OnDraggingSkipRotate();
         }
@@ -359,7 +363,7 @@ namespace Assets.Scripts.Items
                 // = 이전 위치로 롤백
                 if (isRotate != prevRotate)
                 {
-                    ItemRotate();
+                    ItemRotate(true);
                 }
                 ItemAttach(prevSlot);
             }
@@ -437,6 +441,21 @@ namespace Assets.Scripts.Items
                     // 가로: w * = w * 162 / h
                     objCollider.size = objTF.sizeDelta = new Vector2(w * maxH / h, maxH);
                 }
+                // 이미지 사이즈 비율 유지하면서 확대하기
+                // 이미지 가로가 긴가 세로가 긴가 확인
+                if (image.sprite == null) return;
+                Vector2 s = image.sprite.bounds.size;
+                float sw = s.x, sh = s.y;
+                if (sw >= sh)
+                {
+                    // 가로가 김 = 가로에 맞춰서 확대
+                    image.rectTransform.sizeDelta = new Vector2(objCollider.size.x, objCollider.size.x * sh / sw);
+                }
+                else
+                {
+                    // 세로가 김 = 세로에 맞춰서 확대
+                    image.rectTransform.sizeDelta = new Vector2(objCollider.size.y * sw / sh, objCollider.size.y);
+                }
             }
             if (_slot == null)
             {
@@ -473,13 +492,13 @@ namespace Assets.Scripts.Items
                         ApplyResize(216, 108);
                         break;
                 }
-                image.rectTransform.sizeDelta = objCollider.size;
                 return;
             }
-            ApplyActionForOnlyContentWithSlots(null, null, () =>
-            {
-                image.rectTransform.sizeDelta = objCollider.size = objTF.sizeDelta = info.size * 50f;
-            });
+            // 일반 슬롯 컨테이너일 경우
+            w = 50 * (int)info.size.x;
+            h = 50 * (int)info.size.y;
+            l = Mathf.Max(w, h);
+            ApplyResize(50 * (int)info.size.x, 50 * (int)info.size.y);
         }
 
         /// <summary>
