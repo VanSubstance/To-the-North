@@ -153,9 +153,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitTf: {fileID: 8379434864165065241}
-  visualTf: {fileID: 0}
   weaponL: {fileID: 8391907671427950597}
   weaponR: {fileID: 5744239113335710260}
+  audEat: {fileID: 0}
+  audDrink: {fileID: 0}
+  audBandage: {fileID: 8300000, guid: 9cbab94aa986d36429733d2b5cf474eb, type: 3}
+  audReload: {fileID: 8300000, guid: e1c308b314a786c498e33e69af313f75, type: 3}
+  visualTf: {fileID: 4959333376297133284}
   info: {fileID: 11400000, guid: abe18b6cfa722824ba68ab9ac5ff7750, type: 2}
   sightCtrl: {fileID: 7249881556233970603}
   statusType: 0

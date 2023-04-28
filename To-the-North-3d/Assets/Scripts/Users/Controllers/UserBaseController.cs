@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Users
 {
-    public class UserBaseController : AbsCreatureBaseController, ISoundable
+    public class UserBaseController : AbsCreatureBaseController
     {
         public ProgressBarSpriteController progress;
 
@@ -48,15 +48,6 @@ namespace Assets.Scripts.Users
             }
         }
 
-        [HideInInspector]
-        private AudioSource Speaker;
-        [SerializeField]
-        protected AudioClip
-            audEat, audDrink,
-            audBandage,
-            audReload
-            ;
-
         private new void Awake()
         {
             if (_instance == null)
@@ -72,9 +63,6 @@ namespace Assets.Scripts.Users
             DontDestroyOnLoad(gameObject);
 
             base.Awake();
-            Speaker = GetComponent<AudioSource>();
-            Speaker.loop = true;
-            Speaker.playOnAwake = false;
             tickHealthCondition = 0;
         }
 
@@ -174,55 +162,6 @@ namespace Assets.Scripts.Users
                 InGameStatus.User.conditions[targetCondition] = 0;
                 ConditionManager.Instance.AsleepCondition(targetCondition);
             }
-        }
-
-        public void PlaySound(AudioClip _clip = null)
-        {
-            if (_clip != null)
-            {
-                Speaker.clip = _clip;
-            }
-            Speaker.loop = true;
-            Speaker.Play();
-        }
-
-        public void PlaySoundByType(SoundType _type)
-        {
-            if (_type.Equals(IsSoundInPlaying())) return;
-            switch (_type)
-            {
-                case SoundType.Eat:
-                    PlaySound(audEat);
-                    break;
-                case SoundType.Drink:
-                    PlaySound(audDrink);
-                    break;
-                case SoundType.Bandage:
-                    PlaySound(audBandage);
-                    break;
-                case SoundType.Reload:
-                    PlaySound(audReload);
-                    break;
-                case SoundType.None:
-                    StopSound();
-                    break;
-            }
-        }
-
-        public SoundType IsSoundInPlaying()
-        {
-            if (!Speaker.isPlaying) return SoundType.None;
-            AudioClip c = Speaker.clip;
-            if (c.Equals(audDrink)) return SoundType.Drink;
-            if (c.Equals(audEat)) return SoundType.Eat;
-            if (c.Equals(audBandage)) return SoundType.Bandage;
-            if (c.Equals(audReload)) return SoundType.Reload;
-            return SoundType.None;
-        }
-
-        public void StopSound()
-        {
-            Speaker.Stop();
         }
     }
 }

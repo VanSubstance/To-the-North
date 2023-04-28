@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Assets.Scripts.Battles;
+using Assets.Scripts.Commons;
 using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Users;
@@ -69,7 +70,6 @@ namespace Assets.Scripts.Items
                 Input.GetKey(KeyCode.R) && !isAI && !isReloading)
             {
                 // 재장전
-                isReloading = true;
                 TryReload(InGameStatus.Item.LookForMagazine(info.bulletType));
             }
             if (delayAmongFire >= info.delayAmongFire) return;
@@ -159,15 +159,29 @@ namespace Assets.Scripts.Items
 
         private void TryReload(ItemMagazineInfo newMagazine)
         {
+            isReloading = true;
+            if (isAI)
+            {
+                // AI인 경우 =-> 걍 장전
+                StartCoroutine(CoroutineReload(newMagazine));
+                return;
+            }
             if (InGameStatus.User.isInAction) return;
             StartCoroutine(CoroutineReload(newMagazine));
         }
 
         private IEnumerator CoroutineReload(ItemMagazineInfo newMagazine)
         {
-            InGameStatus.User.isInAction = true;
-            UserBaseController.Instance.progress.CurProgress = 0;
-            UserBaseController.Instance.PlaySoundByType(Creatures.SoundType.Reload);
+            if (!isAI)
+            {
+                InGameStatus.User.isInAction = true;
+                UserBaseController.Instance.progress.CurProgress = 0;
+                UserBaseController.Instance.PlaySoundByType(Creatures.SoundType.Reload);
+            }
+            else
+            {
+                owner.GetComponent<ISoundable>().PlaySoundByType(Creatures.SoundType.Reload);
+            }
             float w = 1;
             if (!isAI && InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedReload))
             {
@@ -178,24 +192,33 @@ namespace Assets.Scripts.Items
             {
                 yield return new WaitForSeconds(Time.deltaTime);
                 p = Time.deltaTime / tRemaining;
-                UserBaseController.Instance.progress.CurProgress += p;
+                if (!isAI)
+                    UserBaseController.Instance.progress.CurProgress += p;
                 tRemaining -= Time.deltaTime;
             }
             ItemMagazineInfo oldMagazine = info.ReloadMagazine(newMagazine);
-            if (oldMagazine != null)
+            if (!isAI)
             {
-                // 총에 꽃혀있던 탄창이 있음
-                // = 인벤토리에 넣어야 함
-                // -> 풀링에서 하나 가져와서 신규 생성 및 넣어주기
-                WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Inventory, oldMagazine);
+                if (oldMagazine != null)
+                {
+                    // 총에 꽃혀있던 탄창이 있음
+                    // = 인벤토리에 넣어야 함
+                    // -> 풀링에서 하나 가져와서 신규 생성 및 넣어주기
+                    WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Inventory, oldMagazine);
+                }
+                else
+                {
+                    // 꽃혀있던 탄창이 없음
+                }
+                UserBaseController.Instance.StopSound();
+                InGameStatus.User.isInAction = false;
             }
             else
             {
-                // 꽃혀있던 탄창이 없음
+                owner.GetComponent<ISoundable>().StopSound();
             }
-            UserBaseController.Instance.StopSound();
+            Debug.Log("재장전 완료!");
             isReloading = false;
-            InGameStatus.User.isInAction = false;
         }
     }
 }
