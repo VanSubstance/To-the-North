@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Creatures
+using UnityEngine;
+
+namespace Assets.Scripts.Creatures
 {
     public interface IInteractionWithSight
     {
@@ -13,6 +15,12 @@
         /// <summary>
         /// 유저의 시야에서 벗어났을 때 실행하는 함수
         /// </summary>
+        /// 
         public void DetectNone();
+        /// <summary>
+        /// 소리를 감지하였을 때 실행되는 함수
+        /// </summary>
+        /// <param name="_pos">감지된 소리의 근원지</param>
+        public void DetectSound(Vector3 _pos);
     }
 }

@@ -385,6 +385,8 @@ namespace Assets.Scripts.Creatures.Bases
         public abstract void DetectHalf();
 
         public abstract void DetectNone();
+
+        public abstract void DetectSound(Vector3 _pos);
     }
 }
 

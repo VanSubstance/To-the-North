@@ -672,7 +672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.size
-      value: 15
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[0]
@@ -734,6 +734,14 @@ PrefabInstance:
       propertyPath: itemsAutoAlign.Array.data[14]
       value: 
       objectReference: {fileID: 11400000, guid: b7d7e19bed5b4df49b9b172f29ccd702, type: 2}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: itemsAutoAlign.Array.data[15]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7e463e33373e7ab4eadd22eb65e0b9a3, type: 2}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: itemsAutoAlign.Array.data[16]
+      value: 
+      objectReference: {fileID: 11400000, guid: 28a0c2b1fc9a5d14caaa96982e0f0db9, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: inventoryInfo.Array.data[0].pos.x
       value: 0

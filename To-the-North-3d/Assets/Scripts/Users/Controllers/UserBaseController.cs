@@ -64,15 +64,6 @@ namespace Assets.Scripts.Users
             tickHealthCondition = 0;
         }
 
-        private void Start()
-        {
-            // 테스트 효과 활성화
-            Debug.Log("테스트 효과 활성화");
-            OccurCondition(ConditionType.Bleeding_Light);
-            OccurCondition(ConditionType.Bleeding_Light);
-            OccurCondition(ConditionType.Bleeding_Light);
-        }
-
         private void Update()
         {
             tickHealthCondition += Time.deltaTime;

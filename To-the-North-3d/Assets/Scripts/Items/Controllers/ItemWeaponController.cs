@@ -113,8 +113,9 @@ namespace Assets.Scripts.Items
                 {
                     ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, transform.position,
                         CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)) + UnityEngine.Random.Range(-InGameStatus.User.Detection.Sight.DegreeError,
-                        InGameStatus.User.Detection.Sight.DegreeError))
-                        , owner);
+                        InGameStatus.User.Detection.Sight.DegreeError)),
+                        owner,
+                        info.bulletType);
                 }
                 delayAmongFire = 0f;
             }

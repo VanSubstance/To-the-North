@@ -25,7 +25,7 @@ namespace Assets.Scripts.Items
         [SerializeField]
         private float powerKnockback;
         [SerializeField]
-        private int powerPenetration, powerImpact;
+        private int powerPenetration, powerImpact, levelLoudness;
         [SerializeField]
         private TrajectoryType trajectoryType;
         [SerializeField]
@@ -62,6 +62,13 @@ namespace Assets.Scripts.Items
             get
             {
                 return powerImpact >= 0 ? powerImpact : 0;
+            }
+        }
+        public int LevelLoudness
+        {
+            get
+            {
+                return levelLoudness >= 0 ? levelLoudness : 0;
             }
         }
         public TextMeshProUGUI AmountDisplay
@@ -112,6 +119,7 @@ namespace Assets.Scripts.Items
                     Range = range,
                     Height = headHeight,
                     PowerKnockback = powerKnockback,
+                    LevelLoudness = levelLoudness,
                     AttackInfo = AttackInfo.GetAttackInfo(this, bulletInfo)
                 };
                 return projectileInfo;
@@ -125,6 +133,7 @@ namespace Assets.Scripts.Items
                 Range = range,
                 Height = headHeight,
                 PowerKnockback = powerKnockback,
+                LevelLoudness = levelLoudness,
                 AttackInfo = AttackInfo.GetAttackInfo(this)
             };
             return projectileInfo;

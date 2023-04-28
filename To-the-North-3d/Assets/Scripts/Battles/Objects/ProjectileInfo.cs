@@ -7,6 +7,7 @@ namespace Assets.Scripts.Battles
     {
         private float spd, range;
         private float heightCollider, powerKnockback;
+        private int levelLoudness;
         private TrajectoryType trajectoryType;
         private AttackInfo attackInfo;
 
@@ -19,6 +20,18 @@ namespace Assets.Scripts.Battles
             get
             {
                 return powerKnockback;
+            }
+        }
+
+        public int LevelLoudness
+        {
+            set
+            {
+                levelLoudness = value;
+            }
+            get
+            {
+                return levelLoudness;
             }
         }
 
@@ -92,7 +105,8 @@ namespace Assets.Scripts.Battles
                 heightCollider = _info.heightCollider,
                 powerKnockback = _info.powerKnockback,
                 trajectoryType = _info.trajectoryType,
-                attackInfo = _info.attackInfo
+                attackInfo = _info.attackInfo,
+                levelLoudness = _info.levelLoudness,
             };
             return res;
         }
