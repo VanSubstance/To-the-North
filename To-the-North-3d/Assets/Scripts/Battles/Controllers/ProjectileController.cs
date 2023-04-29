@@ -1,6 +1,5 @@
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures;
-using Assets.Scripts.Commons;
 using Assets.Scripts.Items;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -47,8 +46,6 @@ namespace Assets.Scripts.Battles
         }
 
         private TrajectoryController trajectory;
-
-        private AudioSource Speaker;
         [SerializeField]
         private AudioClip[]
             audGunPerLoudness,
@@ -57,9 +54,6 @@ namespace Assets.Scripts.Battles
 
         private void Awake()
         {
-            Speaker = GetComponent<AudioSource>();
-            Speaker.playOnAwake = false;
-            Speaker.loop = false;
             if ((subHit = lowHit.GetComponent<SubHitDetectController>()) == null)
             {
                 subHit = lowHit.AddComponent<SubHitDetectController>();
@@ -103,20 +97,21 @@ namespace Assets.Scripts.Battles
         /// </summary>
         private void ImpactSound(ItemBulletType bulletType)
         {
+            AudioClip c = null;
             switch (bulletType)
             {
                 case ItemBulletType.None:
-                    Speaker.clip = audSwingPerLoudness[info.LevelLoudness];
+                    c = audSwingPerLoudness[info.LevelLoudness];
                     break;
                 case ItemBulletType.Bullet_mm9:
-                    Speaker.clip = audGunPerLoudness[info.LevelLoudness];
+                    c = audGunPerLoudness[info.LevelLoudness];
                     break;
                 case ItemBulletType.Arrow:
-                    Speaker.clip = audArrowPerLoudness[info.LevelLoudness];
+                    c = audArrowPerLoudness[info.LevelLoudness];
                     break;
             }
             // 소리 재생
-            Speaker.Play();
+            SoundEffects.SoundEffectManager.Instance.GetNewSoundEffect().PlaySound(c, info.LevelLoudness * 10);
             // 소리 수준에 따른 주변 크리쳐들에게 전달
             Collider[] enemies;
             if ((enemies = Physics.OverlapSphere(transform.position, info.LevelLoudness * 10, GlobalStatus.Constant.creatureMask)).Length > 0)

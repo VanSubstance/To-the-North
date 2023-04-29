@@ -18,8 +18,9 @@ MonoBehaviour:
   title: "9mm \uC77C\uBC18\uD0C4"
   description: 
   price: 7
-  consumbableType: 0
-  amountCurrent: 60
+  consumableType: 0
+  amountCurrent: 64
+  secondConsume: 0
   bulletType: 1
   powerPenetration: 3
   powerImpact: 3

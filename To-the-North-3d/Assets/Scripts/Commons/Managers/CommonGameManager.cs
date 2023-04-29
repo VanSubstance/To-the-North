@@ -16,7 +16,7 @@ public class CommonGameManager : MonoBehaviour
     private Transform fadeImagePrefab, userPrefab, filterForScreenPrefab,
         pauseWindowPrefab, inventoryWindowPrefab,
         panelForHpSp, panelForCondition, panelForWelfare, panelForQuick,
-        projectileManager, trajectoryManager,
+        projectileManager, trajectoryManager, soundEffectManager,
         screenHitManager,
         hoveringItemInfo
         ;
@@ -200,6 +200,13 @@ public class CommonGameManager : MonoBehaviour
             {
                 Transform temp = Instantiate(trajectoryManager);
                 temp.name = "Trajectories";
+            }
+
+            // 궤적 풀
+            if (GameObject.Find("SoundEffects") == null)
+            {
+                Transform temp = Instantiate(soundEffectManager);
+                temp.name = "SoundEffects";
             }
 
             // 화면 피격 풀 + 카메라 피격 컨트롤러
