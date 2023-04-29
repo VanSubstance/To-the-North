@@ -786,6 +786,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Static Game Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: itemsAutoAlign.Array.size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: itemsAutoAlign.Array.data[14]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7e463e33373e7ab4eadd22eb65e0b9a3, type: 2}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: itemsAutoAlign.Array.data[15]
+      value: 
+      objectReference: {fileID: 11400000, guid: 28a0c2b1fc9a5d14caaa96982e0f0db9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
 --- !u!1001 &728919769
@@ -21252,7 +21264,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -903924027601988942, guid: cd9deb0718517904c8a0e5a131b35254, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -903924027601988942, guid: cd9deb0718517904c8a0e5a131b35254, type: 3}
       propertyPath: timeMaxMemory
@@ -21276,7 +21288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5111828145308572776, guid: cd9deb0718517904c8a0e5a131b35254, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5111828145308572776, guid: cd9deb0718517904c8a0e5a131b35254, type: 3}
       propertyPath: timeMaxMemory

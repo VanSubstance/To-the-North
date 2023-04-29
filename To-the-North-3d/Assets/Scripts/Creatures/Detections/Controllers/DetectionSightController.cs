@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Events;
 using UnityEngine;
+using static InGameStatus;
 
 namespace Assets.Scripts.Creatures.Detections
 {
@@ -203,11 +204,10 @@ namespace Assets.Scripts.Creatures.Detections
                                     return userTf;
                                 }
                             }
-                            return null;
                         }
-                        return null;
                     }
                 }
+                aIBaseController.OnDetectUser(null);
                 return null;
             }
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴

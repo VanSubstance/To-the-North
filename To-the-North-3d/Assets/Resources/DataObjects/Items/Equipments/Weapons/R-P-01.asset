@@ -32,5 +32,6 @@ MonoBehaviour:
   powerKnockback: 1
   powerPenetration: 13
   powerImpact: 3
+  levelLoudness: 1
   trajectoryType: 0
   magazine: {fileID: 0}

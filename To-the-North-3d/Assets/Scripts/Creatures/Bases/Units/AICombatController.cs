@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Creatures.Interfaces;
+using Assets.Scripts.Creatures.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Bases
@@ -13,7 +13,10 @@ namespace Assets.Scripts.Creatures.Bases
 
         protected override void OnDetectUser(Transform userTf)
         {
-            baseCtrl.SetTargetToMove(userTf.position, 0, false);
+            if (userTf != null)
+            {
+                baseCtrl.SetTargetToMove(userTf.position, 0, false);
+            }
             baseCtrl.SetTargetToAttack(userTf);
         }
 

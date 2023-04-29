@@ -5,6 +5,7 @@ namespace Assets.Scripts.SoundEffects
     public class SoundEffectController : MonoBehaviour
     {
         private AudioSource Speaker;
+        public float impactDistance;
 
         public bool isAsleep
         {
@@ -27,12 +28,14 @@ namespace Assets.Scripts.SoundEffects
         /// 효과음 재생 함수
         /// </summary>
         /// <param name="_clip"></param>
-        public void PlaySound(AudioClip _clip, float impactDistance)
+        public void PlaySound(Vector3 posWorld, AudioClip _clip, float _impactDistance)
         {
             Init();
+            transform.position = posWorld;
             Speaker.clip = _clip;
-            Speaker.maxDistance = impactDistance;
+            Speaker.maxDistance = _impactDistance;
             gameObject.SetActive(true);
+            impactDistance = _impactDistance;
         }
 
         private void Update()

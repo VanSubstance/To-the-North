@@ -111,7 +111,7 @@ namespace Assets.Scripts.Battles
                     break;
             }
             // 소리 재생
-            SoundEffects.SoundEffectManager.Instance.GetNewSoundEffect().PlaySound(c, info.LevelLoudness * 10);
+            SoundEffects.SoundEffectManager.Instance.GetNewSoundEffect().PlaySound(transform.position, c, info.LevelLoudness * 10);
             // 소리 수준에 따른 주변 크리쳐들에게 전달
             Collider[] enemies;
             if ((enemies = Physics.OverlapSphere(transform.position, info.LevelLoudness * 10, GlobalStatus.Constant.creatureMask)).Length > 0)

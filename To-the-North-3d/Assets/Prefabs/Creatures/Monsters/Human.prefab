@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e273d93457959419465f268321bc2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeMaxMemory: 0
+  timeMaxMemory: 10
 --- !u!114 &5111828145308572776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2f39f739e9941142bf63a8243b81bbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeMaxMemory: 0
+  timeMaxMemory: 10
 --- !u!114 &-903924027601988942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222ed55f258165b4b966ed6dc1c535e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeMaxMemory: 0
+  timeMaxMemory: 10
 --- !u!114 &2420854514163520099
 MonoBehaviour:
   m_ObjectHideFlags: 0
