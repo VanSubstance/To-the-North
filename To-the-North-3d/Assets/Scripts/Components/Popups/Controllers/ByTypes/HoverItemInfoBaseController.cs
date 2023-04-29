@@ -12,7 +12,7 @@ namespace Assets.Scripts.Components.Popups
         private TextMeshProUGUI price;
         private void Awake()
         {
-            image = transform.Find("Image").GetComponent<Image>();
+            image = transform.Find("Image Container").GetChild(0).GetComponent<Image>();
             title = transform.Find("Title").GetComponent<TextMeshProUGUI>();
             price = transform.Find("Price").GetComponent<TextMeshProUGUI>();
         }
@@ -32,6 +32,17 @@ namespace Assets.Scripts.Components.Popups
                 return;
             }
             image.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(_info));
+            float w = 50 * image.sprite.bounds.size.x;
+            float h = 50 * image.sprite.bounds.size.y;
+            float l = Mathf.Max(w, h);
+            if (l == w)
+            {
+                image.GetComponent<RectTransform>().sizeDelta = new Vector2(80, h * 80 / w);
+            }
+            else
+            {
+                image.GetComponent<RectTransform>().sizeDelta = new Vector2(w * 80 / h, 80);
+            }
             title.text = _info.title;
             price.text = $"{_info.price} G";
             gameObject.SetActive(true);
