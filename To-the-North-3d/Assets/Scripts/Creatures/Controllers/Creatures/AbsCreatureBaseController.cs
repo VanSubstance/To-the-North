@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Assets.Scripts.Battles;
+using Assets.Scripts.Commons;
 using Assets.Scripts.Items;
 using UnityEngine;
-using Assets.Scripts.Commons;
 
 namespace Assets.Scripts.Creatures.Controllers
 {
