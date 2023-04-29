@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 5111828145308572776}
   - component: {fileID: -903924027601988942}
   - component: {fileID: 2420854514163520099}
+  - component: {fileID: 2595391720657072945}
   - component: {fileID: 1399138213108615271}
   - component: {fileID: 3456621478565511699}
   - component: {fileID: 2066146855263693509}
@@ -234,6 +235,20 @@ MonoBehaviour:
   detections:
   - {fileID: 7249881556233970603}
   targetTf: {fileID: 0}
+--- !u!114 &2595391720657072945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249881556927368019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e5ccaaa6b0a581448620a59fd1cdd45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audWalk: {fileID: 8300000, guid: c64e9cc664a4eb24fbcc74421ad3ae65, type: 3}
+  audRun: {fileID: 8300000, guid: 4d73fd74928077648943aa56e7d6dd8f, type: 3}
 --- !u!54 &1399138213108615271
 Rigidbody:
   m_ObjectHideFlags: 0

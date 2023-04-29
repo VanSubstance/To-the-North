@@ -17,8 +17,7 @@ namespace Assets.Scripts.Creatures.Controllers
 
         protected void Awake()
         {
-            Speaker = GetComponent<AudioSource>();
-            if (Speaker == null) Speaker = gameObject.AddComponent<AudioSource>();
+            Speaker = gameObject.AddComponent<AudioSource>();
             Speaker.loop = true;
             Speaker.playOnAwake = false;
 
