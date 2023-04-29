@@ -55,7 +55,7 @@ namespace Assets.Scripts.Components.Popups
             {
                 transform.SetAsLastSibling();
             }
-            ResizeByChildren();
+            //ResizeByChildren();
         }
 
         private void ResizeByChildren()

@@ -11,14 +11,11 @@ namespace Assets.Scripts.Commons
 
         protected void TracksMouse()
         {
-            Vector3 nextPos;
-            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            nextPos = transform.localPosition;
+            Vector3 nextPos = UIManager.Instance.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             transform.localPosition = new Vector3(
                 nextPos.x,
-                nextPos.y - transform.GetComponent<RectTransform>().sizeDelta.y,
-                0
-                );
+                nextPos.y,
+                0);
         }
     }
 }
