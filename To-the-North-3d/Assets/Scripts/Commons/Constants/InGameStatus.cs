@@ -11,7 +11,7 @@ public static class InGameStatus
     public static class User
     {
         public static bool isPause = false;
-        public static bool isInConsume = false;
+        public static bool isInAction = false;
 
         public static class status
         {

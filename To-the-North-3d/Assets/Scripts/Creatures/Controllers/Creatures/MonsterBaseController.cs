@@ -31,11 +31,21 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
             ChangeVisualOpacity(0);
         }
 
+        public override void DetectSound(Vector3 _pos)
+        {
+            DetectPosition(_pos);
+        }
+
         public override void OnDetectPosition(Vector3 targetPos)
+        {
+            DetectPosition(targetPos);
+        }
+
+        private void DetectPosition(Vector3 _pos)
         {
             foreach (AbsAIStatusController statusCtrl in statusCtrls)
             {
-                statusCtrl.DetectPosition(targetPos);
+                statusCtrl.DetectPosition(_pos);
             }
         }
 

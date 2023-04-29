@@ -1,4 +1,5 @@
 using Assets.Scripts.Commons.Functions;
+using Assets.Scripts.Creatures;
 using Assets.Scripts.Items;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -45,8 +46,24 @@ namespace Assets.Scripts.Battles
         }
 
         private TrajectoryController trajectory;
+        [SerializeField]
+        private AudioClip[]
+            audGunPerLoudness,
+            audArrowPerLoudness,
+            audSwingPerLoudness;
 
-        public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner)
+        private void Awake()
+        {
+            if ((subHit = lowHit.GetComponent<SubHitDetectController>()) == null)
+            {
+                subHit = lowHit.AddComponent<SubHitDetectController>();
+            }
+            subHit.Parent = this;
+            subHit.SetActive(false);
+            gameObject.SetActive(false);
+        }
+
+        public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner, ItemBulletType bulletType)
         {
             float h = startPos.y;
             trajectory = TrajectoryManager.Instance.GetNewTrajectory();
@@ -72,6 +89,42 @@ namespace Assets.Scripts.Battles
                 trajectory.PlayCurve(startPos, CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)), 45, _info.Range);
                 trajectory = null;
             }
+            ImpactSound(bulletType);
+        }
+
+        /// <summary>
+        /// 시작될 때 소리 관련 처리 함수
+        /// </summary>
+        private void ImpactSound(ItemBulletType bulletType)
+        {
+            AudioClip c = null;
+            switch (bulletType)
+            {
+                case ItemBulletType.None:
+                    c = audSwingPerLoudness[info.LevelLoudness];
+                    break;
+                case ItemBulletType.Bullet_mm9:
+                    c = audGunPerLoudness[info.LevelLoudness];
+                    break;
+                case ItemBulletType.Arrow:
+                    c = audArrowPerLoudness[info.LevelLoudness];
+                    break;
+            }
+            // 소리 재생
+            SoundEffects.SoundEffectManager.Instance.GetNewSoundEffect().PlaySound(c, info.LevelLoudness * 10);
+            // 소리 수준에 따른 주변 크리쳐들에게 전달
+            Collider[] enemies;
+            if ((enemies = Physics.OverlapSphere(transform.position, info.LevelLoudness * 10, GlobalStatus.Constant.creatureMask)).Length > 0)
+            {
+                IInteractionWithSight s;
+                foreach (Collider enemy in enemies)
+                {
+                    if ((s = enemy.GetComponent<IInteractionWithSight>()) != null)
+                    {
+                        s.DetectSound(transform.position);
+                    }
+                }
+            }
         }
 
         public void Arrive()
@@ -82,17 +135,6 @@ namespace Assets.Scripts.Battles
             {
                 trajectory.Finish();
             }
-            subHit.SetActive(false);
-            gameObject.SetActive(false);
-        }
-
-        private void Awake()
-        {
-            if ((subHit = lowHit.GetComponent<SubHitDetectController>()) == null)
-            {
-                subHit = lowHit.AddComponent<SubHitDetectController>();
-            }
-            subHit.Parent = this;
             subHit.SetActive(false);
             gameObject.SetActive(false);
         }

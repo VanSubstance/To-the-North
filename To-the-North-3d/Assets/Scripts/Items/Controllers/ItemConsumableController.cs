@@ -7,8 +7,6 @@ namespace Assets.Scripts.Items
 {
     public class ItemConsumableController : AItemBaseController
     {
-        private readonly string TAG = "소모성 아이템:\n";
-
         private ItemConsumableInfo Info
         {
             get

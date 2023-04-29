@@ -16,7 +16,7 @@ public class CommonGameManager : MonoBehaviour
     private Transform fadeImagePrefab, userPrefab, filterForScreenPrefab,
         pauseWindowPrefab, inventoryWindowPrefab,
         panelForHpSp, panelForCondition, panelForWelfare, panelForQuick,
-        projectileManager, trajectoryManager,
+        projectileManager, trajectoryManager, soundEffectManager,
         screenHitManager,
         hoveringItemInfo
         ;
@@ -202,6 +202,13 @@ public class CommonGameManager : MonoBehaviour
                 temp.name = "Trajectories";
             }
 
+            // 궤적 풀
+            if (GameObject.Find("SoundEffects") == null)
+            {
+                Transform temp = Instantiate(soundEffectManager);
+                temp.name = "SoundEffects";
+            }
+
             // 화면 피격 풀 + 카메라 피격 컨트롤러
             if (uiTf.Find("On Hit") == null)
             {
@@ -336,19 +343,20 @@ public class CommonGameManager : MonoBehaviour
     /// <param name="_info"></param>
     public void ApplyConsumable(ItemConsumableInfo _info)
     {
-        if (InGameStatus.User.isInConsume) return;
+        if (InGameStatus.User.isInAction) return;
         StartCoroutine(CoroutineConsume(_info));
     }
     private IEnumerator CoroutineConsume(ItemConsumableInfo _info)
     {
-        InGameStatus.User.isInConsume = true;
+        InGameStatus.User.isInAction = true;
         _info.Use(1);
         UserBaseController.Instance.progress.CurProgress = 0;
-        float tRemaining = _info.SecondConsume, p = 1;
+        float tRemaining = _info.SecondConsume, p;
         if (_info is ItemFoodInfo)
         {
-            ItemFoodInfo fInfo = Instantiate((ItemFoodInfo)_info);
             // 음식일 경우
+            UserBaseController.Instance.PlaySoundByType(Assets.Scripts.Creatures.SoundType.Eat);
+            ItemFoodInfo fInfo = Instantiate((ItemFoodInfo)_info);
             while (tRemaining > 0)
             {
                 yield return new WaitForSeconds(Time.deltaTime);
@@ -366,8 +374,9 @@ public class CommonGameManager : MonoBehaviour
         }
         else if (_info is ItemMedicineInfo)
         {
-            ItemMedicineInfo mInfo = Instantiate((ItemMedicineInfo)_info);
             // 의약품일 경우
+            UserBaseController.Instance.PlaySoundByType(Assets.Scripts.Creatures.SoundType.Bandage);
+            ItemMedicineInfo mInfo = Instantiate((ItemMedicineInfo)_info);
             while (tRemaining > 0)
             {
                 yield return new WaitForSeconds(Time.deltaTime);
@@ -383,6 +392,7 @@ public class CommonGameManager : MonoBehaviour
                 UserBaseController.Instance.CureCondition(effect.targetCondition, effect.countToRemove);
             }
         }
-        InGameStatus.User.isInConsume = false;
+        UserBaseController.Instance.StopSound();
+        InGameStatus.User.isInAction = false;
     }
 }

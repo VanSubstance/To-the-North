@@ -106,7 +106,9 @@ namespace Assets.Scripts.Items
             {
                 ItemDetach();
                 if (isRotate)
-                    ItemRotate();
+                {
+                    ItemRotate(true);
+                }
                 InitInfo(info, _targetSlot);
                 _targetSlot.EquipItemInfo = Info;
                 return true;

@@ -15,7 +15,7 @@ MonoBehaviour:
   itemType: 1
   size: {x: 1, y: 1}
   imagePath: Gun Test
-  title: "\uBE44\uBE44\uD0C4 \uCD1D"
+  title: "\uB9AC\uBCFC\uBC84"
   description: "\uD14C\uC2A4\uD2B8\uC6A9 \uCD1D\uC785\uB2C8\uB2E4."
   price: 100
   equipmentType: 5
@@ -32,4 +32,6 @@ MonoBehaviour:
   powerKnockback: 1
   powerPenetration: 13
   powerImpact: 3
+  levelLoudness: 1
   trajectoryType: 0
+  magazine: {fileID: 0}

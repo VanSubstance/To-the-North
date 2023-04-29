@@ -1,7 +1,9 @@
+using Assets.Scripts.Commons;
+using Assets.Scripts.Creatures;
 using Assets.Scripts.Users;
 using UnityEngine;
 
-public class CameraTrackControlller : MonoBehaviour
+public class CameraTrackControlller : MonoBehaviour, ISoundable
 {
     public static Vector3 MousePosOnTerrain;
     public static Vector3
@@ -9,6 +11,10 @@ public class CameraTrackControlller : MonoBehaviour
         headHorPos = Vector3.zero, headVerPos = Vector3.zero;
 
     private static int speedTracking = 2;
+
+    private AudioSource Speaker, SpeakerEnvironment;
+    [SerializeField]
+    private AudioClip audGroundIn, audGroundOut, audUnderGround;
 
     private static CameraTrackControlller _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
@@ -41,6 +47,17 @@ public class CameraTrackControlller : MonoBehaviour
         }
         // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
         DontDestroyOnLoad(gameObject);
+        Speaker = GetComponent<AudioSource>();
+        Speaker.loop = true;
+        Speaker.playOnAwake = false;
+        SpeakerEnvironment = gameObject.AddComponent<AudioSource>();
+        SpeakerEnvironment.loop = true;
+        SpeakerEnvironment.playOnAwake = false;
+    }
+
+    private void Start()
+    {
+        PlaySoundByType(SoundType.GroundOut);
     }
 
     private void Update()
@@ -82,5 +99,49 @@ public class CameraTrackControlller : MonoBehaviour
         {
             MousePosOnTerrain = hit.point;
         }
+    }
+
+    public void PlaySound(AudioClip _clip = null)
+    {
+        if (_clip != null)
+        {
+            Speaker.clip = _clip;
+        }
+        Speaker.Play();
+    }
+
+    public void StopSound()
+    {
+        Speaker.Stop();
+    }
+
+    public void PlaySoundByType(SoundType _type)
+    {
+        if (_type.Equals(IsSoundInPlaying())) return;
+        switch (_type)
+        {
+            case SoundType.None:
+                StopSound();
+                break;
+            case SoundType.GroundIn:
+                PlaySound(audGroundIn);
+                break;
+            case SoundType.GroundOut:
+                PlaySound(audGroundOut);
+                break;
+            case SoundType.UnderGround:
+                PlaySound(audUnderGround);
+                break;
+        }
+    }
+
+    public SoundType IsSoundInPlaying()
+    {
+        if (!Speaker.isPlaying) return SoundType.None;
+        AudioClip c = Speaker.clip;
+        if (c.Equals(audGroundIn)) return SoundType.GroundIn;
+        if (c.Equals(audGroundOut)) return SoundType.GroundOut;
+        if (c.Equals(audUnderGround)) return SoundType.UnderGround;
+        return SoundType.None;
     }
 }

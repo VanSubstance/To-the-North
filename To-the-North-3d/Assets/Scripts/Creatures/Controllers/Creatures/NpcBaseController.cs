@@ -20,6 +20,11 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
             throw new System.NotImplementedException();
         }
 
+        public override void DetectSound(Vector3 _pos)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void OnDetectPosition(Vector3 targetPos)
         {
             throw new System.NotImplementedException();

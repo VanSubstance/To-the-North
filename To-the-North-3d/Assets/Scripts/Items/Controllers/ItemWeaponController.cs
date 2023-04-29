@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Assets.Scripts.Battles;
+using Assets.Scripts.Commons;
 using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Users;
@@ -22,7 +23,7 @@ namespace Assets.Scripts.Items
         {
             set
             {
-                owner= value;
+                owner = value;
             }
         }
 
@@ -65,10 +66,10 @@ namespace Assets.Scripts.Items
             if (info == null) return;
             TrackReleaseAiming();
             isAiming = false;
-            if (Input.GetKey(KeyCode.R) && !isAI && !isReloading)
+            if (!InGameStatus.User.isInAction &&
+                Input.GetKey(KeyCode.R) && !isAI && !isReloading)
             {
                 // 재장전
-                isReloading = true;
                 TryReload(InGameStatus.Item.LookForMagazine(info.bulletType));
             }
             if (delayAmongFire >= info.delayAmongFire) return;
@@ -105,16 +106,16 @@ namespace Assets.Scripts.Items
                 {
                     // 탄환이 없는 원거리 무기
                     // = 재장전 필요
-                    Debug.Log("재장전 필요!");
-                    if (isAI) TryReload(GlobalComponent.Path.GetMonsterMagazineInfo(info.bulletType, 1));
+                    if (isAI) TryReload(Instantiate(GlobalComponent.Path.GetMonsterMagazineInfo(info.bulletType, 1)));
                     return;
                 }
                 else
                 {
                     ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, transform.position,
                         CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)) + UnityEngine.Random.Range(-InGameStatus.User.Detection.Sight.DegreeError,
-                        InGameStatus.User.Detection.Sight.DegreeError))
-                        , owner);
+                        InGameStatus.User.Detection.Sight.DegreeError)),
+                        owner,
+                        info.bulletType);
                 }
                 delayAmongFire = 0f;
             }
@@ -157,31 +158,58 @@ namespace Assets.Scripts.Items
 
         private void TryReload(ItemMagazineInfo newMagazine)
         {
+            isReloading = true;
+            if (isAI)
+            {
+                // AI인 경우 =-> 걍 장전
+                newMagazine.LoadMagazine(Instantiate(GlobalComponent.Path.GetMonsterBulletInfo(newMagazine.bulletType, 1)));
+                StartCoroutine(CoroutineReload(newMagazine));
+                return;
+            }
+            if (InGameStatus.User.isInAction) return;
             StartCoroutine(CoroutineReload(newMagazine));
         }
 
         private IEnumerator CoroutineReload(ItemMagazineInfo newMagazine)
         {
-            Debug.Log("Reload Starts ...");
+            owner.GetComponent<ISoundable>().PlaySoundByType(Creatures.SoundType.Reload);
+            if (!isAI)
+            {
+                InGameStatus.User.isInAction = true;
+                UserBaseController.Instance.progress.CurProgress = 0;
+            }
             float w = 1;
             if (!isAI && InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedReload))
             {
                 w *= 1.5f;
             }
-            yield return new WaitForSeconds(info.timeReload * w);
+            float tRemaining = info.timeReload * w, p = 1;
+            while (tRemaining > 0f)
+            {
+                yield return new WaitForSeconds(Time.deltaTime);
+                p = Time.deltaTime / tRemaining;
+                if (!isAI)
+                    UserBaseController.Instance.progress.CurProgress += p;
+                tRemaining -= Time.deltaTime;
+            }
             ItemMagazineInfo oldMagazine = info.ReloadMagazine(newMagazine);
-            if (oldMagazine != null)
+            owner.GetComponent<ISoundable>().StopSound();
+            if (!isAI)
             {
-                // 총에 꽃혀있던 탄창이 있음
-                // = 인벤토리에 넣어야 함
-                // -> 풀링에서 하나 가져와서 신규 생성 및 넣어주기
-                WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Inventory, oldMagazine);
-            } else
-            {
-                // 꽃혀있던 탄창이 없음
+                if (oldMagazine != null)
+                {
+                    // 총에 꽃혀있던 탄창이 있음
+                    // = 인벤토리에 넣어야 함
+                    // -> 풀링에서 하나 가져와서 신규 생성 및 넣어주기
+                    WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Inventory, oldMagazine);
+                }
+                else
+                {
+                    // 꽃혀있던 탄창이 없음
+                }
+                InGameStatus.User.isInAction = false;
             }
             isReloading = false;
-            Debug.Log("Reload Complete!");
         }
     }
 }
