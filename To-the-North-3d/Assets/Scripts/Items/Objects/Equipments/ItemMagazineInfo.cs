@@ -92,7 +92,7 @@ namespace Assets.Scripts.Items
             if (currentBullet == null ||
                 currentBullet.AmountCount == 0)
             {
-                // 튜에서 다음 탄환 꺼내기
+                // 큐에서 다음 탄환 꺼내기
                 if (!bullets.TryDequeue(out currentBullet))
                 {
                     // 다음 탄환 없음 = 재장전 필요

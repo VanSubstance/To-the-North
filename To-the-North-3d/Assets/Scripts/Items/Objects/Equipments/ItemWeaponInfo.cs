@@ -154,11 +154,5 @@ namespace Assets.Scripts.Items
             magazine = _magazine;
             return oldMagazine;
         }
-
-        public bool isMagazineRequired()
-        {
-            return
-                !new ItemBulletType[] { ItemBulletType.Arrow, ItemBulletType.None }.Contains(bulletType);
-        }
     }
 }

@@ -7,7 +7,6 @@ namespace Assets.Scripts.Components.Popups
     internal class HoverItemInfoContainerController : MouseTrackController, IControllByKey
     {
         private bool isOccupied = false;
-        private int prevH;
         private HoveringItemInfoChangeControl itemInfoControl;
         private IHoverItemInfo[] infoDisplayFunctions;
         private static HoverItemInfoContainerController _instance;
@@ -38,7 +37,6 @@ namespace Assets.Scripts.Components.Popups
             GetComponent<Canvas>().sortingLayerName = "UI Covering Map";
             gameObject.SetActive(false);
             isOccupied = false;
-            prevH = 0;
             int c = System.Enum.GetNames(typeof(DisplayIndex)).Length;
             infoDisplayFunctions = new IHoverItemInfo[c];
             for (int i = 0; i < c; i++)
@@ -55,23 +53,6 @@ namespace Assets.Scripts.Components.Popups
             {
                 transform.SetAsLastSibling();
             }
-            //ResizeByChildren();
-        }
-
-        private void ResizeByChildren()
-        {
-            float h = 0;
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                if (!transform.GetChild(i).gameObject.activeSelf) continue;
-                h += transform.GetChild(i).GetComponent<RectTransform>().sizeDelta.y + 10;
-            }
-            if ((int)h != prevH)
-            {
-                float w = transform.GetComponent<RectTransform>().sizeDelta.x;
-                transform.GetComponent<RectTransform>().sizeDelta = new Vector2(w, h + 10);
-            }
-            prevH = (int)h;
         }
 
         private void InitItemInfo(ItemBaseInfo info)

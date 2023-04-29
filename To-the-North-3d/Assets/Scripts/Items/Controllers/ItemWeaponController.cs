@@ -106,8 +106,7 @@ namespace Assets.Scripts.Items
                 {
                     // 탄환이 없는 원거리 무기
                     // = 재장전 필요
-                    Debug.Log("재장전 필요!");
-                    if (isAI) TryReload(GlobalComponent.Path.GetMonsterMagazineInfo(info.bulletType, 1));
+                    if (isAI) TryReload(Instantiate(GlobalComponent.Path.GetMonsterMagazineInfo(info.bulletType, 1)));
                     return;
                 }
                 else
@@ -163,6 +162,7 @@ namespace Assets.Scripts.Items
             if (isAI)
             {
                 // AI인 경우 =-> 걍 장전
+                newMagazine.LoadMagazine(Instantiate(GlobalComponent.Path.GetMonsterBulletInfo(newMagazine.bulletType, 1)));
                 StartCoroutine(CoroutineReload(newMagazine));
                 return;
             }
@@ -172,15 +172,11 @@ namespace Assets.Scripts.Items
 
         private IEnumerator CoroutineReload(ItemMagazineInfo newMagazine)
         {
+            owner.GetComponent<ISoundable>().PlaySoundByType(Creatures.SoundType.Reload);
             if (!isAI)
             {
                 InGameStatus.User.isInAction = true;
                 UserBaseController.Instance.progress.CurProgress = 0;
-                UserBaseController.Instance.PlaySoundByType(Creatures.SoundType.Reload);
-            }
-            else
-            {
-                owner.GetComponent<ISoundable>().PlaySoundByType(Creatures.SoundType.Reload);
             }
             float w = 1;
             if (!isAI && InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedReload))
@@ -197,6 +193,7 @@ namespace Assets.Scripts.Items
                 tRemaining -= Time.deltaTime;
             }
             ItemMagazineInfo oldMagazine = info.ReloadMagazine(newMagazine);
+            owner.GetComponent<ISoundable>().StopSound();
             if (!isAI)
             {
                 if (oldMagazine != null)
@@ -210,14 +207,8 @@ namespace Assets.Scripts.Items
                 {
                     // 꽃혀있던 탄창이 없음
                 }
-                UserBaseController.Instance.StopSound();
                 InGameStatus.User.isInAction = false;
             }
-            else
-            {
-                owner.GetComponent<ISoundable>().StopSound();
-            }
-            Debug.Log("재장전 완료!");
             isReloading = false;
         }
     }
