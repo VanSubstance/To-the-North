@@ -28,7 +28,7 @@ namespace Assets.Scripts.Creatures
         {
             if (isCrouching) return;
             isCrouching = true;
-            detectionTf.localPosition = Vector3.up * (-.6f + detectionTf.localPosition.y);
+            detectionTf.localScale = new Vector3(1, .5f, 1);
             sightTf.localPosition = Vector3.up * (-.4f + sightTf.localPosition.y);
             handTf.localPosition = Vector3.up * (-.6f + handTf.localPosition.y);
         }
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Creatures
         {
             if (!isCrouching) return;
             isCrouching = false;
-            detectionTf.localPosition = Vector3.up * (.6f + detectionTf.localPosition.y);
+            detectionTf.localScale = Vector3.one;
             sightTf.localPosition = Vector3.up * (.4f + sightTf.localPosition.y);
             handTf.localPosition = Vector3.up * (.6f + handTf.localPosition.y);
         }

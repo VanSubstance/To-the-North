@@ -21297,7 +21297,7 @@ PrefabInstance:
     - target: {fileID: 5744239113335710260, guid: cd9deb0718517904c8a0e5a131b35254, type: 3}
       propertyPath: info
       value: 
-      objectReference: {fileID: 11400000, guid: 28f7c59c66deb014f8fd4aa0a8f16213, type: 2}
+      objectReference: {fileID: 11400000, guid: 634a05cc713186c439c43cb18187bbca, type: 2}
     - target: {fileID: 7249881556233970603, guid: cd9deb0718517904c8a0e5a131b35254, type: 3}
       propertyPath: meshFilterLower
       value: 

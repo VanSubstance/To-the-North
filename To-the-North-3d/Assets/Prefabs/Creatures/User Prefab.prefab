@@ -784,6 +784,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: User
       objectReference: {fileID: 0}
+    - target: {fileID: 3445592060032075669, guid: a59b8155a9c71a0408be1e77c1d16d76, type: 3}
+      propertyPath: m_TagString
+      value: User
+      objectReference: {fileID: 0}
+    - target: {fileID: 3534436915745288485, guid: a59b8155a9c71a0408be1e77c1d16d76, type: 3}
+      propertyPath: m_TagString
+      value: User
+      objectReference: {fileID: 0}
     - target: {fileID: 4456119000886491282, guid: a59b8155a9c71a0408be1e77c1d16d76, type: 3}
       propertyPath: m_TagString
       value: User
