@@ -26,19 +26,24 @@ namespace Assets.Scripts.Battles
 
         [SerializeField]
         private bool isFixed;
+        [SerializeField]
+        private float anchorZ, minZ;
+        private Vector3 colSize;
+
         private BoxCollider bc;
 
         private void Awake()
         {
             hitController = transform.parent.GetComponent<CreatureHitController>();
             bc = GetComponent<BoxCollider>();
+            colSize = bc.size;
             if (isFixed) return;
         }
 
         private void FixedUpdate()
         {
             if (isFixed) return;
-            if (transform.localPosition.z > 0.9f || transform.localPosition.z < -.9f)
+            if (transform.localPosition.z > anchorZ || transform.localPosition.z < -anchorZ)
             {
                 transform.localPosition = new Vector3(
                     0,
@@ -47,14 +52,14 @@ namespace Assets.Scripts.Battles
                     );
             }
             float z = transform.localPosition.z;
-            if (z < -.1f)
+            if (z < minZ)
             {
                 // 콜라이더 크기 조절
-                bc.size = new Vector3(1, 2, .8f - (-.1f - z) * 2);
+                bc.size = new Vector3(colSize.x, colSize.y, colSize.z - (minZ - z) * 2);
             }
             else
             {
-                bc.size = new Vector3(1, 2, .8f);
+                bc.size = colSize;
             }
         }
 

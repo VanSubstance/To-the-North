@@ -41,6 +41,7 @@ namespace Assets.Scripts.Creatures.Bases
         {
             set
             {
+                Debug.Log($"??? >> {value}");
                 agent.SetDestination(value);
                 agent.stoppingDistance = 1;
             }
@@ -305,8 +306,6 @@ namespace Assets.Scripts.Creatures.Bases
 
             statusType = AIStatusType.None;
             agent = GetComponent<NavMeshAgent>();
-            particle = GetComponent<ParticleSystem>();
-            particle.Stop();
             base.Awake();
 
             if (Info == null) OnDisable();
@@ -358,7 +357,6 @@ namespace Assets.Scripts.Creatures.Bases
         /// <param name="userTf"></param>
         public abstract void OnDetectUser(Transform userTf);
 
-        private ParticleSystem particle;
         private float timeParticle = 0;
 
         private void CheckParticle()

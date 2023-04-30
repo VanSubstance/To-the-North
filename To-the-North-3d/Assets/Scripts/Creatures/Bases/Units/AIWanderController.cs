@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Creatures.Interfaces;
+using Assets.Scripts.Creatures.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Bases

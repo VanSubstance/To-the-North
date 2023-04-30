@@ -367,6 +367,14 @@ PrefabInstance:
       propertyPath: sprite
       value: 
       objectReference: {fileID: 2118545786380512927}
+    - target: {fileID: 1955803467148874660, guid: a59b8155a9c71a0408be1e77c1d16d76, type: 3}
+      propertyPath: minZ
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955803467148874660, guid: a59b8155a9c71a0408be1e77c1d16d76, type: 3}
+      propertyPath: anchorZ
+      value: 0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 2857415897375649370, guid: a59b8155a9c71a0408be1e77c1d16d76, type: 3}
       propertyPath: m_IsActive
       value: 1
