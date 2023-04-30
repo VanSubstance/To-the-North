@@ -1,6 +1,7 @@
 using Assets.Scripts.Commons;
 using Assets.Scripts.Creatures;
 using Assets.Scripts.Users;
+using Assets.Scripts.SoundEffects;
 using UnityEngine;
 
 public class CameraTrackControlller : MonoBehaviour, ISoundable
@@ -47,12 +48,10 @@ public class CameraTrackControlller : MonoBehaviour, ISoundable
         }
         // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
         DontDestroyOnLoad(gameObject);
-        Speaker = GetComponent<AudioSource>();
-        Speaker.loop = true;
-        Speaker.playOnAwake = false;
-        SpeakerEnvironment = gameObject.AddComponent<AudioSource>();
-        SpeakerEnvironment.loop = true;
-        SpeakerEnvironment.playOnAwake = false;
+        SoundEffectManager.AddAudioSource(transform, true, out Speaker);
+        SoundEffectManager.AddAudioSource(transform, true, out SpeakerEnvironment);
+        Speaker.maxDistance = 100;
+        SpeakerEnvironment.maxDistance = 100;
     }
 
     private void Start()

@@ -1,3 +1,4 @@
+using Assets.Scripts.SoundEffects;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,10 +16,7 @@ namespace Assets.Scripts.Creatures.Controllers
         protected void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
-            Speaker = gameObject.AddComponent<AudioSource>();
-            Speaker.loop = true;
-            Speaker.playOnAwake = false;
-            Speaker.Stop();
+            SoundEffectManager.AddAudioSource(transform, true, out Speaker);
         }
 
         private void Update()
@@ -32,6 +30,7 @@ namespace Assets.Scripts.Creatures.Controllers
             {
                 Speaker.Stop();
                 Speaker.clip = null;
+                Speaker.maxDistance = 10;
                 return;
             }
             if (agent.speed < 3)
@@ -39,6 +38,7 @@ namespace Assets.Scripts.Creatures.Controllers
                 if (Speaker.clip == null || !Speaker.clip.Equals(audWalk))
                 {
                     Speaker.clip = audWalk;
+                    Speaker.maxDistance = 15;
                 }
                 if (!Speaker.isPlaying)
                 {
@@ -51,6 +51,7 @@ namespace Assets.Scripts.Creatures.Controllers
                 if (Speaker.clip == null || !Speaker.clip.Equals(audRun))
                 {
                     Speaker.clip = audRun;
+                    Speaker.maxDistance = 20;
                 }
                 if (!Speaker.isPlaying)
                 {

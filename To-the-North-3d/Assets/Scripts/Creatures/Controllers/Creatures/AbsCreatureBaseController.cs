@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Battles;
 using Assets.Scripts.Commons;
+using Assets.Scripts.SoundEffects;
 using Assets.Scripts.Items;
 using UnityEngine;
 
@@ -17,9 +18,8 @@ namespace Assets.Scripts.Creatures.Controllers
 
         protected void Awake()
         {
-            Speaker = gameObject.AddComponent<AudioSource>();
-            Speaker.loop = true;
-            Speaker.playOnAwake = false;
+            SoundEffectManager.AddAudioSource(transform, true, out Speaker);
+            Speaker.maxDistance = 15;
 
             equipableBodies[EquipBodyType.Helmat] = hitTf.GetChild(0).GetChild(0).GetComponent<ItemArmorController>();
             equipableBodies[EquipBodyType.Mask] = hitTf.GetChild(1).GetChild(0).GetComponent<ItemArmorController>();

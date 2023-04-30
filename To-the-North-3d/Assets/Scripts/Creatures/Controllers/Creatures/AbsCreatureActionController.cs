@@ -1,5 +1,6 @@
 using System;
 using Assets.Scripts.Commons;
+using Assets.Scripts.SoundEffects;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures
@@ -19,10 +20,8 @@ namespace Assets.Scripts.Creatures
 
         protected void Awake()
         {
-            Speaker = gameObject.AddComponent<AudioSource>();
-            Speaker.loop = true;
-            Speaker.playOnAwake = false;
-            Speaker.Stop();
+            SoundEffectManager.AddAudioSource(transform, true, out Speaker);
+            Speaker.maxDistance = 15;
         }
 
         public void Crouch()

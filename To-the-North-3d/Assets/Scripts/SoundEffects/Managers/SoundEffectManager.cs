@@ -58,5 +58,16 @@ namespace Assets.Scripts.SoundEffects
             }
             return null;
         }
+
+        public static void AddAudioSource(Transform _tr, bool isLoop, out AudioSource Speaker)
+        {
+            Speaker = _tr.gameObject.AddComponent<AudioSource>();
+            Speaker.loop = isLoop;
+            Speaker.playOnAwake = false;
+            Speaker.spatialBlend = 1;
+            Speaker.maxDistance = 10;
+            Speaker.rolloffMode = AudioRolloffMode.Linear;
+            Speaker.Stop();
+        }
     }
 }
