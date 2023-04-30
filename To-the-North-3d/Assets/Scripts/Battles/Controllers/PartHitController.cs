@@ -6,14 +6,14 @@ namespace Assets.Scripts.Battles
 {
     internal class PartHitController : MonoBehaviour
     {
-        [SerializeField]
-        private bool isFixed;
-        private Vector3 originPos;
 
         private CreatureHitController hitController;
         public Transform Owner
         {
-            get { return hitController.Owner; }
+            get
+            {
+                return hitController.Owner;
+            }
         }
         private ItemArmorInfo info;
         public ItemArmorInfo Info
@@ -24,24 +24,51 @@ namespace Assets.Scripts.Battles
             }
         }
 
+        [SerializeField]
+        private bool isFixed;
+        private BoxCollider bc;
+
         private void Awake()
         {
             hitController = transform.parent.GetComponent<CreatureHitController>();
-            originPos = transform.localPosition;
+            bc = GetComponent<BoxCollider>();
+            if (isFixed) return;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            //if (Vector3.Distance(transform.localPosition, originPos) > 0.1f)
-            //{
-            //    // 돌아가려고 노력은 해야지
-            //    transform.Translate(
-            //        (originPos - transform.localPosition).normalized * Time.deltaTime * 10
-            //        );
-            //}
+            if (isFixed) return;
+            if (transform.localPosition.z > 0.9f || transform.localPosition.z < -.9f)
+            {
+                transform.localPosition = new Vector3(
+                    0,
+                    0,
+                    .1f
+                    );
+            }
+            float z = transform.localPosition.z;
+            if (z < -.1f)
+            {
+                // 콜라이더 크기 조절
+                bc.size = new Vector3(1, 2, .8f - (-.1f - z) * 2);
+            }
+            else
+            {
+                bc.size = new Vector3(1, 2, .8f);
+            }
         }
 
         private void OnTriggerEnter(Collider collision)
+        {
+            CheckHit(collision.transform);
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            CheckHit(collision.transform);
+        }
+
+        private void CheckHit(Transform collision)
         {
             ProjectileController prj = null;
             if (collision.CompareTag("Attack Low"))
@@ -60,12 +87,6 @@ namespace Assets.Scripts.Battles
                 prj.Arrive();
             }
         }
-        private void OnTriggerStay(Collider other)
-        {
-            if (isFixed) return;
-            //Debug.Log(other.ClosestPointOnBounds(transform.position));
-            Debug.Log(GetComponent<BoxCollider>().ClosestPointOnBounds(other.transform.position));
-        }
 
         public static EquipBodyType DecideHitPart()
         {
@@ -75,8 +96,6 @@ namespace Assets.Scripts.Battles
              * 마스크 : 5
              * 가방: 10
              * 몸통 : 60
-             * 헬멧, 마스크가 없을 경우 <- 머리 <- 다이렉트 데미지
-             * 가방이 없을 경우 <- 몸통
             */
             int p = Random.Range(0, 20);
             if (p < 5)

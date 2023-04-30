@@ -219,7 +219,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2367939022131025470}
   - component: {fileID: 1959801407582419908}
-  - component: {fileID: 6466712589191957488}
   m_Layer: 17
   m_Name: WeaponL
   m_TagString: Untagged
@@ -294,19 +293,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &6466712589191957488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2275143117516451313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56f0db985a4706545a119d69ea87b8e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFixed: 0
 --- !u!1 &2484679895385062823
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +387,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2417192529120337145}
   - component: {fileID: 7449776865617745877}
-  - component: {fileID: 8818880552068213579}
   m_Layer: 17
   m_Name: WeaponR
   m_TagString: Untagged
@@ -476,19 +461,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &8818880552068213579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3877785575770401573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56f0db985a4706545a119d69ea87b8e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFixed: 0
 --- !u!1 &6927777327095727129
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,7 +556,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4043511070604052926}
   - component: {fileID: 6582794477451629037}
-  - component: {fileID: 6837244741302307983}
   m_Layer: 17
   m_Name: Leg
   m_TagString: Untagged
@@ -659,19 +630,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &6837244741302307983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9008414820781422893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56f0db985a4706545a119d69ea87b8e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFixed: 0
 --- !u!1 &9020809623979963751
 GameObject:
   m_ObjectHideFlags: 0

@@ -53,6 +53,7 @@ namespace Assets.Scripts.Battles
         /// <returns></returns>
         public static bool IsPenetrationSuccess(ItemArmorInfo armorInfo, int k)
         {
+            if (armorInfo == null) return true;
             float prob = GetProbabilityOfPenetration(armorInfo.ClassPenetration, k);
             if (UnityEngine.Random.Range(0f, 1f) <= prob)
             {
@@ -87,12 +88,13 @@ namespace Assets.Scripts.Battles
         /// 충격 감소율이 적용된 실제 전달될 데미지 계산 함수
         /// 충격 감소율 수준에 따라 방어구의 내구도 차등 손실
         /// </summary>
-        /// <param name="x">충격 방어 클래스</param>
+        /// <param name="armorInfo">방어구 정보</param>
         /// <param name="k">충격력</param>
         /// <param name="damage">적용 전 충격 데미지</param>
         /// <returns></returns>
         public static int GetDamageImpactToApply(ItemArmorInfo armorInfo, int k, int damage)
         {
+            if (armorInfo == null) return damage;
             float rate = GetReductionRateOfImpact(armorInfo.ClassImpact, k);
             armorInfo.Durability -= UnityEngine.Random.Range(0f, 0.5f) * (1 - rate);
             return (int)(damage * (1 - rate));
