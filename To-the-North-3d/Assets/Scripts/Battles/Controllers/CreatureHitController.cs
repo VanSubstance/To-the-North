@@ -34,10 +34,10 @@ namespace Assets.Scripts.Battles
         /// <param name="armorInfo">피격당한 부위의 방어구 정보</param>
         /// <param name="attackInfo">공격의 정보</param>
         /// <param name="hitDir">공격을 받은 방향</param>
-        public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
+        public void OnHit(ItemArmorInfo armorInfo, AttackInfo attackInfo, Vector3 hitDir)
         {
             int[] damage = BattleCalcFunciton.GetDamageTotalToApply(armorInfo, attackInfo);
-            battleFunction.OnHit(partType, armorInfo, attackInfo, damage, hitDir);
+            battleFunction.OnHit(PartHitController.DecideHitPart(), armorInfo, attackInfo, damage, hitDir);
             if (damage[2] <= 10)
             {
                 powerVib = 0.2f;

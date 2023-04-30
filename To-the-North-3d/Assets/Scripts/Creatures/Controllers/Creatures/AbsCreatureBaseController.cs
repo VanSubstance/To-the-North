@@ -11,21 +11,21 @@ namespace Assets.Scripts.Creatures.Controllers
     {
 
         [SerializeField]
-        protected Transform hitTf;
-        protected Dictionary<EquipBodyType, IItemEquipable> equipableBodies = new Dictionary<EquipBodyType, IItemEquipable>();
+        protected ItemArmorController helmet, mask, body, backpack;
         [SerializeField]
         protected ItemWeaponController weaponL, weaponR;
+
+        protected Dictionary<EquipBodyType, IItemEquipable> equipableBodies = new Dictionary<EquipBodyType, IItemEquipable>();
 
         protected void Awake()
         {
             SoundEffectManager.AddAudioSource(transform, true, out Speaker);
             Speaker.maxDistance = 15;
 
-            equipableBodies[EquipBodyType.Helmat] = hitTf.GetChild(0).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Mask] = hitTf.GetChild(1).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Head] = hitTf.GetChild(2).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Body] = hitTf.GetChild(3).GetChild(0).GetComponent<ItemArmorController>();
-            equipableBodies[EquipBodyType.Leg] = hitTf.GetChild(4).GetChild(0).GetComponent<ItemArmorController>();
+            equipableBodies[EquipBodyType.Helmat] = helmet;
+            equipableBodies[EquipBodyType.Mask] = mask;
+            equipableBodies[EquipBodyType.Body] = body;
+            equipableBodies[EquipBodyType.BackPack] = backpack;
             equipableBodies[EquipBodyType.Right] = weaponL;
             equipableBodies[EquipBodyType.Left] = weaponR;
             weaponL.Owner = transform;
