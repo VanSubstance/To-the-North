@@ -4,5 +4,6 @@ namespace Assets.Scripts.Items
     {
         Single,
         Multiple,
+        Clone,
     }
 }

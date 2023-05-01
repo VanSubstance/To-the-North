@@ -43,7 +43,7 @@ namespace Assets.Scripts.Creatures.Bases
             set
             {
                 agent.SetDestination(value);
-                agent.stoppingDistance = 1;
+                agent.stoppingDistance = WeaponRange > 1 ? WeaponRange : 1;
             }
             get
             {
@@ -233,7 +233,8 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     // 관통당했다
                 }
-            } catch (NullReferenceException)
+            }
+            catch (NullReferenceException)
             {
 
             }

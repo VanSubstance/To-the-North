@@ -65,15 +65,14 @@ namespace Assets.Scripts.Battles
 
         private void OnTriggerEnter(Collider collision)
         {
-            CheckHit(collision.transform);
+            CheckProjectileHit(collision.transform);
         }
 
-        private void OnCollisionEnter(Collision collision)
-        {
-            CheckHit(collision.transform);
-        }
-
-        private void CheckHit(Transform collision)
+        /// <summary>
+        /// 투사체 충돌 판정 함수
+        /// </summary>
+        /// <param name="collision"></param>
+        public void CheckProjectileHit(Transform collision)
         {
             ProjectileController prj = null;
             if (collision.CompareTag("Attack Low"))

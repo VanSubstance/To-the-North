@@ -74,11 +74,11 @@ namespace Assets.Scripts.Battles
             while (timeLeft >= 0)
             {
                 timeLeft -= Time.deltaTime;
-                vibrateTf.localPosition = CalculationFunctions.DirFromAngle(UnityEngine.Random.Range(0, 360)) * powerVib + new Vector3(0, 0, -.5f);
+                vibrateTf.localPosition = CalculationFunctions.DirFromAngle(UnityEngine.Random.Range(0, 360)) * powerVib + Vector3.zero;
                 powerVib *= 0.7f;
                 yield return new WaitForSeconds(Time.deltaTime);
             }
-            vibrateTf.localPosition = new Vector3(0, 0, -.5f);
+            vibrateTf.localPosition = Vector3.zero;
             timeLeft = 0;
             powerVib = 0f;
         }

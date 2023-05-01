@@ -156,12 +156,16 @@ namespace Assets.Scripts.Battles
                 Arrive();
             }
         }
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            switch (collision.gameObject.layer)
+            switch (other.gameObject.layer)
             {
                 case 7:
                     Arrive();
+                    break;
+                case 17:
+                    // 크리쳐 충돌
+                    other.GetComponent<PartHitController>().CheckProjectileHit(transform);
                     break;
             }
         }
@@ -209,12 +213,16 @@ namespace Assets.Scripts.Battles
             {
                 hit = GetComponent<BoxCollider>();
             }
-            private void OnCollisionEnter(Collision collision)
+            private void OnTriggerEnter(Collider other)
             {
-                switch (collision.gameObject.layer)
+                switch (other.gameObject.layer)
                 {
                     case 7:
                         gameObject.SetActive(false);
+                        break;
+                    case 17:
+                        // 크리쳐 충돌
+                        other.GetComponent<PartHitController>().CheckProjectileHit(parent.transform);
                         break;
                 }
             }
