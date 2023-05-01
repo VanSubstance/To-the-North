@@ -1,3 +1,4 @@
+using System;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Detections;
@@ -41,7 +42,6 @@ namespace Assets.Scripts.Creatures.Bases
         {
             set
             {
-                Debug.Log($"??? >> {value}");
                 agent.SetDestination(value);
                 agent.stoppingDistance = 1;
             }
@@ -184,63 +184,58 @@ namespace Assets.Scripts.Creatures.Bases
         {
             get
             {
-                if (weaponL == null && weaponR == null) return 0;
+                if (weaponL == null && weaponR == null) return 1;
                 float l = weaponL.Range(), r = weaponR.Range();
-                return Mathf.Max(l, r);
+                return Mathf.Max(Mathf.Max(l, r), 1);
             }
         }
 
         public override void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
         {
-            transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
-            switch (partType)
+            try
             {
-                case EquipBodyType.Helmat:
-                    break;
-                case EquipBodyType.Mask:
-                    break;
-                case EquipBodyType.Head:
-                    break;
-                case EquipBodyType.Body:
-                    break;
-                case EquipBodyType.Leg:
-                    break;
-            }
-            // 계산 처리
-            if (Info)
-            {
-                Info.LiveHp = -damage[0];
-                if (Info.LiveHp <= 0)
+                transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
+                switch (partType)
                 {
-                    gameObject.SetActive(false);
+                    case EquipBodyType.Helmat:
+                        break;
+                    case EquipBodyType.Mask:
+                        break;
+                    case EquipBodyType.Head:
+                        break;
+                    case EquipBodyType.Body:
+                        break;
+                    case EquipBodyType.Leg:
+                        break;
                 }
-            }
-            if (IsRunaway)
-            {
-                statusType = AIStatusType.Runaway;
-            }
-            else
-            {
-                if (!Info.IsActiveBehaviour) Info.IsActiveBehaviour = true;
-                statusType = AIStatusType.Combat;
-            }
-            OnDetectPosition(hitDir + transform.position);
-            //if (isRunAway)
-            //{
-            //    // 피격 반대 방향으로 개같이 런
-            //    statusType = AIStatusType.Runaway;
-            //    GetComponent<AIRunawayController>().RunawayFrom(hitDir);
-            //}
-            //else
-            //{
-            //    // 피격 당한쪽 바라보기
-            //    SetTargetToGaze(hitDir, 3, false);
-            //}
+                // 계산 처리
+                if (Info)
+                {
+                    Info.LiveHp = -damage[0];
+                    if (Info.LiveHp <= 0)
+                    {
+                        gameObject.SetActive(false);
+                    }
+                }
+                if (IsRunaway)
+                {
+                    statusType = AIStatusType.Runaway;
+                }
+                else
+                {
+                    if (!Info.IsActiveBehaviour) Info.IsActiveBehaviour = true;
+                    statusType = AIStatusType.Combat;
+                }
+                OnDetectPosition(hitDir + transform.position);
 
-            // 상태 이상 부여 심사
-            if (damage[1] > 0)
+                // 상태 이상 부여 심사
+                if (damage[1] > 0)
+                {
+                    // 관통당했다
+                }
+            } catch (NullReferenceException)
             {
-                // 관통당했다
+
             }
         }
 
