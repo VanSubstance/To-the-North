@@ -101,8 +101,8 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 4874024345341781184}
   m_Bounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.15, y: 0.20000005, z: 5.3290707e-16}
+    m_Center: {x: 0.007783279, y: 0.003114611, z: -1.2221203e-17}
+    m_Extent: {x: 0.16480368, y: 0.19700146, z: 2.6079052e-15}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -880,14 +880,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8480566871298700444}
-  m_LocalRotation: {x: 0, y: 0, z: -0.46094614, w: 0.8874281}
-  m_LocalPosition: {x: 0.34566998, y: 0.3050239, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.42645758, w: 0.9045076}
+  m_LocalPosition: {x: 0.34567, y: 0.3050239, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5930263467663326179}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -50.486}
 --- !u!1001 &701727685651281281
 PrefabInstance:
   m_ObjectHideFlags: 0

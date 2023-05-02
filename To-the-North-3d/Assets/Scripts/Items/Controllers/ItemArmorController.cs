@@ -33,6 +33,10 @@ namespace Assets.Scripts.Items
         private void Awake()
         {
             def = sprite.sprite;
+            if (info)
+            {
+                Info = Instantiate(info);
+            }
         }
 
         public void ChangeEquipment(ItemEquipmentInfo _info)
