@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 35847b470a5110b439ab73aae4af3bba
+guid: cd19cabd8fc311540985f75002898541
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: N-FL-01_0
+      name: N-FL-01-Back_0
       rect:
         serializedVersion: 2
-        x: 15
+        x: 10
         y: 0
-        width: 15
-        height: 20
+        width: 16
+        height: 22
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,36 +132,37 @@ TextureImporter:
       tessellationDetail: 0
       bones:
       - name: bone_1
-        guid: b7b92f7f6f89b754e8340f613b0f0c93
-        position: {x: 5.905426, y: 15.182112, z: 0}
-        rotation: {x: 0, y: 0, z: -0.53298163, w: 0.8461268}
-        length: 8.940077
+        guid: 5a6b1ca32734699498efedb147c3c70e
+        position: {x: 10.427088, y: 16.958796, z: 0}
+        rotation: {x: 0, y: 0, z: -0.81710607, w: 0.57648736}
+        length: 8.558954
         parentId: -1
         color:
           serializedVersion: 2
           rgba: 4278190335
-      spriteID: c88990ea2d6af5049ba1a8f08e9df39e
-      internalID: -1042200341
+      spriteID: 2f6675af1c82e5b41ba082b6a842ca63
+      internalID: 34424492
       vertices:
-      - {x: 15, y: 6.198}
-      - {x: 15, y: 11.195}
-      - {x: 14.828, y: 11.932}
-      - {x: 12.405001, y: 15.592}
-      - {x: 11.0130005, y: 19.986}
-      - {x: 6.02, y: 19.996}
-      - {x: 1.02, y: 20}
-      - {x: 0, y: 16.019001}
-      - {x: 0, y: 11.019}
-      - {x: 0, y: 7}
-      - {x: 2.757, y: 5.354}
-      - {x: 5.5889997, y: 2.2589998}
-      - {x: 7.283, y: 0.80099964}
-      - {x: 8.282, y: 0.28499985}
-      - {x: 15, y: 0.19699955}
-      indices: 000000000a00000001000000000000000b0000000a000000000000000c0000000b000000000000000d0000000c000000000000000e0000000d000000010000000a00000002000000020000000a00000003000000030000000500000004000000030000000800000005000000030000000a00000008000000050000000700000006000000050000000800000007000000080000000a00000009000000
+      - {x: 8.903, y: 0.19299984}
+      - {x: 8, y: 2}
+      - {x: 12.098, y: 3.1469998}
+      - {x: 16, y: 3.2859995}
+      - {x: 15.998, y: 8.287}
+      - {x: 15.969, y: 13.283}
+      - {x: 15.702, y: 18.236}
+      - {x: 14.714, y: 22}
+      - {x: 9.715, y: 21.958}
+      - {x: 4.8, y: 21.798}
+      - {x: 3.443, y: 17.468}
+      - {x: 3.185, y: 12.738}
+      - {x: 0.954, y: 10.315}
+      - {x: 0.24900007, y: 7.753}
+      - {x: 0.085999966, y: 0.7959995}
+      - {x: 0.21600008, y: 0}
+      indices: 000000000f00000001000000010000000b00000002000000010000000c0000000b000000010000000d0000000c000000010000000e0000000d000000010000000f0000000e000000020000000400000003000000020000000b00000004000000040000000b00000005000000050000000800000006000000050000000a00000008000000050000000b0000000a000000060000000800000007000000080000000a00000009000000
       edges:
       - {x: 0, y: 1}
-      - {x: 0, y: 14}
+      - {x: 0, y: 15}
       - {x: 1, y: 2}
       - {x: 2, y: 3}
       - {x: 3, y: 4}
@@ -175,7 +176,16 @@ TextureImporter:
       - {x: 11, y: 12}
       - {x: 12, y: 13}
       - {x: 13, y: 14}
+      - {x: 14, y: 15}
       weights:
+      - weight[0]: 1
+        weight[1]: 0
+        weight[2]: 0
+        weight[3]: 0
+        boneIndex[0]: 0
+        boneIndex[1]: 0
+        boneIndex[2]: 0
+        boneIndex[3]: 0
       - weight[0]: 1
         weight[1]: 0
         weight[2]: 0
@@ -307,7 +317,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      N-FL-01_0: -1042200341
+      N-FL-01-Back_0: 34424492
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
