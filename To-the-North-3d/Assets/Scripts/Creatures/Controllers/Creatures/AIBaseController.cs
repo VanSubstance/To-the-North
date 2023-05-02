@@ -13,8 +13,8 @@ namespace Assets.Scripts.Creatures.Bases
     {
 
         [SerializeField]
-        protected Transform visualTf;
-        private Animator animCtrl;
+        protected Transform visualTf, handTf;
+        private Animator animCtrl, animHandCtrl;
         [SerializeField]
         private CreatureInfo info;
 
@@ -46,7 +46,7 @@ namespace Assets.Scripts.Creatures.Bases
                 float r = WeaponRange > 1 ? WeaponRange : 1;
                 if (Vector3.Distance(value, transform.position) > r)
                 {
-                    animCtrl.SetFloat("StatusMove", 1);
+                    animCtrl.SetBool("isMove", true);
                     agent.SetDestination(value);
                     agent.stoppingDistance = r;
                 } else
@@ -80,10 +80,7 @@ namespace Assets.Scripts.Creatures.Bases
             if (timeStayAfterMove <= 0)
             {
                 // 끝남
-                if (animCtrl.GetFloat("StatusMove").Equals(1))
-                {
-                    animCtrl.SetFloat("StatusMove", 0);
-                }
+                animCtrl.SetBool("isMove", false);
                 isMoveOrderDone = true;
                 return;
             }
@@ -207,6 +204,7 @@ namespace Assets.Scripts.Creatures.Bases
         {
             try
             {
+                animCtrl.SetTrigger("Hit");
                 transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
                 switch (partType)
                 {
@@ -291,12 +289,25 @@ namespace Assets.Scripts.Creatures.Bases
                 SetTargetToGaze(targetTf.position - transform.position, 0, false);
                 if (!weaponL.IsEmpty())
                 {
-                    animCtrl.SetFloat("StatusMove", 2);
+                    if (animHandCtrl != null)
+                    {
+                        animHandCtrl.SetTrigger("Attack");
+                    } else
+                    {
+                        animCtrl.SetTrigger("Attack");
+                    }
                     weaponL.Use(targetTf.position - transform.position);
                 }
                 if (!weaponR.IsEmpty())
                 {
-                    animCtrl.SetFloat("StatusMove", 2);
+                    if (animHandCtrl != null)
+                    {
+                        animHandCtrl.SetTrigger("Attack");
+                    }
+                    else
+                    {
+                        animCtrl.SetTrigger("Attack");
+                    }
                     weaponR.Use(targetTf.position - transform.position);
                 }
                 return;
@@ -319,6 +330,7 @@ namespace Assets.Scripts.Creatures.Bases
             statusType = AIStatusType.None;
             agent = GetComponent<NavMeshAgent>();
             animCtrl = visualTf.GetComponent<Animator>();
+            animHandCtrl = handTf ? handTf.GetComponent<Animator>() : null;
             base.Awake();
 
             if (Info == null) OnDisable();
