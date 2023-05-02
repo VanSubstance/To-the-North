@@ -14,6 +14,7 @@ namespace Assets.Scripts.Creatures.Bases
 
         [SerializeField]
         protected Transform visualTf;
+        private Animator animCtrl;
         [SerializeField]
         private CreatureInfo info;
 
@@ -42,8 +43,16 @@ namespace Assets.Scripts.Creatures.Bases
         {
             set
             {
-                agent.SetDestination(value);
-                agent.stoppingDistance = WeaponRange > 1 ? WeaponRange : 1;
+                float r = WeaponRange > 1 ? WeaponRange : 1;
+                if (Vector3.Distance(value, transform.position) > r)
+                {
+                    animCtrl.SetFloat("StatusMove", 1);
+                    agent.SetDestination(value);
+                    agent.stoppingDistance = r;
+                } else
+                {
+                    SetTargetToGaze(value - transform.position, 0, false);
+                }
             }
             get
             {
@@ -71,6 +80,10 @@ namespace Assets.Scripts.Creatures.Bases
             if (timeStayAfterMove <= 0)
             {
                 // 끝남
+                if (animCtrl.GetFloat("StatusMove").Equals(1))
+                {
+                    animCtrl.SetFloat("StatusMove", 0);
+                }
                 isMoveOrderDone = true;
                 return;
             }
@@ -275,12 +288,15 @@ namespace Assets.Scripts.Creatures.Bases
             }
             if (Vector3.Distance(transform.position, targetTf.position) < Mathf.Min(WeaponRange, Info.sightRange))
             {
+                SetTargetToGaze(targetTf.position - transform.position, 0, false);
                 if (!weaponL.IsEmpty())
                 {
+                    animCtrl.SetFloat("StatusMove", 2);
                     weaponL.Use(targetTf.position - transform.position);
                 }
                 if (!weaponR.IsEmpty())
                 {
+                    animCtrl.SetFloat("StatusMove", 2);
                     weaponR.Use(targetTf.position - transform.position);
                 }
                 return;
@@ -302,6 +318,7 @@ namespace Assets.Scripts.Creatures.Bases
 
             statusType = AIStatusType.None;
             agent = GetComponent<NavMeshAgent>();
+            animCtrl = visualTf.GetComponent<Animator>();
             base.Awake();
 
             if (Info == null) OnDisable();
@@ -369,8 +386,15 @@ namespace Assets.Scripts.Creatures.Bases
             SpriteRenderer s;
             for (int i = 0; i < visualTf.childCount; i++)
             {
-                c = (s = visualTf.GetChild(i).GetComponent<SpriteRenderer>()).color;
-                s.color = new Color(c.r, c.g, c.b, _opacity);
+                try
+                {
+                    c = (s = visualTf.GetChild(i).GetComponent<SpriteRenderer>()).color;
+                    s.color = new Color(c.r, c.g, c.b, _opacity);
+                }
+                catch (MissingComponentException)
+                {
+
+                }
             }
         }
 

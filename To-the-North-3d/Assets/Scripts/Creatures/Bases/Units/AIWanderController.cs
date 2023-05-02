@@ -20,8 +20,8 @@ namespace Assets.Scripts.Creatures.Bases
             if (baseCtrl.IsOrderDone)
             {
                 Vector3 p = baseCtrl.transform.position;
-                p.x += Random.Range(-3f, 3f);
-                p.z += Random.Range(-3f, 3f);
+                p.x += Random.Range(-6f, 6f);
+                p.z += Random.Range(-6f, 6f);
                 baseCtrl.SetTargetToMove(p, 3f, false);
             }
         }

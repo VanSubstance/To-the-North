@@ -166,7 +166,7 @@ namespace Assets.Scripts.Creatures.Detections
         /// </summary>
         public override Transform CheckSight()
         {
-            if (aIBaseController)
+            if (isAI)
             {
                 // AI의 경우: 유저가 있는지만 체크
                 // 유저가 있다 ? 유저 식별 시 행동 호출
@@ -191,7 +191,6 @@ namespace Assets.Scripts.Creatures.Detections
                             {
                                 if (hitInfo.transform.CompareTag("User"))
                                 {
-                                    aIBaseController.OnDetectUser(userTf);
                                     return userTf;
                                 }
                             }
@@ -200,14 +199,12 @@ namespace Assets.Scripts.Creatures.Detections
                             {
                                 if (hitInfo2.transform.CompareTag("User"))
                                 {
-                                    aIBaseController.OnDetectUser(userTf);
                                     return userTf;
                                 }
                             }
                         }
                     }
                 }
-                aIBaseController.OnDetectUser(null);
                 return null;
             }
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
@@ -241,7 +238,7 @@ namespace Assets.Scripts.Creatures.Detections
                 }
             }
             targetsInViewRadius.Clear();
-            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.Sight.Range, GlobalStatus.Constant.creatureMask));
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, User.Detection.Sight.Range, GlobalStatus.Constant.creatureMask));
             if (targetsInViewRadius.Count > 0)
             {
                 // 주변 반경 안에 크리쳐 식별
@@ -251,7 +248,7 @@ namespace Assets.Scripts.Creatures.Detections
                     iSight = col.GetComponent<IInteractionWithSight>();
                     Vector3 dirToTarget = (col.transform.position - transform.position).normalized;
                     float d = Math.Abs(CalculationFunctions.AngleFromDir(new Vector2(dirToTarget.x, dirToTarget.z)) - curDegree);
-                    if (d < InGameStatus.User.Detection.Sight.Degree / 2 || (360 - d) < InGameStatus.User.Detection.Sight.Degree / 2)
+                    if (d < User.Detection.Sight.Degree / 2 || (360 - d) < User.Detection.Sight.Degree / 2)
                     {
                         // 시야 각도 안에서 식별
                         float dstToTarget = Vector3.Distance(transform.position, col.transform.transform.position);

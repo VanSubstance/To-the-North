@@ -21,10 +21,12 @@ namespace Assets.Scripts.Battles
             }
         }
         private float timeVib = .5f, timeLeft, powerVib;
+        private Vector3 vibOriginPos;
 
         private void Awake()
         {
             battleFunction = ownerTf.GetComponent<ICreatureBattle>();
+            vibOriginPos = vibrateTf.localPosition;
         }
 
         /// <summary>
@@ -74,11 +76,11 @@ namespace Assets.Scripts.Battles
             while (timeLeft >= 0)
             {
                 timeLeft -= Time.deltaTime;
-                vibrateTf.localPosition = CalculationFunctions.DirFromAngle(UnityEngine.Random.Range(0, 360)) * powerVib + Vector3.zero;
+                vibrateTf.localPosition = CalculationFunctions.DirFromAngle(UnityEngine.Random.Range(0, 360)) * powerVib + vibOriginPos;
                 powerVib *= 0.7f;
                 yield return new WaitForSeconds(Time.deltaTime);
             }
-            vibrateTf.localPosition = Vector3.zero;
+            vibrateTf.localPosition = vibOriginPos;
             timeLeft = 0;
             powerVib = 0f;
         }

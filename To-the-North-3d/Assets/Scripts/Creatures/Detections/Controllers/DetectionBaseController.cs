@@ -23,9 +23,6 @@ namespace Assets.Scripts.Creatures.Detections
         public Mesh meshDefault, meshLower;
         public MeshFilter meshFilterDefault, meshFilterLower;
 
-
-        [SerializeField]
-        protected AIBaseController aIBaseController;
         public bool isAI = true;
         public float meshResolution;
         private void Awake()
