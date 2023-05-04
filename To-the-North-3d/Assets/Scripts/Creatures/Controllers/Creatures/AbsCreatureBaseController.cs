@@ -17,6 +17,10 @@ namespace Assets.Scripts.Creatures.Controllers
 
         protected Dictionary<EquipBodyType, IItemEquipable> equipableBodies = new Dictionary<EquipBodyType, IItemEquipable>();
         protected ItemEquipmentInfo[] weapons = new ItemEquipmentInfo[2];
+        /// <summary>
+        /// 현재 장착중인 무기 인덱스; 0 <- 없음; 1 <- 주무기; 2 <- 부무기
+        /// </summary>
+        protected int curWeapon = 0;
 
         protected void Awake()
         {

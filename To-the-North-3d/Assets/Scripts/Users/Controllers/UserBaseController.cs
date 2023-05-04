@@ -73,6 +73,7 @@ namespace Assets.Scripts.Users
                 tickHealthCondition = 0;
                 TickHealthCondition();
             }
+            CheckSwapWeapon();
         }
 
         private void TickHealthCondition()
@@ -81,6 +82,39 @@ namespace Assets.Scripts.Users
             InGameStatus.User.status.ApplyThirst(-2);
             // 온도의 경우, 주변 환경에 따라서 오르거나 내리거나 유지되어야 할 듯
             //InGameStatus.User.status.temperatureBar.LiveInfo = +.5f;
+        }
+
+        private void CheckSwapWeapon()
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                SwapWeapon();
+            }
+        }
+
+        /// <summary>
+        /// 주/부 무기 교체
+        /// </summary>
+        private void SwapWeapon()
+        {
+            if (curWeapon == 0) return;
+            if (curWeapon == 1)
+            {
+                // 주 -> 부
+                if (weapons[1] != null)
+                {
+                    curWeapon = 2;
+                    equipableBodies[EquipBodyType.Hand].ChangeEquipment(weapons[1]);
+                }
+                return;
+            }
+            // 부 -> 주
+            if (weapons[0] != null)
+            {
+                curWeapon = 1;
+                equipableBodies[EquipBodyType.Hand].ChangeEquipment(weapons[0]);
+            }
+            return;
         }
 
         /// <summary>
@@ -97,23 +131,40 @@ namespace Assets.Scripts.Users
                     if (weapons[0] != null)
                     {
                         // 장비 장착임
+                        curWeapon = 1;
                         equipableBodies[EquipBodyType.Hand].ChangeEquipment(weapons[0]);
-                    } else
+                    }
+                    else
                     {
                         // 장비 해제임 -> 주무기가 비었다 -> 부무기 장착 시도
                         if (weapons[1] != null)
                         {
                             // 부무기는 있다 -> 장착
+                            curWeapon = 2;
                             equipableBodies[EquipBodyType.Hand].ChangeEquipment(weapons[1]);
-                        } else
+                        }
+                        else
                         {
                             // 부무기도 없다 -> 걍 장착 해제임
+                            curWeapon = 0;
                             equipableBodies[EquipBodyType.Hand].ChangeEquipment(null);
                         }
                     }
                     return;
                 case EquipBodyType.Secondary:
                     weapons[1] = itemInfo;
+                    if (weapons[0])
+                    {
+                        curWeapon = 1;
+                    }
+                    else if (weapons[1])
+                    {
+                        curWeapon = 2;
+                    }
+                    else
+                    {
+                        curWeapon = 0;
+                    }
                     equipableBodies[EquipBodyType.Hand].ChangeEquipment(weapons[0] ?? weapons[1]);
                     return;
             }
