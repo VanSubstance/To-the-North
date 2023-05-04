@@ -74,13 +74,13 @@ namespace Assets.Scripts.Items
                     // 주 무기 슬롯부터 비어있는지 확인
                     if (!WindowInventoryController.equipmentCtrl.weapon1Ctrl.IsEquipped)
                     {
-                        // 주무기가 비었다 -> 주무기 장착
+                        // 주무기가 비었다 -> 주무기 장착 + 주무기 손에 들기
                         Equip(WindowInventoryController.equipmentCtrl.weapon1Ctrl);
                         return;
                     }
                     if (!WindowInventoryController.equipmentCtrl.weapon2Ctrl.IsEquipped)
                     {
-                        // 부 무기가 비엇다 -> 부무기로 장착
+                        // 부 무기가 비엇다 -> 부무기 장착 + 주무기 손에 들기
                         Equip(WindowInventoryController.equipmentCtrl.weapon2Ctrl);
                         return;
                     }

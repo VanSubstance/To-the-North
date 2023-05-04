@@ -16,6 +16,7 @@ namespace Assets.Scripts.Creatures.Controllers
         protected ItemWeaponController weapon;
 
         protected Dictionary<EquipBodyType, IItemEquipable> equipableBodies = new Dictionary<EquipBodyType, IItemEquipable>();
+        protected ItemEquipmentInfo[] weapons = new ItemEquipmentInfo[2];
 
         protected void Awake()
         {

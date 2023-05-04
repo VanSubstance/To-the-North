@@ -863,6 +863,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8588176721819566547, guid: d184daadca6a6cb4a9947ea313110819, type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8989106808401220828, guid: d184daadca6a6cb4a9947ea313110819, type: 3}
       propertyPath: m_Bounds.m_Center.x
       value: 0.000000059604645

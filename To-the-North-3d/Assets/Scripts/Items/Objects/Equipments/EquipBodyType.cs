@@ -4,14 +4,15 @@ namespace Assets.Scripts.Items
     {
         // 피격 판정 가능 부위: 하위 4개
         Helmat,
-        Head,
         Mask,
         Body,
-
-
-        Leg,
         BackPack,
 
+        Head,
+        Leg,
+
         Hand,
+        Primary,
+        Secondary,
     }
 }

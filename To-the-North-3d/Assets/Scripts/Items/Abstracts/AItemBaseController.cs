@@ -82,7 +82,7 @@ namespace Assets.Scripts.Items
                             eInfo is ItemArmorInfo aInfo && eSlot.equipType.Equals(aInfo.equipPartType)
                         ) ||
                         (
-                            eInfo is ItemWeaponInfo wInfo && new EquipBodyType[] { EquipBodyType.Hand }.Contains(eSlot.equipType)
+                            eInfo is ItemWeaponInfo wInfo && new EquipBodyType[] { EquipBodyType.Primary, EquipBodyType.Secondary }.Contains(eSlot.equipType)
                         )
                     )
                     ;
@@ -487,7 +487,8 @@ namespace Assets.Scripts.Items
                         break;
                     // 240 * 120
                     // = 최대: 216 * 108
-                    case EquipBodyType.Hand:
+                    case EquipBodyType.Primary:
+                    case EquipBodyType.Secondary:
                         ApplyResize(216, 108);
                         break;
                 }

@@ -3,6 +3,7 @@ using Assets.Scripts.Components.Progress;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Items;
 using UnityEngine;
+using System.Linq;
 
 namespace Assets.Scripts.Users
 {
@@ -89,6 +90,33 @@ namespace Assets.Scripts.Users
         /// <param name="itemInfo">장착할 아이템 정보</param>
         public void ChangeEquipment(EquipBodyType targetType, ItemEquipmentInfo itemInfo)
         {
+            switch (targetType)
+            {
+                case EquipBodyType.Primary:
+                    weapons[0] = itemInfo;
+                    if (weapons[0] != null)
+                    {
+                        // 장비 장착임
+                        equipableBodies[EquipBodyType.Hand].ChangeEquipment(weapons[0]);
+                    } else
+                    {
+                        // 장비 해제임 -> 주무기가 비었다 -> 부무기 장착 시도
+                        if (weapons[1] != null)
+                        {
+                            // 부무기는 있다 -> 장착
+                            equipableBodies[EquipBodyType.Hand].ChangeEquipment(weapons[1]);
+                        } else
+                        {
+                            // 부무기도 없다 -> 걍 장착 해제임
+                            equipableBodies[EquipBodyType.Hand].ChangeEquipment(null);
+                        }
+                    }
+                    return;
+                case EquipBodyType.Secondary:
+                    weapons[1] = itemInfo;
+                    equipableBodies[EquipBodyType.Hand].ChangeEquipment(weapons[0] ?? weapons[1]);
+                    return;
+            }
             equipableBodies[targetType].ChangeEquipment(itemInfo);
         }
 
