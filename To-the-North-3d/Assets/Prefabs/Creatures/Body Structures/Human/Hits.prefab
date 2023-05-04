@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 9094032075244325525}
   - component: {fileID: 1955803467148874660}
   - component: {fileID: 6528234058228642912}
-  - component: {fileID: 4723164964245593086}
-  - component: {fileID: 1315931128681494395}
+  - component: {fileID: 2228477867474501606}
+  - component: {fileID: 4074563936069197785}
   m_Layer: 17
   m_Name: Moveable
   m_TagString: Untagged
@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFixed: 0
+  anchorZ: 0.9
+  minZ: -0.1
 --- !u!65 &6528234058228642912
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -61,7 +63,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 0.8}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!54 &4723164964245593086
+--- !u!54 &2228477867474501606
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,20 +79,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 118
   m_CollisionDetection: 0
---- !u!138 &1315931128681494395
+--- !u!138 &4074563936069197785
 FixedJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3445592060032075669}
-  m_ConnectedBody: {fileID: 5246218152590602795}
+  m_ConnectedBody: {fileID: 3162726025617573848}
   m_ConnectedArticulationBody: {fileID: 0}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_EnablePreprocessing: 0
+  m_MassScale: 0.001
   m_ConnectedMassScale: 1
 --- !u!1 &3534436915745288485
 GameObject:
@@ -103,7 +105,7 @@ GameObject:
   - component: {fileID: 7290675046127103151}
   - component: {fileID: 875949197147763623}
   - component: {fileID: 5048994260158401787}
-  - component: {fileID: 5246218152590602795}
+  - component: {fileID: 3162726025617573848}
   m_Layer: 17
   m_Name: Fix
   m_TagString: Untagged
@@ -134,7 +136,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3534436915745288485}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
@@ -152,7 +154,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFixed: 1
---- !u!54 &5246218152590602795
+  anchorZ: 0
+  minZ: 0
+--- !u!54 &3162726025617573848
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

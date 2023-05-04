@@ -84,15 +84,39 @@ namespace Assets.Scripts.Creatures.Detections
         /// </summary>
         public override Transform CheckSight()
         {
-            if (aIBaseController)
+            if (isAI)
             {
                 // AI의 경우: 유저가 있는지만 체크
                 // 유저가 있다 ? 유저 식별 시 행동 호출
-                Collider[] userCol = Physics.OverlapSphere(transform.position, range, GlobalStatus.Constant.userMask);
-                if (userCol != null && userCol.Length > 0 && userCol[0] != null)
+                Collider[] hitCols = Physics.OverlapSphere(transform.position, range, GlobalStatus.Constant.hitMask);
+                foreach (Collider hitCol in hitCols)
                 {
-                    aIBaseController.OnDetectUser(userCol[0].transform);
-                    return userCol[0].transform;
+                    if (hitCol.CompareTag("User"))
+                    {
+                        // 유저 식별
+                        Transform userTf = hitCol.transform;
+                        Vector3 dirToTarget = (userTf.position - transform.position).normalized;
+                        // 시야 각도 안
+                        float dstToTarget = Vector3.Distance(transform.position, userTf.position);
+                        // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
+                        // RayCast를 두번 해서 둘중 하나라도 통과하면 OK
+                        // 1. 현재 y에서
+                        if (Physics.Raycast(transform.position, new Vector3(dirToTarget.x, 0, dirToTarget.z), out RaycastHit hitInfo, dstToTarget, GlobalStatus.Constant.obstacleMask | GlobalStatus.Constant.hitMask))
+                        {
+                            if (hitInfo.transform.CompareTag("User"))
+                            {
+                                return userTf;
+                            }
+                        }
+                        // 2. y - HeightForLow에서
+                        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - HeightForLow, transform.position.z), new Vector3(dirToTarget.x, 0, dirToTarget.z), out RaycastHit hitInfo2, dstToTarget, GlobalStatus.Constant.obstacleMask | GlobalStatus.Constant.hitMask))
+                        {
+                            if (hitInfo2.transform.CompareTag("User"))
+                            {
+                                return userTf;
+                            }
+                        }
+                    }
                 }
                 return null;
             }
@@ -109,6 +133,18 @@ namespace Assets.Scripts.Creatures.Detections
                 catch (NullReferenceException)
                 {
 
+                }
+            }
+            targetsInViewRadius.Clear();
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.Instinct.range, GlobalStatus.Constant.creatureMask));
+            if (targetsInViewRadius.Count > 0)
+            {
+                // 주변 반경 안에 크리쳐 식별
+                IInteractionWithSight iSight;
+                foreach (Collider col in targetsInViewRadius)
+                {
+                    iSight = col.GetComponent<IInteractionWithSight>();
+                    iSight.DetectFull();
                 }
             }
             return null;

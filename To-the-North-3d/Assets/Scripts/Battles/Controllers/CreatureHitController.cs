@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Items;
 using UnityEngine;
 
@@ -20,7 +17,7 @@ namespace Assets.Scripts.Battles
                 return ownerTf;
             }
         }
-        private float timeVib = .5f, timeLeft, powerVib;
+        private float timeVib = .5f, timeLeft;
 
         private void Awake()
         {
@@ -38,49 +35,13 @@ namespace Assets.Scripts.Battles
         {
             int[] damage = BattleCalcFunciton.GetDamageTotalToApply(armorInfo, attackInfo);
             battleFunction.OnHit(PartHitController.DecideHitPart(), armorInfo, attackInfo, damage, hitDir);
-            if (damage[2] <= 10)
-            {
-                powerVib = 0.2f;
-            }
-            else if (damage[2] < 30)
-            {
-                powerVib = 0.5f;
-            }
-            else
-            {
-                powerVib = 1f;
-            }
             if (timeLeft > 0)
             {
                 timeLeft = timeVib;
             }
             else
             {
-                try
-                {
-                    if (gameObject.activeSelf)
-                        StartCoroutine(CoroutineVibrate());
-                }
-                catch (Exception)
-                {
-                    // hit 죽음
-                }
             }
-        }
-
-        private IEnumerator CoroutineVibrate()
-        {
-            timeLeft = timeVib;
-            while (timeLeft >= 0)
-            {
-                timeLeft -= Time.deltaTime;
-                vibrateTf.localPosition = CalculationFunctions.DirFromAngle(UnityEngine.Random.Range(0, 360)) * powerVib + new Vector3(0, 0, -.5f);
-                powerVib *= 0.7f;
-                yield return new WaitForSeconds(Time.deltaTime);
-            }
-            vibrateTf.localPosition = new Vector3(0, 0, -.5f);
-            timeLeft = 0;
-            powerVib = 0f;
         }
     }
 }

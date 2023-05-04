@@ -15,6 +15,8 @@ namespace Assets.Scripts.Items
     public class ItemWeaponController : MonoBehaviour, IItemHandable, IItemEquipable
     {
         [SerializeField]
+        private ItemWeaponController weaponL;
+        [SerializeField]
         private ItemWeaponInfo info;
         [SerializeField]
         private bool isAI = true;
@@ -57,6 +59,11 @@ namespace Assets.Scripts.Items
                 {
                     sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
                     delayAmongFire = info.delayAmongFire;
+
+                    if (info.handType.Equals(EquipHandType.Clone))
+                    {
+                        weaponL.sprite.sprite = sprite.sprite;
+                    }
                 }
             }
         }

@@ -1,3 +1,4 @@
+using System;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Detections;
@@ -12,7 +13,8 @@ namespace Assets.Scripts.Creatures.Bases
     {
 
         [SerializeField]
-        protected Transform visualTf;
+        protected Transform visualTf, handTf;
+        private Animator animCtrl, animHandCtrl;
         [SerializeField]
         private CreatureInfo info;
 
@@ -41,8 +43,16 @@ namespace Assets.Scripts.Creatures.Bases
         {
             set
             {
-                agent.SetDestination(value);
-                agent.stoppingDistance = 1;
+                float r = WeaponRange > 1 ? WeaponRange : 1;
+                if (Vector3.Distance(value, transform.position) > r)
+                {
+                    animCtrl.SetBool("isMove", true);
+                    agent.SetDestination(value);
+                    agent.stoppingDistance = r;
+                } else
+                {
+                    SetTargetToGaze(value - transform.position, 0, false);
+                }
             }
             get
             {
@@ -70,6 +80,7 @@ namespace Assets.Scripts.Creatures.Bases
             if (timeStayAfterMove <= 0)
             {
                 // 끝남
+                animCtrl.SetBool("isMove", false);
                 isMoveOrderDone = true;
                 return;
             }
@@ -183,63 +194,60 @@ namespace Assets.Scripts.Creatures.Bases
         {
             get
             {
-                if (weaponL == null && weaponR == null) return 0;
+                if (weaponL == null && weaponR == null) return 1;
                 float l = weaponL.Range(), r = weaponR.Range();
-                return Mathf.Max(l, r);
+                return Mathf.Max(Mathf.Max(l, r), 1);
             }
         }
 
         public override void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
         {
-            transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
-            switch (partType)
+            try
             {
-                case EquipBodyType.Helmat:
-                    break;
-                case EquipBodyType.Mask:
-                    break;
-                case EquipBodyType.Head:
-                    break;
-                case EquipBodyType.Body:
-                    break;
-                case EquipBodyType.Leg:
-                    break;
-            }
-            // 계산 처리
-            if (Info)
-            {
-                Info.LiveHp = -damage[0];
-                if (Info.LiveHp <= 0)
+                animCtrl.SetTrigger("Hit");
+                transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
+                switch (partType)
                 {
-                    gameObject.SetActive(false);
+                    case EquipBodyType.Helmat:
+                        break;
+                    case EquipBodyType.Mask:
+                        break;
+                    case EquipBodyType.Head:
+                        break;
+                    case EquipBodyType.Body:
+                        break;
+                    case EquipBodyType.Leg:
+                        break;
+                }
+                // 계산 처리
+                if (Info)
+                {
+                    Info.LiveHp = -damage[0];
+                    if (Info.LiveHp <= 0)
+                    {
+                        gameObject.SetActive(false);
+                    }
+                }
+                if (IsRunaway)
+                {
+                    statusType = AIStatusType.Runaway;
+                }
+                else
+                {
+                    if (!Info.IsActiveBehaviour) Info.IsActiveBehaviour = true;
+                    statusType = AIStatusType.Combat;
+                }
+                OnDetectPosition(hitDir + transform.position);
+
+                // 상태 이상 부여 심사
+                if (damage[1] > 0)
+                {
+                    // 관통당했다
                 }
             }
-            if (IsRunaway)
+            catch (NullReferenceException)
             {
-                statusType = AIStatusType.Runaway;
-            }
-            else
-            {
-                if (!Info.IsActiveBehaviour) Info.IsActiveBehaviour = true;
-                statusType = AIStatusType.Combat;
-            }
-            OnDetectPosition(hitDir + transform.position);
-            //if (isRunAway)
-            //{
-            //    // 피격 반대 방향으로 개같이 런
-            //    statusType = AIStatusType.Runaway;
-            //    GetComponent<AIRunawayController>().RunawayFrom(hitDir);
-            //}
-            //else
-            //{
-            //    // 피격 당한쪽 바라보기
-            //    SetTargetToGaze(hitDir, 3, false);
-            //}
 
-            // 상태 이상 부여 심사
-            if (damage[1] > 0)
-            {
-                // 관통당했다
             }
         }
 
@@ -278,12 +286,28 @@ namespace Assets.Scripts.Creatures.Bases
             }
             if (Vector3.Distance(transform.position, targetTf.position) < Mathf.Min(WeaponRange, Info.sightRange))
             {
+                SetTargetToGaze(targetTf.position - transform.position, 0, false);
                 if (!weaponL.IsEmpty())
                 {
+                    if (animHandCtrl != null)
+                    {
+                        animHandCtrl.SetTrigger("Attack");
+                    } else
+                    {
+                        animCtrl.SetTrigger("Attack");
+                    }
                     weaponL.Use(targetTf.position - transform.position);
                 }
                 if (!weaponR.IsEmpty())
                 {
+                    if (animHandCtrl != null)
+                    {
+                        animHandCtrl.SetTrigger("Attack");
+                    }
+                    else
+                    {
+                        animCtrl.SetTrigger("Attack");
+                    }
                     weaponR.Use(targetTf.position - transform.position);
                 }
                 return;
@@ -305,8 +329,8 @@ namespace Assets.Scripts.Creatures.Bases
 
             statusType = AIStatusType.None;
             agent = GetComponent<NavMeshAgent>();
-            particle = GetComponent<ParticleSystem>();
-            particle.Stop();
+            animCtrl = visualTf.GetComponent<Animator>();
+            animHandCtrl = handTf ? handTf.GetComponent<Animator>() : null;
             base.Awake();
 
             if (Info == null) OnDisable();
@@ -358,7 +382,6 @@ namespace Assets.Scripts.Creatures.Bases
         /// <param name="userTf"></param>
         public abstract void OnDetectUser(Transform userTf);
 
-        private ParticleSystem particle;
         private float timeParticle = 0;
 
         private void CheckParticle()
@@ -375,8 +398,15 @@ namespace Assets.Scripts.Creatures.Bases
             SpriteRenderer s;
             for (int i = 0; i < visualTf.childCount; i++)
             {
-                c = (s = visualTf.GetChild(i).GetComponent<SpriteRenderer>()).color;
-                s.color = new Color(c.r, c.g, c.b, _opacity);
+                try
+                {
+                    c = (s = visualTf.GetChild(i).GetComponent<SpriteRenderer>()).color;
+                    s.color = new Color(c.r, c.g, c.b, _opacity);
+                }
+                catch (MissingComponentException)
+                {
+
+                }
             }
         }
 
