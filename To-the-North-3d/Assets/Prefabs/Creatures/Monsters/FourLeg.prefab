@@ -99,6 +99,8 @@ MonoBehaviour:
   audBandage: {fileID: 8300000, guid: 9cbab94aa986d36429733d2b5cf474eb, type: 3}
   audReload: {fileID: 8300000, guid: e1c308b314a786c498e33e69af313f75, type: 3}
   visualTf: {fileID: 1358677448560636769}
+  handTfIfExternal: {fileID: 0}
+  height: 1
   info: {fileID: 11400000, guid: e141c4c77aafee04e8889153e2242d95, type: 2}
   sightCtrl: {fileID: 7249881556233970603}
   statusType: 0
@@ -216,7 +218,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!195 &2066146855263693509
 NavMeshAgent:
   m_ObjectHideFlags: 0

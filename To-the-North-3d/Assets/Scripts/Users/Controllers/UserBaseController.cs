@@ -29,6 +29,9 @@ namespace Assets.Scripts.Users
 
         private float tickHealthCondition;
 
+        [SerializeField]
+        private Animator anim;
+
         private static UserBaseController _instance;
         // 인스턴스에 접근하기 위한 프로퍼티
         public static UserBaseController Instance
@@ -217,7 +220,8 @@ namespace Assets.Scripts.Users
                 }
             }
 
-            // 화면 피격 이벤트 처리
+            // 피격 이벤트 처리
+            anim.SetTrigger("Hit");
             CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(new Vector2(hitDir.x, hitDir.z)), damage);
             return;
         }
