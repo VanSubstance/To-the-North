@@ -85,6 +85,7 @@ namespace Assets.Scripts.Battles
             }
             if (prj != null)
             {
+
                 if (prj.isAffected) return;
                 if (prj.Owner.Equals(hitController.Owner)) return;
                 hitController.OnHit(info, prj.Info.AttackInfo, (prj.startPos - transform.position));

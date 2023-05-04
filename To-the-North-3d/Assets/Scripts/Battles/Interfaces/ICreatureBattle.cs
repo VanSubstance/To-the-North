@@ -14,5 +14,10 @@ namespace Assets.Scripts.Battles
         /// <param name="damage">[0]: 전체 데미지, [1]: 관통 데미지, [2]: 충격 데미지</param>
         /// <param name="hitDir">피격 방향 (상대 좌표)</param>
         public void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir);
+
+        /// <summary>
+        /// 공격을 위한 높이 반환 함수
+        /// </summary>
+        public float GetHeight();
     }
 }

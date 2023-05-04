@@ -5,8 +5,6 @@ namespace Assets.Scripts.Battles
 {
     class CreatureHitController : MonoBehaviour
     {
-        [SerializeField]
-        private Transform vibrateTf;
         private ICreatureBattle battleFunction;
         [SerializeField]
         private Transform ownerTf;

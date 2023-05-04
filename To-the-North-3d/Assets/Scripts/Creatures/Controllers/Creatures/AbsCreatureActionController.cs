@@ -9,6 +9,14 @@ namespace Assets.Scripts.Creatures
     {
         [SerializeField]
         private Transform detectionTf, sightTf;
+        private Vector3 detectionOrigin, sightOrigin, sightOriginPos;
+        public float CurHeight
+        {
+            get
+            {
+                return sightTf.localPosition.y;
+            }
+        }
 
         protected bool isCrouching = false;
 
@@ -20,6 +28,9 @@ namespace Assets.Scripts.Creatures
 
         protected void Awake()
         {
+            detectionOrigin = detectionTf.localScale;
+            sightOrigin= sightTf.localScale;
+            sightOriginPos = sightTf.localPosition;
             SoundEffectManager.AddAudioSource(transform, true, out Speaker);
             Speaker.maxDistance = 15;
         }
@@ -28,15 +39,18 @@ namespace Assets.Scripts.Creatures
         {
             if (isCrouching) return;
             isCrouching = true;
-            detectionTf.localScale = new Vector3(1, .5f, 1);
-            sightTf.localPosition = Vector3.up * (-.4f + sightTf.localPosition.y);
+            detectionTf.localScale = new Vector3(detectionOrigin.z, detectionOrigin.y / 2, detectionOrigin.z);
+            sightTf.localScale = new Vector3(sightOrigin.z, sightOrigin.y / 2, sightOrigin.z);
+            sightTf.localPosition = new Vector3(0, sightOriginPos.y / 2, 0);
         }
 
         public void Stand()
         {
             if (!isCrouching) return;
             isCrouching = false;
-            detectionTf.localScale = Vector3.one;
+            detectionTf.localScale = detectionOrigin;
+            sightTf.localScale = sightOrigin;
+            sightTf.localPosition = new Vector3(0, sightOriginPos.y, 0);
         }
 
         public abstract void Dodge(Vector3 dir);

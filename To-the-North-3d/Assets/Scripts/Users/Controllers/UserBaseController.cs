@@ -4,6 +4,7 @@ using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Items;
 using UnityEngine;
 using System.Linq;
+using Assets.Scripts.Creatures;
 
 namespace Assets.Scripts.Users
 {
@@ -27,6 +28,9 @@ namespace Assets.Scripts.Users
         }
 
         private float tickHealthCondition;
+
+        [SerializeField]
+        private Animator anim;
 
         private static UserBaseController _instance;
         // 인스턴스에 접근하기 위한 프로퍼티
@@ -216,7 +220,8 @@ namespace Assets.Scripts.Users
                 }
             }
 
-            // 화면 피격 이벤트 처리
+            // 피격 이벤트 처리
+            anim.SetTrigger("Hit");
             CommonGameManager.Instance.OnHit(CalculationFunctions.AngleFromDir(new Vector2(hitDir.x, hitDir.z)), damage);
             return;
         }
@@ -239,6 +244,11 @@ namespace Assets.Scripts.Users
                 InGameStatus.User.conditions[targetCondition] = 0;
                 ConditionManager.Instance.AsleepCondition(targetCondition);
             }
+        }
+
+        public override float GetHeight()
+        {
+            return GetComponent<AbsCreatureActionController>().CurHeight;
         }
     }
 }
