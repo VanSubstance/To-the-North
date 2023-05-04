@@ -13,8 +13,8 @@ namespace Assets.Scripts.Creatures.Bases
     {
 
         [SerializeField]
-        protected Transform visualTf, handTf;
-        private Animator animCtrl, animHandCtrl;
+        protected Transform visualTf;
+        private Animator animCtrl;
         [SerializeField]
         private CreatureInfo info;
 
@@ -288,14 +288,7 @@ namespace Assets.Scripts.Creatures.Bases
                 SetTargetToGaze(targetTf.position - transform.position, 0, false);
                 if (!weapon.IsEmpty())
                 {
-                    if (animHandCtrl != null)
-                    {
-                        animHandCtrl.SetTrigger("Attack");
-                    }
-                    else
-                    {
-                        animCtrl.SetTrigger("Attack");
-                    }
+                    animCtrl.SetTrigger("Attack");
                     weapon.Use(targetTf.position - transform.position);
                 }
                 return;
@@ -318,7 +311,6 @@ namespace Assets.Scripts.Creatures.Bases
             statusType = AIStatusType.None;
             agent = GetComponent<NavMeshAgent>();
             animCtrl = visualTf.GetComponent<Animator>();
-            animHandCtrl = handTf ? handTf.GetComponent<Animator>() : null;
             base.Awake();
 
             if (Info == null) OnDisable();

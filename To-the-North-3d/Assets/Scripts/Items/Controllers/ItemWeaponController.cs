@@ -15,7 +15,7 @@ namespace Assets.Scripts.Items
     public class ItemWeaponController : MonoBehaviour, IItemHandable, IItemEquipable
     {
         [SerializeField]
-        private ItemWeaponController weaponL;
+        private SpriteRenderer handL;
         [SerializeField]
         private ItemWeaponInfo info;
         [SerializeField]
@@ -72,7 +72,7 @@ namespace Assets.Scripts.Items
 
                     if (info.handType.Equals(EquipHandType.Clone))
                     {
-                        weaponL.sprite.sprite = sprite.sprite;
+                        handL.sprite = sprite.sprite;
                     }
                 }
             }
