@@ -256,19 +256,19 @@ namespace Assets.Scripts.Creatures.Detections
                         {
                             // 사이에 완전 장애물 존재
                             iSight.DetectNone();
-                            return null;
+                            continue;
                         }
 
                         if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - HeightForLow, transform.position.z), new Vector3(dirToTarget.x, 0, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
                         {
                             // 사이에 절반 장애물 존재
                             iSight.DetectHalf();
-                            return null;
+                            continue;
                         }
 
                         // 사이에 장애물 존재하지 않음
                         iSight.DetectFull();
-                        return null;
+                        continue;
                     }
                     // 시야 각도 밖에서 식별
                     iSight.DetectNone();

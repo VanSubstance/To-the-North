@@ -384,14 +384,10 @@ namespace Assets.Scripts.Creatures.Bases
             SpriteRenderer s;
             for (int i = 0; i < visualTf.childCount; i++)
             {
-                try
+                if ((s = visualTf.GetChild(i).GetComponent<SpriteRenderer>()) != null)
                 {
-                    c = (s = visualTf.GetChild(i).GetComponent<SpriteRenderer>()).color;
+                    c = s.color;
                     s.color = new Color(c.r, c.g, c.b, _opacity);
-                }
-                catch (MissingComponentException)
-                {
-
                 }
             }
             if (handTfIfExternal)
