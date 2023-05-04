@@ -194,9 +194,8 @@ namespace Assets.Scripts.Creatures.Bases
         {
             get
             {
-                if (weaponL == null && weaponR == null) return 1;
-                float l = weaponL.Range(), r = weaponR.Range();
-                return Mathf.Max(Mathf.Max(l, r), 1);
+                if (weapon == null) return 1;
+                return Mathf.Max(weapon.Range(), 1);
             }
         }
 
@@ -287,18 +286,7 @@ namespace Assets.Scripts.Creatures.Bases
             if (Vector3.Distance(transform.position, targetTf.position) < Mathf.Min(WeaponRange, Info.sightRange))
             {
                 SetTargetToGaze(targetTf.position - transform.position, 0, false);
-                if (!weaponL.IsEmpty())
-                {
-                    if (animHandCtrl != null)
-                    {
-                        animHandCtrl.SetTrigger("Attack");
-                    } else
-                    {
-                        animCtrl.SetTrigger("Attack");
-                    }
-                    weaponL.Use(targetTf.position - transform.position);
-                }
-                if (!weaponR.IsEmpty())
+                if (!weapon.IsEmpty())
                 {
                     if (animHandCtrl != null)
                     {
@@ -308,7 +296,7 @@ namespace Assets.Scripts.Creatures.Bases
                     {
                         animCtrl.SetTrigger("Attack");
                     }
-                    weaponR.Use(targetTf.position - transform.position);
+                    weapon.Use(targetTf.position - transform.position);
                 }
                 return;
             }

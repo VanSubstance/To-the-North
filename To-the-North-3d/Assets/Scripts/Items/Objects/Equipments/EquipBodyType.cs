@@ -12,7 +12,6 @@ namespace Assets.Scripts.Items
         Leg,
         BackPack,
 
-        Right,
-        Left,
+        Hand,
     }
 }

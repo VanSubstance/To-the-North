@@ -80,6 +80,14 @@ namespace Assets.Scripts.Items
             }
         }
 
+        public TrajectoryType TrajectoryType
+        {
+            get
+            {
+                return trajectoryType;
+            }
+        }
+
         /// <summary>
         /// 투사체 반환 함수
         /// </summary>

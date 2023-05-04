@@ -13,7 +13,7 @@ namespace Assets.Scripts.Creatures.Controllers
         [SerializeField]
         protected ItemArmorController helmet, mask, body, backpack;
         [SerializeField]
-        protected ItemWeaponController weaponL, weaponR;
+        protected ItemWeaponController weapon;
 
         protected Dictionary<EquipBodyType, IItemEquipable> equipableBodies = new Dictionary<EquipBodyType, IItemEquipable>();
 
@@ -26,10 +26,8 @@ namespace Assets.Scripts.Creatures.Controllers
             equipableBodies[EquipBodyType.Mask] = mask;
             equipableBodies[EquipBodyType.Body] = body;
             equipableBodies[EquipBodyType.BackPack] = backpack;
-            equipableBodies[EquipBodyType.Right] = weaponL;
-            equipableBodies[EquipBodyType.Left] = weaponR;
-            weaponL.Owner = transform;
-            weaponR.Owner = transform;
+            equipableBodies[EquipBodyType.Hand] = weapon;
+            weapon.Owner = transform;
         }
 
         private Collider bushHidden = null;

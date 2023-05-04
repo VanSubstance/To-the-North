@@ -1,7 +1,5 @@
-using Assets.Scripts.Commons;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Components.Progress;
-using Assets.Scripts.Creatures;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Items;
 using UnityEngine;

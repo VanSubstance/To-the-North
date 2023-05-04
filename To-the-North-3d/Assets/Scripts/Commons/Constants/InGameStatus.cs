@@ -199,8 +199,7 @@ public static class InGameStatus
                     break;
                 case EquipBodyType.BackPack:
                     break;
-                case EquipBodyType.Right:
-                case EquipBodyType.Left:
+                case EquipBodyType.Hand:
                     try
                     {
                         ItemWeaponInfo weaponInfo = (ItemWeaponInfo)itemInfo;
@@ -241,8 +240,7 @@ public static class InGameStatus
                 case EquipBodyType.Body:
                 case EquipBodyType.Leg:
                     return (ItemArmorInfo)curEquipments[targetPartType];
-                case EquipBodyType.Right:
-                case EquipBodyType.Left:
+                case EquipBodyType.Hand:
                     return (ItemWeaponInfo)curEquipments[targetPartType];
                 case EquipBodyType.BackPack:
                     return (ItemEquipmentInfo)curEquipments[targetPartType];

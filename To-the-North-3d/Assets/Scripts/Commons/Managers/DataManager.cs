@@ -13,7 +13,7 @@ namespace Assets.Scripts.Commons
         [SerializeField]
         public ItemArmorInfo helmat, mask, body, leg, back;
         [SerializeField]
-        public ItemWeaponInfo right, left;
+        public ItemWeaponInfo hand;
 
         private static DataManager _instance;
         // 인스턴스에 접근하기 위한 프로퍼티
@@ -67,8 +67,7 @@ namespace Assets.Scripts.Commons
             InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Leg, leg ? Instantiate(leg) : null);
             InGameStatus.Item.SetEquipmentInfo(EquipBodyType.BackPack, back ? Instantiate(back) : null);
 
-            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Right, right ? Instantiate(right) : null);
-            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Left, left ? Instantiate(left) : null);
+            InGameStatus.Item.SetEquipmentInfo(EquipBodyType.Hand, hand ? Instantiate(hand) : null);
         }
     }
 }

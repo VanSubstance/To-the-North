@@ -71,13 +71,9 @@ public class EquipmentSlotController : InventorySlotController
             case ItemWeaponInfo weaponInfo:
                 switch (equipType)
                 {
-                    case EquipBodyType.Right:
-                        DataManager.Instance.right = weaponInfo;
-                        UserBaseController.Instance.ChangeEquipment(EquipBodyType.Right, weaponInfo);
-                        break;
-                    case EquipBodyType.Left:
-                        DataManager.Instance.left = weaponInfo;
-                        UserBaseController.Instance.ChangeEquipment(EquipBodyType.Left, weaponInfo);
+                    case EquipBodyType.Hand:
+                        DataManager.Instance.hand = weaponInfo;
+                        UserBaseController.Instance.ChangeEquipment(EquipBodyType.Hand, weaponInfo);
                         break;
                 }
                 break;
@@ -121,13 +117,9 @@ public class EquipmentSlotController : InventorySlotController
             case ItemWeaponInfo weaponInfo:
                 switch (equipType)
                 {
-                    case EquipBodyType.Right:
-                        DataManager.Instance.right = null;
-                        UserBaseController.Instance.ChangeEquipment(EquipBodyType.Right, null);
-                        break;
-                    case EquipBodyType.Left:
-                        DataManager.Instance.left = null;
-                        UserBaseController.Instance.ChangeEquipment(EquipBodyType.Left, null);
+                    case EquipBodyType.Hand:
+                        DataManager.Instance.hand = null;
+                        UserBaseController.Instance.ChangeEquipment(EquipBodyType.Hand, null);
                         break;
                 }
                 break;

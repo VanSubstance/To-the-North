@@ -6,7 +6,7 @@ namespace Assets.Scripts.Creatures
     internal class BodyRotateController : MonoBehaviour
     {
         [SerializeField]
-        Transform body, handL, handR;
+        Transform body, hand;
 
         [SerializeField]
         private AIBaseController aiBase;
@@ -25,17 +25,15 @@ namespace Assets.Scripts.Creatures
             {
                 // 오른쪽
                 body.localScale = Vector3.one;
-                if (handL == null) return;
-                handL.localRotation = Quaternion.Euler(0, 0, curDegree);
-                handR.localRotation = Quaternion.Euler(0, 0, curDegree);
+                if (hand == null) return;
+                hand.localRotation = Quaternion.Euler(0, 0, curDegree);
             }
             else
             {
                 // 왼쪽
                 body.localScale = new Vector3(-1, 1, 1);
-                if (handL == null) return;
-                handL.localRotation = Quaternion.Euler(0, 0, 180 - curDegree);
-                handR.localRotation = Quaternion.Euler(0, 0, 180 - curDegree);
+                if (hand == null) return;
+                hand.localRotation = Quaternion.Euler(0, 0, 180 - curDegree);
             }
         }
     }
