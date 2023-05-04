@@ -129,7 +129,7 @@ namespace Assets.Scripts.Items
                 }
                 else
                 {
-                    ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, transform.position,
+                    ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, new Vector3(transform.position.x, owner.GetComponent<ICreatureBattle>().GetHeight(), transform.position.z),
                         CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)) + UnityEngine.Random.Range(-InGameStatus.User.Detection.Sight.DegreeError,
                         InGameStatus.User.Detection.Sight.DegreeError)),
                         owner,

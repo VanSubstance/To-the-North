@@ -4,6 +4,7 @@ using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Items;
 using UnityEngine;
 using System.Linq;
+using Assets.Scripts.Creatures;
 
 namespace Assets.Scripts.Users
 {
@@ -239,6 +240,11 @@ namespace Assets.Scripts.Users
                 InGameStatus.User.conditions[targetCondition] = 0;
                 ConditionManager.Instance.AsleepCondition(targetCondition);
             }
+        }
+
+        public override float GetHeight()
+        {
+            return GetComponent<AbsCreatureActionController>().CurHeight;
         }
     }
 }

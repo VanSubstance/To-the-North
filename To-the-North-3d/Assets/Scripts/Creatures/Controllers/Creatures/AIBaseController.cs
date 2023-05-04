@@ -13,8 +13,10 @@ namespace Assets.Scripts.Creatures.Bases
     {
 
         [SerializeField]
-        protected Transform visualTf;
+        protected Transform visualTf, handTfIfExternal;
         private Animator animCtrl;
+        [SerializeField]
+        private float height = 1;
         [SerializeField]
         private CreatureInfo info;
 
@@ -388,6 +390,16 @@ namespace Assets.Scripts.Creatures.Bases
 
                 }
             }
+            if (handTfIfExternal)
+            {
+                c = (s = handTfIfExternal.GetComponent<SpriteRenderer>()).color;
+                s.color = new Color(c.r, c.g, c.b, _opacity);
+            }
+        }
+
+        public override float GetHeight()
+        {
+            return height;
         }
 
         public abstract void DetectFull();
