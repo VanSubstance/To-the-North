@@ -3,6 +3,6 @@ namespace Assets.Scripts.Components.Windows.Inventory
 {
     public class ContentEquipmentController: ContentBaseController
     {
-        public EquipmentSlotController helmetCtrl, maskCtrl, bodyCtrl, backpackCtrl, handLCtrl, handRCtrl;
+        public EquipmentSlotController helmetCtrl, maskCtrl, bodyCtrl, backpackCtrl, weapon1Ctrl, weapon2Ctrl;
     }
 }

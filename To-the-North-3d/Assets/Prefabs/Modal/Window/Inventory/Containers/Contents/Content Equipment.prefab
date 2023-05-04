@@ -59,8 +59,8 @@ MonoBehaviour:
   maskCtrl: {fileID: 7228217707224599967}
   bodyCtrl: {fileID: 7125001900532022507}
   backpackCtrl: {fileID: 6978743573142613849}
-  handLCtrl: {fileID: 2230555347425835122}
-  handRCtrl: {fileID: 7492453231245308067}
+  weapon1Ctrl: {fileID: 2230555347425835122}
+  weapon2Ctrl: {fileID: 7492453231245308067}
 --- !u!1001 &2409636594949443621
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507825274974, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_text
-      value: Left Hand
+      value: "\uC8FC \uBB34\uAE30"
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507977437634, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_Pivot.x
@@ -166,7 +166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507977437645, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_Name
-      value: Hand L
+      value: Weapon 1
       objectReference: {fileID: 0}
     - target: {fileID: 8358660508515269825, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_Size.x
@@ -227,9 +227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507825274974, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_text
-      value: 'Helmet
-
-'
+      value: "\uBAA8\uC790"
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507977437634, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_Pivot.x
@@ -348,17 +346,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2122372770905084892}
     m_Modifications:
-    - target: {fileID: 4576846834480474199, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
-      propertyPath: equipType
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 8358660507825274969, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507825274974, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_text
-      value: Right Hand
+      value: "\uBCF4\uC870 \uBB34\uAE30"
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507977437634, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_Pivot.x
@@ -446,7 +440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507977437645, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_Name
-      value: Hand R
+      value: Weapon 2
       objectReference: {fileID: 0}
     - target: {fileID: 8358660508515269825, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_Size.x
@@ -507,7 +501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507825274974, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_text
-      value: Mask
+      value: "\uB9C8\uC2A4\uD06C"
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507977437634, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_Pivot.x
@@ -636,7 +630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507825274974, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_text
-      value: Body
+      value: "\uBAB8"
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507977437634, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_Pivot.x
@@ -773,7 +767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507825274974, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_text
-      value: Backpack
+      value: "\uAC00\uBC29"
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507977437634, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_Pivot.x

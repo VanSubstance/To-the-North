@@ -391,6 +391,10 @@ PrefabInstance:
       propertyPath: equipType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3134890187572250937, guid: 7a6ed3d716af1454691e68b0821c0243, type: 3}
+      propertyPath: m_Name
+      value: Weapon 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3134890188110406713, guid: 7a6ed3d716af1454691e68b0821c0243, type: 3}
       propertyPath: equipType
       value: 6
@@ -410,6 +414,10 @@ PrefabInstance:
     - target: {fileID: 5949064639237926120, guid: 7a6ed3d716af1454691e68b0821c0243, type: 3}
       propertyPath: equipType
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949064640849412584, guid: 7a6ed3d716af1454691e68b0821c0243, type: 3}
+      propertyPath: m_Name
+      value: Weapon 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a6ed3d716af1454691e68b0821c0243, type: 3}

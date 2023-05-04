@@ -65,36 +65,26 @@ namespace Assets.Scripts.Items
                         case EquipBodyType.BackPack:
                             if (Equip(WindowInventoryController.equipmentCtrl.backpackCtrl)) return;
                             break;
-                        case EquipBodyType.Right:
-                            break;
-                        case EquipBodyType.Left:
-                            break;
                     }
                     return;
                 }
                 if (Info is ItemWeaponInfo)
                 {
                     // 무기
-                    if (!WindowInventoryController.equipmentCtrl.handRCtrl.IsEquipped)
+                    // 주 무기 슬롯부터 비어있는지 확인
+                    if (!WindowInventoryController.equipmentCtrl.weapon1Ctrl.IsEquipped)
                     {
-                        if (((ItemWeaponInfo)Info).handType == EquipHandType.Multiple)
-                        {
-                            // 양손 무기
-                            Equip(WindowInventoryController.equipmentCtrl.handRCtrl);
-                        }
-                        else
-                        {
-                            // 한손 무기
-                            Equip(WindowInventoryController.equipmentCtrl.handRCtrl);
-                        }
+                        // 주무기가 비었다 -> 주무기 장착 + 주무기 손에 들기
+                        Equip(WindowInventoryController.equipmentCtrl.weapon1Ctrl);
                         return;
                     }
-                    if (!WindowInventoryController.equipmentCtrl.handLCtrl.IsEquipped)
+                    if (!WindowInventoryController.equipmentCtrl.weapon2Ctrl.IsEquipped)
                     {
-                        // 한손 무기
-                        Equip(WindowInventoryController.equipmentCtrl.handLCtrl);
+                        // 부 무기가 비엇다 -> 부무기 장착 + 주무기 손에 들기
+                        Equip(WindowInventoryController.equipmentCtrl.weapon2Ctrl);
                         return;
                     }
+                    // 둘 다 안비었다 -> 패스
                     return;
                 }
             }

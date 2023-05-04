@@ -11,7 +11,7 @@ namespace Assets.Scripts.Users.Controllers
         [SerializeField]
         private DetectionSightController sightCtrl;
         [SerializeField]
-        private ItemWeaponController weaponL, weaponR;
+        private ItemWeaponController weapon;
         private void Update()
         {
             if (!InGameStatus.User.isPause)
@@ -44,14 +44,9 @@ namespace Assets.Scripts.Users.Controllers
                     mousePos - UserBaseController.Instance.position
                     )
                     * 2 / 3f;
-                if (!weaponL.IsEmpty())
+                if (!weapon.IsEmpty())
                 {
-                    weaponL.Aim(
-                    mousePos - UserBaseController.Instance.position);
-                }
-                if (!weaponR.IsEmpty())
-                {
-                    weaponR.Aim(
+                    weapon.Aim(
                     mousePos - UserBaseController.Instance.position);
                 }
                 InGameStatus.User.Detection.Sight.isControllInRealTime = true;
@@ -67,14 +62,9 @@ namespace Assets.Scripts.Users.Controllers
         {
             if (Input.GetMouseButton((int)MouseButton.LeftMouse))
             {
-                if (!weaponL.IsEmpty())
+                if (!weapon.IsEmpty())
                 {
-                    weaponL.Use(
-                    mousePos - UserBaseController.Instance.position);
-                }
-                if (!weaponR.IsEmpty())
-                {
-                    weaponR.Use(
+                    weapon.Use(
                     mousePos - UserBaseController.Instance.position);
                 }
             }

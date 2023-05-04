@@ -278,7 +278,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   row: 0
   column: 0
-  slotType: 0
   normal: {fileID: 21300000, guid: 8f67d2ac506b6a643be2afcf2b3f4334, type: 3}
   ready: {fileID: 21300000, guid: 8499c738a7a78a54aad7f5ee93d86c0f, type: 3}
-  equipType: 0
+  equipType: 8

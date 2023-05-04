@@ -29,6 +29,16 @@ namespace Assets.Scripts.Items
             }
         }
 
+        private Animator anim;
+
+        public Animator Anim
+        {
+            get
+            {
+                return transform.parent.GetComponent<Animator>();
+            }
+        }
+
         private float delayAmongFire, timeFocusFull = 3f;
         private float timeFocus;
         private float TimeFocus
@@ -66,6 +76,7 @@ namespace Assets.Scripts.Items
                     }
                 }
             }
+            anim = transform.parent.GetComponent<Animator>();
         }
 
         private void Update()
@@ -123,6 +134,26 @@ namespace Assets.Scripts.Items
                         InGameStatus.User.Detection.Sight.DegreeError)),
                         owner,
                         info.bulletType);
+                    if (anim)
+                    {
+                        if (info.bulletType.Equals(ItemBulletType.None))
+                        {
+                            // 근접
+                            switch (info.TrajectoryType)
+                            {
+                                case TrajectoryType.Straight:
+                                    anim.SetTrigger("Step");
+                                    break;
+                                case TrajectoryType.Curve:
+                                    anim.SetTrigger("Swing");
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            anim.SetTrigger("Shot");
+                        }
+                    }
                 }
                 delayAmongFire = 0f;
             }

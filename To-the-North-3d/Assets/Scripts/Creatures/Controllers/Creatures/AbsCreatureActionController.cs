@@ -8,7 +8,7 @@ namespace Assets.Scripts.Creatures
     public abstract class AbsCreatureActionController : MonoBehaviour, ICreatureAction, ISoundable
     {
         [SerializeField]
-        private Transform detectionTf, sightTf, handTf;
+        private Transform detectionTf, sightTf;
 
         protected bool isCrouching = false;
 
@@ -30,7 +30,6 @@ namespace Assets.Scripts.Creatures
             isCrouching = true;
             detectionTf.localScale = new Vector3(1, .5f, 1);
             sightTf.localPosition = Vector3.up * (-.4f + sightTf.localPosition.y);
-            handTf.localPosition = Vector3.up * (-.6f + handTf.localPosition.y);
         }
 
         public void Stand()
@@ -38,8 +37,6 @@ namespace Assets.Scripts.Creatures
             if (!isCrouching) return;
             isCrouching = false;
             detectionTf.localScale = Vector3.one;
-            sightTf.localPosition = Vector3.up * (.4f + sightTf.localPosition.y);
-            handTf.localPosition = Vector3.up * (.6f + handTf.localPosition.y);
         }
 
         public abstract void Dodge(Vector3 dir);

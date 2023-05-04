@@ -13,9 +13,14 @@ namespace Assets.Scripts.Creatures.Controllers
         [SerializeField]
         protected ItemArmorController helmet, mask, body, backpack;
         [SerializeField]
-        protected ItemWeaponController weaponL, weaponR;
+        protected ItemWeaponController weapon;
 
         protected Dictionary<EquipBodyType, IItemEquipable> equipableBodies = new Dictionary<EquipBodyType, IItemEquipable>();
+        protected ItemEquipmentInfo[] weapons = new ItemEquipmentInfo[2];
+        /// <summary>
+        /// 현재 장착중인 무기 인덱스; 0 <- 없음; 1 <- 주무기; 2 <- 부무기
+        /// </summary>
+        protected int curWeapon = 0;
 
         protected void Awake()
         {
@@ -26,10 +31,8 @@ namespace Assets.Scripts.Creatures.Controllers
             equipableBodies[EquipBodyType.Mask] = mask;
             equipableBodies[EquipBodyType.Body] = body;
             equipableBodies[EquipBodyType.BackPack] = backpack;
-            equipableBodies[EquipBodyType.Right] = weaponL;
-            equipableBodies[EquipBodyType.Left] = weaponR;
-            weaponL.Owner = transform;
-            weaponR.Owner = transform;
+            equipableBodies[EquipBodyType.Hand] = weapon;
+            weapon.Owner = transform;
         }
 
         private Collider bushHidden = null;
