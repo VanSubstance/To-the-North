@@ -554,7 +554,7 @@ PrefabInstance:
     - target: {fileID: 4074563936069197785, guid: a59b8155a9c71a0408be1e77c1d16d76, type: 3}
       propertyPath: m_ConnectedBody
       value: 
-      objectReference: {fileID: 2693091791170358360}
+      objectReference: {fileID: 8465036445700528735}
     - target: {fileID: 4456119000886491282, guid: a59b8155a9c71a0408be1e77c1d16d76, type: 3}
       propertyPath: m_TagString
       value: User
@@ -653,14 +653,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a59b8155a9c71a0408be1e77c1d16d76, type: 3}
---- !u!54 &2693091791170358360 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 3162726025617573848, guid: a59b8155a9c71a0408be1e77c1d16d76, type: 3}
-  m_PrefabInstance: {fileID: 1061594037668760448}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7249881556285147604 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7649164930735866452, guid: a59b8155a9c71a0408be1e77c1d16d76, type: 3}
+  m_PrefabInstance: {fileID: 1061594037668760448}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &8465036445700528735 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 8917782481505898975, guid: a59b8155a9c71a0408be1e77c1d16d76, type: 3}
   m_PrefabInstance: {fileID: 1061594037668760448}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2870324968736520311

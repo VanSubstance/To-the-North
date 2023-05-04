@@ -83,7 +83,6 @@ namespace Assets.Scripts.Battles
             {
                 prj = collision.GetComponent<ProjectileController>();
             }
-            Debug.Log("피격 확정:: " + transform.tag + " | " + transform.name);
             if (prj != null)
             {
 
