@@ -30,6 +30,7 @@ namespace Assets.Scripts.Users
         }
         private void Awake()
         {
+            Init();
             visualizationTf = transform.GetChild(0);
             sleepTf = transform.GetChild(1);
             foreach (ConditionType type in System.Enum.GetValues(typeof(ConditionType)))
@@ -59,6 +60,17 @@ namespace Assets.Scripts.Users
         {
             controllers[targetType].transform.SetParent(sleepTf, false);
             controllers[targetType].gameObject.SetActive(false);
+        }
+
+        private void Init()
+        {
+            if (InGameStatus.User.conditions != null) return;
+            InGameStatus.User.conditions = new();
+            foreach (ConditionType type in System.Enum.GetValues(typeof(ConditionType)))
+            {
+                if (type == ConditionType.None) continue;
+                InGameStatus.User.conditions[type] = 0;
+            }
         }
     }
 }

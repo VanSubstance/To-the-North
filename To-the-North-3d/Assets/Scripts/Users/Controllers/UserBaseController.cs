@@ -200,6 +200,8 @@ namespace Assets.Scripts.Users
                 {
                     // 심각한 출혈 발생
                     OccurCondition(ConditionType.Bleeding_Heavy);
+                    // 통증 동시 발생
+                    OccurCondition(ConditionType.Pain);
                 }
             }
 
@@ -217,6 +219,8 @@ namespace Assets.Scripts.Users
                 {
                     // 골절 발생
                     OccurCondition(ConditionType.Fracture);
+                    // 통증 동시 발생
+                    OccurCondition(ConditionType.Pain);
                 }
             }
 
@@ -249,6 +253,11 @@ namespace Assets.Scripts.Users
         public override float GetHeight()
         {
             return GetComponent<AbsCreatureActionController>().CurHeight;
+        }
+
+        private void Start()
+        {
+            OccurCondition(ConditionType.Pain);;
         }
     }
 }

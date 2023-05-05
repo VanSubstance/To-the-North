@@ -81,12 +81,7 @@ public static class InGameStatus
             }
         }
 
-        public static Dictionary<ConditionType, int> conditions = new Dictionary<ConditionType, int>() {
-                { ConditionType.Bleeding_Light, 0},
-                { ConditionType.Bleeding_Heavy, 0},
-                { ConditionType.Fracture, 0},
-                { ConditionType.Test, 0},
-            };
+        public static Dictionary<ConditionType, int> conditions;
 
         public static bool IsConditionExist(ConditionType[] targetTypes)
         {
@@ -168,14 +163,14 @@ public static class InGameStatus
         {
             foreach (ItemInventoryInfo inven in inventory)
             {
-                if (inven.itemInfo is ItemBulletInfo)
+                if (inven.itemInfo is ItemBulletInfo info)
                 {
-                    if  (
-                            ((ItemBulletInfo)inven.itemInfo).bulletType.Equals(type) &&
-                            ((ItemBulletInfo)inven.itemInfo).AmountCount > 0
+                    if (
+                            info.bulletType.Equals(type) &&
+                            info.AmountCount > 0
                         )
                     {
-                        return (ItemBulletInfo)inven.itemInfo;
+                        return info;
                     }
                 }
             }
