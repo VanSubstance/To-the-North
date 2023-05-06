@@ -240,7 +240,7 @@ namespace Assets.Scripts.Users
         /// 상태 이상 발생 함수
         /// </summary>
         /// <param name="targetCondition">발생할 상태 이상</param>
-        private void OccurCondition(ConditionType targetCondition)
+        public void OccurCondition(ConditionType targetCondition)
         {
             InGameStatus.User.conditions[targetCondition]++;
             ConditionManager.Instance.AwakeCondition(targetCondition);
@@ -263,7 +263,7 @@ namespace Assets.Scripts.Users
 
         private void Start()
         {
-            OccurCondition(ConditionType.Dizziness);;
+            OccurCondition(ConditionType.Infection);;
         }
     }
 }

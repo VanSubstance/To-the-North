@@ -18,7 +18,7 @@ namespace Assets.Scripts.Users
             /// <summary>
             /// 틱 데미지
             /// </summary>
-            public static readonly ConditionType[] Damage = { ConditionType.Bleeding_Light, ConditionType.Bleeding_Heavy };
+            public static readonly ConditionType[] Damage = { ConditionType.Bleeding_Light, ConditionType.Bleeding_Heavy, ConditionType.Infection };
             /// <summary>
             /// 화면 진동
             /// </summary>
@@ -26,13 +26,14 @@ namespace Assets.Scripts.Users
             /// <summary>
             /// 화면 붉어짐
             /// </summary>
-            public static readonly ConditionType[] Blurred = { ConditionType.Fracture, ConditionType.Bleeding_Heavy };
+            public static readonly ConditionType[] Blurred = { ConditionType.Fracture, ConditionType.Bleeding_Heavy, ConditionType.Infection };
             /// <summary>
             /// 상태이상 별 틱 데미지
             /// </summary>
             public static readonly Dictionary<ConditionType, int> TickAmountForCondition = new Dictionary<ConditionType, int>()
             {
                 {ConditionType.Bleeding_Light, 2},
+                {ConditionType.Infection, 2},
                 {ConditionType.Bleeding_Heavy, 6},
             };
         }
@@ -80,7 +81,7 @@ namespace Assets.Scripts.Users
             /// <summary>
             /// 이동 속도
             /// </summary>
-            public static readonly ConditionType[] SpeedMove = { ConditionType.Pain };
+            public static readonly ConditionType[] SpeedMove = { ConditionType.Pain, ConditionType.Infection };
             /// <summary>
             /// 재장전 속도
             /// </summary>

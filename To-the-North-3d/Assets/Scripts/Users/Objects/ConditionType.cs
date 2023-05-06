@@ -3,7 +3,6 @@ namespace Assets.Scripts.Users
     public enum ConditionType
     {
         None, 
-        Test,
 
         // 얕은 출혈
         Bleeding_Light,
@@ -15,5 +14,7 @@ namespace Assets.Scripts.Users
         Pain,
         // 어지러움
         Dizziness,
+        //감염
+        Infection,
     }
 }
