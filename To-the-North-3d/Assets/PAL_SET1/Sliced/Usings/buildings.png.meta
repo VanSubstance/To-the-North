@@ -5760,9 +5760,9 @@ TextureImporter:
       name: buildings_3
       rect:
         serializedVersion: 2
-        x: 64
+        x: 57
         y: 608
-        width: 16
+        width: 20
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -5825,7 +5825,7 @@ TextureImporter:
         serializedVersion: 2
         x: 112
         y: 608
-        width: 16
+        width: 20
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -5844,9 +5844,9 @@ TextureImporter:
       name: buildings_7
       rect:
         serializedVersion: 2
-        x: 128
+        x: 132
         y: 608
-        width: 16
+        width: 20
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -5865,9 +5865,9 @@ TextureImporter:
       name: buildings_8
       rect:
         serializedVersion: 2
-        x: 144
+        x: 152
         y: 608
-        width: 16
+        width: 20
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -5886,9 +5886,9 @@ TextureImporter:
       name: buildings_9
       rect:
         serializedVersion: 2
-        x: 160
+        x: 172
         y: 608
-        width: 16
+        width: 20
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -5907,9 +5907,9 @@ TextureImporter:
       name: buildings_10
       rect:
         serializedVersion: 2
-        x: 176
+        x: 191
         y: 608
-        width: 16
+        width: 20
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -5925,33 +5925,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: buildings_11
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 608
-        width: 16
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 18f2e742bc964a810800000000000000
-      internalID: 1775660474302345089
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: buildings_12
       rect:
         serializedVersion: 2
-        x: 208
+        x: 211
         y: 608
-        width: 16
+        width: 26
         height: 64
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -5962,27 +5941,6 @@ TextureImporter:
       bones: []
       spriteID: 537d07e483ae73ed0800000000000000
       internalID: -2434219546015377611
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: buildings_13
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 608
-        width: 16
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b9495de67142ae2c0800000000000000
-      internalID: -4401666002738899813
       vertices: []
       indices: 
       edges: []
@@ -16466,6 +16424,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: buildings_11
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 608
+        width: 7
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d637f8278f86a3d4eb42548f94a7d3bf
+      internalID: 1775660474302345089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buildings_13
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 528
+        width: 16
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9b092a2be5d2ec4eb6d5b3d83af02e7
+      internalID: -4401666002738899813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -16534,8 +16534,8 @@ TextureImporter:
       buildings_148: 3977189861649979108
       buildings_159: -7547149121642657469
       buildings_226: -1453872351044575723
-      buildings_335: -2304374825858206656
       buildings_228: 4690272191755960023
+      buildings_335: -2304374825858206656
       buildings_77: -8676433478304906619
       buildings_338: 8359162732974291115
       buildings_68: 2899797295845442345
