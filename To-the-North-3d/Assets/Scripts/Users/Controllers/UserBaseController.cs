@@ -180,10 +180,12 @@ namespace Assets.Scripts.Users
             switch (partType)
             {
                 case EquipBodyType.Helmat:
-                    break;
                 case EquipBodyType.Mask:
-                    break;
-                case EquipBodyType.Head:
+                    if (Random.Range(0f, 1f) < .5)
+                    {
+                        // 헬멧 또는 마스크 피격 시 50% 확률 어지러움
+                        OccurCondition(ConditionType.Dizziness);
+                    }
                     break;
                 case EquipBodyType.Body:
                     break;
@@ -222,6 +224,10 @@ namespace Assets.Scripts.Users
                     // 통증 동시 발생
                     OccurCondition(ConditionType.Pain);
                 }
+                if (damage[2] > 25)
+                {
+                    OccurCondition(ConditionType.Dizziness);
+                }
             }
 
             // 피격 이벤트 처리
@@ -257,7 +263,7 @@ namespace Assets.Scripts.Users
 
         private void Start()
         {
-            OccurCondition(ConditionType.Pain);;
+            OccurCondition(ConditionType.Dizziness);;
         }
     }
 }

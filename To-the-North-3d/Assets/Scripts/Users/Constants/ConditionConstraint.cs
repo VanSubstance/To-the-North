@@ -74,9 +74,9 @@ namespace Assets.Scripts.Users
             /// </summary>
             public static readonly ConditionType[] SpeedUseStamina = { };
             /// <summary>
-            /// 카메라 조준 속도
+            /// 카메라 이동 속도
             /// </summary>
-            public static readonly ConditionType[] SpeedCameraTracking = { };
+            public static readonly ConditionType[] SpeedCameraTracking = { ConditionType.Dizziness };
             /// <summary>
             /// 이동 속도
             /// </summary>

@@ -13,6 +13,7 @@ namespace Assets.Scripts.Users
         Fracture,
         // 통증
         Pain,
-
+        // 어지러움
+        Dizziness,
     }
 }
