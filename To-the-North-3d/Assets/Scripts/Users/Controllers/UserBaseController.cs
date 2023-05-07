@@ -82,8 +82,8 @@ namespace Assets.Scripts.Users
 
         private void TickHealthCondition()
         {
-            InGameStatus.User.status.ApplyHunger(-2);
-            InGameStatus.User.status.ApplyThirst(-2);
+            //InGameStatus.User.status.ApplyHunger(-2);
+            //InGameStatus.User.status.ApplyThirst(-2);
             // 온도의 경우, 주변 환경에 따라서 오르거나 내리거나 유지되어야 할 듯
             //InGameStatus.User.status.temperatureBar.LiveInfo = +.5f;
         }
@@ -264,7 +264,7 @@ namespace Assets.Scripts.Users
 
         private void Start()
         {
-            OccurCondition(ConditionType.Infection);;
+            //OccurCondition(ConditionType.Infection);
         }
     }
 }
