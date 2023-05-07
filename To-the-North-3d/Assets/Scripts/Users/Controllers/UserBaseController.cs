@@ -69,6 +69,11 @@ namespace Assets.Scripts.Users
             tickHealthCondition = 0;
         }
 
+        private void Start()
+        {
+            //OccurCondition(ConditionType.Infection);
+        }
+
         private void Update()
         {
             tickHealthCondition += Time.deltaTime;
@@ -77,6 +82,7 @@ namespace Assets.Scripts.Users
                 tickHealthCondition = 0;
                 TickHealthCondition();
             }
+            CheckDizziness();
             CheckSwapWeapon();
         }
 
@@ -262,9 +268,16 @@ namespace Assets.Scripts.Users
             return GetComponent<AbsCreatureActionController>().CurHeight;
         }
 
-        private void Start()
+        private void CheckDizziness()
         {
-            //OccurCondition(ConditionType.Infection);
+            if (InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.Dizziness))
+            {
+                CommonGameManager.Instance.IsDizziness = true;
+            }
+            else
+            {
+                CommonGameManager.Instance.IsDizziness = false;
+            }
         }
     }
 }

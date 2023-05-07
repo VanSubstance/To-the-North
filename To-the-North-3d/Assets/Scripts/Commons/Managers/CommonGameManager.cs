@@ -405,11 +405,17 @@ public class CommonGameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 화면 울렁거림 효과 켜기/끄기 함수
+    /// 화면 울렁거림 효과
     /// </summary>
-    /// <param name="isActive"></param>
-    public void ActivateDizziness(bool isActive)
+    public bool IsDizziness
     {
-        _screenDizzinessTf.gameObject.SetActive(isActive);
+        get
+        {
+            return _screenDizzinessTf.gameObject.activeSelf;
+        }
+        set
+        {
+            _screenDizzinessTf.gameObject.SetActive(value);
+        }
     }
 }

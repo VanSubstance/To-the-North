@@ -4,7 +4,6 @@ using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using Assets.Scripts.Users.Objects;
-using UnityEngine;
 
 public static class InGameStatus
 {
@@ -53,7 +52,8 @@ public static class InGameStatus
                 {
                     // 허기 25% 미만
                     UserBaseController.Instance.OccurCondition(ConditionType.Hunger, true);
-                } else if (hungerBar.LivePercent < .50f)
+                }
+                else if (hungerBar.LivePercent < .50f)
                 {
                     // 허기 25% 미만
                     UserBaseController.Instance.CureCondition(ConditionType.Hunger, 1);

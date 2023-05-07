@@ -94,6 +94,10 @@ namespace Assets.Scripts.Users
             /// 시야 거리
             /// </summary>
             public static readonly ConditionType[] RangeSight = { };
+            /// <summary>
+            /// 화면 울렁거림
+            /// </summary>
+            public static readonly ConditionType[] Dizziness = { ConditionType.Thirst, ConditionType.Dizziness };
         }
     }
 }
