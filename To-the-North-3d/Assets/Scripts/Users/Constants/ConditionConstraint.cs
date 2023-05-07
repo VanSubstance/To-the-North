@@ -22,7 +22,7 @@ namespace Assets.Scripts.Users
             /// <summary>
             /// 스테미나 데미지
             /// </summary>
-            public static readonly ConditionType[] Stamina = { ConditionType.Exhaust };
+            public static readonly ConditionType[] Stamina = { ConditionType.Exhaust, ConditionType.Hot };
             /// <summary>
             /// 화면 진동
             /// </summary>
@@ -40,6 +40,7 @@ namespace Assets.Scripts.Users
                 {ConditionType.Infection, 2},
                 {ConditionType.Bleeding_Heavy, 6},
                 {ConditionType.Exhaust, 2},
+                {ConditionType.Hot, 2},
             };
         }
 
@@ -80,13 +81,21 @@ namespace Assets.Scripts.Users
             /// </summary>
             public static readonly ConditionType[] SpeedUseStamina = { ConditionType.Hunger, ConditionType.Thirst };
             /// <summary>
+            /// 갈증 소모속도
+            /// </summary>
+            public static readonly ConditionType[] SpeedThirst = { ConditionType.Hot };
+            /// <summary>
+            /// 허기 소모속도
+            /// </summary>
+            public static readonly ConditionType[] SpeedHunger = { ConditionType.Cold };
+            /// <summary>
             /// 카메라 이동 속도
             /// </summary>
             public static readonly ConditionType[] SpeedCameraTracking = { ConditionType.Dizziness };
             /// <summary>
             /// 이동 속도
             /// </summary>
-            public static readonly ConditionType[] SpeedMove = { ConditionType.Pain, ConditionType.Infection };
+            public static readonly ConditionType[] SpeedMove = { ConditionType.Pain, ConditionType.Infection, ConditionType.Cold };
             /// <summary>
             /// 재장전 속도
             /// </summary>
@@ -103,6 +112,21 @@ namespace Assets.Scripts.Users
             /// 화면 울렁거림
             /// </summary>
             public static readonly ConditionType[] Dizziness = { ConditionType.Thirst, ConditionType.Dizziness };
+        }
+
+        /// <summary>
+        /// 확률 관련
+        /// </summary>
+        public static class Possibility
+        {
+            /// <summary>
+            /// 어지러움 발생 확률 상승
+            /// </summary>
+            public static readonly ConditionType[] Dizziness = { ConditionType.Hot };
+            /// <summary>
+            /// 얕은 출혈 발생 가능성 상승
+            /// </summary>
+            public static readonly ConditionType[] Bleeding_Light = { ConditionType.Cold };
         }
     }
 }

@@ -23,5 +23,9 @@ namespace Assets.Scripts.Users
         Thirst,
         // 피로
         Exhaust,
+        // 더위
+        Hot,
+        // 추위
+        Cold,
     }
 }
