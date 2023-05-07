@@ -240,8 +240,9 @@ namespace Assets.Scripts.Users
         /// 상태 이상 발생 함수
         /// </summary>
         /// <param name="targetCondition">발생할 상태 이상</param>
-        public void OccurCondition(ConditionType targetCondition)
+        public void OccurCondition(ConditionType targetCondition, bool isSingle = false)
         {
+            if (isSingle && InGameStatus.User.conditions[targetCondition] > 0) return;
             InGameStatus.User.conditions[targetCondition]++;
             ConditionManager.Instance.AwakeCondition(targetCondition);
         }

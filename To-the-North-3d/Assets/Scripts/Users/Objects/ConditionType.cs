@@ -16,5 +16,10 @@ namespace Assets.Scripts.Users
         Dizziness,
         //감염
         Infection,
+
+        // 허기
+        Hunger,
+        // 갈즐
+        Thirst,
     }
 }

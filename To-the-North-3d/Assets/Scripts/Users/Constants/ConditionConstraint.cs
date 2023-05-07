@@ -22,7 +22,7 @@ namespace Assets.Scripts.Users
             /// <summary>
             /// 화면 진동
             /// </summary>
-            public static readonly ConditionType[] Vibrating = { ConditionType.Bleeding_Light, ConditionType.Fracture };
+            public static readonly ConditionType[] Vibrating = { ConditionType.Bleeding_Light, ConditionType.Fracture, ConditionType.Hunger };
             /// <summary>
             /// 화면 붉어짐
             /// </summary>
@@ -65,7 +65,7 @@ namespace Assets.Scripts.Users
             /// <summary>
             /// 스테미나 회복
             /// </summary>
-            public static readonly ConditionType[] RecoveryStamina = { ConditionType.Fracture, ConditionType.Bleeding_Heavy };
+            public static readonly ConditionType[] RecoveryStamina = { ConditionType.Fracture, ConditionType.Bleeding_Heavy, ConditionType.Hunger, ConditionType.Thirst };
             /// <summary>
             /// 무기 정확도
             /// </summary>
@@ -73,7 +73,7 @@ namespace Assets.Scripts.Users
             /// <summary>
             /// 스테미나 소모 속도
             /// </summary>
-            public static readonly ConditionType[] SpeedUseStamina = { };
+            public static readonly ConditionType[] SpeedUseStamina = { ConditionType.Hunger, ConditionType.Thirst };
             /// <summary>
             /// 카메라 이동 속도
             /// </summary>
