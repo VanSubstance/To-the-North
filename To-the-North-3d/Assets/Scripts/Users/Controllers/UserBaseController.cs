@@ -69,6 +69,11 @@ namespace Assets.Scripts.Users
             tickHealthCondition = 0;
         }
 
+        private void Start()
+        {
+            //OccurCondition(ConditionType.Infection);
+        }
+
         private void Update()
         {
             tickHealthCondition += Time.deltaTime;
@@ -77,15 +82,39 @@ namespace Assets.Scripts.Users
                 tickHealthCondition = 0;
                 TickHealthCondition();
             }
+            CheckConditions();
             CheckSwapWeapon();
         }
 
         private void TickHealthCondition()
         {
-            InGameStatus.User.status.ApplyHunger(-2);
-            InGameStatus.User.status.ApplyThirst(-2);
             // 온도의 경우, 주변 환경에 따라서 오르거나 내리거나 유지되어야 할 듯
             //InGameStatus.User.status.temperatureBar.LiveInfo = +.5f;
+
+            // 허기 속도
+            if (InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedHunger))
+            {
+                InGameStatus.User.status.ApplyHunger(-3);
+            }
+            else
+            {
+                InGameStatus.User.status.ApplyHunger(-1);
+            }
+
+            // 갈증 속도
+            if (InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.SpeedThirst))
+            {
+                InGameStatus.User.status.ApplyThirst(-3);
+            } else
+            {
+                InGameStatus.User.status.ApplyThirst(-1);
+            }
+
+            // 스테미나 틱
+            if (InGameStatus.User.IsConditionExist(ConditionConstraint.Tick.Stamina))
+            {
+                InGameStatus.User.status.ApplyStamina(-ConditionConstraint.Tick.TickAmountForCondition[ConditionType.Exhaust]);
+            }
         }
 
         private void CheckSwapWeapon()
@@ -175,22 +204,42 @@ namespace Assets.Scripts.Users
             equipableBodies[targetType].ChangeEquipment(itemInfo);
         }
 
+        /// <summary>
+        /// 피격 시 효과 적용 함수
+        /// </summary>
+        /// <param name="partType"></param>
+        /// <param name="armorInfo"></param>
+        /// <param name="attackInfo"></param>
+        /// <param name="damage"></param>
+        /// <param name="hitDir"></param>
         public override void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
         {
-            switch (partType)
+            if (InGameStatus.User.IsConditionExist(ConditionConstraint.Possibility.Dizziness))
             {
-                case EquipBodyType.Helmat:
-                    break;
-                case EquipBodyType.Mask:
-                    break;
-                case EquipBodyType.Head:
-                    break;
-                case EquipBodyType.Body:
-                    break;
-                case EquipBodyType.Leg:
-                    break;
+                if (Random.Range(0f, 1f) < .15f)
+                {
+                    // 피격 시 15% 확률 어지러움
+                    OccurCondition(ConditionType.Dizziness);
+                }
             }
-            // 상태 이상 부여 심사
+            else
+            {
+                switch (partType)
+                {
+                    case EquipBodyType.Helmat:
+                    case EquipBodyType.Mask:
+                        if (Random.Range(0f, 1f) < .35f)
+                        {
+                            // 헬멧 또는 마스크 피격 시 50% 확률 어지러움
+                            OccurCondition(ConditionType.Dizziness);
+                        }
+                        break;
+                    case EquipBodyType.Body:
+                        break;
+                    case EquipBodyType.Leg:
+                        break;
+                }
+            }
 
             if (damage[1] > 0)
             {
@@ -200,6 +249,8 @@ namespace Assets.Scripts.Users
                 {
                     // 심각한 출혈 발생
                     OccurCondition(ConditionType.Bleeding_Heavy);
+                    // 통증 동시 발생
+                    OccurCondition(ConditionType.Pain);
                 }
             }
 
@@ -207,7 +258,8 @@ namespace Assets.Scripts.Users
             {
                 // 충격 데미지
                 // 얉은 출혈 심사
-                if (Random.Range(0f, 1f) <= damage[2] / 100f)
+                float w = InGameStatus.User.IsConditionExist(ConditionConstraint.Possibility.Bleeding_Light) ? .1f : 0;
+                if (Random.Range(0f, 1f) - w <= damage[2] / 100f)
                 {
                     // 얕은 출혈 발생
                     OccurCondition(ConditionType.Bleeding_Light);
@@ -217,6 +269,12 @@ namespace Assets.Scripts.Users
                 {
                     // 골절 발생
                     OccurCondition(ConditionType.Fracture);
+                    // 통증 동시 발생
+                    OccurCondition(ConditionType.Pain);
+                }
+                if (damage[2] > 25)
+                {
+                    OccurCondition(ConditionType.Dizziness);
                 }
             }
 
@@ -230,8 +288,9 @@ namespace Assets.Scripts.Users
         /// 상태 이상 발생 함수
         /// </summary>
         /// <param name="targetCondition">발생할 상태 이상</param>
-        private void OccurCondition(ConditionType targetCondition)
+        public void OccurCondition(ConditionType targetCondition, bool isSingle = false)
         {
+            if (isSingle && InGameStatus.User.conditions[targetCondition] > 0) return;
             InGameStatus.User.conditions[targetCondition]++;
             ConditionManager.Instance.AwakeCondition(targetCondition);
         }
@@ -249,6 +308,71 @@ namespace Assets.Scripts.Users
         public override float GetHeight()
         {
             return GetComponent<AbsCreatureActionController>().CurHeight;
+        }
+
+        private float timeForStamina = 0;
+        private bool isTriggerStamina = false;
+
+        /// <summary>
+        /// 지속적으로 상태이상 발생/소멸 조건 여부를 판별하는 함수
+        /// </summary>
+        private void CheckConditions()
+        {
+            // 1. 어지러움
+            if (InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.Dizziness))
+            {
+                CommonGameManager.Instance.IsDizziness = true;
+            }
+            else
+            {
+                CommonGameManager.Instance.IsDizziness = false;
+            }
+
+            // 2. 피로
+            if (InGameStatus.User.status.staminaBar.LivePercent < .25f)
+            {
+                timeForStamina += Time.deltaTime;
+                if (timeForStamina > 10)
+                {
+                    if (!isTriggerStamina)
+                    {
+                        isTriggerStamina = true;
+                        OccurCondition(ConditionType.Exhaust, true);
+                    }
+                }
+            } else
+            {
+                if (isTriggerStamina)
+                {
+                    if (InGameStatus.User.status.staminaBar.LivePercent > .99f)
+                    {
+                        CureCondition(ConditionType.Exhaust, 1);
+                    }
+                } else
+                {
+                    timeForStamina = 0;
+                }
+            }
+
+            // 3. 체온
+            if (InGameStatus.User.status.temperatureBar.LivePercent >= .65f)
+            {
+                // 체온 65% 이상 -> 더위 발생
+                OccurCondition(ConditionType.Hot, true);
+            } else if (InGameStatus.User.status.temperatureBar.LivePercent <= .6f)
+            {
+                // 60% 이하 -> 더위 제거
+                CureCondition(ConditionType.Hot, 1);
+                if (InGameStatus.User.status.temperatureBar.LivePercent >= .4f)
+                {
+                    // 40% 이상 -> 추위 제거
+                    CureCondition(ConditionType.Cold, 1);
+                } else if (InGameStatus.User.status.temperatureBar.LivePercent <= .35f)
+                {
+                    // 35% 이하 -> 추위 발생
+                    OccurCondition(ConditionType.Cold, true);
+                }
+            }
         }
     }
 }

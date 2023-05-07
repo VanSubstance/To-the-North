@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Components.Progress;
+using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using Assets.Scripts.Users.Objects;
@@ -48,6 +48,16 @@ public static class InGameStatus
                 {
                     //InGameStatus.User.isPause = true;
                 }
+                if (hungerBar.LivePercent < .25f)
+                {
+                    // 허기 25% 미만
+                    UserBaseController.Instance.OccurCondition(ConditionType.Hunger, true);
+                }
+                else if (hungerBar.LivePercent < .50f)
+                {
+                    // 허기 25% 미만
+                    UserBaseController.Instance.CureCondition(ConditionType.Hunger, 1);
+                }
             }
 
 
@@ -63,8 +73,17 @@ public static class InGameStatus
                 {
                     //InGameStatus.User.isPause = true;
                 }
+                if (thirstBar.LivePercent < .25f)
+                {
+                    // 허기 25% 미만
+                    UserBaseController.Instance.OccurCondition(ConditionType.Thirst, true);
+                }
+                else if (thirstBar.LivePercent < .50f)
+                {
+                    // 허기 25% 미만
+                    UserBaseController.Instance.CureCondition(ConditionType.Thirst, 1);
+                }
             }
-
 
             /// <summary>
             /// 체력 조절 함수:
@@ -79,14 +98,23 @@ public static class InGameStatus
                     //InGameStatus.User.isPause = true;
                 }
             }
+
+            /// <summary>
+            /// 스테미나 조절 함수:
+            /// 기본적으로 해당 수치만큼 "오른다"
+            /// </summary>
+            /// <param name="amount">"오를" 수치</param>
+            public static void ApplyStamina(float amount)
+            {
+                staminaBar.LiveInfo = amount;
+                if (staminaBar.LiveInfo <= 0)
+                {
+                    //InGameStatus.User.isPause = true;
+                }
+            }
         }
 
-        public static Dictionary<ConditionType, int> conditions = new Dictionary<ConditionType, int>() {
-                { ConditionType.Bleeding_Light, 0},
-                { ConditionType.Bleeding_Heavy, 0},
-                { ConditionType.Fracture, 0},
-                { ConditionType.Test, 0},
-            };
+        public static Dictionary<ConditionType, int> conditions;
 
         public static bool IsConditionExist(ConditionType[] targetTypes)
         {
@@ -168,14 +196,14 @@ public static class InGameStatus
         {
             foreach (ItemInventoryInfo inven in inventory)
             {
-                if (inven.itemInfo is ItemBulletInfo)
+                if (inven.itemInfo is ItemBulletInfo info)
                 {
-                    if  (
-                            ((ItemBulletInfo)inven.itemInfo).bulletType.Equals(type) &&
-                            ((ItemBulletInfo)inven.itemInfo).AmountCount > 0
+                    if (
+                            info.bulletType.Equals(type) &&
+                            info.AmountCount > 0
                         )
                     {
-                        return (ItemBulletInfo)inven.itemInfo;
+                        return info;
                     }
                 }
             }

@@ -49,6 +49,7 @@ MonoBehaviour:
   fadeImagePrefab: {fileID: 6107510681765497247, guid: 7ec5170c195608a4fb10d5c6cc248faf, type: 3}
   userPrefab: {fileID: 7249881556927368018, guid: 889eabd210638ef4998344c3b01fd6ff, type: 3}
   filterForScreenPrefab: {fileID: 5186991166891482235, guid: c4d8d72fe466002498f2f4440f34a650, type: 3}
+  filterDizzinessPrefab: {fileID: 4243895248618379730, guid: f5e05f63c8665fa4587b149af59b1e56, type: 3}
   pauseWindowPrefab: {fileID: 7281323908136239569, guid: f194450c91ac440429601d268bfc8acf, type: 3}
   inventoryWindowPrefab: {fileID: 4136628891946704698, guid: 9058e96895151a14f8ebf38b0a6426fa, type: 3}
   panelForHpSp: {fileID: 3041732497763416503, guid: f2a42ee29987fc24885b1c99d9609683, type: 3}
@@ -109,5 +110,4 @@ MonoBehaviour:
   body: {fileID: 0}
   leg: {fileID: 0}
   back: {fileID: 0}
-  right: {fileID: 0}
-  left: {fileID: 0}
+  hand: {fileID: 0}
