@@ -73,10 +73,10 @@ namespace Assets.Scripts.Battles
             this.startPos = startPos;
 
             info = ProjectileInfo.GetClone(_info);
-            subHit.size = GetComponent<BoxCollider>().size = new Vector3(0.2f, info.Height, .2f);
+            subHit.size = GetComponent<BoxCollider>().size = new Vector3(0.2f, .2f, info.Height);
             subHit.SetActive(true);
 
-            transform.localRotation = Quaternion.Euler(0f, 0f, CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)));
+            transform.localRotation = Quaternion.Euler(0f, -CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)), 0);
             transform.position = new Vector3(startPos.x, h, startPos.z);
             gameObject.SetActive(true);
             GetComponent<Rigidbody>().velocity = new Vector3(targetDir.x, 0, targetDir.z).normalized * info.Spd;

@@ -16,7 +16,7 @@ namespace Assets.Scripts.Creatures.Bases
         protected Transform visualTf, handTfIfExternal;
         private Animator animCtrl;
         [SerializeField]
-        private float height = 1;
+        private float height = 1.5f;
         [SerializeField]
         private CreatureInfo info;
 
@@ -54,6 +54,7 @@ namespace Assets.Scripts.Creatures.Bases
                 }
                 else
                 {
+                    animCtrl.SetBool("isMove", false);
                     SetTargetToGaze(value - transform.position, 0, false);
                 }
             }
@@ -80,10 +81,11 @@ namespace Assets.Scripts.Creatures.Bases
         {
             if (isMoveOrderDone) return;
             if (!IsMoveDone) return;
+            // 이동 자체는 종료
+            animCtrl.SetBool("isMove", false);
             if (timeStayAfterMove <= 0)
             {
                 // 끝남
-                animCtrl.SetBool("isMove", false);
                 isMoveOrderDone = true;
                 return;
             }

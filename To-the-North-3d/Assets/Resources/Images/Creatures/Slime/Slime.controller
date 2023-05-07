@@ -23,7 +23,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: ed9b9c26aabeaf44e90f1b629b3fddfd, type: 2}
+  m_Motion: {fileID: 7400000, guid: 4987656cffeaa1248a4daadb57d58247, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -127,7 +127,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c6477a9bf5a539645807bdffa186e8de, type: 2}
+  m_Motion: {fileID: 7400000, guid: 9d66c6e8a825ba844944962839e4bd42, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -181,7 +181,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f5475415fa3e9344f8964fd3b9331d0e, type: 2}
+  m_Motion: {fileID: 7400000, guid: 9e0be7dfdd7591c4b90cced48335cbb2, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -218,7 +218,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FourLeg
+  m_Name: Slime
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Hit
@@ -331,7 +331,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 711fbc74ffef8664791bcb835d2e3d75, type: 2}
+  m_Motion: {fileID: 7400000, guid: 8223d4b584aa8c74fbd0c6afe6284777, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
