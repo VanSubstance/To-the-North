@@ -82,7 +82,7 @@ namespace Assets.Scripts.Users
                 tickHealthCondition = 0;
                 TickHealthCondition();
             }
-            CheckDizziness();
+            CheckConditions();
             CheckSwapWeapon();
         }
 
@@ -92,6 +92,12 @@ namespace Assets.Scripts.Users
             InGameStatus.User.status.ApplyThirst(-2);
             // 온도의 경우, 주변 환경에 따라서 오르거나 내리거나 유지되어야 할 듯
             //InGameStatus.User.status.temperatureBar.LiveInfo = +.5f;
+
+            if (InGameStatus.User.IsConditionExist(ConditionConstraint.Tick.Stamina))
+            {
+                // 스테미나 틱이 있을 경우
+                InGameStatus.User.status.ApplyStamina(-ConditionConstraint.Tick.TickAmountForCondition[ConditionType.Exhaust]);
+            }
         }
 
         private void CheckSwapWeapon()
@@ -268,8 +274,15 @@ namespace Assets.Scripts.Users
             return GetComponent<AbsCreatureActionController>().CurHeight;
         }
 
-        private void CheckDizziness()
+        private float timeForStamina = 0;
+        private bool isTriggerStamina = false;
+
+        /// <summary>
+        /// 지속적으로 상태이상 발생/소멸 조건 여부를 판별하는 함수
+        /// </summary>
+        private void CheckConditions()
         {
+            // 1. 어지러움
             if (InGameStatus.User.IsConditionExist(ConditionConstraint.PerformanceLack.Dizziness))
             {
                 CommonGameManager.Instance.IsDizziness = true;
@@ -277,6 +290,32 @@ namespace Assets.Scripts.Users
             else
             {
                 CommonGameManager.Instance.IsDizziness = false;
+            }
+
+            // 2. 피로
+            if (InGameStatus.User.status.staminaBar.LivePercent < .25f)
+            {
+                timeForStamina += Time.deltaTime;
+                if (timeForStamina > 10)
+                {
+                    if (!isTriggerStamina)
+                    {
+                        isTriggerStamina = true;
+                        OccurCondition(ConditionType.Exhaust, true);
+                    }
+                }
+            } else
+            {
+                if (isTriggerStamina)
+                {
+                    if (InGameStatus.User.status.staminaBar.LivePercent > .99f)
+                    {
+                        CureCondition(ConditionType.Exhaust, 1);
+                    }
+                } else
+                {
+                    timeForStamina = 0;
+                }
             }
         }
     }

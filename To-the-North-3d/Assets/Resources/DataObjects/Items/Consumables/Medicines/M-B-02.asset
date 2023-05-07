@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1b85c4d4e0b85348b77439c0a24bbc7, type: 3}
-  m_Name: BoongDae
+  m_Name: M-B-02
   m_EditorClassIdentifier: 
   itemType: 0
   size: {x: 1, y: 1}
   imagePath: 
-  title: "\uD5E4\uC9C4 \uCC9C"
+  title: "\uAE09\uC870\uD55C \uBD80\uBAA9"
   description: 
   price: 0
   consumableType: 2
-  amountCurrent: 60
-  secondConsume: 2
-  hp: 4
+  amountCurrent: 3
+  secondConsume: 5
+  hp: 0
   effects:
-  - targetCondition: 2
-    countToRemove: 2
+  - targetCondition: 3
+    countToRemove: 1

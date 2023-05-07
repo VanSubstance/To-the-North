@@ -20,6 +20,10 @@ namespace Assets.Scripts.Users
             /// </summary>
             public static readonly ConditionType[] Damage = { ConditionType.Bleeding_Light, ConditionType.Bleeding_Heavy, ConditionType.Infection };
             /// <summary>
+            /// 스테미나 데미지
+            /// </summary>
+            public static readonly ConditionType[] Stamina = { ConditionType.Exhaust };
+            /// <summary>
             /// 화면 진동
             /// </summary>
             public static readonly ConditionType[] Vibrating = { ConditionType.Bleeding_Light, ConditionType.Fracture, ConditionType.Hunger };
@@ -35,6 +39,7 @@ namespace Assets.Scripts.Users
                 {ConditionType.Bleeding_Light, 2},
                 {ConditionType.Infection, 2},
                 {ConditionType.Bleeding_Heavy, 6},
+                {ConditionType.Exhaust, 2},
             };
         }
 

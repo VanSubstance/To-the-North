@@ -21,5 +21,7 @@ namespace Assets.Scripts.Users
         Hunger,
         // 갈즐
         Thirst,
+        // 피로
+        Exhaust,
     }
 }

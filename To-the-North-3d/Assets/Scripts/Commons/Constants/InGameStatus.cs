@@ -85,7 +85,6 @@ public static class InGameStatus
                 }
             }
 
-
             /// <summary>
             /// 체력 조절 함수:
             /// 기본적으로 해당 수치만큼 "오른다"
@@ -95,6 +94,20 @@ public static class InGameStatus
             {
                 temperatureBar.LiveInfo = amount;
                 if (temperatureBar.LiveInfo <= 0)
+                {
+                    //InGameStatus.User.isPause = true;
+                }
+            }
+
+            /// <summary>
+            /// 스테미나 조절 함수:
+            /// 기본적으로 해당 수치만큼 "오른다"
+            /// </summary>
+            /// <param name="amount">"오를" 수치</param>
+            public static void ApplyStamina(float amount)
+            {
+                staminaBar.LiveInfo = amount;
+                if (staminaBar.LiveInfo <= 0)
                 {
                     //InGameStatus.User.isPause = true;
                 }
