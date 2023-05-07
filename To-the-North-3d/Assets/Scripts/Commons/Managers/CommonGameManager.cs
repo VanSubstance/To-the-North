@@ -13,7 +13,8 @@ using static GlobalComponent.Common;
 public class CommonGameManager : MonoBehaviour
 {
     [SerializeField]
-    private Transform fadeImagePrefab, userPrefab, filterForScreenPrefab,
+    private Transform fadeImagePrefab, userPrefab,
+        filterForScreenPrefab, filterDizzinessPrefab,
         pauseWindowPrefab, inventoryWindowPrefab,
         panelForHpSp, panelForCondition, panelForWelfare, panelForQuick,
         projectileManager, trajectoryManager, soundEffectManager,
@@ -27,6 +28,7 @@ public class CommonGameManager : MonoBehaviour
     private ScreenHitEffectManager _screenHitManager;
     private CameraHitEffectController _cameraHitController;
     private ScreenHitFilterController _screenHitFilterController;
+    private Transform _screenDizzinessTf;
 
     private static CommonGameManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
@@ -156,8 +158,14 @@ public class CommonGameManager : MonoBehaviour
             // 화면 필터 이미지 추가
             Transform imageForSmog = Instantiate(filterForScreenPrefab, uiTf);
             _screenHitFilterController = imageForSmog.GetComponent<ScreenHitFilterController>();
-            imageForFade.localPosition = Vector3.zero;
+            imageForSmog.localPosition = Vector3.zero;
             imageForSmog.SetAsLastSibling();
+
+            // 화면 울렁거림 이미지 추가
+            Transform imageForDizziness = Instantiate(filterDizzinessPrefab, uiTf);
+            _screenDizzinessTf = imageForDizziness;
+            imageForDizziness.localPosition = Vector3.zero;
+            _screenDizzinessTf.gameObject.SetActive(false);
 
             // 유저 위치
             Transform userGo = Instantiate(userPrefab);
@@ -394,5 +402,14 @@ public class CommonGameManager : MonoBehaviour
         }
         UserBaseController.Instance.StopSound();
         InGameStatus.User.isInAction = false;
+    }
+
+    /// <summary>
+    /// 화면 울렁거림 효과 켜기/끄기 함수
+    /// </summary>
+    /// <param name="isActive"></param>
+    public void ActivateDizziness(bool isActive)
+    {
+        _screenDizzinessTf.gameObject.SetActive(isActive);
     }
 }
