@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 94518199656796054}
   m_Layer: 0
-  m_Name: WoodPolTopLeft
+  m_Name: WoodWallRowTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,7 +105,7 @@ SpriteRenderer:
   m_SortingLayerID: 873360415
   m_SortingLayer: 5
   m_SortingOrder: 3
-  m_Sprite: {fileID: -5500200896511761752, guid: f288120b1b626844bae6fc7ba3a8bae8, type: 3}
+  m_Sprite: {fileID: -8922806545422484088, guid: f288120b1b626844bae6fc7ba3a8bae8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.47058824}
   m_FlipX: 0
   m_FlipY: 0
@@ -145,7 +145,7 @@ Transform:
   m_GameObject: {fileID: 1104141542811113687}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.1875, z: -0.5}
-  m_LocalScale: {x: 0.375, y: 3, z: 0.3750001}
+  m_LocalScale: {x: 1, y: 3, z: 0.3750001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3077452037999824869}
@@ -288,7 +288,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3633104081844685715}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3125, y: 0.125, z: 0}
+  m_LocalPosition: {x: 0, y: 0.125, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -370,7 +370,7 @@ SpriteRenderer:
   m_SortingLayerID: 873360415
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -5500200896511761752, guid: f288120b1b626844bae6fc7ba3a8bae8, type: 3}
+  m_Sprite: {fileID: -8922806545422484088, guid: f288120b1b626844bae6fc7ba3a8bae8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
