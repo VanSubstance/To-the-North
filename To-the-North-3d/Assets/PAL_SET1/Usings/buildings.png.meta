@@ -7021,11 +7021,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 389
-        y: 608
+        y: 592
         width: 6
         height: 16
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: -4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -7147,8 +7147,8 @@ TextureImporter:
       buildings_148: 3977189861649979108
       buildings_159: -7547149121642657469
       buildings_226: -1453872351044575723
-      buildings_335: -2304374825858206656
       buildings_228: 4690272191755960023
+      buildings_335: -2304374825858206656
       buildings_77: -8676433478304906619
       buildings_338: 8359162732974291115
       buildings_68: 2899797295845442345
