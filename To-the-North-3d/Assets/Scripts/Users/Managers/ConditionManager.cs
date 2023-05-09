@@ -51,6 +51,11 @@ namespace Assets.Scripts.Users
                 }
             }
 
+            foreach (ConditionType type in System.Enum.GetValues(typeof(ConditionType)))
+            {
+                if (type == ConditionType.None) continue;
+                timers[type] = null;
+            }
             StartCoroutine(CoroutineTimerCondition());
         }
 

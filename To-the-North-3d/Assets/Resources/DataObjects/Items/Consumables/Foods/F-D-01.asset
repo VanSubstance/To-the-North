@@ -20,7 +20,7 @@ MonoBehaviour:
   price: 60
   consumableType: 1
   amountCurrent: 3
-  secondConsume: 3
+  secondConsume: 1
   hunger: 5
   thirst: 20
   temperature: -1

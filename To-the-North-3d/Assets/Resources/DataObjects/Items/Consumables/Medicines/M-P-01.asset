@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1b85c4d4e0b85348b77439c0a24bbc7, type: 3}
-  m_Name: M-F-01
+  m_Name: M-P-01
   m_EditorClassIdentifier: 
   itemType: 0
-  size: {x: 2, y: 1}
-  imagePath: M-F-01
-  title: "\uAE09\uC870\uD55C \uBD80\uBAA9"
+  size: {x: 1, y: 1}
+  imagePath: M-P-01
+  title: "\uD56D\uC0DD\uC81C"
   description: 
-  price: 15
+  price: 100
   consumableType: 2
-  amountCurrent: 1
-  secondConsume: 4
-  hp: 0
+  amountCurrent: 3
+  secondConsume: 1
+  hp: 2
   effects:
-  - targetCondition: 3
+  - targetCondition: 6
     countToRemove: 1
