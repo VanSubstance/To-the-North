@@ -13,8 +13,10 @@ namespace Assets.Scripts.Creatures.Bases
     {
 
         [SerializeField]
-        protected Transform visualTf;
+        protected Transform visualTf, handTfIfExternal;
         private Animator animCtrl;
+        [SerializeField]
+        private float height = 1.5f;
         [SerializeField]
         private CreatureInfo info;
 
@@ -26,7 +28,7 @@ namespace Assets.Scripts.Creatures.Bases
                 if (info == null) return;
                 sightCtrl.range = Info.sightRange;
                 agent.speed = info.moveSpd;
-                agent.stoppingDistance = WeaponRange - 0.5f;
+                agent.stoppingDistance = WeaponRange;
             }
             get
             {
@@ -49,8 +51,10 @@ namespace Assets.Scripts.Creatures.Bases
                     animCtrl.SetBool("isMove", true);
                     agent.SetDestination(value);
                     agent.stoppingDistance = r;
-                } else
+                }
+                else
                 {
+                    animCtrl.SetBool("isMove", false);
                     SetTargetToGaze(value - transform.position, 0, false);
                 }
             }
@@ -77,10 +81,11 @@ namespace Assets.Scripts.Creatures.Bases
         {
             if (isMoveOrderDone) return;
             if (!IsMoveDone) return;
+            // 이동 자체는 종료
+            animCtrl.SetBool("isMove", false);
             if (timeStayAfterMove <= 0)
             {
                 // 끝남
-                animCtrl.SetBool("isMove", false);
                 isMoveOrderDone = true;
                 return;
             }
@@ -101,8 +106,11 @@ namespace Assets.Scripts.Creatures.Bases
             TargetMove = CalculationFunctions.GetDetouredPositionIfInCollider(transform.position, target);
             isMoveOrderDone = false;
             timeStayAfterMove = timeToStay;
-            // 진행방향 응시
-            SetTargetToGaze(TargetMove - transform.position, 0, false);
+            if ((TargetMove - transform.position).magnitude != 0)
+            {
+                // 진행방향 응시
+                SetTargetToGaze(TargetMove - transform.position, 0, false);
+            }
         }
 
         [SerializeField]
@@ -378,16 +386,22 @@ namespace Assets.Scripts.Creatures.Bases
             SpriteRenderer s;
             for (int i = 0; i < visualTf.childCount; i++)
             {
-                try
+                if ((s = visualTf.GetChild(i).GetComponent<SpriteRenderer>()) != null)
                 {
-                    c = (s = visualTf.GetChild(i).GetComponent<SpriteRenderer>()).color;
+                    c = s.color;
                     s.color = new Color(c.r, c.g, c.b, _opacity);
                 }
-                catch (MissingComponentException)
-                {
-
-                }
             }
+            if (handTfIfExternal)
+            {
+                c = (s = handTfIfExternal.GetComponent<SpriteRenderer>()).color;
+                s.color = new Color(c.r, c.g, c.b, _opacity);
+            }
+        }
+
+        public override float GetHeight()
+        {
+            return height;
         }
 
         public abstract void DetectFull();

@@ -60,6 +60,11 @@ namespace Assets.Scripts.Items
         public void Use(int quantity)
         {
             AmountCount -= quantity;
+            if (AmountCount == 0)
+            {
+                // 아이템 파기
+                Ctrl.ItemTruncate();
+            }
         }
     }
 }

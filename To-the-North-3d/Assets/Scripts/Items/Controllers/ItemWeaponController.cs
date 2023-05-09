@@ -67,12 +67,18 @@ namespace Assets.Scripts.Items
                 isReloading = false;
                 if (info)
                 {
-                    sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
+                    if (sprite)
+                    {
+                        sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
+                    }
                     delayAmongFire = info.delayAmongFire;
 
                     if (info.handType.Equals(EquipHandType.Clone))
                     {
-                        handL.sprite = sprite.sprite;
+                        if (handL)
+                        {
+                            handL.sprite = sprite.sprite;
+                        }
                     }
                 }
             }
@@ -129,7 +135,7 @@ namespace Assets.Scripts.Items
                 }
                 else
                 {
-                    ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, transform.position,
+                    ProjectileManager.Instance.GetNewProjectile().Fire(projInfo, new Vector3(transform.position.x, owner.GetComponent<ICreatureBattle>().GetHeight(), transform.position.z),
                         CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)) + UnityEngine.Random.Range(-InGameStatus.User.Detection.Sight.DegreeError,
                         InGameStatus.User.Detection.Sight.DegreeError)),
                         owner,

@@ -85,6 +85,7 @@ namespace Assets.Scripts.Battles
             }
             if (prj != null)
             {
+
                 if (prj.isAffected) return;
                 if (prj.Owner.Equals(hitController.Owner)) return;
                 hitController.OnHit(info, prj.Info.AttackInfo, (prj.startPos - transform.position));
@@ -92,6 +93,12 @@ namespace Assets.Scripts.Battles
             }
         }
 
+        /// <summary>
+        /// 피격받은 부위 랜덤 함수;
+        /// 피격 판정은 핼멧, 마스크, 가방, 몸통 중 하나 랜덤하여 진행한다:
+        /// 헬멧: 25%, 마스크: 5%, 가방: 10%, 몸통: 60%
+        /// </summary>
+        /// <returns></returns>
         public static EquipBodyType DecideHitPart()
         {
             /** 피격 판정은 핼멧, 마스크, 가방, 몸통 중 하나 랜덤하여 진행한다

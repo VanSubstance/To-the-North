@@ -22,6 +22,7 @@ namespace Assets.Scripts.Creatures.Bases
                 Vector3 p = baseCtrl.transform.position;
                 p.x += Random.Range(-6f, 6f);
                 p.z += Random.Range(-6f, 6f);
+                if (p == new Vector3(0, 0, 0)) return;
                 baseCtrl.SetTargetToMove(p, 3f, false);
             }
         }

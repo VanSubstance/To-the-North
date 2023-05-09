@@ -15,6 +15,7 @@ namespace Assets.Scripts.Items
         }
         public EquipBodyType equipPartType;
         [SerializeField]
+        [Range(0, 3)]
         private int classPenetration, classImpact, classHeat;
         public int ClassPenetration
         {

@@ -28,6 +28,9 @@ namespace Assets.Scripts.Users
             }
         }
 
+        [SerializeField]
+        private Animator anim;
+
         private new void Awake()
         {
             base.Awake();
@@ -205,6 +208,14 @@ namespace Assets.Scripts.Users
             else
             {
                 rigid.velocity = Vector2.zero;
+            }
+            if (vecHor == Vector3.zero && vecVer == Vector3.zero)
+            {
+                anim.SetBool("isMove", false);
+            }
+            else
+            {
+                anim.SetBool("isMove", true);
             }
             CameraTrackControlller.headHorPos = vecHor * spdW;
             CameraTrackControlller.headVerPos = vecVer * spdW;

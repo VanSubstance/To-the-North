@@ -21,6 +21,7 @@ namespace Assets.Scripts.Items
         }
 
         [SerializeField]
+        [Range(0, 1)]
         private float durability = 1;
         public float Durability
         {
