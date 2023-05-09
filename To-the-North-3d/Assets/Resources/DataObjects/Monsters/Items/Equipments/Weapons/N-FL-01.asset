@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4036e84fcb0facb4eb551b709478e67b, type: 3}
+  m_Name: N-FL-01
+  m_EditorClassIdentifier: 
+  itemType: 1
+  size: {x: 1, y: 1}
+  imagePath: N-FL-01
+  title: "\uD070\uD070\uD55C \uC55E\uBC1C"
+  description: "\uC55E\uBC1C\uC774\uB2E4. \uD2BC\uD2BC\uD55C"
+  price: 0
+  equipmentType: 1
+  durability: 100
+  handType: 2
+  bulletType: 0
+  range: 3
+  spd: 30
+  damagePenetration: 1
+  damageImpact: 10
+  delayAmongFire: 1
+  timeReload: 0
+  headHeight: 1
+  powerKnockback: 1
+  powerPenetration: 0
+  powerImpact: 0
+  levelLoudness: 0
+  trajectoryType: 1
+  magazine: {fileID: 0}

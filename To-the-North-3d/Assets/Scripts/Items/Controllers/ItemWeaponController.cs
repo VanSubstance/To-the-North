@@ -67,12 +67,18 @@ namespace Assets.Scripts.Items
                 isReloading = false;
                 if (info)
                 {
-                    sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
+                    if (sprite)
+                    {
+                        sprite.sprite = Resources.Load<Sprite>(GlobalComponent.Path.GetImagePath(info));
+                    }
                     delayAmongFire = info.delayAmongFire;
 
                     if (info.handType.Equals(EquipHandType.Clone))
                     {
-                        handL.sprite = sprite.sprite;
+                        if (handL)
+                        {
+                            handL.sprite = sprite.sprite;
+                        }
                     }
                 }
             }

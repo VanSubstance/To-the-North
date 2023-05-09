@@ -72,6 +72,7 @@ namespace Assets.Scripts.Users
         private void Start()
         {
             //OccurCondition(ConditionType.Infection);
+            //OccurCondition(ConditionType.Dizziness, true);
         }
 
         private void Update()

@@ -103,11 +103,6 @@ namespace Assets.Scripts.Battles
             gameObject.SetActive(false);
         }
 
-        public float GetCurDegree()
-        {
-            return curDegree;
-        }
-
         public void PlayCurve(Vector3 _centerPos, float zeroDegree, float maxDergree, float _radius)
         {
             trail.startWidth = _radius / 2;

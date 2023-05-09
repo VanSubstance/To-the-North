@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92faecc5e581e1a46842510b79e617a0, type: 3}
-  m_Name: Drumb
+  m_Name: B-C-01
   m_EditorClassIdentifier: 
   itemType: 1
-  size: {x: 3, y: 4}
-  imagePath: DrumTong
-  title: "\uB4DC\uB7FC\uD1B5"
-  description: "\uD654\uC0B4\uB530\uC704\uB85C\uB294 \uB6AB\uC744 \uC218 \uC5C6\uC5B4!"
-  price: 170
+  size: {x: 2, y: 2}
+  imagePath: B-C-01
+  title: "\uAE30\uBAA8 \uB9E8\uD22C\uB9E8"
+  description: 
+  price: 60
   equipmentType: 0
-  equipPartType: 3
-  classPenetration: 0
-  classImpact: 0
+  durability: 1
+  equipPartType: 2
+  classPenetration: 1
+  classImpact: 1
+  classHeat: 2
