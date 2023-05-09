@@ -56,6 +56,12 @@ public static class GlobalComponent
                 /// <param name="name">음식 이름</param>
                 /// <returns></returns>
                 public static string Food(string name) => $"{Root}Foods/{name}";
+                /// <summary>
+                /// 의약품 이미지 경로
+                /// </summary>
+                /// <param name="name">탄환 이름</param>
+                /// <returns></returns>
+                public static string Medicine(string name) => $"{Root}Medicines/{name}";
             }
             public static class Equipment
             {
@@ -104,20 +110,21 @@ public static class GlobalComponent
         /// <returns></returns>
         public static string GetImagePath(ItemBaseInfo info)
         {
-            string comp = info.GetType().Name;
-            switch (comp)
+            switch (info)
             {
-                case "ItemWeaponInfo":
+                case ItemWeaponInfo _:
                     return $"{Image.Root}{Item.Equipment.Weapon(info.imagePath)}";
-                case "ItemArmorInfo":
+                case ItemArmorInfo _:
                     return $"{Image.Root}{Item.Equipment.Armor(info.imagePath)}";
-                case "ItemMagazineInfo":
+                case ItemMagazineInfo _:
                     return $"{Image.Root}{Item.Equipment.Magazine(info.imagePath)}";
-                case "ItemFoodInfo":
+                case ItemFoodInfo _:
                     return $"{Image.Root}{Item.Consumbable.Food(info.imagePath)}";
-                case "ItemBulletInfo":
+                case ItemBulletInfo _:
                     return $"{Image.Root}{Item.Consumbable.Bullet(info.imagePath)}";
-                case "ItemMaterialInfo":
+                case ItemMedicineInfo _:
+                    return $"{Image.Root}{Item.Consumbable.Medicine(info.imagePath)}";
+                case ItemMaterialInfo _:
                     return $"{Image.Root}{Item.Material(info.imagePath)}";
                 default:
                     break;
