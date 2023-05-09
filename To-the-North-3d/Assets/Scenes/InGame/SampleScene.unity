@@ -932,7 +932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.size
-      value: 18
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[4]
@@ -990,6 +990,14 @@ PrefabInstance:
       propertyPath: itemsAutoAlign.Array.data[17]
       value: 
       objectReference: {fileID: 11400000, guid: d6fed37845975834a984fd32ce5f54fb, type: 2}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: itemsAutoAlign.Array.data[18]
+      value: 
+      objectReference: {fileID: 11400000, guid: da750c1c655768542acc2de1a5d82428, type: 2}
+    - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: itemsAutoAlign.Array.data[19]
+      value: 
+      objectReference: {fileID: 11400000, guid: a2d2fd79d03ad9845aabeb69a1b91dda, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
 --- !u!1001 &728919769

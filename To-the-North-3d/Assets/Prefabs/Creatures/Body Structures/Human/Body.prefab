@@ -133,7 +133,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 873360415
   m_SortingLayer: 5
-  m_SortingOrder: 7
+  m_SortingOrder: 15
   m_Sprite: {fileID: 21300000, guid: 052c5738c06a0f048b22bba0b1d70949, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -323,7 +323,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 873360415
   m_SortingLayer: 5
-  m_SortingOrder: 3
+  m_SortingOrder: 12
   m_Sprite: {fileID: 451301044, guid: c87f54f9f5d051f4993b3cd9e7ceb235, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -408,7 +408,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 873360415
   m_SortingLayer: 5
-  m_SortingOrder: 9
+  m_SortingOrder: 17
   m_Sprite: {fileID: 3759490635419564363, guid: 2549e899675715a4293834bff275ab5c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -493,7 +493,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 873360415
   m_SortingLayer: 5
-  m_SortingOrder: 5
+  m_SortingOrder: 10
   m_Sprite: {fileID: 3367572487536964064, guid: 2549e899675715a4293834bff275ab5c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -578,7 +578,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 873360415
   m_SortingLayer: 5
-  m_SortingOrder: 6
+  m_SortingOrder: 14
   m_Sprite: {fileID: 818947362, guid: c87f54f9f5d051f4993b3cd9e7ceb235, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -694,7 +694,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 873360415
   m_SortingLayer: 5
-  m_SortingOrder: 4
+  m_SortingOrder: 13
   m_Sprite: {fileID: 1688506922, guid: c87f54f9f5d051f4993b3cd9e7ceb235, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -779,7 +779,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 873360415
   m_SortingLayer: 5
-  m_SortingOrder: 8
+  m_SortingOrder: 16
   m_Sprite: {fileID: 4281770043011150534, guid: 2549e899675715a4293834bff275ab5c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -863,7 +863,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 873360415
   m_SortingLayer: 5
-  m_SortingOrder: 2
+  m_SortingOrder: 11
   m_Sprite: {fileID: 748816322, guid: c87f54f9f5d051f4993b3cd9e7ceb235, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1113,6 +1113,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5699942219112805217}
     m_Modifications:
+    - target: {fileID: 375180975099246152, guid: 3903c135f713cbd488c38f943320b3ca, type: 3}
+      propertyPath: legB
+      value: 
+      objectReference: {fileID: 6857335666608154845}
+    - target: {fileID: 375180975099246152, guid: 3903c135f713cbd488c38f943320b3ca, type: 3}
+      propertyPath: legF
+      value: 
+      objectReference: {fileID: 6962947854582613162}
+    - target: {fileID: 375180975099246152, guid: 3903c135f713cbd488c38f943320b3ca, type: 3}
+      propertyPath: pelvis
+      value: 
+      objectReference: {fileID: 2857853149590796184}
     - target: {fileID: 375180975099246152, guid: 3903c135f713cbd488c38f943320b3ca, type: 3}
       propertyPath: sprite
       value: 

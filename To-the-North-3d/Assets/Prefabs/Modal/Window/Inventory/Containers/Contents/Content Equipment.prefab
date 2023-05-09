@@ -493,7 +493,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4576846834480474199, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: equipType
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507825274969, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -622,7 +622,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4576846834480474199, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: equipType
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507825274969, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -759,7 +759,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4576846834480474199, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: equipType
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8358660507825274969, guid: 448e7c3ee04b78a44a2f5a057e30b1b5, type: 3}
       propertyPath: m_AnchoredPosition.y

@@ -24,13 +24,29 @@ namespace Assets.Scripts.Items
                 }
                 else
                 {
-                    sprite.sprite = GlobalComponent.Asset.GetImage(info);
+                    if (info.equipPartType.Equals(EquipBodyType.Body))
+                    {
+                        // 몸통일 경우 4개를 불러와야 함
+                        // 0: 몸통, 1: 골반, 2: 앞다리, 3: 뒷다리
+                        Sprite[] t = GlobalComponent.Asset.GetImageForBody(info);
+                        sprite.sprite = t[0];
+                        pelvis.sprite = t[1];
+                        legF.sprite = t[2];
+                        legB.sprite = t[3];
+
+                    } else
+                    {
+                        sprite.sprite = GlobalComponent.Asset.GetImage(info);
+                    }
                 }
             }
         }
         [SerializeField]
         private SpriteRenderer sprite;
         private Sprite def;
+
+        [SerializeField]
+        private SpriteRenderer pelvis, legF, legB;
 
         private void Awake()
         {

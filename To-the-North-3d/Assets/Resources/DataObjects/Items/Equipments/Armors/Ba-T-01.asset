@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92faecc5e581e1a46842510b79e617a0, type: 3}
-  m_Name: H-C-01
+  m_Name: Ba-T-01
   m_EditorClassIdentifier: 
   itemType: 1
-  size: {x: 1, y: 1}
-  imagePath: H-C-01
-  title: "\uC57C\uAD6C\uBAA8\uC790"
-  description: 
-  price: 30
+  size: {x: 2, y: 3}
+  imagePath: Ba-T-01
+  title: "\uB4DC\uB7FC\uD1B5"
+  description: "\uD654\uC0B4\uB530\uC704\uB85C\uB294 \uB6AB\uC744 \uC218 \uC5C6\uC5B4!"
+  price: 170
   equipmentType: 0
-  durability: 1
-  equipPartType: 0
-  classPenetration: 0
-  classImpact: 1
-  classHeat: 1
+  durability: 0.725
+  equipPartType: 3
+  classPenetration: 2
+  classImpact: 0
+  classHeat: -1

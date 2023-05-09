@@ -140,5 +140,10 @@ public static class GlobalComponent
         {
             return Resources.Load<Sprite>(Path.GetImagePath(info));
         }
+
+        public static Sprite[] GetImageForBody(ItemBaseInfo info)
+        {
+            return Resources.LoadAll<Sprite>(Path.GetImagePath(info));
+        }
     }
 }
