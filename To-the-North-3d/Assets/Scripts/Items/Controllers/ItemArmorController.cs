@@ -7,6 +7,8 @@ namespace Assets.Scripts.Items
     {
         [SerializeField]
         private ItemArmorInfo info;
+        [SerializeField]
+        private bool isVisibleWithoutInfo = true;
         public ItemArmorInfo Info
         {
             get
@@ -32,7 +34,8 @@ namespace Assets.Scripts.Items
 
         private void Awake()
         {
-            def = sprite.sprite;
+            def = isVisibleWithoutInfo ? sprite.sprite : null;
+            sprite.sprite = def;
             if (info)
             {
                 Info = Instantiate(info);
