@@ -235,6 +235,7 @@ namespace Assets.Scripts.Items
         /// </summary>
         public void ItemTruncate()
         {
+            ItemDetach();
             info.Ctrl = null;
             image.sprite = null;
             amountUGUI.text = string.Empty;
