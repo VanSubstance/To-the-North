@@ -69,7 +69,6 @@ namespace Assets.Scripts.Events.Abstracts
 
         public void DetectNone()
         {
-            Debug.Log("안보임!");
             SpriteOpacity = 0;
             if (!particle.isPlaying)
                 particle.Play();
