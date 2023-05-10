@@ -1,44 +1,36 @@
 using System.Collections;
+using Assets.Scripts.Creatures;
 using UnityEngine;
 
 namespace Assets.Scripts.Events.Abstracts
 {
-    internal abstract class AbsEventBaseController : MonoBehaviour, IEventInteraction
+    public abstract class AbsEventBaseController : MonoBehaviour, IEventInteraction, IInteractionWithSight
     {
+        [SerializeField]
+        private SpriteRenderer spr;
+
+        private float SpriteOpacity
+        {
+            set
+            {
+                spr.color = new Color(1, 1, 1, value);
+            }
+        }
+
+        [SerializeField]
+        private ParticleSystem particle;
+
         public bool isOnTracking = false;
         private bool isInteracted = false;
 
-        private ParticleSystem particle;
-        private float timeParticle = 0;
-
         protected void Awake()
         {
-            particle = GetComponent<ParticleSystem>();
-            particle.Stop();
-        }
-
-        protected void Update()
-        {
-            CheckParticle();
-        }
-
-        private void CheckParticle()
-        {
-            if (timeParticle > 0)
-            {
-                timeParticle -= Time.deltaTime;
-                return;
-            }
+            if (particle.isPlaying)
+                particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
 
         public void StartTrackingInteraction(Transform targetTf)
         {
-            if (timeParticle <= 0)
-            {
-                particle.Play();
-            }
-            timeParticle = .5f;
-
             if (isOnTracking) return;
             isOnTracking = true;
             StartCoroutine(StartCoroutineInteraction(targetTf));
@@ -60,5 +52,31 @@ namespace Assets.Scripts.Events.Abstracts
         }
 
         public abstract void OnInteraction();
+
+        public void DetectFull()
+        {
+            SpriteOpacity = 1;
+            if (particle.isPlaying)
+                particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+
+        public void DetectHalf()
+        {
+            SpriteOpacity = .5f;
+            if (particle.isPlaying)
+                particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+
+        public void DetectNone()
+        {
+            Debug.Log("안보임!");
+            SpriteOpacity = 0;
+            if (!particle.isPlaying)
+                particle.Play();
+        }
+
+        public void DetectSound(Vector3 _pos)
+        {
+        }
     }
 }

@@ -373,8 +373,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detections:
-  - {fileID: 7249881555880525503}
   - {fileID: 7249881556233970603}
+  - {fileID: 7249881555880525503}
   aIBaseController: {fileID: 0}
   targetTf: {fileID: 0}
 --- !u!54 &1399138213108615271
@@ -846,7 +846,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5571990904423007055, guid: d184daadca6a6cb4a9947ea313110819, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5571990904423007055, guid: d184daadca6a6cb4a9947ea313110819, type: 3}
       propertyPath: m_LocalRotation.w

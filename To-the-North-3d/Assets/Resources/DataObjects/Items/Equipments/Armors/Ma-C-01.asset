@@ -20,7 +20,7 @@ MonoBehaviour:
   price: 15
   equipmentType: 0
   durability: 0.361
-  equipPartType: 0
+  equipPartType: 1
   classPenetration: 0
   classImpact: 0
   classHeat: 1
