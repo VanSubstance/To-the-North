@@ -1606,6 +1606,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Portal Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 1538344158340248536, guid: 7b9e76dbaba984f46ae347adbb8f5bb5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7956465801583224184, guid: 7b9e76dbaba984f46ae347adbb8f5bb5, type: 3}
       propertyPath: m_Mesh
       value: 

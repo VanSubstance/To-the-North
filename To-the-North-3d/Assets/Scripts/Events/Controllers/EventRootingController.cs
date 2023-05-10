@@ -1,15 +1,19 @@
 using Assets.Scripts.Events.Abstracts;
+using Assets.Scripts.Items;
 using UnityEngine;
 
 namespace Assets.Scripts.Events.Controllers
 {
-    class EventRootingController : AbsEventBaseController
+    public class EventRootingController : AbsEventBaseController
     {
-        /// <summary>
-        /// 아이템 어레이?
-        /// 자료형이 뭐가 될지 나는 모름 @kang123077
-        /// </summary>
-        private object[] items;
+        [SerializeField]
+        private bool isItemFixed;
+        [SerializeField]
+        private ItemBaseInfo[] itemsFixed;
+        [SerializeField]
+        private int amountIfRandom;
+        [SerializeField]
+        private ItemInfoWithWeight[] itemsRandom;
 
         /// <summary>
         /// SpaceBar 눌렀을 때 작동하는 함수
@@ -17,6 +21,13 @@ namespace Assets.Scripts.Events.Controllers
         public override void OnInteraction()
         {
             Debug.Log("루팅 이벤트 발생!");
+        }
+
+        [System.Serializable]
+        private class ItemInfoWithWeight
+        {
+            public ItemBaseInfo info;
+            public int weight;
         }
     }
 }

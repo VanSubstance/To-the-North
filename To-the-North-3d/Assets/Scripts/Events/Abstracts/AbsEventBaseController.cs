@@ -20,7 +20,7 @@ namespace Assets.Scripts.Events.Abstracts
         [SerializeField]
         private ParticleSystem particle;
 
-        public bool isOnTracking = false;
+        private bool isOnTracking = false;
         private bool isInteracted = false;
 
         protected void Awake()
