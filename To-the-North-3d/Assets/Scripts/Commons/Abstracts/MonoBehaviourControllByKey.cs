@@ -1,7 +1,7 @@
 using Assets.Scripts.Commons;
 using UnityEngine;
 
-public class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
+public abstract class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
 {
     [SerializeField]
     private KeyCode keyToToggle;
@@ -19,6 +19,8 @@ public class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
     /// </summary>
     public void Open()
     {
+        InGameStatus.User.isPause = true;
+        OnOpen();
         gameObject.SetActive(true);
     }
 
@@ -28,6 +30,8 @@ public class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
     public void Close()
     {
         gameObject.SetActive(false);
+        OnClose();
+        InGameStatus.User.isPause = false;
     }
 
     public void ControllByKey(int purpose)
@@ -36,6 +40,17 @@ public class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
             gameObject.activeSelf ? false : true;
         ;
         transform.SetAsLastSibling();
-        gameObject.SetActive(toOpen);
+        if (toOpen)
+        {
+            Open();
+        }
+        else
+        {
+            Close();
+        }
     }
+
+    public abstract void OnOpen();
+
+    public abstract void OnClose();
 }

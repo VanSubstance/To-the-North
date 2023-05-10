@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Items;
 
@@ -9,6 +10,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         [SerializeField]
         private InventorySlotController slotTf;
         private readonly Vector2 sizeSlot = new Vector2(14, 10);
+        private List<ItemInventoryInfo> itemsAttached;
 
         protected void Awake()
         {
@@ -18,6 +20,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         private void Init()
         {
             if (slots != null) return;
+            itemsAttached = new();
             slots = new InventorySlotController[(int)sizeSlot.x, (int)sizeSlot.y];
             // i = x = row
             for (int i = 0; i < sizeSlot.x; i++)
@@ -38,7 +41,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         public void GenerateItem(ItemGenerateController gen, ItemInventoryInfo _info)
         {
             Init();
-            gen.InitItem(_info.itemInfo, slots[_info.row, _info.col]);
+            itemsAttached.Add(gen.InitItem(_info.itemInfo, slots[_info.row, _info.col]));
         }
 
         /// <summary>
@@ -49,8 +52,19 @@ namespace Assets.Scripts.Components.Windows.Inventory
         public ItemInventoryInfo GenerateItemWithAuto(ItemGenerateController gen, ItemBaseInfo _info = null, ContentType _type = ContentType.Undefined)
         {
             Init();
+            ItemInventoryInfo ret = gen.InitItem(_info, type: _type);
+            itemsAttached.Add(ret);
             // 슬롯 지정이 없을 경우 = 자동 정렬 필요
-            return gen.InitItem(_info, type: _type);
+            return ret;
+        }
+
+        public void Clear()
+        {
+            foreach (ItemInventoryInfo _info in itemsAttached)
+            {
+                _info.itemInfo.Ctrl.ItemTruncate();
+            }
+            itemsAttached.Clear();
         }
     }
 }

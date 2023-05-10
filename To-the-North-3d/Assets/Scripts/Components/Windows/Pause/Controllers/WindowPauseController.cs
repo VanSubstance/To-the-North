@@ -1,6 +1,6 @@
 namespace Assets.Scripts.Components.Windows.Pause
 {
-    internal class WindowPauseController : WindowBaseController
+    public class WindowPauseController : WindowBaseController
     {
         public void SaveGame()
         {
@@ -9,6 +9,14 @@ namespace Assets.Scripts.Components.Windows.Pause
         public void ExitGame()
         {
             CommonGameManager.Instance.ExitGame();
+        }
+
+        public override void OnOpen()
+        {
+        }
+
+        public override void OnClose()
+        {
         }
     }
 }

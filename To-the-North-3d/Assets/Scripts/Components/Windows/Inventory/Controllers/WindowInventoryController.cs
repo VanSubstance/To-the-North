@@ -206,6 +206,16 @@ namespace Assets.Scripts.Components.Windows.Inventory
             return null;
         }
 
+        public override void OnOpen()
+        {
+        }
+
+        public override void OnClose()
+        {
+            // 루팅 비우기
+            ((ContentSlotController)contentByType[ContentType.Looting]).Clear();
+        }
+
         private enum Side
         {
             L, C, R
