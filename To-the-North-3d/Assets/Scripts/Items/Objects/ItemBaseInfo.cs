@@ -53,6 +53,10 @@ namespace Assets.Scripts.Items
             }
             set
             {
+                if (invenInfo != null && invenInfo.itemInfo != null)
+                {
+                    invenInfo.itemInfo = null;
+                }
                 invenInfo = value;
             }
         }

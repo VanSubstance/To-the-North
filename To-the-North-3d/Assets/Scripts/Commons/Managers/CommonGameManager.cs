@@ -125,7 +125,7 @@ public class CommonGameManager : MonoBehaviour
         if (uiTf.GetComponent<UIManager>().isInit)
         {
             CameraTrackControlller.Instance.transform.position = new Vector3(GlobalStatus.userInitPosition[0], 0, GlobalStatus.userInitPosition[1]);
-            UserBaseController.Instance.position = new Vector3(GlobalStatus.userInitPosition[0], 2, GlobalStatus.userInitPosition[1]);
+            UserBaseController.Instance.position = new Vector3(GlobalStatus.userInitPosition[0], .25f, GlobalStatus.userInitPosition[1]);
             GlobalStatus.userInitPosition = new float[] { 0, 0 };
             GlobalStatus.Loading.System.CommonGameManager = true;
             curStatus = 0;

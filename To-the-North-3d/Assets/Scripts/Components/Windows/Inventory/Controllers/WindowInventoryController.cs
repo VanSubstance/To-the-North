@@ -9,6 +9,23 @@ namespace Assets.Scripts.Components.Windows.Inventory
         [SerializeField]
         private Transform containerBlank, containerSlots, containerEquipment, itemPrefab;
         private static Dictionary<ContentType, ContentBaseController> contentByType;
+
+        public ContentSlotController ContentLoot
+        {
+            get
+            {
+                return (ContentSlotController)contentByType[ContentType.Looting];
+            }
+        }
+
+        public ContentSlotController ContentInventory
+        {
+            get
+            {
+                return (ContentSlotController)contentByType[ContentType.Inventory];
+            }
+        }
+
         private static Dictionary<Side, ContentBaseController> contentsVisual;
 
         private Transform visualTf, storeTf, itemTf;
@@ -99,10 +116,6 @@ namespace Assets.Scripts.Components.Windows.Inventory
             contentByType[ContentType.Looting] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Looting);
             contentByType[ContentType.Equipment] = Instantiate(containerEquipment, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentEquipmentController>(ContentType.Equipment);
 
-
-            // 테스트용 아이템들 생성
-            testItemInit();
-
             /**
              * 테스트
              * I키 -> 인벤토리
@@ -123,17 +136,6 @@ namespace Assets.Scripts.Components.Windows.Inventory
             contentsVisual[side].Container.SetParent(storeTf);
             (contentsVisual[side] = contentByType[_targetType]).Container.SetParent(visualTf);
             contentsVisual[side].Container.SetSiblingIndex((int)side);
-        }
-
-        /// <summary>
-        /// 테스트용 아이템 객체들 생성
-        /// </summary>
-        private void testItemInit()
-        {
-            foreach (ItemInventoryInfo info in InGameStatus.Item.inventory)
-            {
-                GenerateItemObject(ContentType.Inventory, info);
-            }
         }
 
         /// <summary>
@@ -160,7 +162,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
                 case ContentType.Equipment:
                     break;
             }
-            InGameStatus.Item.inventory.Add(_info);
+            ContentInventory.itemsAttached.Add(_info);
         }
 
         /// <summary>
@@ -189,7 +191,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
                 case ContentType.Equipment:
                     break;
             }
-            InGameStatus.Item.inventory.Add(s);
+            ContentInventory.itemsAttached.Add(s);
         }
 
         /// <summary>
@@ -204,6 +206,16 @@ namespace Assets.Scripts.Components.Windows.Inventory
                 if (!(t = itemTf.GetChild(i)).gameObject.activeSelf) return t.GetComponent<ItemGenerateController>();
             }
             return null;
+        }
+
+        public override void OnOpen()
+        {
+        }
+
+        public override void OnClose()
+        {
+            // 루팅 비우기
+            ((ContentSlotController)contentByType[ContentType.Looting]).Clear();
         }
 
         private enum Side

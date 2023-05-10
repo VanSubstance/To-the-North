@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Components.Windows
 {
-    public class WindowBaseController : MonoBehaviourControllByKey
+    public abstract class WindowBaseController : MonoBehaviourControllByKey
     {
         [SerializeField]
         private Vector2 marginToRatio;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Components.Popups
 {
-    internal class HoverItemInfoContainerController : MouseTrackController, IControllByKey
+    public class HoverItemInfoContainerController : MouseTrackController, IControllByKey
     {
         private bool isOccupied = false;
         private HoveringItemInfoChangeControl itemInfoControl;
@@ -147,6 +147,14 @@ namespace Assets.Scripts.Components.Popups
         public void ControllByKey(int purpose)
         {
             OnHoverExit();
+        }
+
+        public void OnOpen()
+        {
+        }
+
+        public void OnClose()
+        {
         }
 
         private enum DisplayIndex
