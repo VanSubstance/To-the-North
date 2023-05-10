@@ -41,8 +41,10 @@ namespace Assets.Scripts.Events.Controllers
         /// </summary>
         public override void OnInteraction()
         {
+            // 띄워줄 때, 이전에 이미 습득한 아이템은 건너뛴다
             foreach (ItemBaseInfo _itemInfo in itemsLoot)
             {
+                if (_itemInfo.Ctrl != null) continue;
                 WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Looting, _itemInfo);
             }
             WindowInventoryController.Instance.Open();

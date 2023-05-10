@@ -62,6 +62,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         {
             foreach (ItemInventoryInfo _info in itemsAttached)
             {
+                if (_info.itemInfo == null) continue;
                 _info.itemInfo.Ctrl.ItemTruncate();
             }
             itemsAttached.Clear();

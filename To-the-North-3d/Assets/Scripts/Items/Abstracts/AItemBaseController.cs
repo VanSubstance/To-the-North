@@ -604,7 +604,7 @@ namespace Assets.Scripts.Items
                             {
                                 // 남는칸 있음
                                 slotQualified = cur;
-                                newInventoryInfo = new()
+                                _info.InvenInfo = newInventoryInfo = new()
                                 {
                                     itemInfo = _info,
                                     pos = new Vector2(cur.row, cur.column)
@@ -617,7 +617,7 @@ namespace Assets.Scripts.Items
                             if (CheckItemAttachable(cur))
                             {
                                 slotQualified = cur;
-                                newInventoryInfo = new()
+                                _info.InvenInfo = newInventoryInfo = new()
                                 {
                                     itemInfo = _info,
                                     pos = new Vector2(cur.row, cur.column)
@@ -632,7 +632,7 @@ namespace Assets.Scripts.Items
             }
             // 남는칸 없음
             slotQualified = null;
-            newInventoryInfo = null;
+            _info.InvenInfo = newInventoryInfo = null;
             return;
         }
 
