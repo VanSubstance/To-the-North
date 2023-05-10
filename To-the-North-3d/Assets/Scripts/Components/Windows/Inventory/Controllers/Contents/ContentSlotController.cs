@@ -10,7 +10,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         [SerializeField]
         private InventorySlotController slotTf;
         private readonly Vector2 sizeSlot = new Vector2(14, 10);
-        private List<ItemInventoryInfo> itemsAttached;
+        public List<ItemInventoryInfo> itemsAttached;
 
         protected void Awake()
         {

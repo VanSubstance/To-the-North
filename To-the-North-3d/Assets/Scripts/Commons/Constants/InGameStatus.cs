@@ -186,15 +186,10 @@ public static class InGameStatus
 
     public static class Item
     {
-        /// <summary>
-        /// 현재 착용하고 있는 장비 정보
-        /// </summary>
-        private static Dictionary<EquipBodyType, ItemEquipmentInfo> curEquipments = new Dictionary<EquipBodyType, ItemEquipmentInfo>();
-        public static List<ItemInventoryInfo> inventory = new List<ItemInventoryInfo>();
 
         public static ItemBulletInfo LookforBullet(ItemBulletType type)
         {
-            foreach (ItemInventoryInfo inven in inventory)
+            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
             {
                 if (inven.itemInfo is ItemBulletInfo info)
                 {
@@ -212,7 +207,7 @@ public static class InGameStatus
 
         public static ItemMagazineInfo LookForMagazine(ItemBulletType type)
         {
-            foreach (ItemInventoryInfo inven in inventory)
+            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
             {
                 if (inven.itemInfo is ItemMagazineInfo magInfo &&
                     magInfo.bulletType.Equals(type)
@@ -234,7 +229,7 @@ public static class InGameStatus
         {
             itemFromInventory.itemInfo.Ctrl.ItemDetach();
             itemFromInventory.itemInfo.Ctrl.ItemTruncate();
-            inventory.Remove(itemFromInventory);
+            WindowInventoryController.Instance.ContentInventory.itemsAttached.Remove(itemFromInventory);
             return itemFromInventory.itemInfo;
         }
 
