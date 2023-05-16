@@ -46,7 +46,6 @@ namespace Assets.Scripts.Events.Controllers
         /// </summary>
         public override void OnInteraction()
         {
-            Debug.Log($"상호작용 on");
             StartCoroutine(StartConversation());
         }
 

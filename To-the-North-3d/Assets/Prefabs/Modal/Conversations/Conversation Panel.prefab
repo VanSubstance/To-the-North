@@ -75,8 +75,8 @@ MonoBehaviour:
     \uC900\uB300?\n\uC544\uD558\uD558\uD558! \uB09C \uBCF8\uC804\uC774\uB77C\uB3C4
     \uAC74\uC9C0\uB294 \uC904 \uC54C\uC558\uC9C0!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
-  m_sharedMaterial: {fileID: 4892477022148786914, guid: 277b18afdfe0bf948b9e2489968571bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5952dae53a9c274488cf9397cee1d4a2, type: 2}
+  m_sharedMaterial: {fileID: -5839447905667109973, guid: 5952dae53a9c274488cf9397cee1d4a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
