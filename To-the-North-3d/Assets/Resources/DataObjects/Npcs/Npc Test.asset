@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94fd91681e2cfd445b7709446b613528, type: 3}
   m_Name: Npc Test
   m_EditorClassIdentifier: 
-  maxHp: 100
-  isAttackFirst: 0
-  sightRange: 5
-  moveSpd: 3
-  moveDis: 3
+  maxHp: 1000
+  isActiveBehaviour: 0
+  isRunAway: 0
+  sightRange: 10
+  moveSpd: 0

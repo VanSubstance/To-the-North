@@ -210,6 +210,7 @@ namespace Assets.Scripts.Creatures.Detections
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
             List<Collider> targetsInViewRadius = new List<Collider>();
             targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask));
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.npcMask));
             for (int i = 0; i < targetsInViewRadius.Count; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
@@ -238,7 +239,7 @@ namespace Assets.Scripts.Creatures.Detections
                 }
             }
             targetsInViewRadius.Clear();
-            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, User.Detection.Sight.Range, GlobalStatus.Constant.creatureMask | GlobalStatus.Constant.eventMask));
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, User.Detection.Sight.Range, GlobalStatus.Constant.creatureMask | GlobalStatus.Constant.eventMask | GlobalStatus.Constant.npcMask));
             if (targetsInViewRadius.Count > 0)
             {
                 // 주변 반경 안에 크리쳐 식별
