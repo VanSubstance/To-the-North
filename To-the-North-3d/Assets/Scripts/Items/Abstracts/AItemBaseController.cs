@@ -140,6 +140,7 @@ namespace Assets.Scripts.Items
             curSlot = attachSlot;
             nextSlot = prevSlot = null;
             attachSlot.ItemTf = transform;
+            attachSlot.EnrollItemToSlot();
             ApplyActionForOnlyContentWithSlots(attachSlot, (_slot) =>
             {
                 _slot.ItemTf = transform;
@@ -177,6 +178,7 @@ namespace Assets.Scripts.Items
         public void ItemDetach()
         {
             if (curSlot == null) return;
+            curSlot.DetachItemFromSlot();
             info.InvenInfo = null;
             ApplyActionForOnlyContentWithSlots(curSlot, (_slot) =>
             {

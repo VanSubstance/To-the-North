@@ -156,7 +156,6 @@ namespace Assets.Scripts.Components.Windows.Inventory
                 case ContentType.Equipment:
                     break;
             }
-            ContentInventory.itemsAttached.Add(_info);
         }
 
         /// <summary>
@@ -185,7 +184,6 @@ namespace Assets.Scripts.Components.Windows.Inventory
                 case ContentType.Equipment:
                     break;
             }
-            ContentInventory.itemsAttached.Add(s);
         }
 
         /// <summary>

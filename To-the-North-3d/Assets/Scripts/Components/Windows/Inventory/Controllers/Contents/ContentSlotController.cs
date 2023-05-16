@@ -41,7 +41,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         public void GenerateItem(ItemGenerateController gen, ItemInventoryInfo _info)
         {
             Init();
-            itemsAttached.Add(gen.InitItem(_info.itemInfo, slots[_info.row, _info.col]));
+            gen.InitItem(_info.itemInfo, slots[_info.row, _info.col]);
         }
 
         /// <summary>
@@ -52,10 +52,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         public ItemInventoryInfo GenerateItemWithAuto(ItemGenerateController gen, ItemBaseInfo _info = null, ContentType _type = ContentType.Undefined)
         {
             Init();
-            ItemInventoryInfo ret = gen.InitItem(_info, type: _type);
-            itemsAttached.Add(ret);
-            // 슬롯 지정이 없을 경우 = 자동 정렬 필요
-            return ret;
+            return gen.InitItem(_info, type: _type);
         }
 
         public void Clear()
