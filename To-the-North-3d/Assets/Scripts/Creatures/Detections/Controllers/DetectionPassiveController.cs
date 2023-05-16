@@ -141,11 +141,16 @@ namespace Assets.Scripts.Creatures.Detections
             if (targetsInViewRadius.Count > 0)
             {
                 // 주변 반경 안에 크리쳐 식별
-                IInteractionWithSight iSight;
+                IInteractionWithSight[] iSight;
                 foreach (Collider col in targetsInViewRadius)
                 {
-                    iSight = col.GetComponent<IInteractionWithSight>();
-                    iSight.DetectFull();
+                    iSight = col.GetComponents<IInteractionWithSight>();
+
+                    // 사이에 장애물 존재하지 않음
+                    foreach (IInteractionWithSight isight in iSight)
+                    {
+                        isight.DetectFull();
+                    }
                 }
             }
             return null;
