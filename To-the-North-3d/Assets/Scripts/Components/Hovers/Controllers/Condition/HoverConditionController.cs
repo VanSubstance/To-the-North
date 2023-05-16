@@ -1,13 +1,14 @@
 using Assets.Scripts.Commons;
 using Assets.Scripts.Users;
 using UnityEngine;
+using TMPro;
 
 namespace Assets.Scripts.Components.Hovers
 {
     public class HoverConditionController : MouseTrackController, IControllByKey
     {
         [SerializeField]
-        private ConditionInfo[] conditionInfos;
+        private TextMeshProUGUI title, desc;
 
         private bool isOccupied = false;
 
@@ -60,40 +61,17 @@ namespace Assets.Scripts.Components.Hovers
             if (isOccupied) return;
             isOccupied = true;
             base.TracksMouse();
-            //Debug.Log("호버링 아이템 정보 할당!! " + _info);
-            switch (type)
-            {
-                case ConditionType.None:
-                    break;
-                case ConditionType.Bleeding_Light:
-                    break;
-                case ConditionType.Bleeding_Heavy:
-                    break;
-                case ConditionType.Fracture:
-                    break;
-                case ConditionType.Pain:
-                    break;
-                case ConditionType.Dizziness:
-                    break;
-                case ConditionType.Infection:
-                    break;
-                case ConditionType.Hunger:
-                    break;
-                case ConditionType.Thirst:
-                    break;
-                case ConditionType.Exhaust:
-                    break;
-                case ConditionType.Hot:
-                    break;
-                case ConditionType.Cold:
-                    break;
-            }
+            ConditionInfo cur = ConditionInfo.infos[type];
+            title.text = cur.title;
+            desc.text = cur.description;
             gameObject.SetActive(true);
         }
 
         public void OnHoverExit()
         {
             gameObject.SetActive(false);
+            title.text = string.Empty;
+            desc.text = string.Empty;
             isOccupied = false;
         }
 

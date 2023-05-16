@@ -1,3 +1,4 @@
+using Assets.Scripts.Components.Hovers;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -88,6 +89,16 @@ namespace Assets.Scripts.Users
                     // 해상 상태이상 틱 효과 없음
                 }
             }
+        }
+
+        public void OnMouseEnter()
+        {
+            HoverConditionController.Instance.OnHoverEnter(targetType);
+        }
+
+        private void OnMouseExit()
+        {
+            HoverConditionController.Instance.OnHoverExit();
         }
 
         private void ScreenVibrate(float amount)
