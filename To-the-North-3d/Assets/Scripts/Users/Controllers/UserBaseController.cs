@@ -71,7 +71,7 @@ namespace Assets.Scripts.Users
 
         private void Start()
         {
-            //OccurCondition(ConditionType.Bleeding_Light);
+            OccurCondition(ConditionType.Bleeding_Light);
             //OccurCondition(ConditionType.Dizziness, true);
         }
 

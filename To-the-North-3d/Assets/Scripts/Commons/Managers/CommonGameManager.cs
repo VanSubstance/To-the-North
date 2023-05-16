@@ -82,6 +82,7 @@ public class CommonGameManager : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
+        DataFunction.ApplyLanguage();
     }
 
     // Update is called once per frame

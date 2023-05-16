@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using Assets.Scripts.Components.Hovers;
+using Assets.Scripts.Users;
+
 namespace Assets.Scripts.Commons
 {
     public static class GlobalText
@@ -15,6 +19,7 @@ namespace Assets.Scripts.Commons
                 Back,
                 Language;
         }
+
         public static class Inventory
         {
             public static string
@@ -28,5 +33,7 @@ namespace Assets.Scripts.Commons
                 WeaponPri,
                 WeaponSec;
         }
+
+        public static Dictionary<ConditionType, ConditionInfo> Conditions = new();
     }
 }

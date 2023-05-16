@@ -34,7 +34,6 @@ namespace Assets.Scripts.Commons
         }
         private void Start()
         {
-            ConditionInfo.LoadConditionInfosFromText();
             LoadInventoryWithAuto();
         }
 

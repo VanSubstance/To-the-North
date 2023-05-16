@@ -5,6 +5,8 @@ using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
 using UnityEngine.SceneManagement;
+using Assets.Scripts.Components.Hovers;
+using Assets.Scripts.Users;
 
 public static class DataFunction
 {
@@ -71,6 +73,28 @@ public static class DataFunction
                 GlobalText.Inventory.Backpack = curQ.Dequeue();
                 GlobalText.Inventory.WeaponPri = curQ.Dequeue();
                 GlobalText.Inventory.WeaponSec = curQ.Dequeue();
+
+                // 상태이상 관련
+                curQ = LoadTextFromFile("Condition");
+                ConditionInfo newCondition = new();
+                ConditionType curType;
+                string s;
+                while (curQ.TryDequeue(out s))
+                {
+                    // 타입: 1줄
+                    curType = System.Enum.Parse<ConditionType>(s);
+                    // 제목: 1줄
+                    newCondition.title = curQ.Dequeue();
+                    newCondition.description = string.Empty;
+                    // 효과: n줄
+                    while (curQ.TryDequeue(out s))
+                    {
+                        if (s == string.Empty) break;
+                        newCondition.description += $"{s}\n";
+                    }
+                    GlobalText.Conditions[curType] = newCondition;
+                    newCondition = new();
+                }
 
                 switch (SceneManager.GetActiveScene().name)
                 {
