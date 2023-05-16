@@ -13,7 +13,7 @@ namespace Assets.Scripts.Creatures.Bases
 
         protected override void OnDetectUser(Transform userTf)
         {
-            //baseCtrl.SetTargetToGaze(userTf.position - baseCtrl.transform.position, 0, false);
+            baseCtrl.SetTargetToGaze(userTf.position - baseCtrl.transform.position, 3, false);
         }
 
         protected override void OnDetectionUpdate()

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6528234058228642912}
   - component: {fileID: 2228477867474501606}
   - component: {fileID: 4074563936069197785}
-  m_Layer: 17
+  m_Layer: 21
   m_Name: Moveable
   m_TagString: Creature
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 875949197147763623}
   - component: {fileID: 5048994260158401787}
   - component: {fileID: 3162726025617573848}
-  m_Layer: 17
+  m_Layer: 21
   m_Name: Fix
   m_TagString: Creature
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 7649164930735866452}
   - component: {fileID: 1290683330993960189}
   - component: {fileID: 2548972539464835492}
-  m_Layer: 17
+  m_Layer: 21
   m_Name: Hits
   m_TagString: Creature
   m_Icon: {fileID: 0}

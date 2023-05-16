@@ -19,12 +19,14 @@ namespace Assets.Scripts.Commons
             fadeImage = fadeImageTf.GetComponent<Image>();
             GlobalComponent.Common.Text.MainMenu.startGame = startGame;
             GlobalComponent.Common.Text.MainMenu.toDesktop = toDesktop;
-            ApplyLanguage();
         }
 
         private void Start()
         {
-            FadeScreen(false);
+            FadeScreen(false, actionBefore: () =>
+            {
+                DataFunction.ApplyLanguage();
+            });
         }
 
         public void MoveScene(string targetSceneName)

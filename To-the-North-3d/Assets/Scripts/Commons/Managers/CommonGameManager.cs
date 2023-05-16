@@ -82,7 +82,6 @@ public class CommonGameManager : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
-        ApplyLanguage();
     }
 
     // Update is called once per frame
@@ -241,6 +240,8 @@ public class CommonGameManager : MonoBehaviour
 
         GlobalStatus.Loading.System.CommonGameManager = true;
         imageForFade.SetAsFirstSibling();
+
+        DataFunction.ApplyLanguage();
 
         SceneManager.sceneLoaded += (scene, mode) => FadeScreen(false);
         curStatus = 0;
