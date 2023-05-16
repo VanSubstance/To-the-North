@@ -8,8 +8,14 @@ namespace Assets.Scripts.Components.Hovers
     {
         [SerializeField]
         private TextMeshProUGUI tReload, tRange, tProjSpd, tBulletType;
+        [SerializeField]
+        private TextMeshProUGUI reload, range, projSpd, bulletType;
         private void Awake()
         {
+            GlobalComponent.Common.Text.Item.WeaponRange.tReload = tReload;
+            GlobalComponent.Common.Text.Item.WeaponRange.tRange = tRange;
+            GlobalComponent.Common.Text.Item.WeaponRange.tProjSpd = tProjSpd;
+            GlobalComponent.Common.Text.Item.WeaponRange.tBulletType = tBulletType;
         }
 
         public void OnItemInfoChanged(ItemBaseInfo _info)
@@ -20,10 +26,10 @@ namespace Assets.Scripts.Components.Hovers
                 return;
             }
             ItemWeaponInfo info = (ItemWeaponInfo)_info;
-            tReload.text = $"{info.timeReload}초";
-            tRange.text = info.range.ToString();
-            tProjSpd.text = info.spd.ToString();
-            tBulletType.text = $"{HoverItemInfoBulletController.ConvertBulletTypeToString(info.bulletType)}";
+            reload.text = $"{info.timeReload}초";
+            range.text = info.range.ToString();
+            projSpd.text = info.spd.ToString();
+            bulletType.text = $"{HoverItemInfoBulletController.ConvertBulletTypeToString(info.bulletType)}";
             gameObject.SetActive(true);
         }
     }

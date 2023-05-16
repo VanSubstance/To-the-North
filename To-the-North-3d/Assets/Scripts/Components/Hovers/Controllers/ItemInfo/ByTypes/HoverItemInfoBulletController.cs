@@ -8,8 +8,12 @@ namespace Assets.Scripts.Components.Hovers
     {
         [SerializeField]
         private TextMeshProUGUI tBulletType, tAccelSpd;
+        [SerializeField]
+        private TextMeshProUGUI bulletType, accelSpd;
         private void Awake()
         {
+            GlobalComponent.Common.Text.Item.Bullet.tBulletType = tBulletType;
+            GlobalComponent.Common.Text.Item.Bullet.tAccelSpd = tAccelSpd;
         }
 
         public void OnItemInfoChanged(ItemBaseInfo _info)
@@ -20,8 +24,8 @@ namespace Assets.Scripts.Components.Hovers
                 return;
             }
             ItemBulletInfo info = (ItemBulletInfo)_info;
-            tBulletType.text = ConvertBulletTypeToString(info.bulletType);
-            tAccelSpd.text = info.powerSpd.ToString();
+            bulletType.text = ConvertBulletTypeToString(info.bulletType);
+            accelSpd.text = info.powerSpd.ToString();
             gameObject.SetActive(true);
         }
 

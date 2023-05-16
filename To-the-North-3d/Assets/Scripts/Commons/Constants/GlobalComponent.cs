@@ -42,6 +42,34 @@ public static class GlobalComponent
                         helmet, mask, body, backpack, weaponPrimary, weaponSecondary;
                 }
             }
+            public static class Item
+            {
+                public static class Armor
+                {
+                    public static TextMeshProUGUI
+                        tPenatration, tImpact, tHeat;
+                }
+                public static class Bullet
+                {
+                    public static TextMeshProUGUI
+                        tBulletType, tAccelSpd;
+                }
+                public static class Damage
+                {
+                    public static TextMeshProUGUI
+                        tPwPene, tPwImp, tPwKnock, tDmgPene, tDmgImp;
+                }
+                public static class Weapon
+                {
+                    public static TextMeshProUGUI
+                        tAtkSpd, tHandType;
+                }
+                public static class WeaponRange
+                {
+                    public static TextMeshProUGUI 
+                        tReload, tRange, tProjSpd, tBulletType;
+                }
+            }
         }
     }
 

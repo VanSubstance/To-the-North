@@ -35,5 +35,34 @@ namespace Assets.Scripts.Commons
         }
 
         public static Dictionary<ConditionType, ConditionInfo> Conditions = new();
+
+        public static class Item
+        {
+            public static class Armor
+            {
+                public static string
+                    tPenatration, tImpact, tHeat;
+            }
+            public static class Bullet
+            {
+                public static string
+                    tBulletType, tAccelSpd;
+            }
+            public static class Damage
+            {
+                public static string
+                    tPwPene, tPwImp, tPwKnock, tDmgPene, tDmgImp;
+            }
+            public static class Weapon
+            {
+                public static string
+                    tAtkSpd, tHandType;
+            }
+            public static class WeaponRange
+            {
+                public static string 
+                    tReload, tRange, tProjSpd, tBulletType;
+            }
+        }
     }
 }

@@ -1,0 +1,16 @@
+Penetration Lv
+Impact Lv
+보온 레벨
+탄환 종류
+속도 가중치
+관통력
+충격력
+넉백력
+Penetration Dmg
+충격 데미지
+Attack Spd
+손 할당
+Reload Spd
+사거리
+Bullet Type
+탄환 종류

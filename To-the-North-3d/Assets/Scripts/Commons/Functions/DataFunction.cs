@@ -96,6 +96,30 @@ public static class DataFunction
                     newCondition = new();
                 }
 
+                // 아이템 관련
+                curQ = LoadTextFromFile("Item");
+                GlobalText.Item.Armor.tPenatration = curQ.Dequeue();
+                GlobalText.Item.Armor.tImpact = curQ.Dequeue();
+                GlobalText.Item.Armor.tHeat = curQ.Dequeue();
+
+                GlobalText.Item.Bullet.tBulletType = curQ.Dequeue();
+                GlobalText.Item.Bullet.tAccelSpd = curQ.Dequeue();
+
+                GlobalText.Item.Damage.tPwPene = curQ.Dequeue();
+                GlobalText.Item.Damage.tPwImp = curQ.Dequeue();
+                GlobalText.Item.Damage.tPwKnock = curQ.Dequeue();
+                GlobalText.Item.Damage.tDmgPene = curQ.Dequeue();
+                GlobalText.Item.Damage.tDmgImp = curQ.Dequeue();
+
+                GlobalText.Item.Weapon.tAtkSpd = curQ.Dequeue();
+                GlobalText.Item.Weapon.tHandType = curQ.Dequeue();
+
+                GlobalText.Item.WeaponRange.tReload = curQ.Dequeue();
+                GlobalText.Item.WeaponRange.tRange = curQ.Dequeue();
+                GlobalText.Item.WeaponRange.tProjSpd = curQ.Dequeue();
+                GlobalText.Item.WeaponRange.tBulletType = curQ.Dequeue();
+
+
                 switch (SceneManager.GetActiveScene().name)
                 {
                     case "MainMenu":
@@ -143,5 +167,27 @@ public static class DataFunction
         GlobalComponent.Common.Text.Inventory.Equipment.backpack.text = GlobalText.Inventory.Backpack;
         GlobalComponent.Common.Text.Inventory.Equipment.weaponPrimary.text = GlobalText.Inventory.WeaponPri;
         GlobalComponent.Common.Text.Inventory.Equipment.weaponSecondary.text = GlobalText.Inventory.WeaponSec;
+
+        // 아이템 정보
+        GlobalComponent.Common.Text.Item.Armor.tPenatration.text = GlobalText.Item.Armor.tPenatration;
+        GlobalComponent.Common.Text.Item.Armor.tImpact.text = GlobalText.Item.Armor.tImpact;
+        GlobalComponent.Common.Text.Item.Armor.tHeat.text = GlobalText.Item.Armor.tHeat;
+
+        GlobalComponent.Common.Text.Item.Bullet.tBulletType.text = GlobalText.Item.Bullet.tBulletType;
+        GlobalComponent.Common.Text.Item.Bullet.tAccelSpd.text = GlobalText.Item.Bullet.tAccelSpd;
+
+        GlobalComponent.Common.Text.Item.Damage.tPwPene.text = GlobalText.Item.Damage.tPwPene;
+        GlobalComponent.Common.Text.Item.Damage.tPwImp.text = GlobalText.Item.Damage.tPwImp;
+        GlobalComponent.Common.Text.Item.Damage.tPwKnock.text = GlobalText.Item.Damage.tPwKnock;
+        GlobalComponent.Common.Text.Item.Damage.tDmgPene.text = GlobalText.Item.Damage.tDmgPene;
+        GlobalComponent.Common.Text.Item.Damage.tDmgImp.text = GlobalText.Item.Damage.tDmgImp;
+
+        GlobalComponent.Common.Text.Item.Weapon.tAtkSpd.text = GlobalText.Item.Weapon.tAtkSpd;
+        GlobalComponent.Common.Text.Item.Weapon.tHandType.text = GlobalText.Item.Weapon.tHandType;
+
+        GlobalComponent.Common.Text.Item.WeaponRange.tBulletType.text = GlobalText.Item.WeaponRange.tBulletType;
+        GlobalComponent.Common.Text.Item.WeaponRange.tProjSpd.text = GlobalText.Item.WeaponRange.tProjSpd;
+        GlobalComponent.Common.Text.Item.WeaponRange.tRange.text = GlobalText.Item.WeaponRange.tRange;
+        GlobalComponent.Common.Text.Item.WeaponRange.tReload.text = GlobalText.Item.WeaponRange.tReload;
     }
 }

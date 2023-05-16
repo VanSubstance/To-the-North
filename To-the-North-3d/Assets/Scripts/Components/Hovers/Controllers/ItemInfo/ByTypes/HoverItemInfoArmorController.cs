@@ -8,8 +8,13 @@ namespace Assets.Scripts.Components.Hovers
     {
         [SerializeField]
         private TextMeshProUGUI tPenatration, tImpact, tHeat;
+        [SerializeField]
+        private TextMeshProUGUI penatration, impact, heat;
         private void Awake()
         {
+            GlobalComponent.Common.Text.Item.Armor.tPenatration = tPenatration;
+            GlobalComponent.Common.Text.Item.Armor.tImpact = tImpact;
+            GlobalComponent.Common.Text.Item.Armor.tHeat = tHeat;
         }
 
         public void OnItemInfoChanged(ItemBaseInfo _info)
@@ -20,9 +25,9 @@ namespace Assets.Scripts.Components.Hovers
                 return;
             }
             ItemArmorInfo info = (ItemArmorInfo)_info;
-            tPenatration.text = info.ClassPenetration.ToString();
-            tImpact.text = info.ClassImpact.ToString();
-            tHeat.text = info.ClassHeat.ToString();
+            penatration.text = info.ClassPenetration.ToString();
+            impact.text = info.ClassImpact.ToString();
+            heat.text = info.ClassHeat.ToString();
             gameObject.SetActive(true);
         }
     }
