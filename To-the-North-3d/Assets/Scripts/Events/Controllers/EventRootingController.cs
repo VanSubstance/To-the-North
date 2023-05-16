@@ -47,7 +47,7 @@ namespace Assets.Scripts.Events.Controllers
                 if (_itemInfo.Ctrl != null) continue;
                 WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Looting, _itemInfo);
             }
-            WindowInventoryController.Instance.Open();
+            WindowInventoryController.Instance.Open(ContentType.Looting);
         }
 
         [System.Serializable]
