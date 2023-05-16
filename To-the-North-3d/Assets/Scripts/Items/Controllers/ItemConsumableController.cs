@@ -1,5 +1,5 @@
 using Assets.Scripts.Components.Infos;
-using Assets.Scripts.Components.Popups;
+using Assets.Scripts.Components.Hovers;
 using Assets.Scripts.Components.Windows.Inventory;
 using UnityEngine;
 
@@ -36,26 +36,26 @@ namespace Assets.Scripts.Items
 
         protected override void OnHover()
         {
-            HoverItemInfoContainerController.Instance.OnHoverEnter(info);
+            HoverItemInfoController.Instance.OnHoverEnter(info);
             if (Info.consumableType == ConsumbableType.Bullet) return;
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 if (Input.GetKey(KeyCode.Alpha1))
                 {
                     ReplaceWithQuickSlot(UIQuickController.Instance.Quicks[0]);
-                    HoverItemInfoContainerController.Instance.OnHoverExit();
+                    HoverItemInfoController.Instance.OnHoverExit();
                     return;
                 }
                 if (Input.GetKey(KeyCode.Alpha2))
                 {
                     ReplaceWithQuickSlot(UIQuickController.Instance.Quicks[1]);
-                    HoverItemInfoContainerController.Instance.OnHoverExit();
+                    HoverItemInfoController.Instance.OnHoverExit();
                     return;
                 }
                 if (Input.GetKey(KeyCode.Alpha3))
                 {
                     ReplaceWithQuickSlot(UIQuickController.Instance.Quicks[2]);
-                    HoverItemInfoContainerController.Instance.OnHoverExit();
+                    HoverItemInfoController.Instance.OnHoverExit();
                     return;
                 }
             }
@@ -63,7 +63,7 @@ namespace Assets.Scripts.Items
 
         protected override void OnHoverExit()
         {
-            HoverItemInfoContainerController.Instance.OnHoverExit();
+            HoverItemInfoController.Instance.OnHoverExit();
         }
 
         protected override void OnMouseClickWithKeyPress()

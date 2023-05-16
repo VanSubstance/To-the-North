@@ -8,7 +8,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static GlobalComponent.Common;
 
 public class CommonGameManager : MonoBehaviour
 {
@@ -19,7 +18,7 @@ public class CommonGameManager : MonoBehaviour
         panelForHpSp, panelForCondition, panelForWelfare, panelForQuick,
         projectileManager, trajectoryManager, soundEffectManager,
         screenHitManager,
-        hoveringItemInfo
+        hoveringItemInfo, hoveringConditionInfo
         ;
 
     private Image fadeImage;
@@ -154,6 +153,8 @@ public class CommonGameManager : MonoBehaviour
             Transform hovering = Instantiate(hoveringItemInfo, uiTf);
             KeyToggleManager keyAdded = uiTf.AddComponent<KeyToggleManager>();
             keyAdded.InitContent(KeyCode.I, hovering.GetComponent<IControllByKey>());
+
+            hovering = Instantiate(hoveringConditionInfo, uiTf);
 
             // 화면 필터 이미지 추가
             Transform imageForSmog = Instantiate(filterForScreenPrefab, uiTf);

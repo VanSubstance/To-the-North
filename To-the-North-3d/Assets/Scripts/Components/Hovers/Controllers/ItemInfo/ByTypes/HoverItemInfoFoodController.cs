@@ -1,9 +1,9 @@
 using Assets.Scripts.Items;
 using UnityEngine;
 
-namespace Assets.Scripts.Components.Popups
+namespace Assets.Scripts.Components.Hovers
 {
-    public class HoverItemInfoConsumableController : MonoBehaviour, IHoverItemInfo
+    public class HoverItemInfoFoodController : MonoBehaviour, IHoverItemInfo
     {
         private void Awake()
         {
@@ -16,7 +16,7 @@ namespace Assets.Scripts.Components.Popups
                 gameObject.SetActive(false);
                 return;
             }
-            ItemConsumableInfo info = (ItemConsumableInfo)_info;
+            ItemFoodInfo info = (ItemFoodInfo)_info;
             gameObject.SetActive(true);
         }
     }

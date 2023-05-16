@@ -71,7 +71,7 @@ namespace Assets.Scripts.Users
 
         private void Start()
         {
-            //OccurCondition(ConditionType.Infection);
+            //OccurCondition(ConditionType.Bleeding_Light);
             //OccurCondition(ConditionType.Dizziness, true);
         }
 
@@ -81,7 +81,7 @@ namespace Assets.Scripts.Users
             if (tickHealthCondition > 1)
             {
                 tickHealthCondition = 0;
-                //TickHealthCondition();
+                TickHealthCondition();
             }
             CheckConditions();
             CheckSwapWeapon();
