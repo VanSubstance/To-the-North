@@ -35,7 +35,6 @@ namespace Assets.Scripts.Components.Hovers
                 Destroy(gameObject);
             }
             GetComponent<Canvas>().sortingLayerName = "UI Covering Map";
-            gameObject.SetActive(false);
             isOccupied = false;
             int c = System.Enum.GetNames(typeof(DisplayIndex)).Length;
             infoDisplayFunctions = new IHoverItemInfo[c];
@@ -44,6 +43,10 @@ namespace Assets.Scripts.Components.Hovers
                 infoDisplayFunctions[i] = transform.GetChild(i).GetComponent<IHoverItemInfo>();
             }
             itemInfoControl = null;
+        }
+        private void Start()
+        {
+            gameObject.SetActive(false);
         }
 
         protected new void Update()

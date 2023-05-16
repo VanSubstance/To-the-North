@@ -7,9 +7,16 @@ namespace Assets.Scripts.Components.Hovers
     public class HoverItemInfoDamageController : MonoBehaviour, IHoverItemInfo
     {
         [SerializeField]
+        private TextMeshProUGUI tPwPene, tPwImp, tPwKnock, tDmgPene, tDmgImp;
+        [SerializeField]
         private TextMeshProUGUI pwPene, pwImp, pwKnock, dmgPene, dmgImp;
         private void Awake()
         {
+            GlobalComponent.Common.Text.Item.Damage.tPwPene = tPwPene;
+            GlobalComponent.Common.Text.Item.Damage.tPwImp = tPwImp;
+            GlobalComponent.Common.Text.Item.Damage.tPwKnock = tPwKnock;
+            GlobalComponent.Common.Text.Item.Damage.tDmgPene = tDmgPene;
+            GlobalComponent.Common.Text.Item.Damage.tDmgImp = tDmgImp;
         }
 
         public void OnItemInfoChanged(ItemBaseInfo _info)

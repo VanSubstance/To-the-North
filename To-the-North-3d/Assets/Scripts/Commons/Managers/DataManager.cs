@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Commons
 {
-    internal class DataManager : MonoBehaviour
+    public class DataManager : MonoBehaviour
     {
         // 위치를 지정하는 아이템 리스트
         public ItemInventoryInfo[] inventoryInfo;
@@ -34,7 +34,6 @@ namespace Assets.Scripts.Commons
         }
         private void Start()
         {
-            ConditionInfo.LoadConditionInfosFromText();
             LoadInventoryWithAuto();
         }
 

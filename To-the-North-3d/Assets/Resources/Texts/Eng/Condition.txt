@@ -1,9 +1,9 @@
 Bleeding_Light
-¾èÀº ÃâÇ÷
-¾èÀº ÃâÇ÷ÀÔ´Ï´Ù.
-µû²ûµû²ûÇÕ´Ï´Ù.
+Light Bleeding
+Blood forms bit.
+It pricks when clothes touch.
 
 Bleeding_Heavy
-½É°¢ÇÑ ÃâÇ÷
-ÇÇ°¡ ¸¹ÀÌ Èå¸¨´Ï´Ù.
-¿í¾À¿í¾ÀÇÕ´Ï´Ù ...
+ì‹¬ê°í•œ ì¶œí˜ˆ
+í”¼ê°€ ë§Žì´ íë¦…ë‹ˆë‹¤.
+ìš±ì”¬ìš±ì”¬í•©ë‹ˆë‹¤ ...

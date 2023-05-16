@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
 {
     public class ContainerBaseController : MonoBehaviour
     {
-        private TextMeshProUGUI titleUGUI;
+        public TextMeshProUGUI titleUGUI;
         private ContentBaseController content;
         private ContentType contentType;
         public ContentType ContentType

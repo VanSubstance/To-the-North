@@ -8,8 +8,12 @@ namespace Assets.Scripts.Components.Hovers
     {
         [SerializeField]
         private TextMeshProUGUI tAtkSpd, tHandType;
+        [SerializeField]
+        private TextMeshProUGUI atkSpd, handType;
         private void Awake()
         {
+            GlobalComponent.Common.Text.Item.Weapon.tAtkSpd = tAtkSpd;
+            GlobalComponent.Common.Text.Item.Weapon.tHandType = tHandType;
         }
 
         public void OnItemInfoChanged(ItemBaseInfo _info)
@@ -20,8 +24,8 @@ namespace Assets.Scripts.Components.Hovers
                 return;
             }
             ItemWeaponInfo info = (ItemWeaponInfo)_info;
-            tAtkSpd.text = $"1회 / {info.delayAmongFire}초";
-            tHandType.text = info.handType == EquipHandType.Multiple ? "양손" : "한손";
+            atkSpd.text = $"1회 / {info.delayAmongFire}초";
+            handType.text = info.handType == EquipHandType.Multiple ? "양손" : "한손";
             gameObject.SetActive(true);
         }
     }
