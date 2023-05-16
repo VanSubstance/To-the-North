@@ -12,7 +12,7 @@ namespace Assets.Scripts.Components.Hovers
 
         public static void LoadConditionInfosFromText()
         {
-            Queue<string> ss = DataFunction.LoadTextFromFile("Condition.txt");
+            Queue<string> ss = DataFunction.LoadTextFromFile("Condition");
             ConditionInfo newCondition = new();
             ConditionType curType;
             string s;

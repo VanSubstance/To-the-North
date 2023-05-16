@@ -10,11 +10,15 @@ namespace Assets.Scripts.Commons
     {
         [SerializeField]
         private Transform fadeImageTf;
+        [SerializeField]
+        private TextMeshProUGUI startGame, toDesktop;
         private Image fadeImage;
 
         private void Awake()
         {
             fadeImage = fadeImageTf.GetComponent<Image>();
+            GlobalComponent.Common.Text.MainMenu.startGame = startGame;
+            GlobalComponent.Common.Text.MainMenu.toDesktop = toDesktop;
         }
 
         private void Start()

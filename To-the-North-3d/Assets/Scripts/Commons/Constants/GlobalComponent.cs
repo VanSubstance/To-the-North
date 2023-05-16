@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using UnityEngine;
+using TMPro;
 
 public static class GlobalComponent
 {
@@ -14,6 +15,33 @@ public static class GlobalComponent
         public static class Event
         {
             public static MouseCursorManager mouseCursorManager;
+        }
+        public static class Text
+        {
+            public static class MainMenu
+            {
+                public static TextMeshProUGUI startGame, toDesktop;
+            }
+            public static class Loading
+            {
+                public static TextMeshProUGUI
+                    loading;
+            }
+            public static class Option
+            {
+                public static TextMeshProUGUI
+                    backToGame, goToOption, saveGame, goToDesktop, back, language;
+            }
+            public static class Inventory
+            {
+                public static TextMeshProUGUI
+                    looting, inventory, equipment;
+                public static class Equipment
+                {
+                    public static TextMeshProUGUI
+                        helmet, mask, body, backpack, weaponPrimary, weaponSecondary;
+                }
+            }
         }
     }
 

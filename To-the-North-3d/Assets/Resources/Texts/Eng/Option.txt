@@ -1,0 +1,9 @@
+Return to Game
+Option
+Save Game
+Load Game
+Start Game
+Back to Desktop
+Loading . . .
+Back
+Language
