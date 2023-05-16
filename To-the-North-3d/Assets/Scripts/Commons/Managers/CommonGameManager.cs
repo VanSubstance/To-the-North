@@ -82,7 +82,7 @@ public class CommonGameManager : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
-        DataFunction.ApplyLanguage();
+        ApplyLanguage();
     }
 
     // Update is called once per frame
@@ -111,6 +111,17 @@ public class CommonGameManager : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void ApplyLanguage()
+    {
+        FadeScreen(true, actionAfter: () =>
+        {
+            FadeScreen(false, actionBefore: () =>
+            {
+                DataFunction.ApplyLanguage();
+            });
+        });
     }
 
     private IEnumerator GenerateInitialComponents()

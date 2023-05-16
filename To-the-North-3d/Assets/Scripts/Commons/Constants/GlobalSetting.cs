@@ -12,7 +12,11 @@ public static class GlobalSetting
         set
         {
             language = value;
-            DataFunction.ApplyLanguage();
+            if (CommonGameManager.Instance)
+            {
+                CommonGameManager.Instance.ApplyLanguage();
+                return;
+            }
         }
         get
         {

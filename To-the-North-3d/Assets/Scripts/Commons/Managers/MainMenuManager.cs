@@ -19,6 +19,7 @@ namespace Assets.Scripts.Commons
             fadeImage = fadeImageTf.GetComponent<Image>();
             GlobalComponent.Common.Text.MainMenu.startGame = startGame;
             GlobalComponent.Common.Text.MainMenu.toDesktop = toDesktop;
+            ApplyLanguage();
         }
 
         private void Start()
@@ -33,6 +34,17 @@ namespace Assets.Scripts.Commons
                 GlobalStatus.resetLoading();
                 GlobalStatus.nextScene = targetSceneName;
                 SceneManager.LoadScene("Loading");
+            });
+        }
+
+        public void ApplyLanguage()
+        {
+            FadeScreen(true, actionAfter: () =>
+            {
+                FadeScreen(false, actionBefore: () =>
+                {
+                    DataFunction.ApplyLanguage();
+                });
             });
         }
 
