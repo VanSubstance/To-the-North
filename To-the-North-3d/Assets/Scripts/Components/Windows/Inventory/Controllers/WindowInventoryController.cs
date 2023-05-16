@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Assets.Scripts.Events.Controllers;
 using Assets.Scripts.Items;
 using UnityEngine;
 
@@ -116,14 +117,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
             contentByType[ContentType.Looting] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Looting);
             contentByType[ContentType.Equipment] = Instantiate(containerEquipment, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentEquipmentController>(ContentType.Equipment);
 
-            /**
-             * 테스트
-             * I키 -> 인벤토리
-             * L : 루팅 | C: 장착 | R: 인벤토리(배낭)
-             */
-            CallContent(Side.L, ContentType.Looting);
-            CallContent(Side.R, ContentType.Inventory);
-            CallContent(Side.C, ContentType.Equipment);
+            OnClose();
         }
 
         /// <summary>
@@ -133,6 +127,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         /// <param name="_targetType">목표 타입</param>
         private void CallContent(Side side, ContentType _targetType)
         {
+            if (contentsVisual[side].Container.Equals(contentByType[_targetType])) return;
             contentsVisual[side].Container.SetParent(storeTf);
             (contentsVisual[side] = contentByType[_targetType]).Container.SetParent(visualTf);
             contentsVisual[side].Container.SetSiblingIndex((int)side);
@@ -149,10 +144,10 @@ namespace Assets.Scripts.Components.Windows.Inventory
             switch (_type)
             {
                 case ContentType.Inventory:
-                    ((ContentSlotController)contentByType[ContentType.Inventory]).GenerateItem(g, _info);
+                    ContentInventory.GenerateItem(g, _info);
                     break;
                 case ContentType.Looting:
-                    ((ContentSlotController)contentByType[ContentType.Looting]).GenerateItem(g, _info);
+                    ContentLoot.GenerateItem(g, _info);
                     break;
                 case ContentType.None_L:
                 case ContentType.None_C:
@@ -162,7 +157,6 @@ namespace Assets.Scripts.Components.Windows.Inventory
                 case ContentType.Equipment:
                     break;
             }
-            ContentInventory.itemsAttached.Add(_info);
         }
 
         /// <summary>
@@ -178,10 +172,10 @@ namespace Assets.Scripts.Components.Windows.Inventory
             switch (_type)
             {
                 case ContentType.Inventory:
-                    s = ((ContentSlotController)contentByType[ContentType.Inventory]).GenerateItemWithAuto(g, _info, ContentType.Inventory);
+                    s = ContentInventory.GenerateItemWithAuto(g, _info, ContentType.Inventory);
                     break;
                 case ContentType.Looting:
-                    s = ((ContentSlotController)contentByType[ContentType.Looting]).GenerateItemWithAuto(g, _info, ContentType.Looting);
+                    s = ContentLoot.GenerateItemWithAuto(g, _info, ContentType.Looting);
                     break;
                 case ContentType.None_L:
                 case ContentType.None_C:
@@ -191,7 +185,6 @@ namespace Assets.Scripts.Components.Windows.Inventory
                 case ContentType.Equipment:
                     break;
             }
-            ContentInventory.itemsAttached.Add(s);
         }
 
         /// <summary>
@@ -208,6 +201,24 @@ namespace Assets.Scripts.Components.Windows.Inventory
             return null;
         }
 
+        private EventLootingController CurLoot;
+        /// <summary>
+        /// 루팅 열기
+        /// </summary>
+        /// <param name="eventLoot">현재 열 루팅 이벤트</param>
+        public void Open(EventLootingController eventLoot)
+        {
+            if (CurLoot != null) return;
+            CurLoot = eventLoot;
+            CallContent(Side.L, ContentType.Looting);
+            foreach (ItemBaseInfo _itemInfo in eventLoot.itemsLoot)
+            {
+                if (_itemInfo.Ctrl != null) continue;
+                GenerateItemObjectWithAuto(ContentType.Looting, _itemInfo);
+            }
+            Open();
+        }
+
         public override void OnOpen()
         {
         }
@@ -215,7 +226,19 @@ namespace Assets.Scripts.Components.Windows.Inventory
         public override void OnClose()
         {
             // 루팅 비우기
-            ((ContentSlotController)contentByType[ContentType.Looting]).Clear();
+            if (CurLoot != null)
+            {
+                CurLoot.itemsLoot = ContentLoot.Clear();
+                CurLoot = null;
+            }
+            else
+            {
+                ContentLoot.Clear();
+            }
+            // 일반 인벤토리로 리셋
+            CallContent(Side.L, ContentType.None_L);
+            CallContent(Side.C, ContentType.Equipment);
+            CallContent(Side.R, ContentType.Inventory);
         }
 
         private enum Side

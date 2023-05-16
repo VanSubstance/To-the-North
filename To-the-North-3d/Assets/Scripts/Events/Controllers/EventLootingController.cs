@@ -1,14 +1,13 @@
+using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Events.Abstracts;
 using Assets.Scripts.Items;
-using Assets.Scripts.Components.Windows.Inventory;
 using UnityEngine;
+using System.Linq;
 
 namespace Assets.Scripts.Events.Controllers
 {
-    public class EventRootingController : AbsEventBaseController
+    public class EventLootingController : AbsEventBaseController
     {
-        [SerializeField]
-        private bool isItemFixed;
         [SerializeField]
         private ItemBaseInfo[] itemsFixed;
         [SerializeField]
@@ -16,24 +15,47 @@ namespace Assets.Scripts.Events.Controllers
         [SerializeField]
         private ItemInfoWithWeight[] itemsRandom;
 
-        private ItemBaseInfo[] itemsLoot;
+        [HideInInspector]
+        public ItemBaseInfo[] itemsLoot;
         /// <summary>
         /// 실제 루팅 아이템 생성하기
         /// </summary>
         protected new void Awake()
         {
             base.Awake();
-            if (isItemFixed)
+            if (itemsFixed.Length > 0)
             {
                 itemsLoot = new ItemBaseInfo[itemsFixed.Length];
                 for (int i = 0; i < itemsFixed.Length; i++)
                 {
                     itemsLoot[i] = Instantiate(itemsFixed[i]);
                 }
-            } else
-            {
-
+                itemsFixed = null;
+                return;
             }
+
+            itemsLoot = new ItemBaseInfo[amountIfRandom];
+            int t = 0;
+            foreach (ItemInfoWithWeight _info in itemsRandom)
+            {
+                _info.weight = t += _info.weight;
+            }
+            int r, idx = 0;
+            while (idx < amountIfRandom)
+            {
+                r = Random.Range(0, t);
+                foreach (ItemInfoWithWeight _info in itemsRandom)
+                {
+                    if (r < _info.weight)
+                    {
+                        itemsLoot[idx] = Instantiate(_info.info);
+                        idx++;
+                        break;
+                    }
+                }
+            }
+            itemsRandom = null;
+            return;
         }
 
         /// <summary>
@@ -47,7 +69,7 @@ namespace Assets.Scripts.Events.Controllers
                 if (_itemInfo.Ctrl != null) continue;
                 WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Looting, _itemInfo);
             }
-            WindowInventoryController.Instance.Open();
+            WindowInventoryController.Instance.Open(this);
         }
 
         [System.Serializable]

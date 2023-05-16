@@ -20,6 +20,7 @@ public abstract class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
     public void Open()
     {
         InGameStatus.User.isPause = true;
+        transform.SetAsLastSibling();
         OnOpen();
         gameObject.SetActive(true);
     }
@@ -39,7 +40,6 @@ public abstract class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
         bool toOpen = purpose == 1 ? true : purpose == 2 ? false :
             gameObject.activeSelf ? false : true;
         ;
-        transform.SetAsLastSibling();
         if (toOpen)
         {
             Open();

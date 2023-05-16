@@ -139,7 +139,16 @@ namespace Assets.Scripts.Items
             ResizeOnPurpose(attachSlot);
             curSlot = attachSlot;
             nextSlot = prevSlot = null;
+            if (info.InvenInfo == null)
+            {
+                info.InvenInfo = new()
+                {
+                    itemInfo = info,
+                    pos = new Vector2(attachSlot.row, attachSlot.column),
+                };
+            }
             attachSlot.ItemTf = transform;
+            attachSlot.EnrollItemToSlot();
             ApplyActionForOnlyContentWithSlots(attachSlot, (_slot) =>
             {
                 _slot.ItemTf = transform;
@@ -177,6 +186,7 @@ namespace Assets.Scripts.Items
         public void ItemDetach()
         {
             if (curSlot == null) return;
+            curSlot.DetachItemFromSlot();
             info.InvenInfo = null;
             ApplyActionForOnlyContentWithSlots(curSlot, (_slot) =>
             {
@@ -588,10 +598,10 @@ namespace Assets.Scripts.Items
         /// <param name="type">컨텐츠 타입</param>
         /// <param name="_info">아이템 정보</param>
         /// <param name="slotQualified">반환할 설치 가능 슬롯</param>
-        /// <param name="newInventoryInfo">반환할 심규 인벤로티 객체</param>
+        /// <param name="newInventoryInfo">반환할 신규 인벤로티 객체</param>
         private void SeekSlotAttachable(ContentType type, ItemBaseInfo _info, out InventorySlotController slotQualified, out ItemInventoryInfo newInventoryInfo)
         {
-            InventorySlotController cur = null;
+            InventorySlotController cur;
             for (int i = 0; i < 14; i++)
             {
                 for (int j = 0; j < 10; j++)

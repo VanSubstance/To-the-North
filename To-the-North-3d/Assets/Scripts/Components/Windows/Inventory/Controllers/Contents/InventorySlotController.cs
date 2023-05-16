@@ -60,16 +60,24 @@ public class InventorySlotController : MonoBehaviour
     {
         get
         {
-            ContentBaseController t;
-            if ((t = transform.parent.GetComponent<ContentBaseController>()) != null)
-            {
-                return transform.parent.GetComponent<ContentBaseController>().ContentType;
-            }
-            if ((t = transform.parent.parent.GetComponent<ContentBaseController>()) != null)
-            {
-                return transform.parent.parent.GetComponent<ContentBaseController>().ContentType;
-            }
+            if (ContentBase != null) return ContentBase.ContentType;
             return ContentType.Undefined;
+        }
+    }
+
+    public ContentBaseController ContentBase
+    {
+        get
+        {
+            if ((transform.parent.GetComponent<ContentBaseController>()) != null)
+            {
+                return transform.parent.GetComponent<ContentBaseController>();
+            }
+            if ((transform.parent.parent.GetComponent<ContentBaseController>()) != null)
+            {
+                return transform.parent.parent.GetComponent<ContentBaseController>();
+            }
+            return null;
         }
     }
 
@@ -131,15 +139,37 @@ public class InventorySlotController : MonoBehaviour
             if (transform.CompareTag("HotKeySlot"))
             {
                 GetComponent<BoxCollider>().size = new Vector3(100, 100, 1);
-            } else
+            }
+            else
             {
                 GetComponent<BoxCollider>().size = new Vector3(50, 50, 1);
             }
-        } else
+        }
+        else
         {
             Vector2 t = GetComponent<RectTransform>().sizeDelta;
             GetComponent<BoxCollider>().size = new Vector3(t.x, t.y, 1);
         }
         IsConsidered = false;
+    }
+
+    public bool EnrollItemToSlot()
+    {
+        if (ContainerType.Equals(ContentType.Looting) || ContainerType.Equals(ContentType.Inventory))
+        {
+            ((ContentSlotController)ContentBase).itemsAttached.Add(AttachedInfo.InvenInfo);
+            return true;
+        }
+        return false;
+    }
+
+    public bool DetachItemFromSlot()
+    {
+        if (ContainerType.Equals(ContentType.Looting) || ContainerType.Equals(ContentType.Inventory))
+        {
+            ((ContentSlotController)ContentBase).itemsAttached.Remove(AttachedInfo.InvenInfo);
+            return true;
+        }
+        return false;
     }
 }
