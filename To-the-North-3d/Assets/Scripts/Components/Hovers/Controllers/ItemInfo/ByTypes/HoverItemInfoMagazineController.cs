@@ -1,7 +1,7 @@
 using Assets.Scripts.Items;
 using UnityEngine;
 
-namespace Assets.Scripts.Components.Popups
+namespace Assets.Scripts.Components.Hovers
 {
     public class HoverItemInfoMagazineController : MonoBehaviour, IHoverItemInfo
     {

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Assets.Scripts.Items;
 
-namespace Assets.Scripts.Components.Popups
+namespace Assets.Scripts.Components.Hovers
 {
     public class HoverItemInfoBaseController : MonoBehaviour, IHoverItemInfo
     {

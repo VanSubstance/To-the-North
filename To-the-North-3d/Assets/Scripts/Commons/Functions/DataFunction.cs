@@ -26,4 +26,16 @@ public static class DataFunction
             JsonConvert.SerializeObject(objectToSave, Formatting.Indented)
             );
     }
+
+    public static Queue<string> LoadTextFromFile(string filePath)
+    {
+        StreamReader sr = new StreamReader($"Assets/Resources/Texts/{GlobalSetting.Langauge}/{filePath}", System.Text.Encoding.Default, true);
+        Queue<string> res = new();
+        string s;
+        while ((s = sr.ReadLine()) != null)
+        {
+            res.Enqueue(s);
+        }
+        return res;
+    }
 }

@@ -2,21 +2,21 @@ using Assets.Scripts.Commons;
 using Assets.Scripts.Items;
 using UnityEngine;
 
-namespace Assets.Scripts.Components.Popups
+namespace Assets.Scripts.Components.Hovers
 {
-    public class HoverItemInfoContainerController : MouseTrackController, IControllByKey
+    public class HoverItemInfoController : MouseTrackController, IControllByKey
     {
         private bool isOccupied = false;
         private HoveringItemInfoChangeControl itemInfoControl;
         private IHoverItemInfo[] infoDisplayFunctions;
-        private static HoverItemInfoContainerController _instance;
-        public static HoverItemInfoContainerController Instance
+        private static HoverItemInfoController _instance;
+        public static HoverItemInfoController Instance
         {
             get
             {
                 if (!_instance)
                 {
-                    _instance = FindObjectOfType(typeof(HoverItemInfoContainerController)) as HoverItemInfoContainerController;
+                    _instance = FindObjectOfType(typeof(HoverItemInfoController)) as HoverItemInfoController;
                     if (_instance == null)
                         Debug.Log("no Singleton obj");
                 }

@@ -2,7 +2,7 @@ using Assets.Scripts.Items;
 using TMPro;
 using UnityEngine;
 
-namespace Assets.Scripts.Components.Popups
+namespace Assets.Scripts.Components.Hovers
 {
     public class HoverItemInfoBulletController : MonoBehaviour, IHoverItemInfo
     {

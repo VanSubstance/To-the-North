@@ -1,4 +1,5 @@
 using Assets.Scripts.Items;
+using Assets.Scripts.Components.Hovers;
 using UnityEngine;
 
 namespace Assets.Scripts.Commons
@@ -33,6 +34,7 @@ namespace Assets.Scripts.Commons
         }
         private void Start()
         {
+            ConditionInfo.LoadConditionInfosFromText();
             LoadInventoryWithAuto();
         }
 
