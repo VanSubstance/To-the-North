@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Assets.Scripts.Events.Controllers;
 using Assets.Scripts.Items;
 using UnityEngine;
 
@@ -200,33 +201,40 @@ namespace Assets.Scripts.Components.Windows.Inventory
             return null;
         }
 
-        public void Open(ContentType type)
+        private EventLootingController CurLoot;
+        /// <summary>
+        /// 루팅 열기
+        /// </summary>
+        /// <param name="eventLoot">현재 열 루팅 이벤트</param>
+        public void Open(EventLootingController eventLoot)
         {
-            switch (type)
+            if (CurLoot != null) return;
+            CurLoot = eventLoot;
+            CallContent(Side.L, ContentType.Looting);
+            foreach (ItemBaseInfo _itemInfo in eventLoot.itemsLoot)
             {
-                case ContentType.Inventory:
-                    CallContent(Side.L, ContentType.None_L);
-                    break;
-                case ContentType.Looting:
-                    CallContent(Side.L, ContentType.Looting);
-                    break;
-                case ContentType.Equipment:
-                    break;
-                case ContentType.Undefined:
-                    break;
+                if (_itemInfo.Ctrl != null) continue;
+                GenerateItemObjectWithAuto(ContentType.Looting, _itemInfo);
             }
             Open();
         }
 
         public override void OnOpen()
         {
-            Debug.Log($"Looting:: {ContentLoot.itemsAttached.Count}");
         }
 
         public override void OnClose()
         {
             // 루팅 비우기
-            ContentLoot.Clear();
+            if (CurLoot != null)
+            {
+                CurLoot.itemsLoot = ContentLoot.Clear();
+                CurLoot = null;
+            }
+            else
+            {
+                ContentLoot.Clear();
+            }
             // 일반 인벤토리로 리셋
             CallContent(Side.L, ContentType.None_L);
             CallContent(Side.C, ContentType.Equipment);

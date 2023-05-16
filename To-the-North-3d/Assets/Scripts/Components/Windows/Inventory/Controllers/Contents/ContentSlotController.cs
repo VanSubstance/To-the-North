@@ -55,14 +55,20 @@ namespace Assets.Scripts.Components.Windows.Inventory
             return gen.InitItem(_info, type: _type);
         }
 
-        public void Clear()
+        /// <summary>
+        /// 현재 슬롯을 비우고 적재되어있던 아이템 어레이 반환
+        /// </summary>
+        /// <returns></returns>
+        public ItemBaseInfo[] Clear()
         {
-            foreach (ItemInventoryInfo _info in itemsAttached)
+            ItemBaseInfo[] res = itemsAttached.ConvertAll((_info) => _info.itemInfo).ToArray();
+            foreach (ItemInventoryInfo _info in new List<ItemInventoryInfo>(itemsAttached))
             {
                 if (_info.itemInfo == null) continue;
                 _info.itemInfo.Ctrl.ItemTruncate();
             }
             itemsAttached.Clear();
+            return res;
         }
     }
 }

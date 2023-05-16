@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Events.Controllers
 {
-    public class EventRootingController : AbsEventBaseController
+    public class EventLootingController : AbsEventBaseController
     {
         [SerializeField]
         private bool isItemFixed;
@@ -16,7 +16,7 @@ namespace Assets.Scripts.Events.Controllers
         [SerializeField]
         private ItemInfoWithWeight[] itemsRandom;
 
-        private ItemBaseInfo[] itemsLoot;
+        public ItemBaseInfo[] itemsLoot;
         /// <summary>
         /// 실제 루팅 아이템 생성하기
         /// </summary>
@@ -47,7 +47,7 @@ namespace Assets.Scripts.Events.Controllers
                 if (_itemInfo.Ctrl != null) continue;
                 WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Looting, _itemInfo);
             }
-            WindowInventoryController.Instance.Open(ContentType.Looting);
+            WindowInventoryController.Instance.Open(this);
         }
 
         [System.Serializable]

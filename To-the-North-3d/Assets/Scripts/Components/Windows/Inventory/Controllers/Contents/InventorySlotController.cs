@@ -139,11 +139,13 @@ public class InventorySlotController : MonoBehaviour
             if (transform.CompareTag("HotKeySlot"))
             {
                 GetComponent<BoxCollider>().size = new Vector3(100, 100, 1);
-            } else
+            }
+            else
             {
                 GetComponent<BoxCollider>().size = new Vector3(50, 50, 1);
             }
-        } else
+        }
+        else
         {
             Vector2 t = GetComponent<RectTransform>().sizeDelta;
             GetComponent<BoxCollider>().size = new Vector3(t.x, t.y, 1);
