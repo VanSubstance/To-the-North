@@ -21704,6 +21704,30 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1399138213108615271, guid: 3cef0c3ce584da84abfd44153c1f8c57, type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
+    - target: {fileID: 2582904470739548648, guid: 3cef0c3ce584da84abfd44153c1f8c57, type: 3}
+      propertyPath: info
+      value: 
+      objectReference: {fileID: 11400000, guid: a2d2fd79d03ad9845aabeb69a1b91dda, type: 2}
+    - target: {fileID: 3465872289032527175, guid: 3cef0c3ce584da84abfd44153c1f8c57, type: 3}
+      propertyPath: info
+      value: 
+      objectReference: {fileID: 11400000, guid: 8449883dca26d474da7c005ae68d0620, type: 2}
+    - target: {fileID: 4496575162128271169, guid: 3cef0c3ce584da84abfd44153c1f8c57, type: 3}
+      propertyPath: info
+      value: 
+      objectReference: {fileID: 11400000, guid: 28f7c59c66deb014f8fd4aa0a8f16213, type: 2}
+    - target: {fileID: 5554851055265564413, guid: 3cef0c3ce584da84abfd44153c1f8c57, type: 3}
+      propertyPath: info
+      value: 
+      objectReference: {fileID: 11400000, guid: da750c1c655768542acc2de1a5d82428, type: 2}
+    - target: {fileID: 6983585127228666330, guid: 3cef0c3ce584da84abfd44153c1f8c57, type: 3}
+      propertyPath: info
+      value: 
+      objectReference: {fileID: 11400000, guid: 22b519e8083ed92418c81bf62c9a6dec, type: 2}
     - target: {fileID: 7249881556927368018, guid: 3cef0c3ce584da84abfd44153c1f8c57, type: 3}
       propertyPath: m_RootOrder
       value: 0

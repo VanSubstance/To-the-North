@@ -29,6 +29,14 @@ public class CommonGameManager : MonoBehaviour
     private ScreenHitFilterController _screenHitFilterController;
     private Transform _screenDizzinessTf;
 
+    private Transform uiTf
+    {
+        get
+        {
+            return UIManager.Instance.transform;
+        }
+    } 
+
     private static CommonGameManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
     public static CommonGameManager Instance
@@ -131,8 +139,7 @@ public class CommonGameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.01f);
         }
-        Transform uiTf = GameObject.Find("UI").transform;
-        if (uiTf.GetComponent<UIManager>().isInit)
+        if (UIManager.Instance.isInit)
         {
             CameraTrackControlller.Instance.transform.position = new Vector3(GlobalStatus.userInitPosition[0], 0, GlobalStatus.userInitPosition[1]);
             UserBaseController.Instance.position = new Vector3(GlobalStatus.userInitPosition[0], .25f, GlobalStatus.userInitPosition[1]);
@@ -141,7 +148,7 @@ public class CommonGameManager : MonoBehaviour
             curStatus = 0;
             yield break;
         }
-        uiTf.GetComponent<UIManager>().isInit = true;
+        UIManager.Instance.isInit = true;
         // 페이드아웃 이미지 추가
         Transform imageForFade = Instantiate(fadeImagePrefab, uiTf);
         imageForFade.localPosition = Vector3.zero;
@@ -157,13 +164,9 @@ public class CommonGameManager : MonoBehaviour
 
             // 인벤토리 모달 추가
             Transform windowForInventory = Instantiate(inventoryWindowPrefab, uiTf);
-            //windowForPause.localPosition = Vector3.zero;
-            //keyAdded = uiTf.AddComponent<KeyToggleManager>();
-            //keyAdded.InitContent(KeyCode.I, windowForInventory.GetComponent<IControllByKey>());
 
             Transform hovering = Instantiate(hoveringItemInfo, uiTf);
-            KeyToggleManager keyAdded = uiTf.AddComponent<KeyToggleManager>();
-            keyAdded.InitContent(KeyCode.I, hovering.GetComponent<IControllByKey>());
+            UIManager.Instance.AddKeyToggleManager(KeyCode.I, hovering.GetComponent<IControllByKey>());
 
             hovering = Instantiate(hoveringConditionInfo, uiTf);
 

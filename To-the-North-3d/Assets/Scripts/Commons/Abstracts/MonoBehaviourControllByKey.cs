@@ -10,7 +10,7 @@ public abstract class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
     {
         if (keyToToggle != KeyCode.None)
         {
-            UIManager.Instance.gameObject.AddComponent<KeyToggleManager>().InitContent(keyToToggle, this);
+            UIManager.Instance.AddKeyToggleManager(keyToToggle, this);
             gameObject.SetActive(false);
         }
     }
@@ -53,4 +53,9 @@ public abstract class MonoBehaviourControllByKey : MonoBehaviour, IControllByKey
     public abstract void OnOpen();
 
     public abstract void OnClose();
+
+    public bool IsOpen()
+    {
+        return gameObject.activeSelf;
+    }
 }

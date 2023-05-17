@@ -152,12 +152,22 @@ namespace Assets.Scripts.Components.Hovers
             OnHoverExit();
         }
 
+        public void Close()
+        {
+            OnHoverExit();
+        }
+
         public void OnOpen()
         {
         }
 
         public void OnClose()
         {
+        }
+
+        public bool IsOpen()
+        {
+            return gameObject.activeSelf;
         }
 
         private enum DisplayIndex

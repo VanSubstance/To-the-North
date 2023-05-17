@@ -15,4 +15,15 @@ public interface IControllByKey
     /// 윈도우 닫은 직후 실행될 함수
     /// </summary>
     public void OnClose();
+
+    /// <summary>
+    /// 열려있는지 확인하는 함수
+    /// </summary>
+    /// <returns></returns>
+    public bool IsOpen();
+
+    /// <summary>
+    /// 강제 닫기 함수
+    /// </summary>
+    public void Close();
 }

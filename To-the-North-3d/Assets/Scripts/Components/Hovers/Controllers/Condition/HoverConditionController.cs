@@ -87,5 +87,14 @@ namespace Assets.Scripts.Components.Hovers
         public void OnClose()
         {
         }
+
+        public bool IsOpen()
+        {
+            return gameObject.activeSelf;
+        }
+
+        public void Close()
+        {
+        }
     }
 }
