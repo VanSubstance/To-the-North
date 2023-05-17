@@ -1,12 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.Commons;
-using UnityEngine;
 using System.IO;
-using Newtonsoft.Json;
-using UnityEngine.SceneManagement;
+using Assets.Scripts.Commons;
 using Assets.Scripts.Components.Hovers;
 using Assets.Scripts.Users;
+using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 public static class DataFunction
 {
@@ -45,95 +43,89 @@ public static class DataFunction
 
     public static void ApplyLanguage()
     {
-        CommonGameManager.Instance.FadeScreen(true, actionAfter: () =>
+        // 텍스트 불러오기
+        // 옵션 관련
+        Queue<string> curQ = LoadTextFromFile("Option");
+        GlobalText.Common.ReturnToGame = curQ.Dequeue();
+        GlobalText.Common.GoToOption = curQ.Dequeue();
+        GlobalText.Common.SaveGame = curQ.Dequeue();
+        GlobalText.Common.LoadGame = curQ.Dequeue();
+        GlobalText.Common.StartGame = curQ.Dequeue();
+        GlobalText.Common.GoToDesktop = curQ.Dequeue();
+        GlobalText.Common.Loading = curQ.Dequeue();
+        GlobalText.Common.Back = curQ.Dequeue();
+        GlobalText.Common.Language = curQ.Dequeue();
+
+        // 인벤토리 관련
+        curQ = LoadTextFromFile("Inventory");
+        GlobalText.Inventory.Inven = curQ.Dequeue();
+        GlobalText.Inventory.Equipment = curQ.Dequeue();
+        GlobalText.Inventory.Looting = curQ.Dequeue();
+        GlobalText.Inventory.Helmet = curQ.Dequeue();
+        GlobalText.Inventory.Mask = curQ.Dequeue();
+        GlobalText.Inventory.Body = curQ.Dequeue();
+        GlobalText.Inventory.Backpack = curQ.Dequeue();
+        GlobalText.Inventory.WeaponPri = curQ.Dequeue();
+        GlobalText.Inventory.WeaponSec = curQ.Dequeue();
+
+        // 상태이상 관련
+        curQ = LoadTextFromFile("Condition");
+        ConditionInfo newCondition = new();
+        ConditionType curType;
+        string s;
+        while (curQ.TryDequeue(out s))
         {
-            CommonGameManager.Instance.FadeScreen(false, actionBefore: () =>
+            // 타입: 1줄
+            curType = System.Enum.Parse<ConditionType>(s);
+            // 제목: 1줄
+            newCondition.title = curQ.Dequeue();
+            newCondition.description = string.Empty;
+            // 효과: n줄
+            while (curQ.TryDequeue(out s))
             {
-                // 텍스트 불러오기
-                // 옵션 관련
-                Queue<string> curQ = LoadTextFromFile("Option");
-                GlobalText.Common.ReturnToGame = curQ.Dequeue();
-                GlobalText.Common.GoToOption = curQ.Dequeue();
-                GlobalText.Common.SaveGame = curQ.Dequeue();
-                GlobalText.Common.LoadGame = curQ.Dequeue();
-                GlobalText.Common.StartGame = curQ.Dequeue();
-                GlobalText.Common.GoToDesktop = curQ.Dequeue();
-                GlobalText.Common.Loading = curQ.Dequeue();
-                GlobalText.Common.Back = curQ.Dequeue();
-                GlobalText.Common.Language = curQ.Dequeue();
+                if (s == string.Empty) break;
+                newCondition.description += $"{s}\n";
+            }
+            GlobalText.Conditions[curType] = newCondition;
+            newCondition = new();
+        }
 
-                // 인벤토리 관련
-                curQ = LoadTextFromFile("Inventory");
-                GlobalText.Inventory.Inven = curQ.Dequeue();
-                GlobalText.Inventory.Equipment = curQ.Dequeue();
-                GlobalText.Inventory.Looting = curQ.Dequeue();
-                GlobalText.Inventory.Helmet = curQ.Dequeue();
-                GlobalText.Inventory.Mask = curQ.Dequeue();
-                GlobalText.Inventory.Body = curQ.Dequeue();
-                GlobalText.Inventory.Backpack = curQ.Dequeue();
-                GlobalText.Inventory.WeaponPri = curQ.Dequeue();
-                GlobalText.Inventory.WeaponSec = curQ.Dequeue();
+        // 아이템 관련
+        curQ = LoadTextFromFile("Item");
+        GlobalText.Item.Armor.tPenatration = curQ.Dequeue();
+        GlobalText.Item.Armor.tImpact = curQ.Dequeue();
+        GlobalText.Item.Armor.tHeat = curQ.Dequeue();
 
-                // 상태이상 관련
-                curQ = LoadTextFromFile("Condition");
-                ConditionInfo newCondition = new();
-                ConditionType curType;
-                string s;
-                while (curQ.TryDequeue(out s))
-                {
-                    // 타입: 1줄
-                    curType = System.Enum.Parse<ConditionType>(s);
-                    // 제목: 1줄
-                    newCondition.title = curQ.Dequeue();
-                    newCondition.description = string.Empty;
-                    // 효과: n줄
-                    while (curQ.TryDequeue(out s))
-                    {
-                        if (s == string.Empty) break;
-                        newCondition.description += $"{s}\n";
-                    }
-                    GlobalText.Conditions[curType] = newCondition;
-                    newCondition = new();
-                }
+        GlobalText.Item.Bullet.tBulletType = curQ.Dequeue();
+        GlobalText.Item.Bullet.tAccelSpd = curQ.Dequeue();
 
-                // 아이템 관련
-                curQ = LoadTextFromFile("Item");
-                GlobalText.Item.Armor.tPenatration = curQ.Dequeue();
-                GlobalText.Item.Armor.tImpact = curQ.Dequeue();
-                GlobalText.Item.Armor.tHeat = curQ.Dequeue();
+        GlobalText.Item.Damage.tPwPene = curQ.Dequeue();
+        GlobalText.Item.Damage.tPwImp = curQ.Dequeue();
+        GlobalText.Item.Damage.tPwKnock = curQ.Dequeue();
+        GlobalText.Item.Damage.tDmgPene = curQ.Dequeue();
+        GlobalText.Item.Damage.tDmgImp = curQ.Dequeue();
 
-                GlobalText.Item.Bullet.tBulletType = curQ.Dequeue();
-                GlobalText.Item.Bullet.tAccelSpd = curQ.Dequeue();
+        GlobalText.Item.Weapon.tAtkSpd = curQ.Dequeue();
+        GlobalText.Item.Weapon.tHandType = curQ.Dequeue();
 
-                GlobalText.Item.Damage.tPwPene = curQ.Dequeue();
-                GlobalText.Item.Damage.tPwImp = curQ.Dequeue();
-                GlobalText.Item.Damage.tPwKnock = curQ.Dequeue();
-                GlobalText.Item.Damage.tDmgPene = curQ.Dequeue();
-                GlobalText.Item.Damage.tDmgImp = curQ.Dequeue();
-
-                GlobalText.Item.Weapon.tAtkSpd = curQ.Dequeue();
-                GlobalText.Item.Weapon.tHandType = curQ.Dequeue();
-
-                GlobalText.Item.WeaponRange.tReload = curQ.Dequeue();
-                GlobalText.Item.WeaponRange.tRange = curQ.Dequeue();
-                GlobalText.Item.WeaponRange.tProjSpd = curQ.Dequeue();
-                GlobalText.Item.WeaponRange.tBulletType = curQ.Dequeue();
+        GlobalText.Item.WeaponRange.tReload = curQ.Dequeue();
+        GlobalText.Item.WeaponRange.tRange = curQ.Dequeue();
+        GlobalText.Item.WeaponRange.tProjSpd = curQ.Dequeue();
+        GlobalText.Item.WeaponRange.tBulletType = curQ.Dequeue();
 
 
-                switch (SceneManager.GetActiveScene().name)
-                {
-                    case "MainMenu":
-                        ApplyLanguageMainMenu();
-                        break;
-                    case "Loading":
-                        ApplyLanguageLoading();
-                        break;
-                    default:
-                        ApplyLanguageInGame();
-                        break;
-                }
-            });
-        });
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "MainMenu":
+                ApplyLanguageMainMenu();
+                break;
+            case "Loading":
+                ApplyLanguageLoading();
+                break;
+            default:
+                ApplyLanguageInGame();
+                break;
+        }
     }
 
     private static void ApplyLanguageMainMenu()

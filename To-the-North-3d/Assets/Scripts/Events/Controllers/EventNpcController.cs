@@ -46,7 +46,6 @@ namespace Assets.Scripts.Events.Controllers
         /// </summary>
         public override void OnInteraction()
         {
-            baseController.IsPause = true;
             StartCoroutine(StartConversation());
         }
 

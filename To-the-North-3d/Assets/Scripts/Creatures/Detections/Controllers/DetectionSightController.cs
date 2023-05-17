@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Events;
 using UnityEngine;
@@ -210,6 +211,7 @@ namespace Assets.Scripts.Creatures.Detections
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
             List<Collider> targetsInViewRadius = new List<Collider>();
             targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask));
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.npcMask));
             for (int i = 0; i < targetsInViewRadius.Count; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
@@ -222,11 +224,11 @@ namespace Assets.Scripts.Creatures.Detections
                     // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
                     if (Physics.Raycast(transform.position, new Vector3(dirToTarget.x, 0, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
                     {
-                        // 해당 이벤트 반짝반짝 on
+                        // 해당 이벤트 반짝반짝 off
                     }
                     else
                     {
-                        // 해당 이벤트 반짝반짝 off
+                        // 해당 이벤트 반짝반짝 on
                         try
                         {
                             target.GetComponent<IEventInteraction>().StartTrackingInteraction(transform);
@@ -238,14 +240,14 @@ namespace Assets.Scripts.Creatures.Detections
                 }
             }
             targetsInViewRadius.Clear();
-            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, User.Detection.Sight.Range, GlobalStatus.Constant.creatureMask | GlobalStatus.Constant.eventMask));
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, User.Detection.Sight.Range, GlobalStatus.Constant.creatureMask | GlobalStatus.Constant.eventMask | GlobalStatus.Constant.npcMask));
             if (targetsInViewRadius.Count > 0)
             {
                 // 주변 반경 안에 크리쳐 식별
-                IInteractionWithSight iSight;
+                IInteractionWithSight[] iSight;
                 foreach (Collider col in targetsInViewRadius)
                 {
-                    iSight = col.GetComponent<IInteractionWithSight>();
+                    iSight = col.GetComponents<IInteractionWithSight>();
                     Vector3 dirToTarget = (col.transform.position - transform.position).normalized;
                     float d = Math.Abs(CalculationFunctions.AngleFromDir(new Vector2(dirToTarget.x, dirToTarget.z)) - curDegree);
                     if (d < User.Detection.Sight.Degree / 2 || (360 - d) < User.Detection.Sight.Degree / 2)
@@ -255,23 +257,35 @@ namespace Assets.Scripts.Creatures.Detections
                         if (Physics.Raycast(transform.position, new Vector3(dirToTarget.x, 0, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
                         {
                             // 사이에 완전 장애물 존재
-                            iSight.DetectNone();
+                            foreach (IInteractionWithSight isight in iSight)
+                            {
+                                isight.DetectNone();
+                            }
                             continue;
                         }
 
                         if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - HeightForLow, transform.position.z), new Vector3(dirToTarget.x, 0, dirToTarget.z), dstToTarget, GlobalStatus.Constant.obstacleMask))
                         {
                             // 사이에 절반 장애물 존재
-                            iSight.DetectHalf();
+                            foreach (IInteractionWithSight isight in iSight)
+                            {
+                                isight.DetectHalf();
+                            }
                             continue;
                         }
 
                         // 사이에 장애물 존재하지 않음
-                        iSight.DetectFull();
+                        foreach (IInteractionWithSight isight in iSight)
+                        {
+                            isight.DetectFull();
+                        }
                         continue;
                     }
                     // 시야 각도 밖에서 식별
-                    iSight.DetectNone();
+                    foreach (IInteractionWithSight isight in iSight)
+                    {
+                        isight.DetectNone();
+                    }
                 }
             }
             return null;

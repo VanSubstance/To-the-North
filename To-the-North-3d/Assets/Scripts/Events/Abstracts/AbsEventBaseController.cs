@@ -13,7 +13,8 @@ namespace Assets.Scripts.Events.Abstracts
         {
             set
             {
-                spr.color = new Color(1, 1, 1, value);
+                if (spr)
+                    spr.color = new Color(1, 1, 1, value);
             }
         }
 

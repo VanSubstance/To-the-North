@@ -1,9 +1,23 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Assets.Scripts.Commons
 {
     public class UIManager : MonoBehaviour
     {
         public bool isInit = false;
+        private List<KeyToggleManager> keyToggleManagers = new List<KeyToggleManager>();
+
+        public bool IsAllClosed
+        {
+            get
+            {
+                return keyToggleManagers.Where((km) => km.IsOpen).ToArray().Length == 0;
+            }
+        }
+        public bool IsClosedInForce = false;
+
         private static UIManager _instance;
         // 인스턴스에 접근하기 위한 프로퍼티
         public static UIManager Instance
@@ -13,7 +27,6 @@ namespace Assets.Scripts.Commons
                 if (!_instance)
                 {
                     _instance = FindObjectOfType(typeof(UIManager)) as UIManager;
-
                     if (_instance == null)
                         Debug.Log("no Singleton obj");
                 }
@@ -53,6 +66,30 @@ namespace Assets.Scripts.Commons
             if (ConnectedCamera == null)
             {
                 ConnectedCamera = Camera.main;
+            }
+            TrackKeyManagers();
+        }
+
+        public void AddKeyToggleManager(KeyCode _keyToToggle, IControllByKey objectToControll)
+        {
+            KeyToggleManager newKM = gameObject.AddComponent<KeyToggleManager>();
+            newKM.InitContent(_keyToToggle, objectToControll);
+            keyToggleManagers.Add(newKM);
+        }
+
+        private void TrackKeyManagers()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (!IsAllClosed)
+                {
+                    foreach(KeyToggleManager km in keyToggleManagers)
+                    {
+                        km.CloseInForce();
+                    }
+                    IsClosedInForce = true;
+                    return;
+                }
             }
         }
     }

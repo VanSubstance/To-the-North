@@ -81,7 +81,7 @@ namespace Assets.Scripts.Users
             if (tickHealthCondition > 1)
             {
                 tickHealthCondition = 0;
-                TickHealthCondition();
+                //TickHealthCondition();
             }
             CheckConditions();
             CheckSwapWeapon();
