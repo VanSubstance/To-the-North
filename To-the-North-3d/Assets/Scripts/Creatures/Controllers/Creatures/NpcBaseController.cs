@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Controllers.Creatures
 {
-    internal class NpcBaseController : AIBaseController
+    public class NpcBaseController : AIBaseController
     {
         public override void DetectFull()
         {

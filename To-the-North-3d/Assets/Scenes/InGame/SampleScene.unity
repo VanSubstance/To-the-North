@@ -1047,7 +1047,7 @@ PrefabInstance:
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[8]
       value: 
-      objectReference: {fileID: 11400000, guid: bfccca620c9d81a47b27d4279675b22e, type: 2}
+      objectReference: {fileID: 11400000, guid: c6a15b1e10431164f953db5f3063fccc, type: 2}
     - target: {fileID: 7156092665159548779, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: itemsAutoAlign.Array.data[9]
       value: 
@@ -1270,6 +1270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInit: 0
+  IsClosedInForce: 0
 --- !u!1 &775100336
 GameObject:
   m_ObjectHideFlags: 0
@@ -21734,7 +21735,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7249881556927368018, guid: 3cef0c3ce584da84abfd44153c1f8c57, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.58
+      value: -2.51
       objectReference: {fileID: 0}
     - target: {fileID: 7249881556927368018, guid: 3cef0c3ce584da84abfd44153c1f8c57, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21742,7 +21743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7249881556927368018, guid: 3cef0c3ce584da84abfd44153c1f8c57, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.23
+      value: -0.88
       objectReference: {fileID: 0}
     - target: {fileID: 7249881556927368018, guid: 3cef0c3ce584da84abfd44153c1f8c57, type: 3}
       propertyPath: m_LocalRotation.w

@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94fd91681e2cfd445b7709446b613528, type: 3}
-  m_Name: Npc Test
+  m_Name: Shelter-C-01
   m_EditorClassIdentifier: 
+  npcPath: Shelter/C-01
   maxHp: 1000
   isActiveBehaviour: 0
   isRunAway: 0

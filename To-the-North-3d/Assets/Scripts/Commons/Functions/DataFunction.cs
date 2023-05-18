@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.IO;
 using Assets.Scripts.Commons;
+using Assets.Scripts.Components.Conversations.Objects;
 using Assets.Scripts.Components.Hovers;
 using Assets.Scripts.Users;
 using Newtonsoft.Json;
 using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public static class DataFunction
 {
@@ -41,6 +43,76 @@ public static class DataFunction
         return res;
     }
 
+    /// <summary>
+    /// NPC에 해당하는 대화 데이터 불러오기 함수
+    /// </summary>
+    /// <param name="npcPath"></param>
+    public static ConvInfo[] LoadConversation(string npcPath)
+    {
+        Queue<string> lines = LoadTextFromFile(npcPath);
+        string line;
+        string[] tokens;
+        ConvInfo[] res = new ConvInfo[100];
+        ConvInfo c;
+        ConvChoiceInfo choice;
+        ConvChoiceInfo.ChoiceCondition cond;
+
+        while (lines.TryDequeue(out line))
+        {
+            // 숫자로 시작
+            while (line.Equals(string.Empty))
+            {
+                // 빨리감기 -> 숫자 찾기
+                lines.TryDequeue(out line);
+            }
+            // 신규 ConvInfo 생성
+            c = new ConvInfo();
+            // 페이지 번호
+            res[int.Parse(line)] = c;
+            // 설명 할당
+            string d = string.Empty;
+            while ((line = lines.Dequeue()).Length != 0)
+            {
+                d += $"{line}\n";
+            }
+            c.desc = d;
+
+            // 선택지 찾기
+            while (true)
+            {
+                while (!line.Equals("?"))
+                {
+                    lines.TryDequeue(out line);
+                }
+                // ? <- 선택지 시작
+                choice = new ConvChoiceInfo();
+                // 조건들 추가
+                while (!(line = lines.Dequeue()).Equals("<"))
+                {
+                    tokens = line.Split(": ");
+                    cond = new ConvChoiceInfo.ChoiceCondition();
+                    cond.conditionType = System.Enum.Parse<ConvChoiceInfo.ChoiceCondition.ConditionType>(tokens[0]);
+                    cond.contentType = System.Enum.Parse<ConvChoiceInfo.ChoiceCondition.ContentType>(tokens[1]);
+                    cond.code = tokens[2];
+                    if (cond.contentType.Equals(ConvChoiceInfo.ChoiceCondition.ContentType.Item)) cond.amount = int.Parse(tokens[3]);
+                    choice.conditions.Add(cond);
+                }
+                // 텍스트 추가
+                choice.text = lines.Dequeue();
+                // 목표 지정
+                choice.next = lines.Dequeue().Replace("> ", "");
+                // 선택지 추가
+                c.choices.Add(choice);
+                // 선택지 끝인지 확인
+                if ((line = lines.Dequeue()).Equals("!")) break;
+            }
+        }
+        return res;
+    }
+
+    /// <summary>
+    /// 언어 변환 함수
+    /// </summary>
     public static void ApplyLanguage()
     {
         // 텍스트 불러오기

@@ -18,6 +18,8 @@ namespace Assets.Scripts.Components.Conversations.Controllers
         private ConvInfo[] curConvTrack;
         private int curActiveChoiceCnt = 0;
 
+        public string basePath;
+
         private void Awake()
         {
             choiceBtnList = new ButtonTextController[maxChoiceCnt];
@@ -32,22 +34,12 @@ namespace Assets.Scripts.Components.Conversations.Controllers
         private void InitConversation(ConvInfo info)
         {
             descUgui.text = info.desc;
-            if (info.choices == null)
-            {
-                choiceBtnList[0].SetText("[대화 종료]");
-                choiceBtnList[0].SetButtonAction(() =>
-                {
-                    GoToConversation(-1);
-                });
-                choiceBtnList[0].SetActice(true);
-                return;
-            }
-            curActiveChoiceCnt = info.choices.Length;
+            curActiveChoiceCnt = info.choices.Count;
             for (int i = 0; i < curActiveChoiceCnt; i++)
             {
                 ConvChoiceInfo temp = info.choices[i];
                 choiceBtnList[i].SetText(
-                    temp.text + (temp.next == -1 ? " [대화 종료] " : string.Empty)
+                    temp.text
                     );
                 choiceBtnList[i].SetButtonAction(() =>
                 {
@@ -67,21 +59,41 @@ namespace Assets.Scripts.Components.Conversations.Controllers
             }
         }
 
-        private void GoToConversation(int idx)
+        private void GoToConversation(string _next)
         {
-            if (idx < 0)
+            int t;
+            if (int.TryParse(_next, out t))
             {
-                ConversationManager.FinishConversation();
+                // 해당 번호로 이동
+                ClearConversation();
+                InitConversation(curConvTrack[t]);
                 return;
             }
-            ClearConversation();
-            InitConversation(curConvTrack[idx]);
+            switch (_next)
+            {
+                case "Commerce":
+                    // 상점으로 이동
+                    StartConversation("Commerce");
+                    break;
+                case "Quit":
+                    ConversationManager.FinishConversation();
+                    return;
+                default:
+                    // 새로운 책으로 이동
+                    StartConversation(_next);
+                    break;
+            }
         }
 
-        public void StartConversation(ConvInfo[] info)
+        public void SetBasePath(string _basePath)
         {
-            curConvTrack = info;
-            GoToConversation(0);
+            basePath = _basePath;
+        }
+
+        public void StartConversation(string _path)
+        {
+            curConvTrack = DataFunction.LoadConversation($"{basePath}/{_path}");
+            GoToConversation("0");
             gameObject.SetActive(true);
         }
 

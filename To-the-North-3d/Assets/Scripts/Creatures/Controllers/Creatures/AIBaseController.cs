@@ -24,7 +24,7 @@ namespace Assets.Scripts.Creatures.Bases
         {
             set
             {
-                info = CreatureInfo.GetClone(value);
+                info = Instantiate(value);
                 if (info == null) return;
                 sightCtrl.range = Info.sightRange;
                 agent.speed = info.moveSpd;

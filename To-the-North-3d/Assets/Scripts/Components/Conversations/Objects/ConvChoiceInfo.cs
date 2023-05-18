@@ -1,24 +1,44 @@
 using System;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Components.Conversations.Objects
 {
     [Serializable]
-    internal class ConvChoiceInfo
+    public class ConvChoiceInfo
     {
         public string text;
-        public int next;
+        public string next;
+        public List<ChoiceCondition> conditions;
         public ConvChoiceInfo()
         {
+            conditions = new List<ChoiceCondition>();
         }
-        public ConvChoiceInfo(string text)
+
+        public class ChoiceCondition
         {
-            this.text = text;
-            this.next = -1;
+            public ContentType contentType;
+            public ConditionType conditionType;
+            public string code;
+            public int amount;
+            public enum ContentType
+            {
+                Item,
+                Quest,
+            }
+            public enum ConditionType
+            {
+                Have,
+                Get,
+                Pay,
+            }
+            public new string ToString()
+            {
+                return $"> {contentType} -> {conditionType}";
+            }
         }
-        public ConvChoiceInfo(string text, int _next)
+        public new string ToString()
         {
-            this.text = text;
-            this.next = _next;
+            return $"> {text} -> {next}";
         }
     }
 }
