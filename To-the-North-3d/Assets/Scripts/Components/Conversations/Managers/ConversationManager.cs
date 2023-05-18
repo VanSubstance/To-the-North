@@ -10,7 +10,7 @@ namespace Assets.Scripts.Components.Conversations.Managers
     {
         [SerializeField]
         private Transform conversationPrefab;
-        private static ConversationBaseController baseController;
+        private static ConversationBaseController baseCtrl;
         public static bool isInConversation = false;
 
         private void Awake()
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Components.Conversations.Managers
                     tem.localPosition = Vector3.zero;
                     tem.localScale = Vector3.one;
                     tem.gameObject.SetActive(false);
-                    baseController = tem.GetComponent<ConversationBaseController>();
+                    baseCtrl = tem.GetComponent<ConversationBaseController>();
                     GlobalStatus.Loading.System.ConversationManager = true;
                 }
                 catch (NullReferenceException)
@@ -38,18 +38,23 @@ namespace Assets.Scripts.Components.Conversations.Managers
             }
         }
 
-        public static void StartConversation(ConvInfo[] info)
+        public static void SetBasePath(string _basePath)
+        {
+            baseCtrl.SetBasePath(_basePath);
+        }
+
+        public static void StartConversation(string _path)
         {
             isInConversation = true;
             InGameStatus.User.isPause = true;
-            baseController.StartConversation(info);
+            baseCtrl.StartConversation(_path);
         }
 
         public static void FinishConversation()
         {
             isInConversation = false;
             InGameStatus.User.isPause = false;
-            baseController.FinishConversation();
+            baseCtrl.FinishConversation();
         }
 
         public void ControllByKey(int purpose)
@@ -66,7 +71,7 @@ namespace Assets.Scripts.Components.Conversations.Managers
 
         public bool IsOpen()
         {
-            return baseController.gameObject.activeSelf;
+            return baseCtrl.gameObject.activeSelf;
         }
 
         public void Close()

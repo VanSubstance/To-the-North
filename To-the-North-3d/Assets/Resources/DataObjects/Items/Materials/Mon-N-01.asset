@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94fd91681e2cfd445b7709446b613528, type: 3}
-  m_Name: Npc Test
+  m_Script: {fileID: 11500000, guid: 55bc9598ae437a74fa79ce6c74688d6c, type: 3}
+  m_Name: Mon-N-01
   m_EditorClassIdentifier: 
-  maxHp: 1000
-  isActiveBehaviour: 0
-  isRunAway: 0
-  sightRange: 10
-  moveSpd: 0
+  itemType: 2
+  size: {x: 1, y: 1}
+  imagePath: Mon-N-01
+  title: "\uB4E4\uAC1C\uC758 \uBC1C\uD1B1"
+  description: "\uB4E4\uAC1C\uC758 \uBC1C\uD1B1\uC774\uB2E4."
+  price: 15

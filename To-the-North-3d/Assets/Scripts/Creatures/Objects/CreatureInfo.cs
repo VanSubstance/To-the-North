@@ -7,6 +7,17 @@ namespace Assets.Scripts.Creatures
     public class CreatureInfo : ScriptableObject
     {
         [SerializeField]
+        private string npcPath;
+
+        public string NpcPath
+        {
+            get
+            {
+                return $"Npc/{npcPath}";
+            }
+        }
+
+        [SerializeField]
         private int maxHp;
         [SerializeField]
         private bool isActiveBehaviour, isRunAway;

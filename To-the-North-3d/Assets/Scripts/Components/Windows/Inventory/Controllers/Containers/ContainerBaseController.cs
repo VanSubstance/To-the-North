@@ -48,6 +48,9 @@ namespace Assets.Scripts.Components.Windows.Inventory
                 case ContentType.Looting:
                     SetTitle("루팅");
                     break;
+                case ContentType.Commerce:
+                    SetTitle("상점");
+                    break;
                 case ContentType.Equipment:
                     SetTitle("장비");
                     break;

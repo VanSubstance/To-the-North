@@ -24,8 +24,8 @@ namespace Assets.Scripts.Creatures.Bases
         {
             set
             {
-                info = CreatureInfo.GetClone(value);
-                if (info == null) return;
+                if (value == null) return;
+                info = Instantiate(value);
                 sightCtrl.range = Info.sightRange;
                 agent.speed = info.moveSpd;
                 agent.stoppingDistance = WeaponRange;

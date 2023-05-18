@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.IO;
 using Assets.Scripts.Commons;
+using Assets.Scripts.Components.Conversations.Objects;
 using Assets.Scripts.Components.Hovers;
+using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using Newtonsoft.Json;
 using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public static class DataFunction
 {
@@ -41,6 +44,135 @@ public static class DataFunction
         return res;
     }
 
+    public static ItemBaseInfo LoadItemInfoByCode(string code)
+    {
+        string path = $"DataObjects/Items/";
+        string[] tokens = code.Split("-");
+        switch (tokens[0])
+        {
+            case "B":
+                path += "Consumables/Bullets/";
+                break;
+            case "M":
+                path += "Consumables/Medicines/";
+                break;
+            case "F":
+                path += "Consumables/Foods/";
+                break;
+            case "Ba":
+                path += "Equipments/Armors/Backpack/";
+                break;
+            case "Bo":
+                path += "Equipments/Armors/Body/";
+                break;
+            case "H":
+                path += "Equipments/Armors/Helmet/";
+                break;
+            case "Ma":
+                path += "Equipments/Armors/Mask/";
+                break;
+            case "Mag":
+                path += "Equipments/Magazines/";
+                break;
+            case "W":
+                path += "Equipments/Weapons/";
+                break;
+            case "Mon":
+                path += "Materials/";
+                break;
+        }
+        path += code;
+        ItemBaseInfo res = Resources.Load<ItemBaseInfo>(path);
+        return res;
+    }
+
+    /// <summary>
+    /// 아이템 객체 어레이 텍스트에서 추출 함수
+    /// </summary>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
+    public static ItemBaseInfo[] LoadItemList(string filePath)
+    {
+        List<ItemBaseInfo> res = new List<ItemBaseInfo>();
+        Queue<string> codes = LoadTextFromFile(filePath);
+        string code;
+        while (codes.TryDequeue(out code))
+        {
+            res.Add(LoadItemInfoByCode(code));
+        }
+        return res.ToArray();
+    }
+
+    /// <summary>
+    /// NPC에 해당하는 대화 데이터 불러오기 함수
+    /// </summary>
+    /// <param name="npcPath"></param>
+    public static ConvInfo[] LoadConversation(string npcPath)
+    {
+        Queue<string> lines = LoadTextFromFile(npcPath);
+        string line;
+        string[] tokens;
+        ConvInfo[] res = new ConvInfo[100];
+        ConvInfo c;
+        ConvChoiceInfo choice;
+        ConvChoiceInfo.ChoiceCondition cond;
+
+        while (lines.TryDequeue(out line))
+        {
+            // 숫자로 시작
+            while (line.Equals(string.Empty))
+            {
+                // 빨리감기 -> 숫자 찾기
+                lines.TryDequeue(out line);
+            }
+            // 신규 ConvInfo 생성
+            c = new ConvInfo();
+            // 페이지 번호
+            res[int.Parse(line)] = c;
+            // 설명 할당
+            string d = string.Empty;
+            while ((line = lines.Dequeue()).Length != 0)
+            {
+                d += $"{line}\n";
+            }
+            c.desc = d;
+
+            // 선택지 찾기
+            while (true)
+            {
+                while (!line.Equals("?"))
+                {
+                    lines.TryDequeue(out line);
+                }
+                // ? <- 선택지 시작
+                choice = new ConvChoiceInfo();
+                // 조건들 추가
+                while (!(line = lines.Dequeue()).Equals("<"))
+                {
+                    tokens = line.Split(": ");
+                    cond = new ConvChoiceInfo.ChoiceCondition();
+                    cond.conditionType = System.Enum.Parse<ConvChoiceInfo.ChoiceCondition.ConditionType>(tokens[0]);
+                    cond.contentType = System.Enum.Parse<ConvChoiceInfo.ChoiceCondition.ContentType>(tokens[1]);
+                    cond.code = tokens[2];
+                    if (cond.contentType.Equals(ConvChoiceInfo.ChoiceCondition.ContentType.Item)) cond.amount = int.Parse(tokens[3]);
+                    choice.conditions.Add(cond);
+                }
+                // 텍스트 추가
+                choice.text = lines.Dequeue();
+                // 목표 지정
+                choice.next = lines.Dequeue().Replace("> ", "");
+                // 선택지 추가
+                c.choices.Add(choice);
+                // 선택지 끝인지 확인
+                if ((line = lines.Dequeue()).Equals("!")) break;
+            }
+        }
+        return res;
+    }
+
+    /// <summary>
+    /// 언어 변환 함수
+    /// </summary>
     public static void ApplyLanguage()
     {
         // 텍스트 불러오기
@@ -67,6 +199,7 @@ public static class DataFunction
         GlobalText.Inventory.Backpack = curQ.Dequeue();
         GlobalText.Inventory.WeaponPri = curQ.Dequeue();
         GlobalText.Inventory.WeaponSec = curQ.Dequeue();
+        GlobalText.Inventory.Commerce = curQ.Dequeue();
 
         // 상태이상 관련
         curQ = LoadTextFromFile("Condition");
@@ -152,6 +285,7 @@ public static class DataFunction
         // 인벤토리
         GlobalComponent.Common.Text.Inventory.inventory.text = GlobalText.Inventory.Inven;
         GlobalComponent.Common.Text.Inventory.looting.text = GlobalText.Inventory.Looting;
+        GlobalComponent.Common.Text.Inventory.commerce.text = GlobalText.Inventory.Commerce;
         GlobalComponent.Common.Text.Inventory.equipment.text = GlobalText.Inventory.Equipment;
         GlobalComponent.Common.Text.Inventory.Equipment.helmet.text = GlobalText.Inventory.Helmet;
         GlobalComponent.Common.Text.Inventory.Equipment.mask.text = GlobalText.Inventory.Mask;

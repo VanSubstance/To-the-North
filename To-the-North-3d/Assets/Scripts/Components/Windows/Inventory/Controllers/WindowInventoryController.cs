@@ -27,6 +27,14 @@ namespace Assets.Scripts.Components.Windows.Inventory
             }
         }
 
+        public ContentSlotController ContentCommerce
+        {
+            get
+            {
+                return (ContentSlotController)contentByType[ContentType.Commerce];
+            }
+        }
+
         private static Dictionary<Side, ContentBaseController> contentsVisual;
 
         private Transform visualTf, storeTf, itemTf;
@@ -49,6 +57,13 @@ namespace Assets.Scripts.Components.Windows.Inventory
             get
             {
                 return ((ContentSlotController)contentByType[ContentType.Looting]).slots;
+            }
+        }
+        public static InventorySlotController[,] CommerceSlots
+        {
+            get
+            {
+                return ((ContentSlotController)contentByType[ContentType.Commerce]).slots;
             }
         }
 
@@ -117,6 +132,8 @@ namespace Assets.Scripts.Components.Windows.Inventory
             GlobalComponent.Common.Text.Inventory.inventory = contentByType[ContentType.Inventory].Container.GetComponent<ContainerBaseController>().titleUGUI;
             contentByType[ContentType.Looting] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Looting);
             GlobalComponent.Common.Text.Inventory.looting = contentByType[ContentType.Looting].Container.GetComponent<ContainerBaseController>().titleUGUI;
+            contentByType[ContentType.Commerce] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Commerce);
+            GlobalComponent.Common.Text.Inventory.commerce = contentByType[ContentType.Commerce].Container.GetComponent<ContainerBaseController>().titleUGUI;
             contentByType[ContentType.Equipment] = Instantiate(containerEquipment, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentEquipmentController>(ContentType.Equipment);
             GlobalComponent.Common.Text.Inventory.equipment = contentByType[ContentType.Equipment].Container.GetComponent<ContainerBaseController>().titleUGUI;
 
@@ -152,6 +169,9 @@ namespace Assets.Scripts.Components.Windows.Inventory
                 case ContentType.Looting:
                     ContentLoot.GenerateItem(g, _info);
                     break;
+                case ContentType.Commerce:
+                    ContentCommerce.GenerateItem(g, _info);
+                    break;
                 case ContentType.None_L:
                 case ContentType.None_C:
                 case ContentType.None_R:
@@ -166,7 +186,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         /// 아이템 오브젝트 생성 함수:
         /// 위치 데이터 없음 = 자동 정렬
         /// </summary>
-        /// <param name="_Type">목표 컨테이너</param>
+        /// <param name="_type">목표 컨테이너 타입</param>
         /// <param name="_info">생성할 아이템 정보</param>
         public void GenerateItemObjectWithAuto(ContentType _type, ItemBaseInfo _info)
         {
@@ -179,6 +199,9 @@ namespace Assets.Scripts.Components.Windows.Inventory
                     break;
                 case ContentType.Looting:
                     s = ContentLoot.GenerateItemWithAuto(g, _info, ContentType.Looting);
+                    break;
+                case ContentType.Commerce:
+                    s = ContentCommerce.GenerateItemWithAuto(g, _info, ContentType.Commerce);
                     break;
                 case ContentType.None_L:
                 case ContentType.None_C:
@@ -222,6 +245,12 @@ namespace Assets.Scripts.Components.Windows.Inventory
             Open();
         }
 
+        public void OpenCommerce()
+        {
+            CallContent(Side.L, ContentType.Commerce);
+            Open();
+        }
+
         public override void OnOpen()
         {
         }
@@ -238,6 +267,8 @@ namespace Assets.Scripts.Components.Windows.Inventory
             {
                 ContentLoot.Clear();
             }
+            // 상점 비우기
+            ContentCommerce.Clear();
             // 일반 인벤토리로 리셋
             CallContent(Side.L, ContentType.None_L);
             CallContent(Side.C, ContentType.Equipment);

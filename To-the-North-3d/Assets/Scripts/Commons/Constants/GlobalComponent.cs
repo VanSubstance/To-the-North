@@ -35,7 +35,7 @@ public static class GlobalComponent
             public static class Inventory
             {
                 public static TextMeshProUGUI
-                    looting, inventory, equipment;
+                    commerce, looting, inventory, equipment;
                 public static class Equipment
                 {
                     public static TextMeshProUGUI

@@ -219,6 +219,30 @@ public static class InGameStatus
             return null;
         }
 
+        public static bool LookForItemByCode(string _code)
+        {
+            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
+            {
+                if (inven.itemInfo.imagePath.Equals(_code))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static ItemBaseInfo PullItemFromInventoryByCode(string _code)
+        {
+            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
+            {
+                if (inven.itemInfo.imagePath.Equals(_code))
+                {
+                    return PullItemFromInventory(inven);
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// 인벤토리에서 아이템 꺼내기:
         /// 아이템 인벤토리 오브젝트 제거 후 아이템 정보만 반환
@@ -227,10 +251,10 @@ public static class InGameStatus
         /// <returns></returns>
         public static ItemBaseInfo PullItemFromInventory(ItemInventoryInfo itemFromInventory)
         {
-            itemFromInventory.itemInfo.Ctrl.ItemDetach();
-            itemFromInventory.itemInfo.Ctrl.ItemTruncate();
+            ItemBaseInfo res = itemFromInventory.itemInfo;
+            res.Ctrl.ItemTruncate();
             WindowInventoryController.Instance.ContentInventory.itemsAttached.Remove(itemFromInventory);
-            return itemFromInventory.itemInfo;
+            return res;
         }
 
         /// <summary>

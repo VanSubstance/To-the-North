@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55bc9598ae437a74fa79ce6c74688d6c, type: 3}
-  m_Name: Traffic Sign
+  m_Script: {fileID: 11500000, guid: 94fd91681e2cfd445b7709446b613528, type: 3}
+  m_Name: Shelter-C-01
   m_EditorClassIdentifier: 
-  itemType: 2
-  size: {x: 2, y: 2}
-  imagePath: TrafficSign
-  title: "\uBD80\uC11C\uC9C4 \uD45C\uC9C0\uD310"
-  description: "\uBC29\uD328\uAC19\uB124 \u314B\u314B"
-  price: 15
+  npcPath: Shelter/C-01
+  maxHp: 1000
+  isActiveBehaviour: 0
+  isRunAway: 0
+  sightRange: 10
+  moveSpd: 0

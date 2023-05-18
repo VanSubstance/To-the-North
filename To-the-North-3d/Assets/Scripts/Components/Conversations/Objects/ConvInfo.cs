@@ -1,27 +1,22 @@
 using System;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Components.Conversations.Objects
 {
     [Serializable]
-    internal class ConvInfo
+    public class ConvInfo
     {
         public string desc;
-        public ConvChoiceInfo[] choices;
+        public List<ConvChoiceInfo> choices;
 
         public ConvInfo()
         {
-
+            choices = new List<ConvChoiceInfo>();
         }
 
         public ConvInfo(string desc)
         {
             this.desc = desc;
-        }
-
-        public ConvInfo(string desc, ConvChoiceInfo[] _choices)
-        {
-            this.desc = desc;
-            choices = _choices;
         }
     }
 }

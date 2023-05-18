@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a27741c8de56ca4b91f4e1263a1f6ba, type: 3}
-  m_Name: M-9-01
+  m_Name: Mag-9-01
   m_EditorClassIdentifier: 
   itemType: 0
   size: {x: 1, y: 2}
-  imagePath: M-9-01
+  imagePath: Mag-9-01
   title: "\uC870\uC545\uD55C 9mm \uD0C4\uCC3D"
   description: 
   price: 12
@@ -22,4 +22,3 @@ MonoBehaviour:
   durability: 1
   bulletType: 1
   maxCount: 5
-  curCount: 5
