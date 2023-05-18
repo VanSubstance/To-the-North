@@ -81,16 +81,25 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                                     case ConvChoiceInfo.ChoiceCondition.ConditionType.Get:
                                         // 아이템을 획득해야 함 <- 선택지 고르면 아이템 수령
                                         InGameStatus.Item.PushItemToInventory(Instantiate(DataFunction.LoadItemInfoByCode(cond.code)));
-                                        Debug.Log("Item Get !");
                                         break;
                                     case ConvChoiceInfo.ChoiceCondition.ConditionType.Pay:
                                         // 아이템을 제출해야 함 <- 선택지 고르면 아이템 소실
                                         InGameStatus.Item.PullItemFromInventoryByCode(cond.code);
-                                        Debug.Log("Item Pay !");
                                         break;
                                 }
                                 break;
                             case ConvChoiceInfo.ChoiceCondition.ContentType.Quest:
+                                switch (cond.conditionType)
+                                {
+                                    case ConvChoiceInfo.ChoiceCondition.ConditionType.Get:
+                                        // 퀘스트를 시작한다는 개념 <- 선택지 고르면 퀘스트 수령
+                                        Debug.Log($"Quest Start ! {cond.code}");
+                                        break;
+                                    case ConvChoiceInfo.ChoiceCondition.ConditionType.Pay:
+                                        // 퀘스트를 완료했다는 개념 <- 선택지 고르면 퀘스트 사라짐
+                                        Debug.Log($"Quest Clear ! {cond.code}");
+                                        break;
+                                }
                                 break;
                         }
                     }

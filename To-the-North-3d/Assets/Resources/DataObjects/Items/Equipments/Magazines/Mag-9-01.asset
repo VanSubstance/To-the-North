@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 0
   size: {x: 1, y: 2}
-  imagePath: M-9-01
+  imagePath: Mag-9-01
   title: "\uC870\uC545\uD55C 9mm \uD0C4\uCC3D"
   description: 
   price: 12
@@ -22,4 +22,3 @@ MonoBehaviour:
   durability: 1
   bulletType: 1
   maxCount: 5
-  curCount: 5

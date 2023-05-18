@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   size: {x: 1, y: 1}
-  imagePath: R-P-01
+  imagePath: W-P-01
   title: "\uBE44\uBE44\uD0C4 \uCD1D"
   description: "\uD14C\uC2A4\uD2B8\uC6A9 \uCD1D\uC785\uB2C8\uB2E4."
   price: 100

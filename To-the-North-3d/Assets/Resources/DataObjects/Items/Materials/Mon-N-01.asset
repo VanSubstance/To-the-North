@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 2
   size: {x: 1, y: 1}
-  imagePath: TrafficSign
+  imagePath: Mon-N-01
   title: "\uB4E4\uAC1C\uC758 \uBC1C\uD1B1"
   description: "\uB4E4\uAC1C\uC758 \uBC1C\uD1B1\uC774\uB2E4."
   price: 15

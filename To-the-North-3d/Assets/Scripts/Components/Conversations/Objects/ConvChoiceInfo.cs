@@ -30,8 +30,6 @@ namespace Assets.Scripts.Components.Conversations.Objects
                 Have,
                 Get,
                 Pay,
-
-                Clear, // <- 퀘스트용
             }
             public new string ToString()
             {
