@@ -4,6 +4,7 @@ using Assets.Scripts.Components.Conversations.Objects;
 using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Items;
 using UnityEngine;
+using System.Linq;
 
 namespace Assets.Scripts.Components.Conversations.Controllers
 {
@@ -36,15 +37,63 @@ namespace Assets.Scripts.Components.Conversations.Controllers
         private void InitConversation(ConvInfo info)
         {
             descUgui.text = info.desc;
-            curActiveChoiceCnt = info.choices.Count;
+            ConvChoiceInfo[] possibleChoices = info.choices.Where((_choice) =>
+            {
+                foreach (ConvChoiceInfo.ChoiceCondition cond in _choice.conditions)
+                {
+                    switch (cond.contentType)
+                    {
+                        case ConvChoiceInfo.ChoiceCondition.ContentType.Item:
+                            switch (cond.conditionType)
+                            {
+                                case ConvChoiceInfo.ChoiceCondition.ConditionType.Have:
+                                    // 아이템을 가지고 있어야 함
+                                    if (!InGameStatus.Item.LookForItemByCode(cond.code))
+                                    {
+                                        // 아이템이 없음
+                                        return false;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case ConvChoiceInfo.ChoiceCondition.ContentType.Quest:
+                            break;
+                    }
+                }
+                return true;
+            }).ToArray();
+            curActiveChoiceCnt = possibleChoices.Length;
             for (int i = 0; i < curActiveChoiceCnt; i++)
             {
-                ConvChoiceInfo temp = info.choices[i];
+                ConvChoiceInfo temp = possibleChoices[i];
                 choiceBtnList[i].SetText(
                     temp.text
                     );
                 choiceBtnList[i].SetButtonAction(() =>
                 {
+                    foreach(ConvChoiceInfo.ChoiceCondition cond in temp.conditions)
+                    {
+                        switch (cond.contentType)
+                        {
+                            case ConvChoiceInfo.ChoiceCondition.ContentType.Item:
+                                switch (cond.conditionType)
+                                {
+                                    case ConvChoiceInfo.ChoiceCondition.ConditionType.Get:
+                                        // 아이템을 획득해야 함 <- 선택지 고르면 아이템 수령
+                                        InGameStatus.Item.PushItemToInventory(Instantiate(DataFunction.LoadItemInfoByCode(cond.code)));
+                                        Debug.Log("Item Get !");
+                                        break;
+                                    case ConvChoiceInfo.ChoiceCondition.ConditionType.Pay:
+                                        // 아이템을 제출해야 함 <- 선택지 고르면 아이템 소실
+                                        InGameStatus.Item.PullItemFromInventoryByCode(cond.code);
+                                        Debug.Log("Item Pay !");
+                                        break;
+                                }
+                                break;
+                            case ConvChoiceInfo.ChoiceCondition.ContentType.Quest:
+                                break;
+                        }
+                    }
                     GoToConversation(temp.next);
                 });
                 choiceBtnList[i].SetActice(true);

@@ -44,7 +44,7 @@ public static class DataFunction
         return res;
     }
 
-    private static ItemBaseInfo LoadItemInfoByCode(string code)
+    public static ItemBaseInfo LoadItemInfoByCode(string code)
     {
         string path = $"DataObjects/Items/";
         string[] tokens = code.Split("-");
@@ -96,7 +96,7 @@ public static class DataFunction
         List<ItemBaseInfo> res = new List<ItemBaseInfo>();
         Queue<string> codes = LoadTextFromFile(filePath);
         string code;
-        while(codes.TryDequeue(out code))
+        while (codes.TryDequeue(out code))
         {
             res.Add(LoadItemInfoByCode(code));
         }
