@@ -155,7 +155,7 @@ public class InventorySlotController : MonoBehaviour
 
     public bool EnrollItemToSlot()
     {
-        if (ContainerType.Equals(ContentType.Looting) || ContainerType.Equals(ContentType.Inventory))
+        if (ContainerType.Equals(ContentType.Looting) || ContainerType.Equals(ContentType.Inventory) || ContainerType.Equals(ContentType.Commerce))
         {
             ((ContentSlotController)ContentBase).itemsAttached.Add(AttachedInfo.InvenInfo);
             return true;
@@ -165,7 +165,7 @@ public class InventorySlotController : MonoBehaviour
 
     public bool DetachItemFromSlot()
     {
-        if (ContainerType.Equals(ContentType.Looting) || ContainerType.Equals(ContentType.Inventory))
+        if (ContainerType.Equals(ContentType.Looting) || ContainerType.Equals(ContentType.Inventory) || ContainerType.Equals(ContentType.Commerce))
         {
             ((ContentSlotController)ContentBase).itemsAttached.Remove(AttachedInfo.InvenInfo);
             return true;

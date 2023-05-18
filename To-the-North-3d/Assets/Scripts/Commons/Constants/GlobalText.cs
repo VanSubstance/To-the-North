@@ -25,6 +25,7 @@ namespace Assets.Scripts.Commons
             public static string
                 Inven,
                 Looting,
+                Commerce,
                 Equipment,
                 Helmet,
                 Mask,

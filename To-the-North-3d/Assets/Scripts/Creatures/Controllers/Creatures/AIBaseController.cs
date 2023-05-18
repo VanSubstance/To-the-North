@@ -24,8 +24,8 @@ namespace Assets.Scripts.Creatures.Bases
         {
             set
             {
+                if (value == null) return;
                 info = Instantiate(value);
-                if (info == null) return;
                 sightCtrl.range = Info.sightRange;
                 agent.speed = info.moveSpd;
                 agent.stoppingDistance = WeaponRange;

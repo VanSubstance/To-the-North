@@ -3,6 +3,7 @@ using System.IO;
 using Assets.Scripts.Commons;
 using Assets.Scripts.Components.Conversations.Objects;
 using Assets.Scripts.Components.Hovers;
+using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using Newtonsoft.Json;
 using UnityEngine.SceneManagement;
@@ -41,6 +42,65 @@ public static class DataFunction
             res.Enqueue(s);
         }
         return res;
+    }
+
+    private static ItemBaseInfo LoadItemInfoByCode(string code)
+    {
+        string path = $"DataObjects/Items/";
+        string[] tokens = code.Split("-");
+        switch (tokens[0])
+        {
+            case "B":
+                path += "Consumables/Bullets/";
+                break;
+            case "M":
+                path += "Consumables/Medicines/";
+                break;
+            case "F":
+                path += "Consumables/Foods/";
+                break;
+            case "Ba":
+                path += "Equipments/Armors/Backpack/";
+                break;
+            case "Bo":
+                path += "Equipments/Armors/Body/";
+                break;
+            case "H":
+                path += "Equipments/Armors/Helmet/";
+                break;
+            case "Ma":
+                path += "Equipments/Armors/Mask/";
+                break;
+            case "Mag":
+                path += "Equipments/Magazines/";
+                break;
+            case "W":
+                path += "Equipments/Weapons/";
+                break;
+            case "Mon":
+                path += "Materials/";
+                break;
+        }
+        path += code;
+        ItemBaseInfo res = Resources.Load<ItemBaseInfo>(path);
+        return res;
+    }
+
+    /// <summary>
+    /// 아이템 객체 어레이 텍스트에서 추출 함수
+    /// </summary>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
+    public static ItemBaseInfo[] LoadItemList(string filePath)
+    {
+        List<ItemBaseInfo> res = new List<ItemBaseInfo>();
+        Queue<string> codes = LoadTextFromFile(filePath);
+        string code;
+        while(codes.TryDequeue(out code))
+        {
+            res.Add(LoadItemInfoByCode(code));
+        }
+        return res.ToArray();
     }
 
     /// <summary>
@@ -139,6 +199,7 @@ public static class DataFunction
         GlobalText.Inventory.Backpack = curQ.Dequeue();
         GlobalText.Inventory.WeaponPri = curQ.Dequeue();
         GlobalText.Inventory.WeaponSec = curQ.Dequeue();
+        GlobalText.Inventory.Commerce = curQ.Dequeue();
 
         // 상태이상 관련
         curQ = LoadTextFromFile("Condition");
@@ -224,6 +285,7 @@ public static class DataFunction
         // 인벤토리
         GlobalComponent.Common.Text.Inventory.inventory.text = GlobalText.Inventory.Inven;
         GlobalComponent.Common.Text.Inventory.looting.text = GlobalText.Inventory.Looting;
+        GlobalComponent.Common.Text.Inventory.commerce.text = GlobalText.Inventory.Commerce;
         GlobalComponent.Common.Text.Inventory.equipment.text = GlobalText.Inventory.Equipment;
         GlobalComponent.Common.Text.Inventory.Equipment.helmet.text = GlobalText.Inventory.Helmet;
         GlobalComponent.Common.Text.Inventory.Equipment.mask.text = GlobalText.Inventory.Mask;

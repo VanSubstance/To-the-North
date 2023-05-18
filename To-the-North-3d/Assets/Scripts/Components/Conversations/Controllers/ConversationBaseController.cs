@@ -1,6 +1,8 @@
 using Assets.Scripts.Components.Buttons.Controllers;
 using Assets.Scripts.Components.Conversations.Managers;
 using Assets.Scripts.Components.Conversations.Objects;
+using Assets.Scripts.Components.Windows.Inventory;
+using Assets.Scripts.Items;
 using UnityEngine;
 
 namespace Assets.Scripts.Components.Conversations.Controllers
@@ -73,7 +75,7 @@ namespace Assets.Scripts.Components.Conversations.Controllers
             {
                 case "Commerce":
                     // 상점으로 이동
-                    StartConversation("Commerce");
+                    OpenCommerce();
                     break;
                 case "Quit":
                     ConversationManager.FinishConversation();
@@ -95,6 +97,15 @@ namespace Assets.Scripts.Components.Conversations.Controllers
             curConvTrack = DataFunction.LoadConversation($"{basePath}/{_path}");
             GoToConversation("0");
             gameObject.SetActive(true);
+        }
+
+        public void OpenCommerce()
+        {
+            foreach (ItemBaseInfo _info in DataFunction.LoadItemList($"{basePath}/Commerce"))
+            {
+                WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Commerce, Instantiate(_info));
+            }
+            WindowInventoryController.Instance.OpenCommerce();
         }
 
         public void FinishConversation()

@@ -105,6 +105,11 @@ namespace Assets.Scripts.Items
                     {
                         return WindowInventoryController.LootSlots[row, col].ItemTf == null;
                     });
+                case ContentType.Commerce:
+                    return ApplyActionForAllSlots(destSlot, (row, col) =>
+                    {
+                        return WindowInventoryController.CommerceSlots[row, col].ItemTf == null;
+                    });
                 default:
                     break;
             }
@@ -585,9 +590,18 @@ namespace Assets.Scripts.Items
             {
                 if (actionToLoop != null)
                     ApplyActionForAllSlots(_targetSlot, (r, c) =>
-                {
-                    actionToLoop(WindowInventoryController.LootSlots[r, c]);
-                });
+                    {
+                        actionToLoop(WindowInventoryController.LootSlots[r, c]);
+                    });
+                return;
+            }
+            if (_targetSlot.ContainerType == ContentType.Commerce)
+            {
+                if (actionToLoop != null)
+                    ApplyActionForAllSlots(_targetSlot, (r, c) =>
+                    {
+                        actionToLoop(WindowInventoryController.CommerceSlots[r, c]);
+                    });
                 return;
             }
         }
@@ -612,7 +626,6 @@ namespace Assets.Scripts.Items
                             cur = WindowInventoryController.InventorySlots[i, j];
                             if (CheckItemAttachable(cur))
                             {
-                                // 남는칸 있음
                                 slotQualified = cur;
                                 _info.InvenInfo = newInventoryInfo = new()
                                 {
@@ -624,6 +637,19 @@ namespace Assets.Scripts.Items
                             continue;
                         case ContentType.Looting:
                             cur = WindowInventoryController.LootSlots[i, j];
+                            if (CheckItemAttachable(cur))
+                            {
+                                slotQualified = cur;
+                                _info.InvenInfo = newInventoryInfo = new()
+                                {
+                                    itemInfo = _info,
+                                    pos = new Vector2(cur.row, cur.column)
+                                };
+                                return;
+                            }
+                            continue;
+                        case ContentType.Commerce:
+                            cur = WindowInventoryController.CommerceSlots[i, j];
                             if (CheckItemAttachable(cur))
                             {
                                 slotQualified = cur;
