@@ -20,6 +20,15 @@ namespace Assets.Scripts.Commons
                 Language;
         }
 
+        public static class System
+        {
+            public static string
+                ItemGet,
+                ItemPay,
+                QuestGet,
+                QuestClear;
+        }
+
         public static class Inventory
         {
             public static string

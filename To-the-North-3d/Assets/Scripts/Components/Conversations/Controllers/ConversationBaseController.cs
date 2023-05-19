@@ -7,6 +7,7 @@ using Assets.Scripts.Components.Infos;
 using UnityEngine;
 using System.Linq;
 using Assets.Scripts.Components.Windows;
+using Assets.Scripts.Commons;
 
 namespace Assets.Scripts.Components.Conversations.Controllers
 {
@@ -96,12 +97,12 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                                     case ConvChoiceInfo.ChoiceCondition.ConditionType.Get:
                                         // 아이템을 획득해야 함 <- 선택지 고르면 아이템 수령
                                         InGameStatus.Item.PushItemToInventory(Instantiate(ib = DataFunction.LoadItemInfoByCode(cond.code)));
-                                        UIInfoTextContainerController.Instance.PrintText($"Item Get ! {ib.Title}");
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.ItemGet}: {ib.Title}");
                                         break;
                                     case ConvChoiceInfo.ChoiceCondition.ConditionType.Pay:
                                         // 아이템을 제출해야 함 <- 선택지 고르면 아이템 소실
                                         ib = InGameStatus.Item.PullItemFromInventoryByCode(cond.code);
-                                        UIInfoTextContainerController.Instance.PrintText($"Item Paid ! {ib.Title}");
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.ItemGet}: {ib.Title}");
                                         break;
                                 }
                                 break;
@@ -110,11 +111,11 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                                 {
                                     case ConvChoiceInfo.ChoiceCondition.ConditionType.Get:
                                         // 퀘스트를 시작한다는 개념 <- 선택지 고르면 퀘스트 수령
-                                        UIInfoTextContainerController.Instance.PrintText($"Quest Start ! {WindowQuestContainerController.Instance.ActivateQuest(cond.code)}");
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.QuestGet}: {WindowQuestContainerController.Instance.ActivateQuest(cond.code)}");
                                         break;
                                     case ConvChoiceInfo.ChoiceCondition.ConditionType.Pay:
                                         // 퀘스트를 완료했다는 개념 <- 선택지 고르면 퀘스트 사라짐
-                                        UIInfoTextContainerController.Instance.PrintText($"Quest Clear ! {WindowQuestContainerController.Instance.ClearQuest(cond.code)}");
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.QuestClear}: {WindowQuestContainerController.Instance.ClearQuest(cond.code)}");
                                         break;
                                 }
                                 break;

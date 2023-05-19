@@ -23,11 +23,11 @@ namespace Assets.Scripts.Components.Windows
             {
                 q.TryDequeue(out t);
             }
-            while (t != "<")
+            while ((t = q.Dequeue()) != "<")
             {
                 WindowQuestContentConditionController c = Instantiate(conditionPrefab, conditionTf).GetComponent<WindowQuestContentConditionController>();
                 conditions.Add(c);
-                string[] token = (t = q.Dequeue()).Replace(" ", "").Split(":");
+                string[] token = t.Replace(" ", "").Split(":");
                 switch (token[0])
                 {
                     case "Have":
