@@ -48,10 +48,10 @@ namespace Assets.Scripts.Components.Windows.Pause
             {
                 case 0:
                     GlobalSetting.Language = "Kor";
-                    return;
+                    break;
                 case 1:
                     GlobalSetting.Language = "Eng";
-                    return;
+                    break;
             }
             WindowQuestContainerController.Instance.Refresh();
         }
