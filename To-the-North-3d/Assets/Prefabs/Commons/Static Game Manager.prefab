@@ -62,6 +62,7 @@ MonoBehaviour:
   screenHitManager: {fileID: 2903384632904630330, guid: fe2e1c5a5ac949e49ad1d8490e15af12, type: 3}
   hoveringItemInfo: {fileID: 3911897967975284119, guid: 304c1979094582741a88217beb2000ee, type: 3}
   hoveringConditionInfo: {fileID: 3911897967975284119, guid: b1f8ff352282e1e4ea78ba7628c66fbe, type: 3}
+  noticeTextInfo: {fileID: 3989931165860439644, guid: 499b8e2ebab28bb4e81f324d3fe4dee9, type: 3}
 --- !u!114 &953080142591831877
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,7 +18,8 @@ public class CommonGameManager : MonoBehaviour
         panelForHpSp, panelForCondition, panelForWelfare, panelForQuick,
         projectileManager, trajectoryManager, soundEffectManager,
         screenHitManager,
-        hoveringItemInfo, hoveringConditionInfo
+        hoveringItemInfo, hoveringConditionInfo,
+        noticeTextInfo
         ;
 
     private Image fadeImage;
@@ -210,6 +211,9 @@ public class CommonGameManager : MonoBehaviour
             // 퀵슬롯 UI
             Transform PanelForQuick = Instantiate(panelForQuick, uiTf);
             PanelForQuick.localScale = Vector3.one;
+
+            // 시스템 메세지용 UI
+            Instantiate(noticeTextInfo, uiTf);
 
             // 투사체 풀
             if (GameObject.Find("Projectiles") == null)
