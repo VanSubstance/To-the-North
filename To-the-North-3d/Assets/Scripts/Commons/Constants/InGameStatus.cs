@@ -284,7 +284,7 @@ public static class InGameStatus
 
     public static class Quest
     {
-        public static List<string> Clear = new List<string>();
+        public static List<string> Done = new List<string>();
         public static List<string> Progress = new List<string>();
     }
 }

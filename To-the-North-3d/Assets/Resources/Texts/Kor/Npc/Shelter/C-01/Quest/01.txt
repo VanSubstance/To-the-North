@@ -40,7 +40,7 @@ Get: Item: Mon-N-01: 1
 > 3
 
 ?
-Get: Quest: C-01-01
+Start: Quest: C-01-01
 <
 오. 그렇다면 부탁 드려도 될까요 ?
 > 4

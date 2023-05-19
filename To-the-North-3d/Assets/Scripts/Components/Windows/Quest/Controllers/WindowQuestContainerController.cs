@@ -61,7 +61,7 @@ namespace Assets.Scripts.Components.Windows
         public string ClearQuest(string _questCode)
         {
             InGameStatus.Quest.Progress.Remove(_questCode);
-            InGameStatus.Quest.Clear.Add(_questCode);
+            InGameStatus.Quest.Done.Add(_questCode);
             return questContentControllers[_questCode].ClearQuest();
         }
 

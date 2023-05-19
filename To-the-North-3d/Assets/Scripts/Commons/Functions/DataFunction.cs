@@ -151,7 +151,7 @@ public static class DataFunction
                 {
                     tokens = line.Split(": ");
                     cond = new ConvChoiceInfo.ChoiceCondition();
-                    cond.conditionType = System.Enum.Parse<ConvChoiceInfo.ChoiceCondition.ConditionType>(tokens[0]);
+                    cond.conditionType = tokens[0];
                     cond.contentType = System.Enum.Parse<ConvChoiceInfo.ChoiceCondition.ContentType>(tokens[1]);
                     cond.code = tokens[2];
                     if (cond.contentType.Equals(ConvChoiceInfo.ChoiceCondition.ContentType.Item)) cond.amount = int.Parse(tokens[3]);

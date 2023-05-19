@@ -17,19 +17,13 @@ namespace Assets.Scripts.Components.Conversations.Objects
         public class ChoiceCondition
         {
             public ContentType contentType;
-            public ConditionType conditionType;
+            public string conditionType;
             public string code;
             public int amount;
             public enum ContentType
             {
                 Item,
                 Quest,
-            }
-            public enum ConditionType
-            {
-                Have,
-                Get,
-                Pay,
             }
             public new string ToString()
             {
