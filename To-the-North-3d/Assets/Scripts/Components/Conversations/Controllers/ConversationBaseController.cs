@@ -3,6 +3,7 @@ using Assets.Scripts.Components.Conversations.Managers;
 using Assets.Scripts.Components.Conversations.Objects;
 using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Items;
+using Assets.Scripts.Components.Infos;
 using UnityEngine;
 using System.Linq;
 
@@ -81,10 +82,12 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                                     case ConvChoiceInfo.ChoiceCondition.ConditionType.Get:
                                         // 아이템을 획득해야 함 <- 선택지 고르면 아이템 수령
                                         InGameStatus.Item.PushItemToInventory(Instantiate(DataFunction.LoadItemInfoByCode(cond.code)));
+                                        UIInfoTextContainerController.Instance.PrintText($"Item Get ! {cond.code}");
                                         break;
                                     case ConvChoiceInfo.ChoiceCondition.ConditionType.Pay:
                                         // 아이템을 제출해야 함 <- 선택지 고르면 아이템 소실
                                         InGameStatus.Item.PullItemFromInventoryByCode(cond.code);
+                                        UIInfoTextContainerController.Instance.PrintText($"Item Paid ! {cond.code}");
                                         break;
                                 }
                                 break;
@@ -93,11 +96,11 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                                 {
                                     case ConvChoiceInfo.ChoiceCondition.ConditionType.Get:
                                         // 퀘스트를 시작한다는 개념 <- 선택지 고르면 퀘스트 수령
-                                        Debug.Log($"Quest Start ! {cond.code}");
+                                        UIInfoTextContainerController.Instance.PrintText($"Quest Start ! {cond.code}");
                                         break;
                                     case ConvChoiceInfo.ChoiceCondition.ConditionType.Pay:
                                         // 퀘스트를 완료했다는 개념 <- 선택지 고르면 퀘스트 사라짐
-                                        Debug.Log($"Quest Clear ! {cond.code}");
+                                        UIInfoTextContainerController.Instance.PrintText($"Quest Clear ! {cond.code}");
                                         break;
                                 }
                                 break;
