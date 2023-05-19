@@ -46,10 +46,23 @@ namespace Assets.Scripts.Components.Windows
             }
         }
 
-        public void NoticeChange(bool _isTargetItem = true)
+        /// <summary>
+        /// 인벤토리에 아이템이 추가/제거 되었을 때 해당 사실에 기반하여 조건을 업데이트하는 함수
+        /// </summary>
+        /// <param name="_code">아이템 코드</param>
+        public void NoticeChange(string _code)
         {
-            if (isTargetItem != _isTargetItem) return;
-            curCount = Mathf.Min(maxCount, InGameStatus.Item.CountItemByCode(targetCode));
+            if (_code != targetCode) return;
+            Refresh();
         }
+
+        /// <summary>
+        /// 단순 새로고침 함수
+        /// </summary>
+        public void Refresh()
+        {
+            curCount = Mathf.Min(maxCount, InGameStatus.Item.CountItemByCode(targetCode));
+            Print();
+        } 
     }
 }

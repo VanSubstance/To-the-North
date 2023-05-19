@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3742676692171232870}
   - component: {fileID: 3742676692171232865}
   - component: {fileID: 3742676692171232871}
+  - component: {fileID: 4509533998562882846}
   m_Layer: 5
   m_Name: Quest Container
   m_TagString: Untagged
@@ -120,3 +121,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!223 &4509533998562882846
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3742676692171232866}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 757277289
+  m_SortingOrder: 3
+  m_TargetDisplay: 0

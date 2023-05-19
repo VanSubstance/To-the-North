@@ -265,9 +265,10 @@ public static class InGameStatus
         /// <returns></returns>
         public static ItemBaseInfo PullItemFromInventory(ItemInventoryInfo itemFromInventory)
         {
+            int idx = WindowInventoryController.Instance.ContentInventory.itemsAttached.IndexOf(itemFromInventory);
             ItemBaseInfo res = itemFromInventory.itemInfo;
             res.Ctrl.ItemTruncate();
-            WindowInventoryController.Instance.ContentInventory.itemsAttached.Remove(itemFromInventory);
+            WindowInventoryController.Instance.ContentInventory.itemsAttached.RemoveAt(idx);
             return res;
         }
 

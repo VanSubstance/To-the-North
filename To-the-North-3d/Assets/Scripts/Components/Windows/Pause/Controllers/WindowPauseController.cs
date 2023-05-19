@@ -53,6 +53,7 @@ namespace Assets.Scripts.Components.Windows.Pause
                     GlobalSetting.Language = "Eng";
                     return;
             }
+            WindowQuestContainerController.Instance.Refresh();
         }
 
         public override void OnOpen()

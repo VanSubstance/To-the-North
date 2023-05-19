@@ -147,7 +147,7 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                                         {
                                             ib = InGameStatus.Item.PullItemFromInventoryByCode(cond.code);
                                         }
-                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.ItemGet}: {ib.Title} x {cond.amount}");
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.ItemPay}: {ib.Title} x {cond.amount}");
                                         break;
                                 }
                                 break;

@@ -10,15 +10,15 @@ namespace Assets.Scripts.Components.Windows
         private Transform conditionPrefab, conditionTf;
         [SerializeField]
         private TextMeshProUGUI title, desc;
-        private string t;
+        private string t, qCode;
         private List<WindowQuestContentConditionController> conditions;
 
         public string InitQuest(string _questCode)
         {
-            string res = string.Empty;
+            qCode = _questCode;
             conditions = new();
             Queue<string> q = DataFunction.LoadTextFromFile($"Quest/{_questCode}");
-            res = title.text = t = q.Dequeue();
+            string res = title.text = t = q.Dequeue();
             while (t != "?")
             {
                 q.TryDequeue(out t);
@@ -69,12 +69,28 @@ namespace Assets.Scripts.Components.Windows
             }
         }
 
-        public void NoticeChange()
+        /// <summary>
+        /// 인벤토리에 아이템이 추가/제거 되었을 때 해당 사실을 퀘스트의 조건 항목들에 전달해주는 함수
+        /// </summary>
+        /// <param name="_code">아이템 코드</param>
+        public void NoticeChange(string _code)
         {
             foreach (WindowQuestContentConditionController cond in conditions)
             {
-                cond.NoticeChange();
+                cond.NoticeChange(_code);
             }
+        }
+
+        /// <summary>
+        /// 단순 새로고침 함수
+        /// </summary>
+        public void Refresh()
+        {
+            foreach (WindowQuestContentConditionController c in conditions)
+            {
+                Destroy(c.gameObject);
+            }
+            InitQuest(qCode);
         }
     }
 }

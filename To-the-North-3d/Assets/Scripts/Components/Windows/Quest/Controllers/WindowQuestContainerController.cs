@@ -65,15 +65,33 @@ namespace Assets.Scripts.Components.Windows
             return questContentControllers[_questCode].ClearQuest();
         }
 
-        public void NoticeChange(string _code)
+        /// <summary>
+        /// 인벤토리에 아이템이 추가/제거 되었을 때 해당 사실을 퀘스트의 조건 항목들에 전달해주는 함수
+        /// </summary>
+        /// <param name="_code">아이템 코드</param>
+        public void NoticeItemChanged(string _code)
         {
             try
             {
-                questContentControllers[_code].NoticeChange();
+                foreach (KeyValuePair<string, WindowQuestContentController> kv in questContentControllers)
+                {
+                    kv.Value.NoticeChange(_code);
+                }
             }
             catch (NullReferenceException)
             {
 
+            }
+        }
+
+        /// <summary>
+        /// 단순 새로고침 함수
+        /// </summary>
+        public void Refresh()
+        {
+            foreach (KeyValuePair<string, WindowQuestContentController> kv in questContentControllers)
+            {
+                kv.Value.Refresh();
             }
         }
 
