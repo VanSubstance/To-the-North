@@ -1,4 +1,5 @@
 using UnityEngine;
+using Assets.Scripts.Commons;
 
 namespace Assets.Scripts.Components.Windows
 {
