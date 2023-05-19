@@ -15,7 +15,8 @@ MonoBehaviour:
   itemType: 0
   size: {x: 1, y: 2}
   imagePath: Mag-9-01
-  title: "\uC870\uC545\uD55C 9mm \uD0C4\uCC3D"
+  titleKor: "9mm \uD0C4\uCC3D"
+  titleEng: "9mm \uD0C4\uCC3D \uC601\uC5B4"
   description: 
   price: 12
   equipmentType: 0

@@ -15,7 +15,8 @@ MonoBehaviour:
   itemType: 1
   size: {x: 2, y: 3}
   imagePath: W-B-01
-  title: "\uC870\uC7A1\uD55C \uB098\uBB34\uD65C"
+  titleKor: "\uB098\uBB34 \uD65C"
+  titleEng: "\uB098\uBB34 \uD65C \uC601\uC5B4"
   description: "\uC870\uC7A1\uD55C \uB098\uBB34\uD65C\uC774\uB2E4. \uBA87\uBC88 \uC3D8\uBA74
     \uBD80\uB7EC\uC9C8 \uAC83 \uAC19\uB2E4."
   price: 100

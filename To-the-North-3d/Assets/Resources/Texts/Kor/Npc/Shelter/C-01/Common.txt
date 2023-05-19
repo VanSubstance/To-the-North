@@ -7,12 +7,7 @@
 > Commerce
 
 ?
-<
-오늘따라 기분이 좋아보이시는군요.
-> 1
-
-?
-Have: Item: Mon-N-01: 1
+Have: Item: Mon-N-01: 2
 <
 들개에게서 이런 것을 얻었습니다. 어떻게 생각하십니까?
 > Quest/01
@@ -21,6 +16,25 @@ Have: Item: Mon-N-01: 1
 <
 [대화를 종료한다]
 > Quit
+
+?
+NotDone: Quest: C-02-01
+NotHave: Quest: C-02-01
+<
+퀘스트 수령 테스트
+> Quest/C-02-01
+
+?
+Have: Quest: C-02-01
+<
+퀘스트 완료 테스트
+> Quest/C-02-02
+
+?
+Done: Quest: C-02-01
+<
+특정 퀘스트 완료 후 해금되는 선택지
+> 2
 !
 
 
@@ -37,5 +51,15 @@ Have: Item: Mon-N-01: 1
 ?
 <
 [대화를 종료한다]
+> Quit
+!
+
+
+2
+퀘스트 테스트는 한번만 가능하다네.
+
+?
+<
+[대화 종료]
 > Quit
 !

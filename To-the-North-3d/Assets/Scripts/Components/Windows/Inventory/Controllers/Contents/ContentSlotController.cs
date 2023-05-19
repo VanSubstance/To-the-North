@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Items;
+using Assets.Scripts.Commons.Objects;
 
 namespace Assets.Scripts.Components.Windows.Inventory
 {
@@ -10,7 +11,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         [SerializeField]
         private InventorySlotController slotTf;
         private readonly Vector2 sizeSlot = new Vector2(14, 10);
-        public List<ItemInventoryInfo> itemsAttached;
+        public ListWithListener<ItemInventoryInfo> itemsAttached = new ListWithListener<ItemInventoryInfo>();
 
         protected void Awake()
         {
@@ -20,7 +21,6 @@ namespace Assets.Scripts.Components.Windows.Inventory
         private void Init()
         {
             if (slots != null) return;
-            itemsAttached = new();
             slots = new InventorySlotController[(int)sizeSlot.x, (int)sizeSlot.y];
             // i = x = row
             for (int i = 0; i < sizeSlot.x; i++)

@@ -43,7 +43,7 @@ namespace Assets.Scripts.Components.Hovers
             {
                 image.GetComponent<RectTransform>().sizeDelta = new Vector2(w * 80 / h, 80);
             }
-            title.text = _info.title;
+            title.text = _info.Title;
             price.text = $"{_info.price} G";
             gameObject.SetActive(true);
         }

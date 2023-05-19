@@ -3,8 +3,12 @@ using Assets.Scripts.Components.Conversations.Managers;
 using Assets.Scripts.Components.Conversations.Objects;
 using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Items;
+using Assets.Scripts.Components.Infos;
 using UnityEngine;
 using System.Linq;
+using Assets.Scripts.Components.Windows;
+using Assets.Scripts.Commons;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Components.Conversations.Controllers
 {
@@ -46,17 +50,67 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                         case ConvChoiceInfo.ChoiceCondition.ContentType.Item:
                             switch (cond.conditionType)
                             {
-                                case ConvChoiceInfo.ChoiceCondition.ConditionType.Have:
+                                case "Have":
                                     // 아이템을 가지고 있어야 함
-                                    if (!InGameStatus.Item.LookForItemByCode(cond.code))
+                                    // + 개수가 넘어가야 함
+                                    if (InGameStatus.Item.CountItemByCode(cond.code) < cond.amount)
                                     {
                                         // 아이템이 없음
+                                        // or 개수가 안넘음
                                         return false;
                                     }
                                     break;
                             }
                             break;
                         case ConvChoiceInfo.ChoiceCondition.ContentType.Quest:
+                            switch (cond.conditionType)
+                            {
+                                case "Have":
+                                    // 퀘스트를 가지고 있어야 함
+                                    // + 클리어 조건 전부 통과했어야 함
+                                    try
+                                    {
+                                        if (!WindowQuestContainerController.Instance.questContentControllers[cond.code].IsClearable)
+                                        {
+                                            // 클리어 불가
+                                            return false;
+                                        }
+                                    }
+                                    catch (KeyNotFoundException)
+                                    {
+                                        return false;
+                                    }
+                                    break;
+                                case "NotHave":
+                                    // 퀘스트를 가지고 있지 않아야 함
+                                    try
+                                    {
+                                        if (WindowQuestContainerController.Instance.questContentControllers[cond.code])
+                                        {
+                                            return false;
+                                        }
+                                    }
+                                    catch (KeyNotFoundException)
+                                    {
+                                    }
+                                    break;
+                                case "NotDone":
+                                    // 한 적이 없어야 함
+                                    if (InGameStatus.Quest.Done.Contains(cond.code))
+                                    {
+                                        // 클리어 불가
+                                        return false;
+                                    }
+                                    break;
+                                case "Done":
+                                    // 클리어 했어야 함
+                                    if (!InGameStatus.Quest.Done.Contains(cond.code))
+                                    {
+                                        // 클리어 불가
+                                        return false;
+                                    }
+                                    break;
+                            }
                             break;
                     }
                 }
@@ -71,33 +125,42 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                     );
                 choiceBtnList[i].SetButtonAction(() =>
                 {
-                    foreach(ConvChoiceInfo.ChoiceCondition cond in temp.conditions)
+                    foreach (ConvChoiceInfo.ChoiceCondition cond in temp.conditions)
                     {
                         switch (cond.contentType)
                         {
                             case ConvChoiceInfo.ChoiceCondition.ContentType.Item:
+                                ItemBaseInfo ib = null;
                                 switch (cond.conditionType)
                                 {
-                                    case ConvChoiceInfo.ChoiceCondition.ConditionType.Get:
+                                    case "Get":
                                         // 아이템을 획득해야 함 <- 선택지 고르면 아이템 수령
-                                        InGameStatus.Item.PushItemToInventory(Instantiate(DataFunction.LoadItemInfoByCode(cond.code)));
+                                        for (int i = 0; i < cond.amount; i++)
+                                        {
+                                            InGameStatus.Item.PushItemToInventory(Instantiate(ib = DataFunction.LoadItemInfoByCode(cond.code)));
+                                        }
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.ItemGet}: {ib.Title} x {cond.amount}");
                                         break;
-                                    case ConvChoiceInfo.ChoiceCondition.ConditionType.Pay:
+                                    case "Pay":
                                         // 아이템을 제출해야 함 <- 선택지 고르면 아이템 소실
-                                        InGameStatus.Item.PullItemFromInventoryByCode(cond.code);
+                                        for (int i = 0; i < cond.amount; i++)
+                                        {
+                                            ib = InGameStatus.Item.PullItemFromInventoryByCode(cond.code);
+                                        }
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.ItemPay}: {ib.Title} x {cond.amount}");
                                         break;
                                 }
                                 break;
                             case ConvChoiceInfo.ChoiceCondition.ContentType.Quest:
                                 switch (cond.conditionType)
                                 {
-                                    case ConvChoiceInfo.ChoiceCondition.ConditionType.Get:
+                                    case "Start":
                                         // 퀘스트를 시작한다는 개념 <- 선택지 고르면 퀘스트 수령
-                                        Debug.Log($"Quest Start ! {cond.code}");
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.QuestGet}: {WindowQuestContainerController.Instance.ActivateQuest(cond.code)}");
                                         break;
-                                    case ConvChoiceInfo.ChoiceCondition.ConditionType.Pay:
+                                    case "Clear":
                                         // 퀘스트를 완료했다는 개념 <- 선택지 고르면 퀘스트 사라짐
-                                        Debug.Log($"Quest Clear ! {cond.code}");
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.QuestClear}: {WindowQuestContainerController.Instance.ClearQuest(cond.code)}");
                                         break;
                                 }
                                 break;

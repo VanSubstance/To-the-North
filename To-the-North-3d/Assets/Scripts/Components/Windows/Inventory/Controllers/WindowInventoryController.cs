@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Components.Windows.Inventory
 {
-    public class WindowInventoryController : WindowBaseController
+    public class WindowInventoryController : WindowCenterBaseController
     {
         [SerializeField]
         private Transform containerBlank, containerSlots, containerEquipment, itemPrefab;
@@ -128,14 +128,26 @@ namespace Assets.Scripts.Components.Windows.Inventory
             };
 
             // 풀링: 각각의 컨테이너 생성 및 보관
-            contentByType[ContentType.Inventory] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Inventory);
-            GlobalComponent.Common.Text.Inventory.inventory = contentByType[ContentType.Inventory].Container.GetComponent<ContainerBaseController>().titleUGUI;
             contentByType[ContentType.Looting] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Looting);
             GlobalComponent.Common.Text.Inventory.looting = contentByType[ContentType.Looting].Container.GetComponent<ContainerBaseController>().titleUGUI;
             contentByType[ContentType.Commerce] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Commerce);
             GlobalComponent.Common.Text.Inventory.commerce = contentByType[ContentType.Commerce].Container.GetComponent<ContainerBaseController>().titleUGUI;
             contentByType[ContentType.Equipment] = Instantiate(containerEquipment, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentEquipmentController>(ContentType.Equipment);
             GlobalComponent.Common.Text.Inventory.equipment = contentByType[ContentType.Equipment].Container.GetComponent<ContainerBaseController>().titleUGUI;
+            contentByType[ContentType.Inventory] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Inventory);
+            GlobalComponent.Common.Text.Inventory.inventory = contentByType[ContentType.Inventory].Container.GetComponent<ContainerBaseController>().titleUGUI;
+
+            /** 인벤토리의 경우, 아이템 리스트에 리스너 부착
+             *  아이템 추가/삭제 시: 진행중인 퀘스트의 조건들 업데이트
+             */
+            ContentInventory.itemsAttached.onValueAddedListener = (_info) =>
+            {
+                WindowQuestContainerController.Instance.NoticeItemChanged(_info.itemInfo.imagePath);
+            };
+            ContentInventory.itemsAttached.onValueRemovedListener = (_info) =>
+            {
+                WindowQuestContainerController.Instance.NoticeItemChanged(_info.itemInfo.imagePath);
+            };
 
             OnClose();
         }

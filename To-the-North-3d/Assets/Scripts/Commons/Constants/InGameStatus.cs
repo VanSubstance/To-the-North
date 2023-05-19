@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Assets.Scripts.Components.Progress;
+using Assets.Scripts.Components.Windows;
 using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
@@ -231,6 +232,19 @@ public static class InGameStatus
             return false;
         }
 
+        public static int CountItemByCode(string _code)
+        {
+            int res = 0;
+            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
+            {
+                if (inven.itemInfo.imagePath.Equals(_code))
+                {
+                    res++;
+                }
+            }
+            return res;
+        } 
+
         public static ItemBaseInfo PullItemFromInventoryByCode(string _code)
         {
             foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
@@ -251,9 +265,10 @@ public static class InGameStatus
         /// <returns></returns>
         public static ItemBaseInfo PullItemFromInventory(ItemInventoryInfo itemFromInventory)
         {
+            int idx = WindowInventoryController.Instance.ContentInventory.itemsAttached.IndexOf(itemFromInventory);
             ItemBaseInfo res = itemFromInventory.itemInfo;
             res.Ctrl.ItemTruncate();
-            WindowInventoryController.Instance.ContentInventory.itemsAttached.Remove(itemFromInventory);
+            WindowInventoryController.Instance.ContentInventory.itemsAttached.RemoveAt(idx);
             return res;
         }
 
@@ -266,5 +281,11 @@ public static class InGameStatus
         {
             WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Inventory, baseInfo);
         }
+    }
+
+    public static class Quest
+    {
+        public static List<string> Done = new List<string>();
+        public static List<string> Progress = new List<string>();
     }
 }

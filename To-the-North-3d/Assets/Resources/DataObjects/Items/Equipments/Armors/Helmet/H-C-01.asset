@@ -15,7 +15,8 @@ MonoBehaviour:
   itemType: 1
   size: {x: 1, y: 1}
   imagePath: H-C-01
-  title: "\uC57C\uAD6C\uBAA8\uC790"
+  titleKor: "\uC57C\uAD6C \uBAA8\uC790"
+  titleEng: "\uC57C\uAD6C \uBAA8\uC790 \uC601\uC5B4"
   description: 
   price: 30
   equipmentType: 0

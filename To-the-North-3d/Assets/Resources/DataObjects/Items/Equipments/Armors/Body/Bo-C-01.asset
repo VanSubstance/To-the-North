@@ -15,7 +15,8 @@ MonoBehaviour:
   itemType: 1
   size: {x: 2, y: 2}
   imagePath: Bo-C-01
-  title: "\uAE30\uBAA8 \uB9E8\uD22C\uB9E8"
+  titleKor: "\uAE30\uBAA8 \uB4E4\uC5B4\uAC04 \uB9E8\uD22C\uB9E8"
+  titleEng: "\uAE30\uBAA8 \uB4E4\uC5B4\uAC04 \uB9E8\uD22C\uB9E8 \uC601\uC5B4"
   description: 
   price: 60
   equipmentType: 0

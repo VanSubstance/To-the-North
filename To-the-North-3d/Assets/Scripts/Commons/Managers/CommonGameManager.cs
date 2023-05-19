@@ -14,11 +14,12 @@ public class CommonGameManager : MonoBehaviour
     [SerializeField]
     private Transform fadeImagePrefab, userPrefab,
         filterForScreenPrefab, filterDizzinessPrefab,
-        pauseWindowPrefab, inventoryWindowPrefab,
+        pauseWindowPrefab, inventoryWindowPrefab, questWindowPrefab,
         panelForHpSp, panelForCondition, panelForWelfare, panelForQuick,
         projectileManager, trajectoryManager, soundEffectManager,
         screenHitManager,
-        hoveringItemInfo, hoveringConditionInfo
+        hoveringItemInfo, hoveringConditionInfo,
+        noticeTextInfo
         ;
 
     private Image fadeImage;
@@ -35,7 +36,7 @@ public class CommonGameManager : MonoBehaviour
         {
             return UIManager.Instance.transform;
         }
-    } 
+    }
 
     private static CommonGameManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
@@ -160,10 +161,13 @@ public class CommonGameManager : MonoBehaviour
             // 필드 있음 = 유저가 있어야 함
 
             // esc 모달 추가
-            Transform windowForPause = Instantiate(pauseWindowPrefab, uiTf);
+            Instantiate(pauseWindowPrefab, uiTf);
 
             // 인벤토리 모달 추가
-            Transform windowForInventory = Instantiate(inventoryWindowPrefab, uiTf);
+            Instantiate(inventoryWindowPrefab, uiTf);
+
+            // 퀘스트 모달 추가
+            Instantiate(questWindowPrefab, uiTf);
 
             Transform hovering = Instantiate(hoveringItemInfo, uiTf);
             UIManager.Instance.AddKeyToggleManager(KeyCode.I, hovering.GetComponent<IControllByKey>());
@@ -210,6 +214,9 @@ public class CommonGameManager : MonoBehaviour
             // 퀵슬롯 UI
             Transform PanelForQuick = Instantiate(panelForQuick, uiTf);
             PanelForQuick.localScale = Vector3.one;
+
+            // 시스템 메세지용 UI
+            Instantiate(noticeTextInfo, uiTf);
 
             // 투사체 풀
             if (GameObject.Find("Projectiles") == null)

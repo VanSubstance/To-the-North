@@ -151,7 +151,7 @@ public static class DataFunction
                 {
                     tokens = line.Split(": ");
                     cond = new ConvChoiceInfo.ChoiceCondition();
-                    cond.conditionType = System.Enum.Parse<ConvChoiceInfo.ChoiceCondition.ConditionType>(tokens[0]);
+                    cond.conditionType = tokens[0];
                     cond.contentType = System.Enum.Parse<ConvChoiceInfo.ChoiceCondition.ContentType>(tokens[1]);
                     cond.code = tokens[2];
                     if (cond.contentType.Equals(ConvChoiceInfo.ChoiceCondition.ContentType.Item)) cond.amount = int.Parse(tokens[3]);
@@ -200,6 +200,13 @@ public static class DataFunction
         GlobalText.Inventory.WeaponPri = curQ.Dequeue();
         GlobalText.Inventory.WeaponSec = curQ.Dequeue();
         GlobalText.Inventory.Commerce = curQ.Dequeue();
+
+        // 시스템 관련
+        curQ = LoadTextFromFile("System");
+        GlobalText.System.ItemGet = curQ.Dequeue();
+        GlobalText.System.ItemPay = curQ.Dequeue();
+        GlobalText.System.QuestGet = curQ.Dequeue();
+        GlobalText.System.QuestClear = curQ.Dequeue();
 
         // 상태이상 관련
         curQ = LoadTextFromFile("Condition");

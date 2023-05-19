@@ -15,7 +15,8 @@ MonoBehaviour:
   itemType: 0
   size: {x: 1, y: 1}
   imagePath: F-D-01
-  title: "\uACFD\uC6B0\uC720"
+  titleKor: "\uACFD\uC6B0\uC720"
+  titleEng: "\uACFD\uC6B0\uC720 \uC601\uC5B4"
   description: 
   price: 60
   consumableType: 1

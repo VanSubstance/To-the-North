@@ -15,11 +15,13 @@ MonoBehaviour:
   itemType: 0
   size: {x: 1, y: 1}
   imagePath: B-9-01
-  title: "9mm \uC77C\uBC18\uD0C4"
+  titleKor: "9mm \uD0C4\uD658"
+  titleEng: "9mm \uD0C4\uD658 \uC601\uC5B4"
   description: 
   price: 7
-  consumbableType: 0
+  consumableType: 0
   amountCurrent: 60
+  secondConsume: 0
   bulletType: 1
   powerPenetration: 3
   powerImpact: 3
