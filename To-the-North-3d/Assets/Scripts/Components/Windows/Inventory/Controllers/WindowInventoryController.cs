@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Components.Windows.Inventory
 {
-    public class WindowInventoryController : WindowBaseController
+    public class WindowInventoryController : WindowCenterBaseController
     {
         [SerializeField]
         private Transform containerBlank, containerSlots, containerEquipment, itemPrefab;

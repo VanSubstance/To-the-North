@@ -23,7 +23,7 @@ public class DragToMoveController : MonoBehaviour
         }
         else
         {
-            GetComponent<BoxCollider>().size = unitToBoxColliderForce * GlobalSetting.unitSize;
+            GetComponent<BoxCollider>().size = unitToBoxColliderForce * GlobalSetting.UnitSize;
         }
     }
 

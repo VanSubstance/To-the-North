@@ -3,7 +3,7 @@ using TMPro;
 
 namespace Assets.Scripts.Components.Windows.Pause
 {
-    public class WindowPauseController : WindowBaseController
+    public class WindowPauseController : WindowCenterBaseController
     {
         [SerializeField]
         private Transform mainOption, optionOption;
