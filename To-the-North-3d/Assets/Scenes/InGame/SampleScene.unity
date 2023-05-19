@@ -1020,10 +1020,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 953080142591831879, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
-      propertyPath: noticeTextInfo
-      value: 
-      objectReference: {fileID: 3989931165860439644, guid: 499b8e2ebab28bb4e81f324d3fe4dee9, type: 3}
     - target: {fileID: 953080142591831897, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: m_Name
       value: Static Game Manager
