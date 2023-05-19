@@ -15,7 +15,8 @@ MonoBehaviour:
   itemType: 1
   size: {x: 2, y: 3}
   imagePath: Ba-T-01
-  title: "\uC904\uC744 \uBA54\uB2E8 \uB4DC\uB7FC\uD1B5"
+  titleKor: "\uB4DC\uB7FC\uD1B5"
+  titleEng: "\uB4DC\uB7FC\uD1B5 \uC601\uC5B4"
   description: "\uD654\uC0B4\uB530\uC704\uB85C\uB294 \uB6AB\uC744 \uC218 \uC5C6\uC5B4!"
   price: 170
   equipmentType: 0

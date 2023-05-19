@@ -15,7 +15,8 @@ MonoBehaviour:
   itemType: 1
   size: {x: 1, y: 1}
   imagePath: Ma-C-01
-  title: "\uCC9C \uB9C8\uC2A4\uD06C"
+  titleKor: "\uCC9C \uC2A4\uCE74\uD504"
+  titleEng: "\uCC9C \uC2A4\uCE74\uD504 \uC601\uC5B4"
   description: 
   price: 15
   equipmentType: 0

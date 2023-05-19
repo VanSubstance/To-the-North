@@ -13,7 +13,15 @@ namespace Assets.Scripts.Items
         /// </summary>
         public Vector2 size;
         public string imagePath;
-        public string title;
+        [SerializeField]
+        private string titleKor, titleEng;
+        public string Title
+        {
+            get
+            {
+                return GlobalSetting.Language == "Kor" ? titleKor : titleEng;
+            }
+        }
         public string description;
         public int price;
 
