@@ -1,41 +1,66 @@
 0
-만나서 반갑네! 뭔가 필요한게 있나?
+Good to see you!
+Anything you need?
 
 ?
 <
-[상점을 둘러본다]
+[Look for shop]
 > Commerce
 
 ?
+Have: Item: Mon-N-01: 2
 <
-오늘따라 기분이 좋아보이시는군요.
-> 1
-
-?
-Have: Item: Mon-N-01: 1
-<
-들개에게서 이런 것을 얻었습니다. 어떻게 생각하십니까?
+I took this one from wolves. How do you see?
 > Quest/01
 
 ?
 <
-[대화를 종료한다]
+[Quit Conversation]
 > Quit
+
+?
+NotDone: Quest: C-02-01
+NotHave: Quest: C-02-01
+<
+Test: Start Quest
+> Quest/C-02-01
+
+?
+Have: Quest: C-02-01
+<
+Test: Clear Quest
+> Quest/C-02-02
+
+?
+Done: Quest: C-02-01
+<
+The Selection unlocked after clearing certain Quest
+> 2
 !
 
 
 1
-그런가?
-허허, 내가 힘을 내야 다른이들도 힘을 낼 것 아닌가?
-오늘도 힘내자구!
+Do I?
+Haha, I just cheer myself up so others can too!
+Have a nice day you too!
 
 ?
 <
-[상점을 둘러본다]
+[Look for shop]
 > Commerce
 
 ?
 <
-[대화를 종료한다]
+[Quit]
+> Quit
+!
+
+
+2
+Quest Test is avaiable for only once.
+
+?
+<
+[Quit]
 > Quit
 !

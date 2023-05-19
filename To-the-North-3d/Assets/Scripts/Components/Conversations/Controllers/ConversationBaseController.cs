@@ -52,9 +52,11 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                             {
                                 case "Have":
                                     // 아이템을 가지고 있어야 함
-                                    if (!InGameStatus.Item.LookForItemByCode(cond.code))
+                                    // + 개수가 넘어가야 함
+                                    if (InGameStatus.Item.CountItemByCode(cond.code) < cond.amount)
                                     {
                                         // 아이템이 없음
+                                        // or 개수가 안넘음
                                         return false;
                                     }
                                     break;
@@ -128,18 +130,24 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                         switch (cond.contentType)
                         {
                             case ConvChoiceInfo.ChoiceCondition.ContentType.Item:
-                                ItemBaseInfo ib;
+                                ItemBaseInfo ib = null;
                                 switch (cond.conditionType)
                                 {
                                     case "Get":
                                         // 아이템을 획득해야 함 <- 선택지 고르면 아이템 수령
-                                        InGameStatus.Item.PushItemToInventory(Instantiate(ib = DataFunction.LoadItemInfoByCode(cond.code)));
-                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.ItemGet}: {ib.Title}");
+                                        for (int i = 0; i < cond.amount; i++)
+                                        {
+                                            InGameStatus.Item.PushItemToInventory(Instantiate(ib = DataFunction.LoadItemInfoByCode(cond.code)));
+                                        }
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.ItemGet}: {ib.Title} x {cond.amount}");
                                         break;
                                     case "Pay":
                                         // 아이템을 제출해야 함 <- 선택지 고르면 아이템 소실
-                                        ib = InGameStatus.Item.PullItemFromInventoryByCode(cond.code);
-                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.ItemGet}: {ib.Title}");
+                                        for (int i = 0; i < cond.amount; i++)
+                                        {
+                                            ib = InGameStatus.Item.PullItemFromInventoryByCode(cond.code);
+                                        }
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.ItemGet}: {ib.Title} x {cond.amount}");
                                         break;
                                 }
                                 break;
