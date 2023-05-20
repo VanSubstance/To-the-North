@@ -60,7 +60,7 @@ namespace Assets.Scripts.Creatures
         public static CreatureInfo GetClone(CreatureInfo _data)
         {
             if (_data == null) return null;
-            CreatureInfo res = CreateInstance<CreatureInfo>();
+            CreatureInfo res = Instantiate(_data);
             res.hp = new ProgressInfo(_data.maxHp);
             res.sightRange = _data.sightRange;
             res.moveSpd = _data.moveSpd;

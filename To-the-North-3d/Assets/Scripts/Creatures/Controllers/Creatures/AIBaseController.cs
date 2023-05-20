@@ -25,7 +25,7 @@ namespace Assets.Scripts.Creatures.Bases
             set
             {
                 if (value == null) return;
-                info = Instantiate(value);
+                info = CreatureInfo.GetClone(value);
                 sightCtrl.range = Info.sightRange;
                 agent.speed = info.moveSpd;
                 agent.stoppingDistance = WeaponRange;
@@ -211,52 +211,53 @@ namespace Assets.Scripts.Creatures.Bases
 
         public override void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir)
         {
+            animCtrl.SetTrigger("Hit");
+            transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
+            switch (partType)
+            {
+                case EquipBodyType.Helmat:
+                    break;
+                case EquipBodyType.Mask:
+                    break;
+                case EquipBodyType.Head:
+                    break;
+                case EquipBodyType.Body:
+                    break;
+                case EquipBodyType.Leg:
+                    break;
+            }
+            // 계산 처리
+            if (Info)
+            {
+                Info.LiveHp = -damage[0];
+                if (Info.LiveHp <= 0)
+                {
+                    // 죽음
+                    // -> 루팅 프리펩 생성 필요
+                    gameObject.SetActive(false);
+                }
+            }
+            if (IsRunaway)
+            {
+                statusType = AIStatusType.Runaway;
+            }
+            else
+            {
+                if (!Info.IsActiveBehaviour) Info.IsActiveBehaviour = true;
+                statusType = AIStatusType.Combat;
+            }
+            OnDetectPosition(hitDir + transform.position);
+
+            // 상태 이상 부여 심사
+            if (damage[1] > 0)
+            {
+                // 관통당했다
+            }
             try
             {
-                animCtrl.SetTrigger("Hit");
-                transform.position = transform.position - (hitDir.normalized * 0.5f * attackInfo.powerKnockback);
-                switch (partType)
-                {
-                    case EquipBodyType.Helmat:
-                        break;
-                    case EquipBodyType.Mask:
-                        break;
-                    case EquipBodyType.Head:
-                        break;
-                    case EquipBodyType.Body:
-                        break;
-                    case EquipBodyType.Leg:
-                        break;
-                }
-                // 계산 처리
-                if (Info)
-                {
-                    Info.LiveHp = -damage[0];
-                    if (Info.LiveHp <= 0)
-                    {
-                        gameObject.SetActive(false);
-                    }
-                }
-                if (IsRunaway)
-                {
-                    statusType = AIStatusType.Runaway;
-                }
-                else
-                {
-                    if (!Info.IsActiveBehaviour) Info.IsActiveBehaviour = true;
-                    statusType = AIStatusType.Combat;
-                }
-                OnDetectPosition(hitDir + transform.position);
-
-                // 상태 이상 부여 심사
-                if (damage[1] > 0)
-                {
-                    // 관통당했다
-                }
             }
             catch (NullReferenceException)
             {
-
             }
         }
 
