@@ -172,8 +172,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detections:
-  - {fileID: 6339890935786844866}
   - {fileID: 7249881556233970603}
+  - {fileID: 6339890935786844866}
   aIBaseController: {fileID: 4158035123242763712}
   targetTf: {fileID: 0}
 --- !u!114 &2595391720657072945

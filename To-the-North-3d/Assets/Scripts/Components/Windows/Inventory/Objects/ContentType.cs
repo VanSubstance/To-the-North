@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Components.Windows.Inventory
+namespace Assets.Scripts.Components.Windows.Inventory
 {
     public enum ContentType
     {
@@ -8,6 +8,7 @@
 
         Inventory,
         Looting,
+        Commerce,
 
         Equipment,
 

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using Assets.Scripts.Components.Progress;
+using Assets.Scripts.Components.Windows;
 using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using Assets.Scripts.Users.Objects;
+using Assets.Scripts.Components.Infos;
 
 public static class InGameStatus
 {
@@ -186,15 +188,10 @@ public static class InGameStatus
 
     public static class Item
     {
-        /// <summary>
-        /// 현재 착용하고 있는 장비 정보
-        /// </summary>
-        private static Dictionary<EquipBodyType, ItemEquipmentInfo> curEquipments = new Dictionary<EquipBodyType, ItemEquipmentInfo>();
-        public static List<ItemInventoryInfo> inventory = new List<ItemInventoryInfo>();
 
         public static ItemBulletInfo LookforBullet(ItemBulletType type)
         {
-            foreach (ItemInventoryInfo inven in inventory)
+            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
             {
                 if (inven.itemInfo is ItemBulletInfo info)
                 {
@@ -212,13 +209,50 @@ public static class InGameStatus
 
         public static ItemMagazineInfo LookForMagazine(ItemBulletType type)
         {
-            foreach (ItemInventoryInfo inven in inventory)
+            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
             {
                 if (inven.itemInfo is ItemMagazineInfo magInfo &&
                     magInfo.bulletType.Equals(type)
                     )
                 {
                     return (ItemMagazineInfo)PullItemFromInventory(inven);
+                }
+            }
+            return null;
+        }
+
+        public static bool LookForItemByCode(string _code)
+        {
+            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
+            {
+                if (inven.itemInfo.imagePath.Equals(_code))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static int CountItemByCode(string _code)
+        {
+            int res = 0;
+            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
+            {
+                if (inven.itemInfo.imagePath.Equals(_code))
+                {
+                    res++;
+                }
+            }
+            return res;
+        }
+
+        public static ItemBaseInfo PullItemFromInventoryByCode(string _code)
+        {
+            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
+            {
+                if (inven.itemInfo.imagePath.Equals(_code))
+                {
+                    return PullItemFromInventory(inven);
                 }
             }
             return null;
@@ -232,10 +266,11 @@ public static class InGameStatus
         /// <returns></returns>
         public static ItemBaseInfo PullItemFromInventory(ItemInventoryInfo itemFromInventory)
         {
-            itemFromInventory.itemInfo.Ctrl.ItemDetach();
-            itemFromInventory.itemInfo.Ctrl.ItemTruncate();
-            inventory.Remove(itemFromInventory);
-            return itemFromInventory.itemInfo;
+            int idx = WindowInventoryController.Instance.ContentInventory.itemsAttached.IndexOf(itemFromInventory);
+            ItemBaseInfo res = itemFromInventory.itemInfo;
+            res.Ctrl.ItemTruncate();
+            WindowInventoryController.Instance.ContentInventory.itemsAttached.RemoveAt(idx);
+            return res;
         }
 
         /// <summary>
@@ -246,6 +281,93 @@ public static class InGameStatus
         public static void PushItemToInventory(ItemBaseInfo baseInfo)
         {
             WindowInventoryController.Instance.GenerateItemObjectWithAuto(ContentType.Inventory, baseInfo);
+        }
+    }
+
+    public static class Quest
+    {
+        public static List<string> Done = new List<string>();
+        public static List<string> Progress = new List<string>();
+    }
+
+    private static int currency = 0;
+    public static int Currency
+    {
+        get
+        {
+            return currency;
+        }
+        set
+        {
+            if (value == 0) return;
+            currency += value;
+            UIInfoTextContainerController.Instance.PrintText($"{(value > 0 ? GlobalText.System.CurrencyGet : GlobalText.System.CurrencyPay)}: {(value > 0 ? value : -value)} G");
+            GlobalComponent.Common.Text.Inventory.currency.text = $"{currency} G";
+        }
+    }
+
+    public static class Weight
+    {
+        private static int weight = 0, maxWeight = 100;
+        public static int WeightC
+        {
+            get
+            {
+                return weight;
+            }
+            set
+            {
+                if (value == 0) return;
+                weight += value;
+                GlobalComponent.Common.Text.Inventory.weight.text = $"{weight} / {maxWeight}";
+                CheckOverWeight();
+            }
+        }
+        public static int MaxWeightC
+        {
+            get
+            {
+                return maxWeight;
+            }
+            set
+            {
+                if (value == 0) return;
+                maxWeight += value;
+                GlobalComponent.Common.Text.Inventory.weight.text = $"{weight} / {maxWeight}";
+                CheckOverWeight();
+            }
+        }
+        public static int OverweightAmount
+        {
+            get
+            {
+                return weight - maxWeight;
+            }
+        }
+
+        /// <summary>
+        /// 과정 평가 함수
+        /// </summary>
+        public static void CheckOverWeight()
+        {
+            if (OverweightAmount > 20)
+            {
+                // 초 과적 상태
+                UserBaseController.Instance.OccurCondition(ConditionType.Overweight_Heavy, true);
+                UserBaseController.Instance.CureCondition(ConditionType.Overweight_Light, 1);
+                return;
+            }
+            if (OverweightAmount > 3)
+            {
+                // 과적 상태
+                UserBaseController.Instance.CureCondition(ConditionType.Overweight_Heavy, 1);
+                UserBaseController.Instance.OccurCondition(ConditionType.Overweight_Light, true);
+                return;
+            }
+            // 정상
+            UserBaseController.Instance.CureCondition(ConditionType.Overweight_Light, 1);
+            UserBaseController.Instance.CureCondition(ConditionType.Overweight_Heavy, 1);
+            return;
         }
     }
 }

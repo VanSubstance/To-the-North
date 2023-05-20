@@ -1,0 +1,66 @@
+0
+Good to see you!
+Anything you need?
+
+?
+<
+[Look for shop]
+> Commerce
+
+?
+Have: Item: Mon-N-01: 2
+<
+I took this one from wolves. How do you see?
+> Quest/01
+
+?
+<
+[Quit Conversation]
+> Quit
+
+?
+NotDone: Quest: C-02-01
+NotHave: Quest: C-02-01
+<
+Test: Start Quest
+> Quest/C-02-01
+
+?
+Have: Quest: C-02-01
+<
+Test: Clear Quest
+> Quest/C-02-02
+
+?
+Done: Quest: C-02-01
+<
+The Selection unlocked after clearing certain Quest
+> 2
+!
+
+
+1
+Do I?
+Haha, I just cheer myself up so others can too!
+Have a nice day you too!
+
+?
+<
+[Look for shop]
+> Commerce
+
+?
+<
+[Quit]
+> Quit
+!
+
+
+2
+Quest Test is avaiable for only once.
+
+?
+<
+[Quit]
+> Quit
+!

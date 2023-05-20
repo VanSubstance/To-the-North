@@ -122,6 +122,7 @@ namespace Assets.Scripts.Creatures.Detections
             }
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
             List<Collider> targetsInViewRadius = Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask).ToList();
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.npcMask).ToList());
             //targetsInViewRadius.AddRange(Physics.OverlapCircleAll(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.creatureMask));
             for (int i = 0; i < targetsInViewRadius.Count; i++)
             {
@@ -136,15 +137,20 @@ namespace Assets.Scripts.Creatures.Detections
                 }
             }
             targetsInViewRadius.Clear();
-            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.Instinct.range, GlobalStatus.Constant.creatureMask));
+            targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.Instinct.range, GlobalStatus.Constant.creatureMask | GlobalStatus.Constant.eventMask | GlobalStatus.Constant.npcMask));
             if (targetsInViewRadius.Count > 0)
             {
                 // 주변 반경 안에 크리쳐 식별
-                IInteractionWithSight iSight;
+                IInteractionWithSight[] iSight;
                 foreach (Collider col in targetsInViewRadius)
                 {
-                    iSight = col.GetComponent<IInteractionWithSight>();
-                    iSight.DetectFull();
+                    iSight = col.GetComponents<IInteractionWithSight>();
+
+                    // 사이에 장애물 존재하지 않음
+                    foreach (IInteractionWithSight isight in iSight)
+                    {
+                        isight.DetectFull();
+                    }
                 }
             }
             return null;

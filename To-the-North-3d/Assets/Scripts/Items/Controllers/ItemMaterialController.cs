@@ -1,4 +1,4 @@
-using Assets.Scripts.Components.Popups;
+using Assets.Scripts.Components.Hovers;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -14,12 +14,12 @@ namespace Assets.Scripts.Items
 
         protected override void OnHover()
         {
-            HoverItemInfoContainerController.Instance.OnHoverEnter(info);
+            HoverItemInfoController.Instance.OnHoverEnter(info);
         }
 
         protected override void OnHoverExit()
         {
-            HoverItemInfoContainerController.Instance.OnHoverExit();
+            HoverItemInfoController.Instance.OnHoverExit();
         }
 
         protected override void OnMouseClickWithKeyPress()

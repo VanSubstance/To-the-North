@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Items;
+using Assets.Scripts.Commons.Objects;
 
 namespace Assets.Scripts.Components.Windows.Inventory
 {
@@ -9,6 +11,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         [SerializeField]
         private InventorySlotController slotTf;
         private readonly Vector2 sizeSlot = new Vector2(14, 10);
+        public ListWithListener<ItemInventoryInfo> itemsAttached = new ListWithListener<ItemInventoryInfo>();
 
         protected void Awake()
         {
@@ -49,8 +52,23 @@ namespace Assets.Scripts.Components.Windows.Inventory
         public ItemInventoryInfo GenerateItemWithAuto(ItemGenerateController gen, ItemBaseInfo _info = null, ContentType _type = ContentType.Undefined)
         {
             Init();
-            // 슬롯 지정이 없을 경우 = 자동 정렬 필요
             return gen.InitItem(_info, type: _type);
+        }
+
+        /// <summary>
+        /// 현재 슬롯을 비우고 적재되어있던 아이템 어레이 반환
+        /// </summary>
+        /// <returns></returns>
+        public ItemBaseInfo[] Clear()
+        {
+            ItemBaseInfo[] res = itemsAttached.ConvertAll((_info) => _info.itemInfo).ToArray();
+            foreach (ItemInventoryInfo _info in new List<ItemInventoryInfo>(itemsAttached))
+            {
+                if (_info.itemInfo == null) continue;
+                _info.itemInfo.Ctrl.ItemTruncate();
+            }
+            itemsAttached.Clear();
+            return res;
         }
     }
 }

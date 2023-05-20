@@ -24,8 +24,8 @@ namespace Assets.Scripts.Creatures.Bases
         {
             set
             {
-                info = CreatureInfo.GetClone(value);
-                if (info == null) return;
+                if (value == null) return;
+                info = Instantiate(value);
                 sightCtrl.range = Info.sightRange;
                 agent.speed = info.moveSpd;
                 agent.stoppingDistance = WeaponRange;
@@ -184,6 +184,8 @@ namespace Assets.Scripts.Creatures.Bases
         /// 현재 행동 상태
         /// </summary>
         public AIStatusType statusType;
+        [SerializeField]
+        private AIStatusType defaultType = AIStatusType.Wander;
 
         private bool isPause = false;
         public bool IsPause
@@ -340,7 +342,7 @@ namespace Assets.Scripts.Creatures.Bases
         {
             if (statusType == AIStatusType.None)
             {
-                statusType = AIStatusType.Wander;
+                statusType = defaultType;
             }
         }
 

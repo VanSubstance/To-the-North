@@ -4,22 +4,24 @@ using Assets.Scripts.Components.Infos;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static GlobalComponent.Common;
 
 public class CommonGameManager : MonoBehaviour
 {
     [SerializeField]
+    private int currency;
+
+    [SerializeField]
     private Transform fadeImagePrefab, userPrefab,
         filterForScreenPrefab, filterDizzinessPrefab,
-        pauseWindowPrefab, inventoryWindowPrefab,
+        pauseWindowPrefab, inventoryWindowPrefab, questWindowPrefab,
         panelForHpSp, panelForCondition, panelForWelfare, panelForQuick,
         projectileManager, trajectoryManager, soundEffectManager,
         screenHitManager,
-        hoveringItemInfo
+        hoveringItemInfo, hoveringConditionInfo,
+        noticeTextInfo
         ;
 
     private Image fadeImage;
@@ -30,6 +32,14 @@ public class CommonGameManager : MonoBehaviour
     private ScreenHitFilterController _screenHitFilterController;
     private Transform _screenDizzinessTf;
 
+    private Transform uiTf
+    {
+        get
+        {
+            return UIManager.Instance.transform;
+        }
+    }
+
     private static CommonGameManager _instance;
     // 인스턴스에 접근하기 위한 프로퍼티
     public static CommonGameManager Instance
@@ -39,7 +49,6 @@ public class CommonGameManager : MonoBehaviour
             if (!_instance)
             {
                 _instance = FindObjectOfType(typeof(CommonGameManager)) as CommonGameManager;
-
                 if (_instance == null)
                     Debug.Log("no Singleton obj");
             }
@@ -113,6 +122,17 @@ public class CommonGameManager : MonoBehaviour
         }
     }
 
+    public void ApplyLanguage()
+    {
+        FadeScreen(true, actionAfter: () =>
+        {
+            FadeScreen(false, actionBefore: () =>
+            {
+                DataFunction.ApplyLanguage();
+            });
+        });
+    }
+
     private IEnumerator GenerateInitialComponents()
     {
         if (curStatus == 10) yield break;
@@ -121,17 +141,16 @@ public class CommonGameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.01f);
         }
-        Transform uiTf = GameObject.Find("UI").transform;
-        if (uiTf.GetComponent<UIManager>().isInit)
+        if (UIManager.Instance.isInit)
         {
             CameraTrackControlller.Instance.transform.position = new Vector3(GlobalStatus.userInitPosition[0], 0, GlobalStatus.userInitPosition[1]);
-            UserBaseController.Instance.position = new Vector3(GlobalStatus.userInitPosition[0], 2, GlobalStatus.userInitPosition[1]);
+            UserBaseController.Instance.position = new Vector3(GlobalStatus.userInitPosition[0], .25f, GlobalStatus.userInitPosition[1]);
             GlobalStatus.userInitPosition = new float[] { 0, 0 };
             GlobalStatus.Loading.System.CommonGameManager = true;
             curStatus = 0;
             yield break;
         }
-        uiTf.GetComponent<UIManager>().isInit = true;
+        UIManager.Instance.isInit = true;
         // 페이드아웃 이미지 추가
         Transform imageForFade = Instantiate(fadeImagePrefab, uiTf);
         imageForFade.localPosition = Vector3.zero;
@@ -143,17 +162,18 @@ public class CommonGameManager : MonoBehaviour
             // 필드 있음 = 유저가 있어야 함
 
             // esc 모달 추가
-            Transform windowForPause = Instantiate(pauseWindowPrefab, uiTf);
+            Instantiate(pauseWindowPrefab, uiTf);
 
             // 인벤토리 모달 추가
-            Transform windowForInventory = Instantiate(inventoryWindowPrefab, uiTf);
-            //windowForPause.localPosition = Vector3.zero;
-            //keyAdded = uiTf.AddComponent<KeyToggleManager>();
-            //keyAdded.InitContent(KeyCode.I, windowForInventory.GetComponent<IControllByKey>());
+            Instantiate(inventoryWindowPrefab, uiTf);
+
+            // 퀘스트 모달 추가
+            Instantiate(questWindowPrefab, uiTf);
 
             Transform hovering = Instantiate(hoveringItemInfo, uiTf);
-            KeyToggleManager keyAdded = uiTf.AddComponent<KeyToggleManager>();
-            keyAdded.InitContent(KeyCode.I, hovering.GetComponent<IControllByKey>());
+            UIManager.Instance.AddKeyToggleManager(KeyCode.I, hovering.GetComponent<IControllByKey>());
+
+            hovering = Instantiate(hoveringConditionInfo, uiTf);
 
             // 화면 필터 이미지 추가
             Transform imageForSmog = Instantiate(filterForScreenPrefab, uiTf);
@@ -196,6 +216,9 @@ public class CommonGameManager : MonoBehaviour
             Transform PanelForQuick = Instantiate(panelForQuick, uiTf);
             PanelForQuick.localScale = Vector3.one;
 
+            // 시스템 메세지용 UI
+            Instantiate(noticeTextInfo, uiTf);
+
             // 투사체 풀
             if (GameObject.Find("Projectiles") == null)
             {
@@ -228,6 +251,10 @@ public class CommonGameManager : MonoBehaviour
 
         GlobalStatus.Loading.System.CommonGameManager = true;
         imageForFade.SetAsFirstSibling();
+
+        DataFunction.ApplyLanguage();
+
+        InGameStatus.Currency = +currency;
 
         SceneManager.sceneLoaded += (scene, mode) => FadeScreen(false);
         curStatus = 0;

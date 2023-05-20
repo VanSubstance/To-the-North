@@ -237,6 +237,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeImageTf: {fileID: 1167610424}
+  startGame: {fileID: 1860442666}
+  toDesktop: {fileID: 145752039}
 --- !u!4 &123785268
 Transform:
   m_ObjectHideFlags: 0
@@ -511,7 +513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6107510681765497247, guid: 7ec5170c195608a4fb10d5c6cc248faf, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6107510681765497247, guid: 7ec5170c195608a4fb10d5c6cc248faf, type: 3}
       propertyPath: m_AnchorMax.x

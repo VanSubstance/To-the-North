@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Commons;
 using UnityEngine;
 
 public class KeyToggleManager : MonoBehaviour
@@ -6,8 +7,16 @@ public class KeyToggleManager : MonoBehaviour
     public KeyCode keyToToggle;
     private IControllByKey modalToControll;
 
+    public bool IsOpen
+    {
+        get
+        {
+            return modalToControll.IsOpen();
+        }
+    }
+
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         TrackKeys();
     }
@@ -18,6 +27,13 @@ public class KeyToggleManager : MonoBehaviour
         {
             if (Input.GetKeyDown(keyToToggle))
             {
+                if (keyToToggle == KeyCode.Escape &&
+                    UIManager.Instance.IsClosedInForce
+                    )
+                {
+                    UIManager.Instance.IsClosedInForce = false;
+                    return;
+                }
                 modalToControll.ControllByKey(0);
                 return;
             }
@@ -26,6 +42,11 @@ public class KeyToggleManager : MonoBehaviour
         {
             // 키 할당 안됨
         }
+    }
+
+    public void CloseInForce()
+    {
+        modalToControll.Close();
     }
 
     public void InitContent(KeyCode _keyToToggle, IControllByKey objectToControll)

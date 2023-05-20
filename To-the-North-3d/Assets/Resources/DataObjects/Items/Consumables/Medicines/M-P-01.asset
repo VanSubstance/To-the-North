@@ -15,9 +15,12 @@ MonoBehaviour:
   itemType: 0
   size: {x: 1, y: 1}
   imagePath: M-P-01
-  title: "\uD56D\uC0DD\uC81C"
+  titleKor: "\uD56D\uC0DD\uC81C"
+  titleEng: "\uD56D\uC0DD\uC81C \uC601\uC5B4"
   description: 
   price: 100
+  weight: 1
+  weightExtension: 0
   consumableType: 2
   amountCurrent: 3
   secondConsume: 1

@@ -1,0 +1,9 @@
+Bleeding_Light
+Light Bleeding
+Blood forms bit.
+It pricks when clothes touch.
+
+Bleeding_Heavy
+심각한 출혈
+피가 많이 흐릅니다.
+욱씬욱씬합니다 ...

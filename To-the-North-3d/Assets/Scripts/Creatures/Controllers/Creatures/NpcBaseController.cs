@@ -1,38 +1,73 @@
 using Assets.Scripts.Creatures.Bases;
+using Assets.Scripts.Users;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Controllers.Creatures
 {
-    internal class NpcBaseController : AIBaseController
+    public class NpcBaseController : AIBaseController
     {
         public override void DetectFull()
         {
-            throw new System.NotImplementedException();
+            if (BushHidden && !BushHidden.Equals(UserBaseController.Instance.BushHidden))
+            {
+                ChangeVisualOpacity(.2f);
+                return;
+            }
+            ChangeVisualOpacity(1);
         }
 
         public override void DetectHalf()
         {
-            throw new System.NotImplementedException();
+            if (BushHidden && !BushHidden.Equals(UserBaseController.Instance.BushHidden))
+            {
+                ChangeVisualOpacity(.2f);
+                return;
+            }
+            ChangeVisualOpacity(.2f);
         }
 
         public override void DetectNone()
         {
-            throw new System.NotImplementedException();
+            ChangeVisualOpacity(0);
         }
 
         public override void DetectSound(Vector3 _pos)
         {
-            throw new System.NotImplementedException();
+            DetectPosition(_pos);
         }
 
         public override void OnDetectPosition(Vector3 targetPos)
         {
-            throw new System.NotImplementedException();
+            DetectPosition(targetPos);
+        }
+
+        private void DetectPosition(Vector3 _pos)
+        {
+            foreach (AbsAIStatusController statusCtrl in statusCtrls)
+            {
+                statusCtrl.DetectPosition(_pos);
+            }
         }
 
         public override void OnDetectUser(Transform userTf)
         {
-            throw new System.NotImplementedException();
+            if (IsRunaway)
+            {
+                statusType = Interfaces.AIStatusType.Runaway;
+            }
+            else if (Info.IsActiveBehaviour)
+            {
+                statusType = Interfaces.AIStatusType.Combat;
+            }
+            else
+            {
+
+            }
+
+            foreach (AbsAIStatusController statusCtrl in statusCtrls)
+            {
+                statusCtrl.DetectUser(userTf);
+            }
         }
     }
 }

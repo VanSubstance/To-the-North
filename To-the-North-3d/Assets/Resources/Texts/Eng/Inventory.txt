@@ -1,0 +1,10 @@
+Inventory
+Equipment
+Looting
+Helmet
+Mask
+Body
+BackPack
+Primary Weapon
+Secondary Weapon
+Shop

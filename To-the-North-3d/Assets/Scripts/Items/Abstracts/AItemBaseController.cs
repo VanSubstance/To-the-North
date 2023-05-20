@@ -105,6 +105,11 @@ namespace Assets.Scripts.Items
                     {
                         return WindowInventoryController.LootSlots[row, col].ItemTf == null;
                     });
+                case ContentType.Commerce:
+                    return ApplyActionForAllSlots(destSlot, (row, col) =>
+                    {
+                        return WindowInventoryController.CommerceSlots[row, col].ItemTf == null;
+                    });
                 default:
                     break;
             }
@@ -139,7 +144,16 @@ namespace Assets.Scripts.Items
             ResizeOnPurpose(attachSlot);
             curSlot = attachSlot;
             nextSlot = prevSlot = null;
+            if (info.InvenInfo == null)
+            {
+                info.InvenInfo = new()
+                {
+                    itemInfo = info,
+                    pos = new Vector2(attachSlot.row, attachSlot.column),
+                };
+            }
             attachSlot.ItemTf = transform;
+            attachSlot.EnrollItemToSlot();
             ApplyActionForOnlyContentWithSlots(attachSlot, (_slot) =>
             {
                 _slot.ItemTf = transform;
@@ -177,6 +191,7 @@ namespace Assets.Scripts.Items
         public void ItemDetach()
         {
             if (curSlot == null) return;
+            curSlot.DetachItemFromSlot();
             info.InvenInfo = null;
             ApplyActionForOnlyContentWithSlots(curSlot, (_slot) =>
             {
@@ -351,10 +366,48 @@ namespace Assets.Scripts.Items
                 if (!OnItemOnOtherItem(hitItem.transform.GetComponent<AItemBaseController>().info)) return;
             }
 
+            void Rollback()
+            {
+                if (nextSlot != null)
+                {
+                    ConsiderTargetSlot(nextSlot, false);
+                }
+                if (isRotate != prevRotate)
+                {
+                    ItemRotate(true);
+                }
+                ItemAttach(prevSlot);
+            }
+
             // nextSlot이 있는지 확인
             if (nextSlot != null)
             {
                 // 있음
+                // 만약 구매 시도라면 ? 돈 확인 필요
+                if (prevSlot.ContainerType.Equals(ContentType.Commerce))
+                {
+                    // 돈이 없는가 ?
+                    if (InGameStatus.Currency < info.price)
+                    {
+                        // 롤백
+                        Rollback();
+                    }
+                    else
+                    {
+                        // 구매
+                        ItemAttach(nextSlot);
+                        InGameStatus.Currency = -info.price;
+                    }
+                    return;
+                }
+                // 만약 판매 시도라면 ?
+                if (nextSlot.ContainerType.Equals(ContentType.Commerce))
+                {
+                    // 판매
+                    ItemAttach(nextSlot);
+                    InGameStatus.Currency = +info.price;
+                    return;
+                }
                 // = 장착
                 ItemAttach(nextSlot);
             }
@@ -362,11 +415,7 @@ namespace Assets.Scripts.Items
             {
                 // 없음
                 // = 이전 위치로 롤백
-                if (isRotate != prevRotate)
-                {
-                    ItemRotate(true);
-                }
-                ItemAttach(prevSlot);
+                Rollback();
             }
         }
 
@@ -575,9 +624,18 @@ namespace Assets.Scripts.Items
             {
                 if (actionToLoop != null)
                     ApplyActionForAllSlots(_targetSlot, (r, c) =>
-                {
-                    actionToLoop(WindowInventoryController.LootSlots[r, c]);
-                });
+                    {
+                        actionToLoop(WindowInventoryController.LootSlots[r, c]);
+                    });
+                return;
+            }
+            if (_targetSlot.ContainerType == ContentType.Commerce)
+            {
+                if (actionToLoop != null)
+                    ApplyActionForAllSlots(_targetSlot, (r, c) =>
+                    {
+                        actionToLoop(WindowInventoryController.CommerceSlots[r, c]);
+                    });
                 return;
             }
         }
@@ -588,10 +646,10 @@ namespace Assets.Scripts.Items
         /// <param name="type">컨텐츠 타입</param>
         /// <param name="_info">아이템 정보</param>
         /// <param name="slotQualified">반환할 설치 가능 슬롯</param>
-        /// <param name="newInventoryInfo">반환할 심규 인벤로티 객체</param>
+        /// <param name="newInventoryInfo">반환할 신규 인벤로티 객체</param>
         private void SeekSlotAttachable(ContentType type, ItemBaseInfo _info, out InventorySlotController slotQualified, out ItemInventoryInfo newInventoryInfo)
         {
-            InventorySlotController cur = null;
+            InventorySlotController cur;
             for (int i = 0; i < 14; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -602,9 +660,8 @@ namespace Assets.Scripts.Items
                             cur = WindowInventoryController.InventorySlots[i, j];
                             if (CheckItemAttachable(cur))
                             {
-                                // 남는칸 있음
                                 slotQualified = cur;
-                                newInventoryInfo = new()
+                                _info.InvenInfo = newInventoryInfo = new()
                                 {
                                     itemInfo = _info,
                                     pos = new Vector2(cur.row, cur.column)
@@ -617,7 +674,20 @@ namespace Assets.Scripts.Items
                             if (CheckItemAttachable(cur))
                             {
                                 slotQualified = cur;
-                                newInventoryInfo = new()
+                                _info.InvenInfo = newInventoryInfo = new()
+                                {
+                                    itemInfo = _info,
+                                    pos = new Vector2(cur.row, cur.column)
+                                };
+                                return;
+                            }
+                            continue;
+                        case ContentType.Commerce:
+                            cur = WindowInventoryController.CommerceSlots[i, j];
+                            if (CheckItemAttachable(cur))
+                            {
+                                slotQualified = cur;
+                                _info.InvenInfo = newInventoryInfo = new()
                                 {
                                     itemInfo = _info,
                                     pos = new Vector2(cur.row, cur.column)
@@ -632,7 +702,7 @@ namespace Assets.Scripts.Items
             }
             // 남는칸 없음
             slotQualified = null;
-            newInventoryInfo = null;
+            _info.InvenInfo = newInventoryInfo = null;
             return;
         }
 

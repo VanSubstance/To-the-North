@@ -1,9 +1,10 @@
 using Assets.Scripts.Items;
+using Assets.Scripts.Components.Hovers;
 using UnityEngine;
 
 namespace Assets.Scripts.Commons
 {
-    internal class DataManager : MonoBehaviour
+    public class DataManager : MonoBehaviour
     {
         // 위치를 지정하는 아이템 리스트
         public ItemInventoryInfo[] inventoryInfo;

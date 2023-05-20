@@ -10,16 +10,23 @@ namespace Assets.Scripts.Commons
     {
         [SerializeField]
         private Transform fadeImageTf;
+        [SerializeField]
+        private TextMeshProUGUI startGame, toDesktop;
         private Image fadeImage;
 
         private void Awake()
         {
             fadeImage = fadeImageTf.GetComponent<Image>();
+            GlobalComponent.Common.Text.MainMenu.startGame = startGame;
+            GlobalComponent.Common.Text.MainMenu.toDesktop = toDesktop;
         }
 
         private void Start()
         {
-            FadeScreen(false);
+            FadeScreen(false, actionBefore: () =>
+            {
+                DataFunction.ApplyLanguage();
+            });
         }
 
         public void MoveScene(string targetSceneName)
@@ -29,6 +36,17 @@ namespace Assets.Scripts.Commons
                 GlobalStatus.resetLoading();
                 GlobalStatus.nextScene = targetSceneName;
                 SceneManager.LoadScene("Loading");
+            });
+        }
+
+        public void ApplyLanguage()
+        {
+            FadeScreen(true, actionAfter: () =>
+            {
+                FadeScreen(false, actionBefore: () =>
+                {
+                    DataFunction.ApplyLanguage();
+                });
             });
         }
 

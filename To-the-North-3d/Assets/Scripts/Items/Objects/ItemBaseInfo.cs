@@ -13,9 +13,17 @@ namespace Assets.Scripts.Items
         /// </summary>
         public Vector2 size;
         public string imagePath;
-        public string title;
+        [SerializeField]
+        private string titleKor, titleEng;
+        public string Title
+        {
+            get
+            {
+                return GlobalSetting.Language == "Kor" ? titleKor : titleEng;
+            }
+        }
         public string description;
-        public int price;
+        public int price, weight, weightExtension;
 
         /// <summary>
         /// 장비로 착용이 가능한지 여부 반환
@@ -53,6 +61,10 @@ namespace Assets.Scripts.Items
             }
             set
             {
+                if (invenInfo != null && invenInfo.itemInfo != null)
+                {
+                    invenInfo.itemInfo = null;
+                }
                 invenInfo = value;
             }
         }

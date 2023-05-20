@@ -12,10 +12,12 @@ public static class GlobalStatus
             blockingSightMask = 1 << 18,
             eventMask = 1 << 9,
             creatureMask = 1 << 8,
+            npcMask = 1 << 15,
             itemMask = 1 << 11,
             slotMask = 1 << 12,
             userMask = 1 << 13,
-            hitMask = 1 << 17
+            hitMask = 1 << 17,
+            hitCreatureMask = 1 << 21
             ;
     }
 

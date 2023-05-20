@@ -64,6 +64,9 @@ namespace Assets.Scripts.Users
                     TrackMovementType();
                     TrackSound();
                 }
+            } else
+            {
+                rigid.velocity = Vector2.zero;
             }
         }
 
