@@ -366,10 +366,48 @@ namespace Assets.Scripts.Items
                 if (!OnItemOnOtherItem(hitItem.transform.GetComponent<AItemBaseController>().info)) return;
             }
 
+            void Rollback()
+            {
+                if (nextSlot != null)
+                {
+                    ConsiderTargetSlot(nextSlot, false);
+                }
+                if (isRotate != prevRotate)
+                {
+                    ItemRotate(true);
+                }
+                ItemAttach(prevSlot);
+            }
+
             // nextSlot이 있는지 확인
             if (nextSlot != null)
             {
                 // 있음
+                // 만약 구매 시도라면 ? 돈 확인 필요
+                if (prevSlot.ContainerType.Equals(ContentType.Commerce))
+                {
+                    // 돈이 없는가 ?
+                    if (InGameStatus.Currency < info.price)
+                    {
+                        // 롤백
+                        Rollback();
+                    }
+                    else
+                    {
+                        // 구매
+                        ItemAttach(nextSlot);
+                        InGameStatus.Currency = -info.price;
+                    }
+                    return;
+                }
+                // 만약 판매 시도라면 ?
+                if (nextSlot.ContainerType.Equals(ContentType.Commerce))
+                {
+                    // 판매
+                    ItemAttach(nextSlot);
+                    InGameStatus.Currency = +info.price;
+                    return;
+                }
                 // = 장착
                 ItemAttach(nextSlot);
             }
@@ -377,11 +415,7 @@ namespace Assets.Scripts.Items
             {
                 // 없음
                 // = 이전 위치로 롤백
-                if (isRotate != prevRotate)
-                {
-                    ItemRotate(true);
-                }
-                ItemAttach(prevSlot);
+                Rollback();
             }
         }
 
