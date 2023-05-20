@@ -19,6 +19,8 @@ MonoBehaviour:
   titleEng: "9mm \uD0C4\uD658 \uC601\uC5B4"
   description: 
   price: 7
+  weight: 2
+  weightExtension: 0
   consumableType: 0
   amountCurrent: 60
   secondConsume: 0

@@ -27,5 +27,11 @@ namespace Assets.Scripts.Users
         Hot,
         // 추위
         Cold,
+
+        // 초 과적
+        Overweight_Heavy,
+
+        // 일반 과적
+        Overweight_Light,
     }
 }

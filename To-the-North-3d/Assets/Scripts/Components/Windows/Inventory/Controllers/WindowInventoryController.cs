@@ -134,6 +134,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
             GlobalComponent.Common.Text.Inventory.commerce = contentByType[ContentType.Commerce].Container.GetComponent<ContainerBaseController>().titleUGUI;
             contentByType[ContentType.Equipment] = Instantiate(containerEquipment, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentEquipmentController>(ContentType.Equipment);
             GlobalComponent.Common.Text.Inventory.equipment = contentByType[ContentType.Equipment].Container.GetComponent<ContainerBaseController>().titleUGUI;
+            GlobalComponent.Common.Text.Inventory.weight = contentByType[ContentType.Equipment].Container.GetComponent<ContainerBaseController>().subTextUGUI;
             contentByType[ContentType.Inventory] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Inventory);
             GlobalComponent.Common.Text.Inventory.inventory = contentByType[ContentType.Inventory].Container.GetComponent<ContainerBaseController>().titleUGUI;
             GlobalComponent.Common.Text.Inventory.currency = contentByType[ContentType.Inventory].Container.GetComponent<ContainerBaseController>().subTextUGUI;
@@ -144,10 +145,12 @@ namespace Assets.Scripts.Components.Windows.Inventory
             ContentInventory.itemsAttached.onValueAddedListener = (_info) =>
             {
                 WindowQuestContainerController.Instance.NoticeItemChanged(_info.itemInfo.imagePath);
+                InGameStatus.Weight.WeightC = _info.itemInfo.weight;
             };
             ContentInventory.itemsAttached.onValueRemovedListener = (_info) =>
             {
                 WindowQuestContainerController.Instance.NoticeItemChanged(_info.itemInfo.imagePath);
+                InGameStatus.Weight.WeightC = -_info.itemInfo.weight;
             };
 
             OnClose();

@@ -19,6 +19,8 @@ MonoBehaviour:
   titleEng: "\uBD95\uB300 \uC601\uC5B4"
   description: 
   price: 0
+  weight: 1
+  weightExtension: 0
   consumableType: 2
   amountCurrent: 60
   secondConsume: 2

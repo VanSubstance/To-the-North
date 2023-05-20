@@ -52,11 +52,11 @@ namespace Assets.Scripts.Users
             /// <summary>
             /// 달리기 불가
             /// </summary>
-            public static readonly ConditionType[] Run = { ConditionType.Fracture };
+            public static readonly ConditionType[] Run = { ConditionType.Fracture, ConditionType.Overweight_Heavy };
             /// <summary>
             /// 닷지(구르기) 불가
             /// </summary>
-            public static readonly ConditionType[] Dodge = { ConditionType.Fracture };
+            public static readonly ConditionType[] Dodge = { ConditionType.Fracture, ConditionType.Overweight_Heavy };
             /// <summary>
             /// 조준 불가
             /// </summary>
@@ -71,7 +71,7 @@ namespace Assets.Scripts.Users
             /// <summary>
             /// 스테미나 회복
             /// </summary>
-            public static readonly ConditionType[] RecoveryStamina = { ConditionType.Fracture, ConditionType.Bleeding_Heavy, ConditionType.Hunger, ConditionType.Thirst };
+            public static readonly ConditionType[] RecoveryStamina = { ConditionType.Fracture, ConditionType.Bleeding_Heavy, ConditionType.Hunger, ConditionType.Thirst, ConditionType.Overweight_Heavy };
             /// <summary>
             /// 무기 정확도
             /// </summary>
@@ -79,15 +79,15 @@ namespace Assets.Scripts.Users
             /// <summary>
             /// 스테미나 소모 속도
             /// </summary>
-            public static readonly ConditionType[] SpeedUseStamina = { ConditionType.Hunger, ConditionType.Thirst };
+            public static readonly ConditionType[] SpeedUseStamina = { ConditionType.Hunger, ConditionType.Thirst, ConditionType.Overweight_Heavy };
             /// <summary>
             /// 갈증 소모속도
             /// </summary>
-            public static readonly ConditionType[] SpeedThirst = { ConditionType.Hot };
+            public static readonly ConditionType[] SpeedThirst = { ConditionType.Hot, ConditionType.Overweight_Heavy, ConditionType.Overweight_Light };
             /// <summary>
             /// 허기 소모속도
             /// </summary>
-            public static readonly ConditionType[] SpeedHunger = { ConditionType.Cold };
+            public static readonly ConditionType[] SpeedHunger = { ConditionType.Cold, ConditionType.Overweight_Heavy };
             /// <summary>
             /// 카메라 이동 속도
             /// </summary>
@@ -95,7 +95,7 @@ namespace Assets.Scripts.Users
             /// <summary>
             /// 이동 속도
             /// </summary>
-            public static readonly ConditionType[] SpeedMove = { ConditionType.Pain, ConditionType.Infection, ConditionType.Cold };
+            public static readonly ConditionType[] SpeedMove = { ConditionType.Pain, ConditionType.Infection, ConditionType.Cold, ConditionType.Overweight_Heavy, ConditionType.Overweight_Light };
             /// <summary>
             /// 재장전 속도
             /// </summary>
