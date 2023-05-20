@@ -408,6 +408,12 @@ namespace Assets.Scripts.Items
                     InGameStatus.Currency = +info.price;
                     return;
                 }
+                // 만약 장착 시도라면 ?
+                if (nextSlot.ContainerType.Equals(ContentType.Equipment))
+                {
+                    OnItemDownWithKeyPress();
+                    return;
+                }
                 // = 장착
                 ItemAttach(nextSlot);
             }
