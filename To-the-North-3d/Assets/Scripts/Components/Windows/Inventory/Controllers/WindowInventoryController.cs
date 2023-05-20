@@ -277,6 +277,12 @@ namespace Assets.Scripts.Components.Windows.Inventory
             if (CurLoot != null)
             {
                 CurLoot.itemsLoot = ContentLoot.Clear();
+                if (CurLoot.itemsLoot.Length == 0)
+                {
+                    // 전부 아이템 수령 함
+                    // -> 파괴되어야 함
+                    Destroy(CurLoot.gameObject);
+                }
                 CurLoot = null;
             }
             else
