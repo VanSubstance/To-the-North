@@ -136,6 +136,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
             GlobalComponent.Common.Text.Inventory.equipment = contentByType[ContentType.Equipment].Container.GetComponent<ContainerBaseController>().titleUGUI;
             contentByType[ContentType.Inventory] = Instantiate(containerSlots, storeTf).GetComponent<ContainerBaseController>().GetContent<ContentSlotController>(ContentType.Inventory);
             GlobalComponent.Common.Text.Inventory.inventory = contentByType[ContentType.Inventory].Container.GetComponent<ContainerBaseController>().titleUGUI;
+            GlobalComponent.Common.Text.Inventory.currency = contentByType[ContentType.Inventory].Container.GetComponent<ContainerBaseController>().subTextUGUI;
 
             /** 인벤토리의 경우, 아이템 리스트에 리스너 부착
              *  아이템 추가/삭제 시: 진행중인 퀘스트의 조건들 업데이트

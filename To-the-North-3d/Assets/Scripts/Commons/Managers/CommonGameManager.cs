@@ -4,13 +4,15 @@ using Assets.Scripts.Components.Infos;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CommonGameManager : MonoBehaviour
 {
+    [SerializeField]
+    private int currency;
+
     [SerializeField]
     private Transform fadeImagePrefab, userPrefab,
         filterForScreenPrefab, filterDizzinessPrefab,
@@ -47,7 +49,6 @@ public class CommonGameManager : MonoBehaviour
             if (!_instance)
             {
                 _instance = FindObjectOfType(typeof(CommonGameManager)) as CommonGameManager;
-
                 if (_instance == null)
                     Debug.Log("no Singleton obj");
             }
@@ -252,6 +253,8 @@ public class CommonGameManager : MonoBehaviour
         imageForFade.SetAsFirstSibling();
 
         DataFunction.ApplyLanguage();
+
+        InGameStatus.Currency = +currency;
 
         SceneManager.sceneLoaded += (scene, mode) => FadeScreen(false);
         curStatus = 0;

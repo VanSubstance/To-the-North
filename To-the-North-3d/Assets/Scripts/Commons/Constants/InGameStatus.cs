@@ -288,4 +288,18 @@ public static class InGameStatus
         public static List<string> Done = new List<string>();
         public static List<string> Progress = new List<string>();
     }
+
+    private static int currency = 0;
+    public static int Currency
+    {
+        get
+        {
+            return currency;
+        }
+        set
+        {
+            currency = +value;
+            GlobalComponent.Common.Text.Inventory.currency.text = $"{currency} G";
+        }
+    }
 }
