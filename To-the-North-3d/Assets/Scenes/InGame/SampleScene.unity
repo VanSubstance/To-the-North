@@ -736,6 +736,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.35
       objectReference: {fileID: 0}
+    - target: {fileID: 4158035123242763712, guid: 1d10904cad95cf44a86d90cf0ede294e, type: 3}
+      propertyPath: lootingPrefab
+      value: 
+      objectReference: {fileID: 1538344158340248485, guid: e6f26cf1a51cfb344a65b81a07c3bd0a, type: 3}
     - target: {fileID: 5485272486806113099, guid: 1d10904cad95cf44a86d90cf0ede294e, type: 3}
       propertyPath: info
       value: 
@@ -778,7 +782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7249881556927368018, guid: 1d10904cad95cf44a86d90cf0ede294e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.63
+      value: -1.31
       objectReference: {fileID: 0}
     - target: {fileID: 7249881556927368018, guid: 1d10904cad95cf44a86d90cf0ede294e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -786,7 +790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7249881556927368018, guid: 1d10904cad95cf44a86d90cf0ede294e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.95
+      value: -4.21
       objectReference: {fileID: 0}
     - target: {fileID: 7249881556927368018, guid: 1d10904cad95cf44a86d90cf0ede294e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -932,7 +936,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1538344158340248536, guid: b9ecfeb2caf3ded4bbc8c38870ed4204, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2971056630415743630, guid: b9ecfeb2caf3ded4bbc8c38870ed4204, type: 3}
       propertyPath: m_SortingLayer
@@ -1048,6 +1052,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 953080142591831879, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
+      propertyPath: parentEvent
+      value: 
+      objectReference: {fileID: 952349562}
     - target: {fileID: 953080142591831897, guid: 7afa73d2e54a3b54096477bb7a39fa4e, type: 3}
       propertyPath: m_Name
       value: Static Game Manager
@@ -1314,7 +1322,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &775100337
 Transform:
   m_ObjectHideFlags: 0
@@ -2314,7 +2322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1538344158340248536, guid: b9ecfeb2caf3ded4bbc8c38870ed4204, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2971056630415743630, guid: b9ecfeb2caf3ded4bbc8c38870ed4204, type: 3}
       propertyPath: m_SortingLayer

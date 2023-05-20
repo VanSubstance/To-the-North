@@ -234,7 +234,7 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     // 죽음
                     // -> 루팅 프리펩 생성 필요
-                    gameObject.SetActive(false);
+                    OnDied();
                 }
             }
             if (IsRunaway)

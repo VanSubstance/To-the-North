@@ -375,5 +375,9 @@ namespace Assets.Scripts.Users
                 }
             }
         }
+
+        public override void OnDied()
+        {
+        }
     }
 }

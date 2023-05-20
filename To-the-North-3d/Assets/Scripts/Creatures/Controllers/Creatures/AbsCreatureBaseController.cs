@@ -126,6 +126,8 @@ namespace Assets.Scripts.Creatures.Controllers
 
         public abstract void OnHit(EquipBodyType partType, ItemArmorInfo armorInfo, AttackInfo attackInfo, int[] damage, Vector3 hitDir);
 
+        public abstract void OnDied();
+
         public abstract float GetHeight();
     }
 }

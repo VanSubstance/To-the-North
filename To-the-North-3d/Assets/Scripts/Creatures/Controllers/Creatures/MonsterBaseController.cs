@@ -6,6 +6,8 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
 {
     internal class MonsterBaseController : AIBaseController
     {
+        [SerializeField]
+        private Transform lootingPrefab;
         public override void DetectFull()
         {
             if (BushHidden && !BushHidden.Equals(UserBaseController.Instance.BushHidden))
@@ -68,6 +70,13 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
             {
                 statusCtrl.DetectUser(userTf);
             }
+        }
+
+        public override void OnDied()
+        {
+            lootingPrefab = Instantiate(lootingPrefab, GlobalComponent.Common.Parent.Event);
+            lootingPrefab.position = transform.position;
+            Destroy(gameObject);
         }
     }
 }

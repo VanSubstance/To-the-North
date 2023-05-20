@@ -69,5 +69,9 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
                 statusCtrl.DetectUser(userTf);
             }
         }
+
+        public override void OnDied()
+        {
+        }
     }
 }
