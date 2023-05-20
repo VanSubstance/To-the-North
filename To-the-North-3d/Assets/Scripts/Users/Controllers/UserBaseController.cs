@@ -120,7 +120,7 @@ namespace Assets.Scripts.Users
 
         private void CheckSwapWeapon()
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 SwapWeapon();
             }
