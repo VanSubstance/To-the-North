@@ -19,6 +19,8 @@ MonoBehaviour:
   titleEng: "\uB4DC\uB7FC\uD1B5 \uC601\uC5B4"
   description: "\uD654\uC0B4\uB530\uC704\uB85C\uB294 \uB6AB\uC744 \uC218 \uC5C6\uC5B4!"
   price: 170
+  weight: 25
+  weightExtension: 50
   equipmentType: 0
   durability: 0.725
   equipPartType: 3

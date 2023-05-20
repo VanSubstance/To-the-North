@@ -23,7 +23,7 @@ namespace Assets.Scripts.Items
             }
         }
         public string description;
-        public int price;
+        public int price, weight, weightExtension;
 
         /// <summary>
         /// 장비로 착용이 가능한지 여부 반환

@@ -19,3 +19,5 @@ MonoBehaviour:
   titleEng: "\uB4E4\uAC1C\uC758 \uBC1C\uD1B1 \uC601\uC5B4"
   description: "\uB4E4\uAC1C\uC758 \uBC1C\uD1B1\uC774\uB2E4."
   price: 15
+  weight: 1
+  weightExtension: 0

@@ -19,6 +19,8 @@ MonoBehaviour:
   titleEng: "\uACFD\uC6B0\uC720 \uC601\uC5B4"
   description: 
   price: 60
+  weight: 1
+  weightExtension: 0
   consumableType: 1
   amountCurrent: 3
   secondConsume: 1

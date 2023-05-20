@@ -123,6 +123,8 @@ namespace Assets.Scripts.Users
                         timers[ConditionType.Infection] = 0;
                     }
                 }
+
+                // 과적 관련 발생 가능한 상태 이상 관측
             }
         }
     }

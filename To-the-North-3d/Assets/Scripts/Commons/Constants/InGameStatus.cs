@@ -299,12 +299,75 @@ public static class InGameStatus
         }
         set
         {
+            if (value == 0) return;
             currency += value;
-            if (value != 0)
-            {
-                UIInfoTextContainerController.Instance.PrintText($"{(value > 0 ? GlobalText.System.CurrencyGet : GlobalText.System.CurrencyPay)}: {(value > 0 ? value : -value)} G");
-            }
+            UIInfoTextContainerController.Instance.PrintText($"{(value > 0 ? GlobalText.System.CurrencyGet : GlobalText.System.CurrencyPay)}: {(value > 0 ? value : -value)} G");
             GlobalComponent.Common.Text.Inventory.currency.text = $"{currency} G";
+        }
+    }
+
+    public static class Weight
+    {
+        private static int weight = 0, maxWeight = 100;
+        public static int WeightC
+        {
+            get
+            {
+                return weight;
+            }
+            set
+            {
+                if (value == 0) return;
+                weight += value;
+                GlobalComponent.Common.Text.Inventory.weight.text = $"{weight} / {maxWeight}";
+                CheckOverWeight();
+            }
+        }
+        public static int MaxWeightC
+        {
+            get
+            {
+                return maxWeight;
+            }
+            set
+            {
+                if (value == 0) return;
+                maxWeight += value;
+                GlobalComponent.Common.Text.Inventory.weight.text = $"{weight} / {maxWeight}";
+                CheckOverWeight();
+            }
+        }
+        public static int OverweightAmount
+        {
+            get
+            {
+                return weight - maxWeight;
+            }
+        }
+
+        /// <summary>
+        /// 과정 평가 함수
+        /// </summary>
+        public static void CheckOverWeight()
+        {
+            if (OverweightAmount > 20)
+            {
+                // 초 과적 상태
+                UserBaseController.Instance.OccurCondition(ConditionType.Overweight_Heavy, true);
+                UserBaseController.Instance.CureCondition(ConditionType.Overweight_Light, 1);
+                return;
+            }
+            if (OverweightAmount > 3)
+            {
+                // 과적 상태
+                UserBaseController.Instance.CureCondition(ConditionType.Overweight_Heavy, 1);
+                UserBaseController.Instance.OccurCondition(ConditionType.Overweight_Light, true);
+                return;
+            }
+            // 정상
+            UserBaseController.Instance.CureCondition(ConditionType.Overweight_Light, 1);
+            UserBaseController.Instance.CureCondition(ConditionType.Overweight_Heavy, 1);
+            return;
         }
     }
 }

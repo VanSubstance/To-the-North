@@ -58,6 +58,7 @@ public class EquipmentSlotController : InventorySlotController
                         UserBaseController.Instance.ChangeEquipment(EquipBodyType.Leg, armorInfo);
                         break;
                     case EquipBodyType.BackPack:
+                        InGameStatus.Weight.MaxWeightC = equipItem.weightExtension;
                         UserBaseController.Instance.ChangeEquipment(EquipBodyType.BackPack, armorInfo);
                         break;
                 }
@@ -76,6 +77,7 @@ public class EquipmentSlotController : InventorySlotController
             default:
                 break;
         }
+        InGameStatus.Weight.WeightC = equipItem.weight;
     }
     public void UnEquipItem()
     {
@@ -100,6 +102,7 @@ public class EquipmentSlotController : InventorySlotController
                         UserBaseController.Instance.ChangeEquipment(EquipBodyType.Leg, null);
                         break;
                     case EquipBodyType.BackPack:
+                        InGameStatus.Weight.MaxWeightC = -equipItem.weightExtension;
                         UserBaseController.Instance.ChangeEquipment(EquipBodyType.BackPack, null);
                         break;
                 }
@@ -118,6 +121,7 @@ public class EquipmentSlotController : InventorySlotController
             default:
                 break;
         }
+        InGameStatus.Weight.WeightC = -equipItem.weight;
         equipItem = null;
     }
 }

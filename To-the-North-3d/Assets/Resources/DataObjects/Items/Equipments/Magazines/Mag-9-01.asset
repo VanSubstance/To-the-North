@@ -19,6 +19,8 @@ MonoBehaviour:
   titleEng: "9mm \uD0C4\uCC3D \uC601\uC5B4"
   description: 
   price: 12
+  weight: 3
+  weightExtension: 0
   equipmentType: 0
   durability: 1
   bulletType: 1
