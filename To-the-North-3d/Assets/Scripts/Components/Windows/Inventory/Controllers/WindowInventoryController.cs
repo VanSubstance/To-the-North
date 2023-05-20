@@ -152,7 +152,6 @@ namespace Assets.Scripts.Components.Windows.Inventory
                 WindowQuestContainerController.Instance.NoticeItemChanged(_info.itemInfo.imagePath);
                 InGameStatus.Weight.WeightC = -_info.itemInfo.weight;
             };
-
             OnClose();
         }
 

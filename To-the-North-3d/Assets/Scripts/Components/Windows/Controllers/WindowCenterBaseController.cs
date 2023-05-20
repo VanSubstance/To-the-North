@@ -1,3 +1,4 @@
+using Assets.Scripts.Commons;
 using UnityEngine;
 
 namespace Assets.Scripts.Components.Windows
@@ -5,11 +6,12 @@ namespace Assets.Scripts.Components.Windows
     public abstract class WindowCenterBaseController : MonoBehaviourControllByKey
     {
         [SerializeField]
-        private Vector2 marginToRatio;
+        private Vector2 sizeToRatio;
 
         protected void Awake()
         {
-            GetComponent<RectTransform>().sizeDelta = marginToRatio * -120 * 2;
+            GetComponent<RectTransform>().sizeDelta = sizeToRatio * 120;
+            MouseInteractionController.AttachMouseInteractor<MouseInteractionMoveableController>(transform);
         }
 
         protected void OnEnable()

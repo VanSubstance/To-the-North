@@ -1783,10 +1783,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 880, y: 496}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7281323908136239575
 CanvasRenderer:
@@ -1839,7 +1839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyToToggle: 27
-  marginToRatio: {x: 0, y: 0}
+  sizeToRatio: {x: 16, y: 9}
   mainOption: {fileID: 7281323907892744081}
   optionOption: {fileID: 2824368314500172980}
   backToGame: {fileID: 7281323907825472977}
@@ -1847,7 +1847,6 @@ MonoBehaviour:
   saveGame: {fileID: 7281323908475167752}
   goToDesktop: {fileID: 7281323908057610148}
   back: {fileID: 6336111446891024996}
-  option: {fileID: 3424599232519329629}
   language: {fileID: 3424599232519329629}
 --- !u!1 &7281323908345451247
 GameObject:

@@ -11,7 +11,7 @@ namespace Assets.Scripts.Commons
             {
                 BoxCollider t = _tf.gameObject.AddComponent<BoxCollider>();
                 t.size = _tf.gameObject.GetComponent<RectTransform>().sizeDelta;
-                t.center = new Vector3(t.size.x / 2, -t.size.y / 2, 1);
+                //t.center = new Vector3(t.size.x / 2, -t.size.y / 2, 1);
             }
         }
 
