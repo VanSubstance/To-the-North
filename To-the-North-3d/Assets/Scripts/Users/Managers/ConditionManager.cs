@@ -125,6 +125,17 @@ namespace Assets.Scripts.Users
                 }
 
                 // 과적 관련 발생 가능한 상태 이상 관측
+                // 초과적 13초 마다 -> 골절 발생
+                if (
+                    (timers[ConditionType.Overweight_Heavy] != null && timers[ConditionType.Overweight_Heavy] >= 13)
+                    )
+                {
+                    if (Random.Range(0, 1f) < .6f)
+                    {
+                        UserBaseController.Instance.OccurCondition(ConditionType.Fracture);
+                    }
+                    timers[ConditionType.Overweight_Heavy] = 0;
+                }
             }
         }
     }
