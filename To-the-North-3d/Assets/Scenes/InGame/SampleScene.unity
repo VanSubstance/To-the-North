@@ -939,6 +939,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6686701668443452210, guid: b9ecfeb2caf3ded4bbc8c38870ed4204, type: 3}
+      propertyPath: currency
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6686701668443452210, guid: b9ecfeb2caf3ded4bbc8c38870ed4204, type: 3}
       propertyPath: isItemFixed
       value: 1
       objectReference: {fileID: 0}

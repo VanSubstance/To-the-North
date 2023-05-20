@@ -9,6 +9,8 @@ namespace Assets.Scripts.Events.Controllers
     public class EventLootingController : AbsEventBaseController
     {
         [SerializeField]
+        private int currency;
+        [SerializeField]
         private ItemBaseInfo[] itemsFixed;
         [SerializeField]
         private int amountIfRandom;
@@ -63,6 +65,8 @@ namespace Assets.Scripts.Events.Controllers
         /// </summary>
         public override void OnInteraction()
         {
+            InGameStatus.Currency = currency;
+            currency = 0;
             // 띄워줄 때, 이전에 이미 습득한 아이템은 건너뛴다
             foreach (ItemBaseInfo _itemInfo in itemsLoot)
             {
