@@ -5,6 +5,7 @@ using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using Assets.Scripts.Users.Objects;
+using Assets.Scripts.Components.Infos;
 
 public static class InGameStatus
 {
@@ -243,7 +244,7 @@ public static class InGameStatus
                 }
             }
             return res;
-        } 
+        }
 
         public static ItemBaseInfo PullItemFromInventoryByCode(string _code)
         {
@@ -298,7 +299,11 @@ public static class InGameStatus
         }
         set
         {
-            currency = +value;
+            currency += value;
+            if (value != 0)
+            {
+                UIInfoTextContainerController.Instance.PrintText($"{(value > 0 ? GlobalText.System.CurrencyGet : GlobalText.System.CurrencyPay)}: {(value > 0 ? value : -value)} G");
+            }
             GlobalComponent.Common.Text.Inventory.currency.text = $"{currency} G";
         }
     }

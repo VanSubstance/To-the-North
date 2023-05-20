@@ -1,9 +1,11 @@
 0
 퀘스트를 완료시켜주겠네.
+자, 여기 돈 받게나.
 
 ?
 Clear: Quest: C-02-01
 Get: Item: F-D-01: 2
+Get: Currency: 30
 <
 [퀘스트를 완료한다]
 > 1
