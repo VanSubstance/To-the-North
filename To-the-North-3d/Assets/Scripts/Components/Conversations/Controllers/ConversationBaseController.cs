@@ -82,6 +82,7 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                                     // + 클리어 조건 전부 통과했어야 함
                                     try
                                     {
+                                        if (!InGameStatus.Quest.Progress.Contains(cond.code)) return false;
                                         if (!WindowQuestContainerController.Instance.questContentControllers[cond.code].IsClearable)
                                         {
                                             // 클리어 불가
