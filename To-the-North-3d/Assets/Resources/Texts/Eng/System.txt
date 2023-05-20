@@ -2,3 +2,5 @@ Item Get
 Item Lost
 Quest Started
 Quest Cleared
+Currecy Get
+Currency Paid

@@ -6,7 +6,8 @@ namespace Assets.Scripts.Components.Windows.Inventory
 {
     public class ContainerBaseController : MonoBehaviour
     {
-        public TextMeshProUGUI titleUGUI;
+        [SerializeField]
+        public TextMeshProUGUI titleUGUI, subTextUGUI;
         private ContentBaseController content;
         private ContentType contentType;
         public ContentType ContentType
@@ -25,7 +26,7 @@ namespace Assets.Scripts.Components.Windows.Inventory
         private void InitContent()
         {
             if (content != null) return;
-            titleUGUI = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            if (subTextUGUI) subTextUGUI.text = string.Empty;
             content = transform.GetChild(1).GetChild(0).GetComponent<ContentBaseController>();
             contentType = ContentType.Undefined;
         }

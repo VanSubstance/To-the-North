@@ -1,10 +1,10 @@
 Inventory
-장비
-루팅
-헬멧
-마스크
-몸
-가방
-주 무기
-보조 무기
-상점
+Equipment
+Looting
+Helmet
+Mask
+Body
+BackPack
+Primary Weapon
+Secondary Weapon
+Shop

@@ -35,7 +35,6 @@ namespace Assets.Scripts.Components.Windows
             if (_instance == null)
             {
                 _instance = this;
-                DontDestroyOnLoad(gameObject);
                 MouseInteractionController.AttachMouseInteractor<MouseInteractionMoveableController>(transform);
                 questContentControllers = new();
                 // 퀘스트 띄우기

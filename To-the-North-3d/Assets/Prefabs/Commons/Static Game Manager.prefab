@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8f43b3b86783141ad001f1885a7372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currency: 70
   fadeImagePrefab: {fileID: 6107510681765497247, guid: 7ec5170c195608a4fb10d5c6cc248faf, type: 3}
   userPrefab: {fileID: 7249881556927368018, guid: 889eabd210638ef4998344c3b01fd6ff, type: 3}
   filterForScreenPrefab: {fileID: 5186991166891482235, guid: c4d8d72fe466002498f2f4440f34a650, type: 3}

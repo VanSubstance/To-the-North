@@ -24,6 +24,7 @@ namespace Assets.Scripts.Components.Conversations.Objects
             {
                 Item,
                 Quest,
+                Currency,
             }
             public new string ToString()
             {

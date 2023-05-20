@@ -62,6 +62,18 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                                     break;
                             }
                             break;
+                        case ConvChoiceInfo.ChoiceCondition.ContentType.Currency:
+                            switch (cond.conditionType)
+                            {
+                                case "Have":
+                                    // 돈이 있어야 함
+                                    if (InGameStatus.Currency < cond.amount)
+                                    {
+                                        return false;
+                                    }
+                                    break;
+                            }
+                            break;
                         case ConvChoiceInfo.ChoiceCondition.ContentType.Quest:
                             switch (cond.conditionType)
                             {
@@ -148,6 +160,19 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                                             ib = InGameStatus.Item.PullItemFromInventoryByCode(cond.code);
                                         }
                                         UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.ItemPay}: {ib.Title} x {cond.amount}");
+                                        break;
+                                }
+                                break;
+                            case ConvChoiceInfo.ChoiceCondition.ContentType.Currency:
+                                switch (cond.conditionType)
+                                {
+                                    case "Get":
+                                        // 재화를 얻음
+                                        InGameStatus.Currency = +cond.amount;
+                                        break;
+                                    case "Pay":
+                                        // 재화를 지불함
+                                        InGameStatus.Currency = -cond.amount;
                                         break;
                                 }
                                 break;

@@ -154,7 +154,18 @@ public static class DataFunction
                     cond.conditionType = tokens[0];
                     cond.contentType = System.Enum.Parse<ConvChoiceInfo.ChoiceCondition.ContentType>(tokens[1]);
                     cond.code = tokens[2];
-                    if (cond.contentType.Equals(ConvChoiceInfo.ChoiceCondition.ContentType.Item)) cond.amount = int.Parse(tokens[3]);
+                    switch (cond.contentType)
+                    {
+                        case ConvChoiceInfo.ChoiceCondition.ContentType.Item:
+                            cond.amount = int.Parse(tokens[3]);
+                            break;
+                        case ConvChoiceInfo.ChoiceCondition.ContentType.Quest:
+                            break;
+                        case ConvChoiceInfo.ChoiceCondition.ContentType.Currency:
+                            cond.code = null;
+                            cond.amount = int.Parse(tokens[2]);
+                            break;
+                    }
                     choice.conditions.Add(cond);
                 }
                 // 텍스트 추가
@@ -207,6 +218,8 @@ public static class DataFunction
         GlobalText.System.ItemPay = curQ.Dequeue();
         GlobalText.System.QuestGet = curQ.Dequeue();
         GlobalText.System.QuestClear = curQ.Dequeue();
+        GlobalText.System.CurrencyGet = curQ.Dequeue();
+        GlobalText.System.CurrencyPay = curQ.Dequeue();
 
         // 상태이상 관련
         curQ = LoadTextFromFile("Condition");
