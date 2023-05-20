@@ -8,6 +8,11 @@ public static class GlobalComponent
 {
     public static class Common
     {
+        public static class Parent
+        {
+            public static Transform 
+                Event;
+        }
         public static class Info
         {
             public static InfoMessageManager controller;

@@ -81,7 +81,7 @@ namespace Assets.Scripts.Users
             if (tickHealthCondition > 1)
             {
                 tickHealthCondition = 0;
-                TickHealthCondition();
+                //TickHealthCondition();
             }
             CheckConditions();
             CheckSwapWeapon();
@@ -120,7 +120,7 @@ namespace Assets.Scripts.Users
 
         private void CheckSwapWeapon()
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 SwapWeapon();
             }
@@ -374,6 +374,10 @@ namespace Assets.Scripts.Users
                     OccurCondition(ConditionType.Cold, true);
                 }
             }
+        }
+
+        public override void OnDied()
+        {
         }
     }
 }

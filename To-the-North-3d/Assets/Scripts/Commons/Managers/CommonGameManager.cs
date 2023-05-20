@@ -21,7 +21,8 @@ public class CommonGameManager : MonoBehaviour
         projectileManager, trajectoryManager, soundEffectManager,
         screenHitManager,
         hoveringItemInfo, hoveringConditionInfo,
-        noticeTextInfo
+        noticeTextInfo,
+        parentEvent
         ;
 
     private Image fadeImage;
@@ -85,6 +86,7 @@ public class CommonGameManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
+            GlobalComponent.Common.Parent.Event = parentEvent;
             StartCoroutine(GenerateInitialComponents());
         }
         else if (_instance != this)
