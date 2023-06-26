@@ -4,7 +4,7 @@ namespace Assets.Scripts.Commons
 {
     public class MouseTrackController : MonoBehaviour
     {
-        protected void Update()
+        protected void LateUpdate()
         {
             TracksMouse();
         }
