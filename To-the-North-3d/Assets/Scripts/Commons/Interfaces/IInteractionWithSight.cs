@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Scripts.Creatures
+namespace Assets.Scripts.Commons
 {
     public interface IInteractionWithSight
     {

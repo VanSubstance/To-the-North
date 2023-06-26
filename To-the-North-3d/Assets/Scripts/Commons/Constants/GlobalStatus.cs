@@ -7,7 +7,7 @@ public static class GlobalStatus
 
     public static class Constant
     {
-        public static LayerMask
+        public readonly static LayerMask
             obstacleMask = 1 << 7,
             blockingSightMask = 1 << 18,
             eventMask = 1 << 9,
@@ -32,7 +32,7 @@ public static class GlobalStatus
             public static bool ConversationManager = false;
             public static bool InventoryLoading = false;
 
-            public static bool isSystemLoadingDone()
+            public static bool IsSystemLoadingDone()
             {
                 return
                     CommonGameManager &&
@@ -47,7 +47,7 @@ public static class GlobalStatus
         }
     }
 
-    public static void resetLoading()
+    public static void ResetLoading()
     {
         Loading.System.CommonGameManager = false;
         Loading.System.MouseCursorManager = false;

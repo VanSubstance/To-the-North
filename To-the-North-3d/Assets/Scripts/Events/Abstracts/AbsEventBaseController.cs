@@ -1,5 +1,5 @@
 using System.Collections;
-using Assets.Scripts.Creatures;
+using Assets.Scripts.Commons;
 using UnityEngine;
 
 namespace Assets.Scripts.Events.Abstracts

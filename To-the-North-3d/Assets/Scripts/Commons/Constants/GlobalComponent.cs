@@ -173,19 +173,19 @@ public static class GlobalComponent
         {
             switch (info)
             {
-                case ItemWeaponInfo _:
+                case ItemWeaponInfo:
                     return $"{Image.Root}{Item.Equipment.Weapon(info.imagePath)}";
-                case ItemArmorInfo _:
+                case ItemArmorInfo:
                     return $"{Image.Root}{Item.Equipment.Armor(info.imagePath)}";
-                case ItemMagazineInfo _:
+                case ItemMagazineInfo:
                     return $"{Image.Root}{Item.Equipment.Magazine(info.imagePath)}";
-                case ItemFoodInfo _:
+                case ItemFoodInfo:
                     return $"{Image.Root}{Item.Consumbable.Food(info.imagePath)}";
-                case ItemBulletInfo _:
+                case ItemBulletInfo:
                     return $"{Image.Root}{Item.Consumbable.Bullet(info.imagePath)}";
-                case ItemMedicineInfo _:
+                case ItemMedicineInfo:
                     return $"{Image.Root}{Item.Consumbable.Medicine(info.imagePath)}";
-                case ItemMaterialInfo _:
+                case ItemMaterialInfo:
                     return $"{Image.Root}{Item.Material(info.imagePath)}";
                 default:
                     break;

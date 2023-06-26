@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts.Commons;
 using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Detections;

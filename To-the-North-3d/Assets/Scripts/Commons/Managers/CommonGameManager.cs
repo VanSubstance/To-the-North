@@ -112,7 +112,7 @@ public class CommonGameManager : MonoBehaviour
                     curStatus = 1;
                     break;
                 case 1:
-                    if (GlobalStatus.Loading.System.isSystemLoadingDone())
+                    if (GlobalStatus.Loading.System.IsSystemLoadingDone())
                     {
                         GetComponent<InfoMessageManager>().AddMessageIntoQueue(new InfoStat(GlobalStatus.curScene, InfoType.ERROR));
                         curStatus = 2;
@@ -340,7 +340,7 @@ public class CommonGameManager : MonoBehaviour
     {
         FadeScreen(true, () =>
         {
-            GlobalStatus.resetLoading();
+            GlobalStatus.ResetLoading();
             GlobalStatus.nextScene = targetSceneName;
             SceneManager.LoadScene("Loading");
         });
