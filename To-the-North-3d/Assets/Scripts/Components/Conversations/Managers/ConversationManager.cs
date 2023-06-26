@@ -18,7 +18,7 @@ namespace Assets.Scripts.Components.Conversations.Managers
             UIManager.Instance.AddKeyToggleManager(KeyCode.Escape, this);
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             if (!GlobalStatus.Loading.System.ConversationManager)
             {
