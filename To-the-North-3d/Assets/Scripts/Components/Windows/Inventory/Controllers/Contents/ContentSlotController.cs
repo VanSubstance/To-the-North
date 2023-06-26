@@ -70,5 +70,15 @@ namespace Assets.Scripts.Components.Windows.Inventory
             itemsAttached.Clear();
             return res;
         }
+
+        /// <summary>
+        /// 아이템 리스트에서 조건에 맞는 아이템 정보 반환
+        /// </summary>
+        /// <param name="actionCondition">조건식 (Predicate)</param>
+        /// <returns></returns>
+        public ItemInventoryInfo SeekItemInvenInfo(System.Predicate<ItemInventoryInfo> actionCondition)
+        {
+            return itemsAttached.Find(actionCondition);
+        }
     }
 }

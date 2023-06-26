@@ -191,46 +191,24 @@ public static class InGameStatus
 
         public static ItemBulletInfo LookforBullet(ItemBulletType type)
         {
-            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
-            {
-                if (inven.itemInfo is ItemBulletInfo info)
-                {
-                    if (
-                            info.bulletType.Equals(type) &&
-                            info.AmountCount > 0
-                        )
-                    {
-                        return info;
-                    }
-                }
-            }
-            return null;
+            return (ItemBulletInfo) WindowInventoryController.Instance.ContentInventory.SeekItemInvenInfo(
+                (inven) => inven.itemInfo is ItemBulletInfo info && info.bulletType.Equals(type) && info.AmountCount > 0
+                ).itemInfo;
         }
 
         public static ItemMagazineInfo LookForMagazine(ItemBulletType type)
         {
-            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
-            {
-                if (inven.itemInfo is ItemMagazineInfo magInfo &&
-                    magInfo.bulletType.Equals(type)
-                    )
-                {
-                    return (ItemMagazineInfo)PullItemFromInventory(inven);
-                }
-            }
-            return null;
+            return (ItemMagazineInfo) PullItemFromInventory(WindowInventoryController.Instance.ContentInventory.SeekItemInvenInfo(
+                (inven) => inven.itemInfo is ItemMagazineInfo magInfo && magInfo.bulletType.Equals(type)
+                )
+            );
         }
 
         public static bool LookForItemByCode(string _code)
         {
-            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
-            {
-                if (inven.itemInfo.imagePath.Equals(_code))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return WindowInventoryController.Instance.ContentInventory.SeekItemInvenInfo(
+                (inven) => inven.itemInfo.imagePath.Equals(_code)
+                ) != null;
         }
 
         public static int CountItemByCode(string _code)
@@ -248,14 +226,11 @@ public static class InGameStatus
 
         public static ItemBaseInfo PullItemFromInventoryByCode(string _code)
         {
-            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
-            {
-                if (inven.itemInfo.imagePath.Equals(_code))
-                {
-                    return PullItemFromInventory(inven);
-                }
-            }
-            return null;
+            return PullItemFromInventory(
+            WindowInventoryController.Instance.ContentInventory.SeekItemInvenInfo(
+                (inven) => inven.itemInfo.imagePath.Equals(_code)
+                )
+            );
         }
 
         /// <summary>
@@ -266,6 +241,7 @@ public static class InGameStatus
         /// <returns></returns>
         public static ItemBaseInfo PullItemFromInventory(ItemInventoryInfo itemFromInventory)
         {
+            if (itemFromInventory == null) return null;
             WindowInventoryController.Instance.ContentInventory.itemsAttached.Remove(itemFromInventory);
             ItemBaseInfo res = itemFromInventory.itemInfo;
             res.Ctrl.ItemTruncate();
