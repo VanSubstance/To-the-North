@@ -49,9 +49,9 @@ namespace Assets.Scripts.Components.Hovers
             gameObject.SetActive(false);
         }
 
-        protected new void Update()
+        protected new void LateUpdate()
         {
-            base.Update();
+            base.LateUpdate();
             if (transform.GetSiblingIndex() != transform.parent.childCount - 1)
             {
                 transform.SetAsLastSibling();

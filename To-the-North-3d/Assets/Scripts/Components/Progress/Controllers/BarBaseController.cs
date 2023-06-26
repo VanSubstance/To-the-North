@@ -83,7 +83,7 @@ namespace Assets.Scripts.Components.Progress
                 LiveInfo = +0;
             }
         }
-        private void Update()
+        private void LateUpdate()
         {
             currentTf.anchorMax = new Vector2(info.GetCurrentPercent(), 1);
             currentTf.offsetMax = Vector2.zero;

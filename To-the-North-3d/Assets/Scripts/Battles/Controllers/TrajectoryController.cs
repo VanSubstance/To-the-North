@@ -38,6 +38,10 @@ namespace Assets.Scripts.Battles
                 // 파괴
                 StartCoroutine(CoroutineKill(0));
             }
+        }
+
+        private void LateUpdate()
+        {
             if (isTerminated) return;
             if (isCurved)
             {

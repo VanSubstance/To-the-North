@@ -42,9 +42,9 @@ namespace Assets.Scripts.Components.Hovers
             isOccupied = false;
         }
 
-        protected new void Update()
+        protected new void LateUpdate()
         {
-            base.Update();
+            base.LateUpdate();
             if (transform.GetSiblingIndex() != transform.parent.childCount - 1)
             {
                 transform.SetAsLastSibling();

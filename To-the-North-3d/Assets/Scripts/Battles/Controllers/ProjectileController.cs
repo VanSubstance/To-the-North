@@ -1,5 +1,5 @@
 using Assets.Scripts.Commons.Functions;
-using Assets.Scripts.Creatures;
+using Assets.Scripts.Commons;
 using Assets.Scripts.Items;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -61,6 +61,29 @@ namespace Assets.Scripts.Battles
             subHit.Parent = this;
             subHit.SetActive(false);
             gameObject.SetActive(false);
+        }
+
+        private void Update()
+        {
+            if (!GlobalStatus.Loading.System.CommonGameManager)
+            {
+                // 파괴
+                Arrive();
+            }
+            if (!isReady) return;
+            if (Vector3.Distance(transform.position, startPos) >= Vector3.Distance(targetPos, startPos))
+            {
+                Arrive();
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if (!isReady) return;
+            if (trajectory)
+            {
+                trajectory.MoveTo(transform.position);
+            }
         }
 
         public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner, ItemBulletType bulletType)
@@ -139,23 +162,6 @@ namespace Assets.Scripts.Battles
             gameObject.SetActive(false);
         }
 
-        private void Update()
-        {
-            if (!GlobalStatus.Loading.System.CommonGameManager)
-            {
-                // 파괴
-                Arrive();
-            }
-            if (!isReady) return;
-            if (trajectory)
-            {
-                trajectory.MoveTo(transform.position);
-            }
-            if (Vector3.Distance(transform.position, startPos) >= Vector3.Distance(targetPos, startPos))
-            {
-                Arrive();
-            }
-        }
         private void OnTriggerEnter(Collider other)
         {
             switch (other.gameObject.layer)
@@ -227,7 +233,7 @@ namespace Assets.Scripts.Battles
                 }
             }
 
-            private void Update()
+            private void LateUpdate()
             {
                 transform.position = parent.transform.position + Vector3.down;
             }

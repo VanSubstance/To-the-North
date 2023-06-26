@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,11 +10,6 @@ public class MouseCursorManager : MonoBehaviour
         LoadCursors();
         GlobalComponent.Common.Event.mouseCursorManager = this;
         GlobalStatus.Loading.System.MouseCursorManager = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     public void SetMouseCursor(MouseCursorType cursorType)
