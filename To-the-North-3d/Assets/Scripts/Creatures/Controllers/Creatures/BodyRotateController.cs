@@ -15,7 +15,7 @@ namespace Assets.Scripts.Creatures
         {
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             float curDegree = aiBase ? aiBase.CurDegree : InGameStatus.User.Movement.curdegree;
             if (
