@@ -1,11 +1,10 @@
 using System.Collections.Generic;
+using Assets.Scripts.Components.Infos;
 using Assets.Scripts.Components.Progress;
-using Assets.Scripts.Components.Windows;
 using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using Assets.Scripts.Users.Objects;
-using Assets.Scripts.Components.Infos;
 
 public static class InGameStatus
 {
@@ -213,22 +212,16 @@ public static class InGameStatus
 
         public static int CountItemByCode(string _code)
         {
-            int res = 0;
-            foreach (ItemInventoryInfo inven in WindowInventoryController.Instance.ContentInventory.itemsAttached)
-            {
-                if (inven.itemInfo.imagePath.Equals(_code))
-                {
-                    res++;
-                }
-            }
-            return res;
+           return WindowInventoryController.Instance.ContentInventory.CountItemInvenInfoAll(
+                (inven) => inven.itemInfo.imagePath.Equals(_code)
+                );
         }
 
         public static ItemBaseInfo PullItemFromInventoryByCode(string _code)
         {
             return PullItemFromInventory(
-            WindowInventoryController.Instance.ContentInventory.SeekItemInvenInfo(
-                (inven) => inven.itemInfo.imagePath.Equals(_code)
+                WindowInventoryController.Instance.ContentInventory.SeekItemInvenInfo(
+                    (inven) => inven.itemInfo.imagePath.Equals(_code)
                 )
             );
         }
