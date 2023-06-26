@@ -83,10 +83,10 @@ namespace Assets.Scripts.Commons
             {
                 if (!IsAllClosed)
                 {
-                    foreach(KeyToggleManager km in keyToggleManagers)
+                    keyToggleManagers.ForEach((km) =>
                     {
                         km.CloseInForce();
-                    }
+                    });
                     IsClosedInForce = true;
                     return;
                 }

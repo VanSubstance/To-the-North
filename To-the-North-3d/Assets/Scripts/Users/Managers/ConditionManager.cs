@@ -4,8 +4,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Users
 {
-    internal class ConditionManager : MonoBehaviour
+    public class ConditionManager : MonoBehaviour
     {
+        private static System.Array enumListConditionType;
+
         [SerializeField]
         private Transform controllerPrefab;
         private Transform sleepTf, visualizationTf;
@@ -35,14 +37,14 @@ namespace Assets.Scripts.Users
             Init();
             visualizationTf = transform.GetChild(0);
             sleepTf = transform.GetChild(1);
-            foreach (ConditionType type in System.Enum.GetValues(typeof(ConditionType)))
+            foreach (ConditionType type in enumListConditionType)
             {
                 if (type == ConditionType.None) continue;
                 controllers[type] = Instantiate(controllerPrefab, sleepTf).GetComponent<ConditionController>();
                 controllers[type].InitCondition(type, sleepTf);
             }
 
-            foreach (ConditionType type in System.Enum.GetValues(typeof(ConditionType)))
+            foreach (ConditionType type in enumListConditionType)
             {
                 if (type == ConditionType.None) continue;
                 if (InGameStatus.User.conditions[type] > 0)
@@ -51,7 +53,7 @@ namespace Assets.Scripts.Users
                 }
             }
 
-            foreach (ConditionType type in System.Enum.GetValues(typeof(ConditionType)))
+            foreach (ConditionType type in enumListConditionType)
             {
                 if (type == ConditionType.None) continue;
                 timers[type] = null;
@@ -77,7 +79,8 @@ namespace Assets.Scripts.Users
         {
             if (InGameStatus.User.conditions != null) return;
             InGameStatus.User.conditions = new();
-            foreach (ConditionType type in System.Enum.GetValues(typeof(ConditionType)))
+            enumListConditionType = CommonFunction.ListOfEnumValue(typeof(ConditionType));
+            foreach (ConditionType type in enumListConditionType)
             {
                 if (type == ConditionType.None) continue;
                 InGameStatus.User.conditions[type] = 0;
@@ -93,7 +96,7 @@ namespace Assets.Scripts.Users
             while (true)
             {
                 yield return new WaitForSeconds(Time.deltaTime);
-                foreach (ConditionType type in System.Enum.GetValues(typeof(ConditionType)))
+                foreach (ConditionType type in enumListConditionType)
                 {
                     if (type == ConditionType.None) continue;
                     try

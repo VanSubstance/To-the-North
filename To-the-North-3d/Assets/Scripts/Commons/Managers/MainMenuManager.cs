@@ -33,7 +33,7 @@ namespace Assets.Scripts.Commons
         {
             FadeScreen(true, () =>
             {
-                GlobalStatus.resetLoading();
+                GlobalStatus.ResetLoading();
                 GlobalStatus.nextScene = targetSceneName;
                 SceneManager.LoadScene("Loading");
             });

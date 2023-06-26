@@ -93,8 +93,7 @@ public class CameraTrackControlller : MonoBehaviour, ISoundable
 
     private void TrackMousePosOnTerrain()
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (Physics.Raycast(mousePos, Camera.main.transform.forward, out RaycastHit hit, 100, 1 << 19))
+        if (Physics.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Camera.main.transform.forward, out RaycastHit hit, 100, 1 << 19))
         {
             MousePosOnTerrain = hit.point;
         }
