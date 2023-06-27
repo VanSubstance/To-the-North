@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Commons
 {
+    /// <summary>
+    /// 필터 모듈
+    /// </summary>
     public class ScreenHitFilterController : MonoBehaviour
     {
         private SpriteRenderer image;

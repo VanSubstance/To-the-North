@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Commons
 {
+    /// <summary>
+    /// 화면 피격 방향 이펙트 모듈 (원형)
+    /// </summary>
     public class ScreenHitEffectManager : MonoBehaviour
     {
         [SerializeField]

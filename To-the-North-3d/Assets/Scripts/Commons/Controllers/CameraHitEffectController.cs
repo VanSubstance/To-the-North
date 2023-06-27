@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Commons
 {
+    /// <summary>
+    /// 진동 모듈
+    /// </summary>
     public class CameraHitEffectController : MonoBehaviour
     {
         private readonly Vector3 originPos = new Vector3(0, 20, 0);
