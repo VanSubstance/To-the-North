@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &-4355317065790809995
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4041078459997360422}
-  m_Layer: 0
-  m_Name: 'WoodWallColRight (Missing Prefab with guid: 3b74edbd24fa8114082e8d0b6f3ddf23)'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4041078459997360422
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: -4355317065790809995}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 861729434198861271}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6339666904224799886
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,7 +82,6 @@ Transform:
   - {fileID: 1236353748293493166}
   - {fileID: 395063437676271437}
   - {fileID: 4908705664827215925}
-  - {fileID: 4041078459997360422}
   - {fileID: 8664145117608197557}
   - {fileID: 3536146951509700886}
   - {fileID: 2997338744073546466}
@@ -262,22 +230,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WoodWallRowTop
       objectReference: {fileID: 0}
-    - target: {fileID: 1104141542811113687, guid: f419bd954ac4d2d429902e1eae32ebd0, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493292676709692762, guid: f419bd954ac4d2d429902e1eae32ebd0, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8044141275690200177, guid: f419bd954ac4d2d429902e1eae32ebd0, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8136332605385288403, guid: f419bd954ac4d2d429902e1eae32ebd0, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f419bd954ac4d2d429902e1eae32ebd0, type: 3}
 --- !u!4 &395063437676271437 stripped
@@ -339,22 +291,6 @@ PrefabInstance:
     - target: {fileID: 94518199656796055, guid: 1e374f31de558724e974fcbaadc8ab14, type: 3}
       propertyPath: m_Name
       value: WoodWallRowBot
-      objectReference: {fileID: 0}
-    - target: {fileID: 1104141542811113687, guid: 1e374f31de558724e974fcbaadc8ab14, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493292676709692762, guid: 1e374f31de558724e974fcbaadc8ab14, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8044141275690200177, guid: 1e374f31de558724e974fcbaadc8ab14, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8136332605385288403, guid: 1e374f31de558724e974fcbaadc8ab14, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e374f31de558724e974fcbaadc8ab14, type: 3}
@@ -418,22 +354,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WoodPolBotRight
       objectReference: {fileID: 0}
-    - target: {fileID: 1104141542811113687, guid: cfe77fb4c3370d1489b7f0b39ffa29df, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493292676709692762, guid: cfe77fb4c3370d1489b7f0b39ffa29df, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8044141275690200177, guid: cfe77fb4c3370d1489b7f0b39ffa29df, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8136332605385288403, guid: cfe77fb4c3370d1489b7f0b39ffa29df, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfe77fb4c3370d1489b7f0b39ffa29df, type: 3}
 --- !u!4 &1649977568151926354 stripped
@@ -496,22 +416,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WoodPolBotLeft
       objectReference: {fileID: 0}
-    - target: {fileID: 1104141542811113687, guid: 89f2acbb861be974391d626b9c9c71d1, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493292676709692762, guid: 89f2acbb861be974391d626b9c9c71d1, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8044141275690200177, guid: 89f2acbb861be974391d626b9c9c71d1, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8136332605385288403, guid: 89f2acbb861be974391d626b9c9c71d1, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89f2acbb861be974391d626b9c9c71d1, type: 3}
 --- !u!4 &2759769173404200360 stripped
@@ -528,7 +432,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 94518199656796054, guid: 219d87956baa9da48a1e6ec830522127, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 94518199656796054, guid: 219d87956baa9da48a1e6ec830522127, type: 3}
       propertyPath: m_LocalPosition.x
@@ -574,22 +478,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WoodWallColLeftBot
       objectReference: {fileID: 0}
-    - target: {fileID: 1104141542811113687, guid: 219d87956baa9da48a1e6ec830522127, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493292676709692762, guid: 219d87956baa9da48a1e6ec830522127, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8044141275690200177, guid: 219d87956baa9da48a1e6ec830522127, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8136332605385288403, guid: 219d87956baa9da48a1e6ec830522127, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 219d87956baa9da48a1e6ec830522127, type: 3}
 --- !u!4 &2997338744073546466 stripped
@@ -606,7 +494,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 94518199656796054, guid: 678c2bd640d519144920e73f8fa82938, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 94518199656796054, guid: 678c2bd640d519144920e73f8fa82938, type: 3}
       propertyPath: m_LocalPosition.x
@@ -651,22 +539,6 @@ PrefabInstance:
     - target: {fileID: 94518199656796055, guid: 678c2bd640d519144920e73f8fa82938, type: 3}
       propertyPath: m_Name
       value: WoodWallColRightBot
-      objectReference: {fileID: 0}
-    - target: {fileID: 1104141542811113687, guid: 678c2bd640d519144920e73f8fa82938, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493292676709692762, guid: 678c2bd640d519144920e73f8fa82938, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8044141275690200177, guid: 678c2bd640d519144920e73f8fa82938, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8136332605385288403, guid: 678c2bd640d519144920e73f8fa82938, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 678c2bd640d519144920e73f8fa82938, type: 3}
@@ -730,22 +602,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WoodWallColLeft
       objectReference: {fileID: 0}
-    - target: {fileID: 1104141542811113687, guid: dbf4b2523263d204d8ca2eaa0ffab217, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493292676709692762, guid: dbf4b2523263d204d8ca2eaa0ffab217, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8044141275690200177, guid: dbf4b2523263d204d8ca2eaa0ffab217, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8136332605385288403, guid: dbf4b2523263d204d8ca2eaa0ffab217, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbf4b2523263d204d8ca2eaa0ffab217, type: 3}
 --- !u!4 &4908705664827215925 stripped
@@ -807,22 +663,6 @@ PrefabInstance:
     - target: {fileID: 94518199656796055, guid: 474d78a239900fd4295b6276c2a18eef, type: 3}
       propertyPath: m_Name
       value: WoodPolTopLeft
-      objectReference: {fileID: 0}
-    - target: {fileID: 1104141542811113687, guid: 474d78a239900fd4295b6276c2a18eef, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493292676709692762, guid: 474d78a239900fd4295b6276c2a18eef, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8044141275690200177, guid: 474d78a239900fd4295b6276c2a18eef, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8136332605385288403, guid: 474d78a239900fd4295b6276c2a18eef, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 474d78a239900fd4295b6276c2a18eef, type: 3}
@@ -886,22 +726,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WoodPolTopRight
       objectReference: {fileID: 0}
-    - target: {fileID: 1104141542811113687, guid: fee7d2ae92188b048baf0d1d94c44f4b, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493292676709692762, guid: fee7d2ae92188b048baf0d1d94c44f4b, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8044141275690200177, guid: fee7d2ae92188b048baf0d1d94c44f4b, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8136332605385288403, guid: fee7d2ae92188b048baf0d1d94c44f4b, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fee7d2ae92188b048baf0d1d94c44f4b, type: 3}
 --- !u!4 &6975376797515585202 stripped
@@ -918,7 +742,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 94518199656796054, guid: 3941d23e45786b94a8cdda8eca486f0b, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 94518199656796054, guid: 3941d23e45786b94a8cdda8eca486f0b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -963,22 +787,6 @@ PrefabInstance:
     - target: {fileID: 94518199656796055, guid: 3941d23e45786b94a8cdda8eca486f0b, type: 3}
       propertyPath: m_Name
       value: WoodWallColRight
-      objectReference: {fileID: 0}
-    - target: {fileID: 1104141542811113687, guid: 3941d23e45786b94a8cdda8eca486f0b, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493292676709692762, guid: 3941d23e45786b94a8cdda8eca486f0b, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8044141275690200177, guid: 3941d23e45786b94a8cdda8eca486f0b, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8136332605385288403, guid: 3941d23e45786b94a8cdda8eca486f0b, type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3941d23e45786b94a8cdda8eca486f0b, type: 3}
