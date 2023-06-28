@@ -3,6 +3,8 @@ using Assets.Scripts.Commons;
 using Assets.Scripts.Components.Infos;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
+using Assets.Scripts.Effects;
+using Assets.Scripts.Effects.Vibrate;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,7 +31,6 @@ public class CommonGameManager : MonoBehaviour
     private int curStatus = 0;
 
     private ScreenHitEffectManager _screenHitManager;
-    private CameraHitEffectController _cameraHitController;
     private ScreenHitFilterController _screenHitFilterController;
     private Transform _screenDizzinessTf;
 
@@ -62,14 +63,6 @@ public class CommonGameManager : MonoBehaviour
         get
         {
             return _screenHitManager;
-        }
-    }
-
-    public CameraHitEffectController CameraHitController
-    {
-        get
-        {
-            return _cameraHitController;
         }
     }
 
@@ -247,7 +240,6 @@ public class CommonGameManager : MonoBehaviour
             {
                 _screenHitManager = Instantiate(screenHitManager, uiTf).GetComponent<ScreenHitEffectManager>();
                 _screenHitManager.transform.name = "On Hit";
-                _cameraHitController = GameObject.Find("Camera Container").transform.GetChild(0).GetComponent<CameraHitEffectController>();
             }
         }
 
@@ -370,7 +362,7 @@ public class CommonGameManager : MonoBehaviour
         // 데미지 계산
         InGameStatus.User.status.ApplyDamage(damage[0]);
         _screenHitManager.OnHit(degree);
-        _cameraHitController.OnHit(damage[2]);
+        EffectManager.Instance.ExecuteEffect(EffectType.Vibrate, Camera.main.transform, new VibrateInfo() { powerVib = damage[2] / (10 + damage[2]), timeVib = .5f });
         _screenHitFilterController.OnHit(damage[1]);
     }
 

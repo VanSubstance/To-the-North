@@ -9,7 +9,6 @@ namespace Assets.Scripts.Commons
     /// </summary>
     public class CameraHitEffectController : MonoBehaviour
     {
-        private readonly Vector3 originPos = new Vector3(0, 20, 0);
         private float timeVib = .5f, timeLeft, powerVib;
         /// <summary>
         /// 데미지에 따라 화면에 진동을 주는 함수
@@ -44,11 +43,11 @@ namespace Assets.Scripts.Commons
             while (timeLeft >= 0)
             {
                 timeLeft -= Time.deltaTime;
-                transform.localPosition = originPos + CalculationFunctions.DirFromAngle(Random.Range(0, 360)) * powerVib;
+                transform.localPosition = CalculationFunctions.DirFromAngle(Random.Range(0, 360)) * powerVib;
                 powerVib *= 0.7f;
                 yield return new WaitForSeconds(Time.deltaTime);
             }
-            transform.localPosition = originPos;
+            transform.localPosition = Vector3.zero;
             timeLeft = 0;
             powerVib = 0f;
         }

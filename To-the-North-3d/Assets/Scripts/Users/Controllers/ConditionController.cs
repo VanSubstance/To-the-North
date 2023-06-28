@@ -1,4 +1,6 @@
 using Assets.Scripts.Components.Hovers;
+using Assets.Scripts.Effects;
+using Assets.Scripts.Effects.Vibrate;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -103,7 +105,10 @@ namespace Assets.Scripts.Users
 
         private void ScreenVibrate(float amount)
         {
-            CommonGameManager.Instance.CameraHitController.OnHit(amount);
+            EffectManager.Instance.ExecuteEffect(EffectType.Vibrate, Camera.main.transform, new VibrateInfo()
+            {
+                powerVib = amount,
+            });
         }
 
         private void ScreenBlurred(float amount)
