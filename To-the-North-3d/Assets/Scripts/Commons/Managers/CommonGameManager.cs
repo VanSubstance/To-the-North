@@ -245,7 +245,7 @@ public class CommonGameManager : MonoBehaviour
         }
 
         GlobalStatus.Loading.System.CommonGameManager = true;
-        imageForFade.SetAsFirstSibling();
+        imageForFade.SetAsLastSibling();
 
         DataFunction.ApplyLanguage();
 
@@ -263,37 +263,14 @@ public class CommonGameManager : MonoBehaviour
     /// <param name="actionBefore">화면 애니메이션 이전 실행할 함수</param>
     public void FadeScreen(bool isFadein, System.Action actionAfter = null, System.Action actionBefore = null)
     {
-        FadeObject(fadeImage.transform, isFadein, 1f, actionAfter, actionBefore);
-    }
-
-    public void FadeObject(Transform targetTf, bool isFadeIn, float accelSpeed, System.Action afterAction = null, System.Action actionBefore = null)
-    {
-        StartCoroutine(CoroutineFadeObject(targetTf, isFadeIn, accelSpeed, afterAction, actionBefore));
-    }
-    private IEnumerator CoroutineFadeObject(Transform targetTf, bool isFadeIn, float accelSpeed, System.Action afterAction = null, System.Action actionBefore = null)
-    {
-        float goalOpacity = isFadeIn ? 1.0f : 0.0f, curOpacity = isFadeIn ? 0.0f : 1.0f;
-        if (actionBefore != null) actionBefore();
-        targetTf.SetAsLastSibling();
-        while (isFadeIn ? curOpacity < goalOpacity : curOpacity > goalOpacity)
+        EffectManager.Instance.ExecuteEffect(EffectType.Fade, fadeImage.transform, new FadeInfo()
         {
-            yield return new WaitForSeconds(0.01f);
-            curOpacity = curOpacity + (0.01f * (GlobalSetting.accelSpeed * (isFadeIn ? 1f : -1f)) * accelSpeed);
-            if (targetTf == null) break;
-            if (targetTf.GetComponent<Image>() != null) targetTf.GetComponent<Image>().color = new Color(
-                targetTf.GetComponent<Image>().color.r,
-                targetTf.GetComponent<Image>().color.g,
-                targetTf.GetComponent<Image>().color.b,
-                curOpacity);
-            if (targetTf == null) break;
-            if (targetTf.GetComponent<TextMeshProUGUI>() != null) targetTf.GetComponent<TextMeshProUGUI>().color = new Color(
-                targetTf.GetComponent<TextMeshProUGUI>().color.r,
-                targetTf.GetComponent<TextMeshProUGUI>().color.g,
-                targetTf.GetComponent<TextMeshProUGUI>().color.b,
-                curOpacity);
-        }
-        targetTf.SetAsFirstSibling();
-        if (afterAction != null) afterAction();
+            start = isFadein ? 0 : 1,
+            end = isFadein ? 1 : 0,
+            timeLeft = .5f,
+            actionAfter = () => { fadeImage.gameObject.SetActive(false); actionAfter?.Invoke(); },
+            actionBefore = () => { fadeImage.transform.SetAsLastSibling(); fadeImage.gameObject.SetActive(true); actionBefore?.Invoke(); }
+        });
     }
 
     public void MoveObject(Transform targetTf, DirectionType direction, float accelAmount, float distanceToMove, System.Action afterAction = null)

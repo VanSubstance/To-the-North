@@ -13,6 +13,7 @@ namespace Assets.Scripts.Effects
             effectControllers = new Dictionary<EffectType, IEffectControl>() {
                 { EffectType.Vibrate, new VibrateController()},
                 { EffectType.Filter, new FilterController()},
+                { EffectType.Fade, new FadeController()},
             };
         }
 
