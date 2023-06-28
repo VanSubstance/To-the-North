@@ -2,7 +2,7 @@ using System.Collections;
 using Assets.Scripts.Commons.Functions;
 using UnityEngine;
 
-namespace Assets.Scripts.Effects.Vibrate
+namespace Assets.Scripts.Effects
 {
     public class VibrateController : IEffectControl
     {
@@ -18,21 +18,18 @@ namespace Assets.Scripts.Effects.Vibrate
             }
             return 1f;
         }
-        public IEnumerator CoroutineEffect<T>(Transform target, T _info)
+        public IEnumerator CoroutineEffect(Transform target, EffectInfo info)
         {
-            if (_info is VibrateInfo info)
+            Vector3 origin = target.localPosition;
+            info.power = PowerVib(info.power);
+            while (info.timeLeft >= 0)
             {
-                Vector3 origin = target.localPosition;
-                info.powerVib = PowerVib(info.powerVib);
-                while (info.timeVib >= 0)
-                {
-                    info.timeVib -= Time.deltaTime;
-                    target.localPosition = origin + CalculationFunctions.DirFromAngle(Random.Range(0, 360)) * info.powerVib;
-                    info.powerVib *= 0.7f;
-                    yield return new WaitForSeconds(Time.deltaTime);
-                }
-                target.localPosition = origin;
+                info.timeLeft -= Time.deltaTime;
+                target.localPosition = origin + CalculationFunctions.DirFromAngle(Random.Range(0, 360)) * info.power;
+                info.power *= 0.7f;
+                yield return new WaitForSeconds(Time.deltaTime);
             }
+            target.localPosition = origin;
         }
     }
 }

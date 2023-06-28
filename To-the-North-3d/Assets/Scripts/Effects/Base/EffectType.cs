@@ -2,6 +2,6 @@ namespace Assets.Scripts.Effects
 {
     public enum EffectType
     {
-        Vibrate
+        Vibrate, Filter
     }
 }

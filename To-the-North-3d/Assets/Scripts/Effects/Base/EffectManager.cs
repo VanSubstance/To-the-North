@@ -1,10 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using Assets.Scripts.Effects.Vibrate;
 
 namespace Assets.Scripts.Effects
 {
@@ -16,11 +11,12 @@ namespace Assets.Scripts.Effects
         {
             base.Awake();
             effectControllers = new Dictionary<EffectType, IEffectControl>() {
-                { EffectType.Vibrate, new VibrateController()}
+                { EffectType.Vibrate, new VibrateController()},
+                { EffectType.Filter, new FilterController()},
             };
         }
 
-        public void ExecuteEffect<T>(EffectType effectType, Transform target, T info)
+        public void ExecuteEffect(EffectType effectType, Transform target, EffectInfo info)
         {
             StartCoroutine(effectControllers[effectType].CoroutineEffect(target, info));
         }

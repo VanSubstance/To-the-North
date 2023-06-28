@@ -1,8 +1,7 @@
-using Assets.Scripts.Components.Hovers;
-using Assets.Scripts.Effects;
-using Assets.Scripts.Effects.Vibrate;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Components.Hovers;
+using Assets.Scripts.Effects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -105,15 +104,19 @@ namespace Assets.Scripts.Users
 
         private void ScreenVibrate(float amount)
         {
-            EffectManager.Instance.ExecuteEffect(EffectType.Vibrate, Camera.main.transform, new VibrateInfo()
+            EffectManager.Instance.ExecuteEffect(EffectType.Vibrate, Camera.main.transform, new EffectInfo()
             {
-                powerVib = amount,
+                power = amount,
             });
         }
 
         private void ScreenBlurred(float amount)
         {
-            CommonGameManager.Instance.ScreenHitFilterController.OnHit(amount);
+            EffectManager.Instance.ExecuteEffect(EffectType.Filter, CommonGameManager.Instance.ScreenFilterTf, new FilterInfo()
+            {
+                power = amount,
+                color = Color.red,
+            });
         }
     }
 }

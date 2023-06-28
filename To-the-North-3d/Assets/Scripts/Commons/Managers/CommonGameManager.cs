@@ -1,10 +1,9 @@
 using System.Collections;
 using Assets.Scripts.Commons;
 using Assets.Scripts.Components.Infos;
+using Assets.Scripts.Effects;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
-using Assets.Scripts.Effects;
-using Assets.Scripts.Effects.Vibrate;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,7 +16,7 @@ public class CommonGameManager : MonoBehaviour
 
     [SerializeField]
     private Transform fadeImagePrefab, userPrefab,
-        filterForScreenPrefab, filterDizzinessPrefab,
+        filterSightPrefab, filterDizzinessPrefab, filterScreenPrefab,
         pauseWindowPrefab, inventoryWindowPrefab, questWindowPrefab,
         panelForHpSp, panelForCondition, panelForWelfare, panelForQuick,
         projectileManager, trajectoryManager, soundEffectManager,
@@ -31,8 +30,14 @@ public class CommonGameManager : MonoBehaviour
     private int curStatus = 0;
 
     private ScreenHitEffectManager _screenHitManager;
-    private ScreenHitFilterController _screenHitFilterController;
-    private Transform _screenDizzinessTf;
+    private Transform _screenDizzinessTf, _screenFilterTf;
+    public Transform ScreenFilterTf
+    {
+        get
+        {
+            return _screenFilterTf;
+        }
+    }
 
     private Transform uiTf
     {
@@ -63,14 +68,6 @@ public class CommonGameManager : MonoBehaviour
         get
         {
             return _screenHitManager;
-        }
-    }
-
-    public ScreenHitFilterController ScreenHitFilterController
-    {
-        get
-        {
-            return _screenHitFilterController;
         }
     }
 
@@ -171,10 +168,14 @@ public class CommonGameManager : MonoBehaviour
             hovering = Instantiate(hoveringConditionInfo, uiTf);
 
             // 화면 필터 이미지 추가
-            Transform imageForSmog = Instantiate(filterForScreenPrefab, uiTf);
-            _screenHitFilterController = imageForSmog.GetComponent<ScreenHitFilterController>();
+            Transform imageForSmog = Instantiate(filterSightPrefab, uiTf);
             imageForSmog.localPosition = Vector3.zero;
             imageForSmog.SetAsLastSibling();
+
+            // 화면 필터 이미지 추가
+            _screenFilterTf = Instantiate(filterScreenPrefab, uiTf);
+            _screenFilterTf.localPosition = Vector3.zero;
+            _screenFilterTf.SetAsLastSibling();
 
             // 화면 울렁거림 이미지 추가
             Transform imageForDizziness = Instantiate(filterDizzinessPrefab, uiTf);
@@ -362,8 +363,8 @@ public class CommonGameManager : MonoBehaviour
         // 데미지 계산
         InGameStatus.User.status.ApplyDamage(damage[0]);
         _screenHitManager.OnHit(degree);
-        EffectManager.Instance.ExecuteEffect(EffectType.Vibrate, Camera.main.transform, new VibrateInfo() { powerVib = damage[2], timeVib = .5f });
-        _screenHitFilterController.OnHit(damage[1]);
+        EffectManager.Instance.ExecuteEffect(EffectType.Vibrate, Camera.main.transform, new EffectInfo() { power = damage[2], timeLeft = .5f });
+        EffectManager.Instance.ExecuteEffect(EffectType.Filter, _screenFilterTf, new FilterInfo() { power = damage[1], timeLeft = .5f, color = Color.red });
     }
 
     /// <summary>

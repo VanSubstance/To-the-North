@@ -1,6 +1,5 @@
-using Assets.Scripts.Items;
 using Assets.Scripts.Effects;
-using Assets.Scripts.Effects.Vibrate;
+using Assets.Scripts.Items;
 using UnityEngine;
 
 namespace Assets.Scripts.Battles
@@ -34,9 +33,9 @@ namespace Assets.Scripts.Battles
         {
             int[] damage = BattleCalcFunciton.GetDamageTotalToApply(armorInfo, attackInfo);
             battleFunction.OnHit(PartHitController.DecideHitPart(), armorInfo, attackInfo, damage, hitDir);
-            EffectManager.Instance.ExecuteEffect(EffectType.Vibrate, Owner.GetChild(1), new VibrateInfo()
+            EffectManager.Instance.ExecuteEffect(EffectType.Vibrate, Owner.GetChild(1), new EffectInfo()
             {
-                powerVib = damage[2],
+                power = damage[2],
             });
             if (timeLeft > 0)
             {
