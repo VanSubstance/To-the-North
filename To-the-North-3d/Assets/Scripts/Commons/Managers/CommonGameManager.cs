@@ -362,7 +362,7 @@ public class CommonGameManager : MonoBehaviour
         // 데미지 계산
         InGameStatus.User.status.ApplyDamage(damage[0]);
         _screenHitManager.OnHit(degree);
-        EffectManager.Instance.ExecuteEffect(EffectType.Vibrate, Camera.main.transform, new VibrateInfo() { powerVib = damage[2] / (10 + damage[2]), timeVib = .5f });
+        EffectManager.Instance.ExecuteEffect(EffectType.Vibrate, Camera.main.transform, new VibrateInfo() { powerVib = damage[2], timeVib = .5f });
         _screenHitFilterController.OnHit(damage[1]);
     }
 

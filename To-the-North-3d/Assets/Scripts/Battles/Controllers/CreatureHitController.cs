@@ -1,4 +1,6 @@
 using Assets.Scripts.Items;
+using Assets.Scripts.Effects;
+using Assets.Scripts.Effects.Vibrate;
 using UnityEngine;
 
 namespace Assets.Scripts.Battles
@@ -25,7 +27,6 @@ namespace Assets.Scripts.Battles
         /// <summary>
         /// 피격당했을 때 작동하는 함수
         /// </summary>
-        /// <param name="partType">피격당한 부위</param>
         /// <param name="armorInfo">피격당한 부위의 방어구 정보</param>
         /// <param name="attackInfo">공격의 정보</param>
         /// <param name="hitDir">공격을 받은 방향</param>
@@ -33,6 +34,10 @@ namespace Assets.Scripts.Battles
         {
             int[] damage = BattleCalcFunciton.GetDamageTotalToApply(armorInfo, attackInfo);
             battleFunction.OnHit(PartHitController.DecideHitPart(), armorInfo, attackInfo, damage, hitDir);
+            EffectManager.Instance.ExecuteEffect(EffectType.Vibrate, Owner.GetChild(1), new VibrateInfo()
+            {
+                powerVib = damage[2],
+            });
             if (timeLeft > 0)
             {
                 timeLeft = timeVib;
