@@ -273,39 +273,6 @@ public class CommonGameManager : MonoBehaviour
         });
     }
 
-    public void MoveObject(Transform targetTf, DirectionType direction, float accelAmount, float distanceToMove, System.Action afterAction = null)
-    {
-        StartCoroutine(CoroutineMoveObject(targetTf, direction, accelAmount, distanceToMove, afterAction));
-    }
-    private IEnumerator CoroutineMoveObject(Transform targetTf, DirectionType direction, float accelAmount, float distanceToMove, System.Action afterAction = null)
-    {
-        float cnt = 1f;
-        Vector3 dirVector = Vector3.zero;
-        switch (direction)
-        {
-            case DirectionType.UP:
-                dirVector = Vector3.up;
-                break;
-            case DirectionType.DOWN:
-                dirVector = Vector3.down;
-                break;
-            case DirectionType.LEFT:
-                dirVector = Vector3.left;
-                break;
-            case DirectionType.RIGHT:
-                dirVector = Vector3.right;
-                break;
-        }
-        while (cnt > 0f)
-        {
-            yield return new WaitForSeconds(0.01f);
-            cnt -= 0.01f * GlobalSetting.accelSpeed * accelAmount;
-            if (targetTf == null) break;
-            targetTf.Translate(dirVector * distanceToMove * 0.01f * GlobalSetting.accelSpeed * accelAmount);
-        }
-        if (afterAction != null) afterAction();
-    }
-
     public void MoveScene(string targetSceneName)
     {
         FadeScreen(true, () =>

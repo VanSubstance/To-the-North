@@ -82,7 +82,12 @@ public class InfoMessageManager : MonoBehaviour
             }
             newInfoText.color = new Color(c.r, c.g, c.b, 0f);
             isAnimating = true;
-            GetComponent<CommonGameManager>().MoveObject(newInfoText.transform, DirectionType.DOWN, 3f, distanceToMove / 128f);
+            EffectManager.Instance.ExecuteEffect(EffectType.Move, newInfoText.transform, new MoveInfo()
+            {
+                direction = Direction.Down,
+                distance = distanceToMove / 128f,
+                timeLeft = .2f,
+            });
             EffectManager.Instance.ExecuteEffect(EffectType.Fade, newInfoText.transform, new FadeInfo()
             {
                 start = 0,
@@ -109,7 +114,12 @@ public class InfoMessageManager : MonoBehaviour
         try
         {
             isAnimating = true;
-            GetComponent<CommonGameManager>().MoveObject(newInfoText.transform, DirectionType.DOWN, 3f, distanceToMove / 128f);
+            EffectManager.Instance.ExecuteEffect(EffectType.Move, newInfoText.transform, new MoveInfo()
+            {
+                direction = Direction.Down,
+                distance = distanceToMove / 128f,
+                timeLeft = .2f,
+            });
             EffectManager.Instance.ExecuteEffect(EffectType.Fade, newInfoText.transform, new FadeInfo()
             {
                 start = 0,

@@ -14,6 +14,7 @@ namespace Assets.Scripts.Effects
                 { EffectType.Vibrate, new VibrateController()},
                 { EffectType.Filter, new FilterController()},
                 { EffectType.Fade, new FadeController()},
+                { EffectType.Move, new MoveController()},
             };
         }
 
