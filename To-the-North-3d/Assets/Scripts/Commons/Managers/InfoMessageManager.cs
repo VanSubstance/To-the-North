@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using TMPro;
+using Assets.Scripts.Effects;
 
 public class InfoMessageManager : MonoBehaviour
 {
@@ -81,8 +82,19 @@ public class InfoMessageManager : MonoBehaviour
             }
             newInfoText.color = new Color(c.r, c.g, c.b, 0f);
             isAnimating = true;
-            GetComponent<CommonGameManager>().MoveObject(newInfoText.transform, DirectionType.DOWN, 3f, distanceToMove / 128f);
-            GetComponent<CommonGameManager>().FadeObject(newInfoText.transform, true, 3f, () => { isAnimating = false; });
+            EffectManager.Instance.ExecuteEffect(EffectType.Move, newInfoText.transform, new MoveInfo()
+            {
+                direction = Direction.Down,
+                distance = distanceToMove / 128f,
+                timeLeft = .2f,
+            });
+            EffectManager.Instance.ExecuteEffect(EffectType.Fade, newInfoText.transform, new FadeInfo()
+            {
+                start = 0,
+                end = 1,
+                timeLeft = .2f,
+                actionAfter = () => { isAnimating = false; },
+            });
         }
         catch (MissingReferenceException)
         {
@@ -102,11 +114,22 @@ public class InfoMessageManager : MonoBehaviour
         try
         {
             isAnimating = true;
-            GetComponent<CommonGameManager>().MoveObject(newInfoText.transform, DirectionType.DOWN, 3f, distanceToMove / 128f);
-            GetComponent<CommonGameManager>().FadeObject(newInfoText.transform, false, 3f, () =>
+            EffectManager.Instance.ExecuteEffect(EffectType.Move, newInfoText.transform, new MoveInfo()
             {
-                Destroy(newInfoTextGb);
-                timer = 0f;
+                direction = Direction.Down,
+                distance = distanceToMove / 128f,
+                timeLeft = .2f,
+            });
+            EffectManager.Instance.ExecuteEffect(EffectType.Fade, newInfoText.transform, new FadeInfo()
+            {
+                start = 0,
+                end = 1,
+                timeLeft = .2f,
+                actionAfter = () =>
+                {
+                    Destroy(newInfoTextGb);
+                    timer = 0f;
+                },
             });
         }
         catch (MissingReferenceException)

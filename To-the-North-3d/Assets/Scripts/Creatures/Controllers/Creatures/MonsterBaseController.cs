@@ -74,8 +74,11 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
 
         public override void OnDied()
         {
-            lootingPrefab = Instantiate(lootingPrefab, GlobalComponent.Common.Parent.Event);
-            lootingPrefab.position = transform.position;
+            if (lootingPrefab != null)
+            {
+                lootingPrefab = Instantiate(lootingPrefab, GlobalComponent.Common.Parent.Event);
+                lootingPrefab.position = transform.position;
+            }
             Destroy(gameObject);
         }
     }

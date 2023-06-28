@@ -1,6 +1,7 @@
 using System.Collections;
 using Assets.Scripts.Commons;
 using Assets.Scripts.Components.Infos;
+using Assets.Scripts.Effects;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using TMPro;
@@ -15,7 +16,7 @@ public class CommonGameManager : MonoBehaviour
 
     [SerializeField]
     private Transform fadeImagePrefab, userPrefab,
-        filterForScreenPrefab, filterDizzinessPrefab,
+        filterSightPrefab, filterDizzinessPrefab, filterScreenPrefab,
         pauseWindowPrefab, inventoryWindowPrefab, questWindowPrefab,
         panelForHpSp, panelForCondition, panelForWelfare, panelForQuick,
         projectileManager, trajectoryManager, soundEffectManager,
@@ -29,9 +30,14 @@ public class CommonGameManager : MonoBehaviour
     private int curStatus = 0;
 
     private ScreenHitEffectManager _screenHitManager;
-    private CameraHitEffectController _cameraHitController;
-    private ScreenHitFilterController _screenHitFilterController;
-    private Transform _screenDizzinessTf;
+    private Transform _screenDizzinessTf, _screenFilterTf;
+    public Transform ScreenFilterTf
+    {
+        get
+        {
+            return _screenFilterTf;
+        }
+    }
 
     private Transform uiTf
     {
@@ -62,22 +68,6 @@ public class CommonGameManager : MonoBehaviour
         get
         {
             return _screenHitManager;
-        }
-    }
-
-    public CameraHitEffectController CameraHitController
-    {
-        get
-        {
-            return _cameraHitController;
-        }
-    }
-
-    public ScreenHitFilterController ScreenHitFilterController
-    {
-        get
-        {
-            return _screenHitFilterController;
         }
     }
 
@@ -178,10 +168,14 @@ public class CommonGameManager : MonoBehaviour
             hovering = Instantiate(hoveringConditionInfo, uiTf);
 
             // 화면 필터 이미지 추가
-            Transform imageForSmog = Instantiate(filterForScreenPrefab, uiTf);
-            _screenHitFilterController = imageForSmog.GetComponent<ScreenHitFilterController>();
+            Transform imageForSmog = Instantiate(filterSightPrefab, uiTf);
             imageForSmog.localPosition = Vector3.zero;
             imageForSmog.SetAsLastSibling();
+
+            // 화면 필터 이미지 추가
+            _screenFilterTf = Instantiate(filterScreenPrefab, uiTf);
+            _screenFilterTf.localPosition = Vector3.zero;
+            _screenFilterTf.SetAsLastSibling();
 
             // 화면 울렁거림 이미지 추가
             Transform imageForDizziness = Instantiate(filterDizzinessPrefab, uiTf);
@@ -247,12 +241,11 @@ public class CommonGameManager : MonoBehaviour
             {
                 _screenHitManager = Instantiate(screenHitManager, uiTf).GetComponent<ScreenHitEffectManager>();
                 _screenHitManager.transform.name = "On Hit";
-                _cameraHitController = GameObject.Find("Camera Container").transform.GetChild(0).GetComponent<CameraHitEffectController>();
             }
         }
 
         GlobalStatus.Loading.System.CommonGameManager = true;
-        imageForFade.SetAsFirstSibling();
+        imageForFade.SetAsLastSibling();
 
         DataFunction.ApplyLanguage();
 
@@ -270,70 +263,14 @@ public class CommonGameManager : MonoBehaviour
     /// <param name="actionBefore">화면 애니메이션 이전 실행할 함수</param>
     public void FadeScreen(bool isFadein, System.Action actionAfter = null, System.Action actionBefore = null)
     {
-        FadeObject(fadeImage.transform, isFadein, 1f, actionAfter, actionBefore);
-    }
-
-    public void FadeObject(Transform targetTf, bool isFadeIn, float accelSpeed, System.Action afterAction = null, System.Action actionBefore = null)
-    {
-        StartCoroutine(CoroutineFadeObject(targetTf, isFadeIn, accelSpeed, afterAction, actionBefore));
-    }
-    private IEnumerator CoroutineFadeObject(Transform targetTf, bool isFadeIn, float accelSpeed, System.Action afterAction = null, System.Action actionBefore = null)
-    {
-        float goalOpacity = isFadeIn ? 1.0f : 0.0f, curOpacity = isFadeIn ? 0.0f : 1.0f;
-        if (actionBefore != null) actionBefore();
-        targetTf.SetAsLastSibling();
-        while (isFadeIn ? curOpacity < goalOpacity : curOpacity > goalOpacity)
+        EffectManager.Instance.ExecuteEffect(EffectType.Fade, fadeImage.transform, new FadeInfo()
         {
-            yield return new WaitForSeconds(0.01f);
-            curOpacity = curOpacity + (0.01f * (GlobalSetting.accelSpeed * (isFadeIn ? 1f : -1f)) * accelSpeed);
-            if (targetTf == null) break;
-            if (targetTf.GetComponent<Image>() != null) targetTf.GetComponent<Image>().color = new Color(
-                targetTf.GetComponent<Image>().color.r,
-                targetTf.GetComponent<Image>().color.g,
-                targetTf.GetComponent<Image>().color.b,
-                curOpacity);
-            if (targetTf == null) break;
-            if (targetTf.GetComponent<TextMeshProUGUI>() != null) targetTf.GetComponent<TextMeshProUGUI>().color = new Color(
-                targetTf.GetComponent<TextMeshProUGUI>().color.r,
-                targetTf.GetComponent<TextMeshProUGUI>().color.g,
-                targetTf.GetComponent<TextMeshProUGUI>().color.b,
-                curOpacity);
-        }
-        targetTf.SetAsFirstSibling();
-        if (afterAction != null) afterAction();
-    }
-
-    public void MoveObject(Transform targetTf, DirectionType direction, float accelAmount, float distanceToMove, System.Action afterAction = null)
-    {
-        StartCoroutine(CoroutineMoveObject(targetTf, direction, accelAmount, distanceToMove, afterAction));
-    }
-    private IEnumerator CoroutineMoveObject(Transform targetTf, DirectionType direction, float accelAmount, float distanceToMove, System.Action afterAction = null)
-    {
-        float cnt = 1f;
-        Vector3 dirVector = Vector3.zero;
-        switch (direction)
-        {
-            case DirectionType.UP:
-                dirVector = Vector3.up;
-                break;
-            case DirectionType.DOWN:
-                dirVector = Vector3.down;
-                break;
-            case DirectionType.LEFT:
-                dirVector = Vector3.left;
-                break;
-            case DirectionType.RIGHT:
-                dirVector = Vector3.right;
-                break;
-        }
-        while (cnt > 0f)
-        {
-            yield return new WaitForSeconds(0.01f);
-            cnt -= 0.01f * GlobalSetting.accelSpeed * accelAmount;
-            if (targetTf == null) break;
-            targetTf.Translate(dirVector * distanceToMove * 0.01f * GlobalSetting.accelSpeed * accelAmount);
-        }
-        if (afterAction != null) afterAction();
+            start = isFadein ? 0 : 1,
+            end = isFadein ? 1 : 0,
+            timeLeft = .5f,
+            actionAfter = () => { fadeImage.gameObject.SetActive(false); actionAfter?.Invoke(); },
+            actionBefore = () => { fadeImage.transform.SetAsLastSibling(); fadeImage.gameObject.SetActive(true); actionBefore?.Invoke(); }
+        });
     }
 
     public void MoveScene(string targetSceneName)
@@ -370,8 +307,8 @@ public class CommonGameManager : MonoBehaviour
         // 데미지 계산
         InGameStatus.User.status.ApplyDamage(damage[0]);
         _screenHitManager.OnHit(degree);
-        _cameraHitController.OnHit(damage[2]);
-        _screenHitFilterController.OnHit(damage[1]);
+        EffectManager.Instance.ExecuteEffect(EffectType.Vibrate, Camera.main.transform, new EffectInfo() { power = damage[2], timeLeft = .5f });
+        EffectManager.Instance.ExecuteEffect(EffectType.Filter, _screenFilterTf, new FilterInfo() { power = damage[1], timeLeft = .5f, color = Color.red });
     }
 
     /// <summary>

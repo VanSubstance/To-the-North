@@ -300,7 +300,14 @@ namespace Assets.Scripts.Creatures.Bases
                 SetTargetToGaze(targetTf.position - transform.position, 0, false);
                 if (!weapon.IsEmpty())
                 {
-                    animCtrl.SetTrigger("Attack");
+                    foreach(AnimatorControllerParameter param in animCtrl.parameters)
+                    {
+                        if (param.Equals("Attack"))
+                        {
+                            animCtrl.SetTrigger("Attack");
+                            break;
+                        }
+                    }
                     weapon.Use(targetTf.position - transform.position);
                 }
                 return;
