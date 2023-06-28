@@ -35,7 +35,6 @@ namespace Assets.Scripts.Effects
                 }
                 info.actionAfter?.Invoke();
             }
-            throw new NotImplementedException();
         }
     }
 }
