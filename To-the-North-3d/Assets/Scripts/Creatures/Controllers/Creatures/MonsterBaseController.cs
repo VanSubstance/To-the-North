@@ -45,31 +45,6 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
 
         private void DetectPosition(Vector3 _pos)
         {
-            foreach (AbsAIStatusController statusCtrl in statusCtrls)
-            {
-                statusCtrl.DetectPosition(_pos);
-            }
-        }
-
-        public override void OnDetectUser(Transform userTf)
-        {
-            if (IsRunaway)
-            {
-                statusType = Interfaces.AIStatusType.Runaway;
-            }
-            else if (Info.IsActiveBehaviour)
-            {
-                statusType = Interfaces.AIStatusType.Combat;
-            }
-            else
-            {
-
-            }
-
-            foreach (AbsAIStatusController statusCtrl in statusCtrls)
-            {
-                statusCtrl.DetectUser(userTf);
-            }
         }
 
         public override void OnDied()

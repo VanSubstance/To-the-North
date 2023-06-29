@@ -4,6 +4,7 @@ using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Detections;
 using Assets.Scripts.Creatures.Interfaces;
+using Assets.Scripts.Creatures.AI.Status;
 using Assets.Scripts.Items;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,6 +17,7 @@ namespace Assets.Scripts.Creatures.Bases
         [SerializeField]
         protected Transform visualTf, handTfIfExternal;
         private Animator animCtrl;
+        public Animator AnimCtrl;
         [SerializeField]
         private float height = 1.5f;
         [SerializeField]
@@ -27,7 +29,6 @@ namespace Assets.Scripts.Creatures.Bases
             {
                 if (value == null) return;
                 info = CreatureInfo.GetClone(value);
-                sightCtrl.range = Info.sightRange;
                 agent.speed = info.moveSpd;
                 agent.stoppingDistance = WeaponRange;
             }
@@ -38,26 +39,36 @@ namespace Assets.Scripts.Creatures.Bases
         }
 
         private NavMeshAgent agent;
+        public NavMeshAgent Agent
+        {
+            get
+            {
+                return agent;
+            }
+        }
+        private Vector3? curTarget;
+        public Vector3? CurTarget
+        {
+            get
+            {
+                return curTarget;
+            }
+        }
+        public Transform targetTf;
+
+        public int SightDirection;
 
         /// <summary>
         /// agent가 추적할 위치 설정 (절대 좌표)
         /// </summary>
-        private Vector3 TargetMove
+        public Vector3 TargetMove
         {
             set
             {
-                float r = WeaponRange > 1 ? WeaponRange : 1;
-                if (Vector3.Distance(value, transform.position) > r)
-                {
-                    animCtrl.SetBool("isMove", true);
-                    agent.SetDestination(value);
-                    agent.stoppingDistance = r;
-                }
-                else
-                {
-                    animCtrl.SetBool("isMove", false);
-                    SetTargetToGaze(value - transform.position, 0, false);
-                }
+                value = CalculationFunctions.GetDetouredPositionIfInCollider(transform.position, value);
+                SightDirection = value.x - transform.position.x > 0 ? 0 : 180;
+                animCtrl.SetBool("isMove", true);
+                agent.SetDestination(value);
             }
             get
             {
@@ -65,128 +76,18 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
-        private bool IsMoveDone
-        {
-            get
-            {
-                return agent.remainingDistance < WeaponRange;
-            }
-        }
-
-        private float timeStayAfterMove = 0f;
-        private bool isMoveOrderDone = false;
-
         private bool isInit = false;
 
-        private void CheckMove()
-        {
-            if (isMoveOrderDone) return;
-            if (!IsMoveDone) return;
-            // 이동 자체는 종료
-            animCtrl.SetBool("isMove", false);
-            if (timeStayAfterMove <= 0)
-            {
-                // 끝남
-                isMoveOrderDone = true;
-                return;
-            }
-            // 안끝남
-            timeStayAfterMove -= Time.deltaTime;
-        }
-
-        /// <summary>
-        /// 현재 목표 타겟 좌표 (절대 좌표) 설정
-        /// 이동 종료 후 대기 시간 설정
-        /// 이동 시, 해당 방향을 무조건 바라봄
-        /// </summary>
-        /// <param name="target">목표 좌표: 절대 좌표 기준</param>
-        /// <param name="timeToStay">도착 후 대기 시간</param>
-        /// <param name="isRandom">무작위성이 있는지</param>
-        public void SetTargetToMove(Vector3 target, float timeToStay, bool isRandom = false)
-        {
-            TargetMove = CalculationFunctions.GetDetouredPositionIfInCollider(transform.position, target);
-            isMoveOrderDone = false;
-            timeStayAfterMove = timeToStay;
-            if ((TargetMove - transform.position).magnitude != 0)
-            {
-                // 진행방향 응시
-                SetTargetToGaze(TargetMove - transform.position, 0, false);
-            }
-        }
-
-        [SerializeField]
-        private DetectionSightController sightCtrl;
-
-        private Vector3 TargetGaze
+        private IAIStatus aiStatus;
+        public IAIStatus AiStatus
         {
             set
             {
-                sightCtrl.Target = value;
+                aiStatus = value;
+                curTarget = null;
+                targetTf = null;
             }
         }
-
-        private bool IsGazeDone
-        {
-            get
-            {
-                return sightCtrl.IsGazeDone;
-            }
-        }
-
-        private void CheckGaze()
-        {
-            if (isGazeOrderDone) return;
-            if (!IsGazeDone) return;
-            if (timeStayAfterGaze <= 0)
-            {
-                // 끝남
-                isGazeOrderDone = true;
-                return;
-            }
-            timeStayAfterGaze -= Time.deltaTime;
-        }
-
-        private float timeStayAfterGaze = 0f;
-        private bool isGazeOrderDone = false;
-
-        /// <summary>
-        /// 바라볼 방향 (상대 좌표) 설정 함수
-        /// </summary>
-        /// <param name="target">바라볼 방향 (상대 좌표)</param>
-        /// <param name="timeToStay">바라볼 시간</param>
-        /// <param name="isRandom">무작위성이 있는지</param>
-        public void SetTargetToGaze(Vector3 target, float timeToStay, bool isRandom = false)
-        {
-            TargetGaze = target;
-            timeStayAfterGaze = timeToStay; ;
-            isGazeOrderDone = false;
-        }
-
-        /// <summary>
-        /// 모든 명령아 완료되었는지 확인 함수
-        /// </summary>
-        public bool IsOrderDone
-        {
-            get
-            {
-                return isGazeOrderDone && isMoveOrderDone;
-            }
-        }
-
-        public float CurDegree
-        {
-            get
-            {
-                return sightCtrl.curDegree;
-            }
-        }
-
-        /// <summary>
-        /// 현재 행동 상태
-        /// </summary>
-        public AIStatusType statusType;
-        [SerializeField]
-        private AIStatusType defaultType = AIStatusType.Wander;
 
         private bool isPause = false;
         public bool IsPause
@@ -201,7 +102,7 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
-        private float WeaponRange
+        public float WeaponRange
         {
             get
             {
@@ -238,17 +139,14 @@ namespace Assets.Scripts.Creatures.Bases
                     OnDied();
                 }
             }
-            if (IsRunaway)
-            {
-                statusType = AIStatusType.Runaway;
-            }
-            else
-            {
-                if (!Info.IsActiveBehaviour) Info.IsActiveBehaviour = true;
-                statusType = AIStatusType.Combat;
-            }
             OnDetectPosition(hitDir + transform.position);
-
+            curTarget = hitDir + transform.position;
+            // 전투 상태로 전환
+            if (aiStatus is not CombatStatus)
+            {
+                agent.stoppingDistance = info.sightRange - 1;
+                AiStatus = new CombatStatus();
+            }
             // 상태 이상 부여 심사
             if (damage[1] > 0)
             {
@@ -262,45 +160,25 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
-        public bool IsRunaway
-        {
-            get
-            {
-                return info.IsRunAway;
-            }
-        }
-
-        public Transform targetTf;
-
-        /// <summary>
-        /// 공격할 대상 설정 함수
-        /// </summary>
-        /// <param name="_targetTf"></param>
-        public void SetTargetToAttack(Transform _targetTf)
-        {
-            targetTf = _targetTf;
-        }
-
         /// <summary>
         /// 공격 가능 여부 판단 함수
         /// </summary>
-        public void CheckAim()
+        public bool CheckAim()
         {
             if (targetTf == null)
             {
-                return;
+                return false;
             }
             if (Physics.Raycast(transform.position, targetTf.position, WeaponRange, GlobalStatus.Constant.obstacleMask))
             {
                 targetTf = null;
-                return;
+                return false;
             }
             if (Vector3.Distance(transform.position, targetTf.position) < Mathf.Min(WeaponRange, Info.sightRange))
             {
-                SetTargetToGaze(targetTf.position - transform.position, 0, false);
                 if (!weapon.IsEmpty())
                 {
-                    foreach(AnimatorControllerParameter param in animCtrl.parameters)
+                    foreach (AnimatorControllerParameter param in animCtrl.parameters)
                     {
                         if (param.Equals("Attack"))
                         {
@@ -309,28 +187,19 @@ namespace Assets.Scripts.Creatures.Bases
                         }
                     }
                     weapon.Use(targetTf.position - transform.position);
+                    return true;
                 }
-                return;
             }
+            return false;
         }
-
-        /// <summary>
-        /// 예하 행동 컨트롤러들
-        /// </summary>
-        protected AbsAIStatusController[] statusCtrls;
 
         protected new void Awake()
         {
-            statusCtrls = GetComponents<AbsAIStatusController>();
-            foreach (AbsAIStatusController ctrl in statusCtrls)
-            {
-                ctrl.BaseCtrl = this;
-            }
-
-            statusType = AIStatusType.None;
             agent = GetComponent<NavMeshAgent>();
             animCtrl = visualTf.GetComponent<Animator>();
             base.Awake();
+            AiStatus = new IdleStatus();
+            SightDirection = 1;
 
             if (Info == null) OnDisable();
             else OnEnable();
@@ -340,18 +209,39 @@ namespace Assets.Scripts.Creatures.Bases
         {
             if (!isPause)
             {
-                CheckMove();
-                CheckGaze();
-                CheckStatus();
-                CheckParticle();
+                // 시야를 통한 타겟 업데이트
+                if (DetectionController.TryGetTarget(transform.position, Info.sightRange, GlobalStatus.Constant.userMask, GlobalStatus.Constant.obstacleMask, out Transform res))
+                {
+                    // 시야 안에 타겟 존재 = 타겟 업데이트
+                    curTarget = res.position;
+                    if (info.IsActiveBehaviour && aiStatus is not CombatStatus)
+                    {
+                        AiStatus = new CombatStatus();
+                    }
+                    if (aiStatus is CombatStatus)
+                    {
+                        // 공격용 타겟 추가 설정
+                        targetTf = res;
+                    }
+                }
+                else
+                {
+                    curTarget = null;
+                    targetTf = null;
+                }
+
+                if (agent.isStopped)
+                {
+                    animCtrl.SetBool("isMove", false);
+                }
             }
         }
 
-        private void CheckStatus()
+        private void LateUpdate()
         {
-            if (statusType == AIStatusType.None)
+            if (!isPause)
             {
-                statusType = defaultType;
+                aiStatus.UpdateAction(this, targetTf ? targetTf.position : curTarget);
             }
         }
 
@@ -364,7 +254,6 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void OnDisable()
         {
-            sightCtrl.range = 0;
             Info = null;
             isInit = false;
         }
@@ -374,12 +263,6 @@ namespace Assets.Scripts.Creatures.Bases
         /// </summary>
         /// <param name="targetPos"></param>
         public abstract void OnDetectPosition(Vector3 targetPos);
-
-        /// <summary>
-        /// 감지된 유저
-        /// </summary>
-        /// <param name="userTf"></param>
-        public abstract void OnDetectUser(Transform userTf);
 
         private float timeParticle = 0;
 

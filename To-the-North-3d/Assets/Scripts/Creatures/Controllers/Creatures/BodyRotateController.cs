@@ -17,7 +17,7 @@ namespace Assets.Scripts.Creatures
 
         private void LateUpdate()
         {
-            float curDegree = aiBase ? aiBase.CurDegree : InGameStatus.User.Movement.curdegree;
+            float curDegree = aiBase ? aiBase.SightDirection : InGameStatus.User.Movement.curdegree;
             if (
                 270 < curDegree ||
                 curDegree <= 90
