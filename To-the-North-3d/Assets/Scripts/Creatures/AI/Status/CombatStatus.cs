@@ -14,11 +14,17 @@ namespace Assets.Scripts.Creatures.AI.Status
                 // 타겟 있음 = 라이브 상태
                 timeLeft = -1;
                 cntSearch = 3;
+                mover.Agent.stoppingDistance = mover.WeaponRange / 2;
+                if (mover.Info.IsRunAway)
+                {
+                    // 도주
+                    mover.TargetMove = (mover.transform.position - (Vector3)target) + mover.transform.position;
+                    return;
+                }
+                mover.TargetMove = ((Vector3)target);
                 if (!mover.CheckAim())
                 {
                 }
-                mover.Agent.stoppingDistance = mover.WeaponRange / 2;
-                mover.TargetMove = ((Vector3)target);
             }
             else
             {
