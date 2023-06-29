@@ -16,10 +16,8 @@ namespace Assets.Scripts.Creatures.Bases
 
         private void Update()
         {
-            if (baseCtrl.statusType != AIType()) return;
             if (timeMaxMemory <= timeLiveMemory)
             {
-                baseCtrl.statusType = AIStatusType.None;
                 timeLiveMemory = 0;
                 return;
             }
@@ -51,14 +49,12 @@ namespace Assets.Scripts.Creatures.Bases
 
         public void DetectPosition(Vector3 detectPos)
         {
-            if (baseCtrl.statusType != AIType()) return;
             if (IsDuringAction) ResetTimer();
             OnDetectPosition(detectPos);
         }
 
         public void DetectUser(Transform userTf)
         {
-            if (baseCtrl.statusType != AIType()) return;
             if (IsDuringAction) ResetTimer();
             OnDetectUser(userTf);
         }

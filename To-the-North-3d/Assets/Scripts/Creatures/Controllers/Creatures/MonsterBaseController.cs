@@ -53,19 +53,6 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
 
         public override void OnDetectUser(Transform userTf)
         {
-            if (IsRunaway)
-            {
-                statusType = Interfaces.AIStatusType.Runaway;
-            }
-            else if (Info.IsActiveBehaviour)
-            {
-                statusType = Interfaces.AIStatusType.Combat;
-            }
-            else
-            {
-
-            }
-
             foreach (AbsAIStatusController statusCtrl in statusCtrls)
             {
                 statusCtrl.DetectUser(userTf);
