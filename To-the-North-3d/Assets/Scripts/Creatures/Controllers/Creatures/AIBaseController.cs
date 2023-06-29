@@ -160,14 +160,6 @@ namespace Assets.Scripts.Creatures.Bases
             }
         }
 
-        public bool IsRunaway
-        {
-            get
-            {
-                return info.IsRunAway;
-            }
-        }
-
         /// <summary>
         /// 공격 가능 여부 판단 함수
         /// </summary>
@@ -242,10 +234,6 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     animCtrl.SetBool("isMove", false);
                 }
-                //CheckMove();
-                //CheckGaze();
-                //CheckStatus();
-                //CheckParticle();
             }
         }
 
@@ -275,12 +263,6 @@ namespace Assets.Scripts.Creatures.Bases
         /// </summary>
         /// <param name="targetPos"></param>
         public abstract void OnDetectPosition(Vector3 targetPos);
-
-        /// <summary>
-        /// 감지된 유저
-        /// </summary>
-        /// <param name="userTf"></param>
-        public abstract void OnDetectUser(Transform userTf);
 
         private float timeParticle = 0;
 

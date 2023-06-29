@@ -8,9 +8,6 @@ namespace Assets.Scripts.Creatures.Detections
     {
         [SerializeField]
         private DetectionBaseController[] detections;
-        [SerializeField]
-        private AIBaseController aIBaseController;
-        public Transform targetTf;
         private bool isCheckingActive;
         private void Awake()
         {
@@ -31,14 +28,7 @@ namespace Assets.Scripts.Creatures.Detections
                 yield return new WaitForSeconds(delay);
                 foreach (DetectionBaseController detection in detections)
                 {
-                    if (targetTf = detection.CheckSight())
-                    {
-                        if (aIBaseController)
-                        {
-                            aIBaseController.OnDetectUser(targetTf);
-                            break;
-                        }
-                    }
+                    detection.CheckSight();
                 }
             }
         }

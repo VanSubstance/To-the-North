@@ -1,4 +1,3 @@
-using System;
 using Assets.Scripts.Commons;
 using Assets.Scripts.SoundEffects;
 using UnityEngine;

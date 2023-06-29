@@ -45,10 +45,6 @@ namespace Assets.Scripts.Creatures.Controllers.Creatures
         {
         }
 
-        public override void OnDetectUser(Transform userTf)
-        {
-        }
-
         public override void OnDied()
         {
         }

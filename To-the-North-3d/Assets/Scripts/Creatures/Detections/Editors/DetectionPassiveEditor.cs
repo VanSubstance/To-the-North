@@ -10,7 +10,7 @@ namespace Assets.Scripts.Creatures.Detections
         {
             DetectionPassiveController fow = (DetectionPassiveController)target;
             Handles.color = Color.white;
-            Handles.DrawWireArc(fow.transform.position, Vector3.up, Vector3.forward, 360, fow.isAI ? fow.range : InGameStatus.User.Detection.Instinct.range);
+            Handles.DrawWireArc(fow.transform.position, Vector3.up, Vector3.forward, 360, InGameStatus.User.Detection.Instinct.range);
 
             Handles.color = Color.red;
         }

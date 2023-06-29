@@ -91,15 +91,15 @@ namespace Assets.Scripts.Creatures.Detections
             {
                 meshDefault.Clear();
                 meshLower.Clear();
-                stepCount = Mathf.RoundToInt((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) * meshResolution);
-                stepAngleSize = (isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / stepCount;
+                stepCount = Mathf.RoundToInt((User.Detection.Sight.Degree) * meshResolution);
+                stepAngleSize = (User.Detection.Sight.Degree) / stepCount;
                 viewPoints = new List<Vector3>();
 
                 for (int i = 0; i <= stepCount; i++)
                 {
-                    float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
+                    float angle = transform.eulerAngles.y - ((User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
 
-                    DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Sight.Range, 0);
+                    DetectionSightInfo newViewCast = SightCast(angle, User.Detection.Sight.Range, 0);
                     viewPoints.Add(newViewCast.point);
                 }
 
@@ -132,9 +132,9 @@ namespace Assets.Scripts.Creatures.Detections
 
                 for (int i = 0; i <= stepCount; i++)
                 {
-                    float angle = transform.eulerAngles.y - ((isAI ? degree : InGameStatus.User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
+                    float angle = transform.eulerAngles.y - ((User.Detection.Sight.Degree) / 2) + stepAngleSize * i;
 
-                    DetectionSightInfo newViewCast = SightCast(angle, isAI ? range : InGameStatus.User.Detection.Sight.Range, -HeightForLow);
+                    DetectionSightInfo newViewCast = SightCast(angle, User.Detection.Sight.Range, -HeightForLow);
                     viewPoints.Add(newViewCast.point);
                 }
 
@@ -165,49 +165,8 @@ namespace Assets.Scripts.Creatures.Detections
         /// <summary>
         /// 시야 내에서 상호작용 거리 안에 들어온 이벤트 또는 타겟 식별
         /// </summary>
-        public override Transform CheckSight()
+        public override void CheckSight()
         {
-            if (isAI)
-            {
-                // AI의 경우: 유저가 있는지만 체크
-                // 유저가 있다 ? 유저 식별 시 행동 호출
-
-                Collider[] hitCols = Physics.OverlapSphere(transform.position, range, GlobalStatus.Constant.hitMask);
-                foreach (Collider hitCol in hitCols)
-                {
-                    if (hitCol.CompareTag("User"))
-                    {
-                        // 유저 식별
-                        Transform userTf = hitCol.transform;
-                        Vector3 dirToTarget = (userTf.position - transform.position).normalized;
-                        float d = Math.Abs(CalculationFunctions.AngleFromDir(new Vector2(dirToTarget.x, dirToTarget.z)) - curDegree);
-                        if (d < degree / 2 || (360 - d) < degree / 2)
-                        {
-                            // 시야 각도 안
-                            float dstToTarget = Vector3.Distance(transform.position, userTf.position);
-                            // 타겟으로 가는 레이캐스트에 obstacleMask가 걸리지 않으면 visibleTargets에 Add
-                            // RayCast를 두번 해서 둘중 하나라도 통과하면 OK
-                            // 1. 현재 y에서
-                            if (Physics.Raycast(transform.position, new Vector3(dirToTarget.x, 0, dirToTarget.z), out RaycastHit hitInfo, dstToTarget, GlobalStatus.Constant.obstacleMask | GlobalStatus.Constant.hitMask))
-                            {
-                                if (hitInfo.transform.CompareTag("User"))
-                                {
-                                    return userTf;
-                                }
-                            }
-                            // 2. y - HeightForLow에서
-                            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - HeightForLow, transform.position.z), new Vector3(dirToTarget.x, 0, dirToTarget.z), out RaycastHit hitInfo2, dstToTarget, GlobalStatus.Constant.obstacleMask | GlobalStatus.Constant.hitMask))
-                            {
-                                if (hitInfo2.transform.CompareTag("User"))
-                                {
-                                    return userTf;
-                                }
-                            }
-                        }
-                    }
-                }
-                return null;
-            }
             // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어인 콜라이더를 모두 가져옴
             List<Collider> targetsInViewRadius = new List<Collider>();
             targetsInViewRadius.AddRange(Physics.OverlapSphere(transform.position, InGameStatus.User.Detection.distanceInteraction, GlobalStatus.Constant.eventMask));
@@ -288,7 +247,7 @@ namespace Assets.Scripts.Creatures.Detections
                     }
                 }
             }
-            return null;
+            return;
         }
     }
 }

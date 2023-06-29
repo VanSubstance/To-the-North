@@ -1,5 +1,4 @@
 using Assets.Scripts.Commons.Functions;
-using Assets.Scripts.Creatures.Bases;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures.Detections
@@ -23,11 +22,7 @@ namespace Assets.Scripts.Creatures.Detections
         public Mesh meshDefault, meshLower;
         public MeshFilter meshFilterDefault, meshFilterLower;
 
-        public bool isAI = true;
         public float meshResolution;
-        private void Awake()
-        {
-        }
 
         public void Start()
         {
@@ -92,6 +87,6 @@ namespace Assets.Scripts.Creatures.Detections
         public abstract void DrawSightArea();
 
         /** 시야 체크 */
-        public abstract Transform CheckSight();
+        public abstract void CheckSight();
     }
 }
