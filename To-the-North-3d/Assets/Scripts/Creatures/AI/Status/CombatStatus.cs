@@ -14,7 +14,6 @@ namespace Assets.Scripts.Creatures.AI.Status
                 // 타겟 있음 = 라이브 상태
                 timeLeft = -1;
                 cntSearch = 3;
-                Debug.DrawRay(mover.transform.position, (Vector3)target - mover.transform.position, Color.blue, 10f);
                 if (!mover.CheckAim())
                 {
                 }

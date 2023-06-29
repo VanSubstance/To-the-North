@@ -21,7 +21,6 @@ namespace Assets.Scripts.Creatures.Detections
                 if (!Physics.Raycast(origin, res[0].transform.position, out RaycastHit hit, (origin - res[0].transform.position).magnitude, blockLayer))
                 {
                     // 2차 식별 = 사이에 장애물 없음
-                    Debug.DrawRay(origin, res[0].transform.position - origin, Color.red, 10f);
                     result = res[0].transform;
                     return true;
                 }

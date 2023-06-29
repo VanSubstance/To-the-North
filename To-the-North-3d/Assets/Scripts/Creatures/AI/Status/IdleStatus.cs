@@ -15,7 +15,6 @@ namespace Assets.Scripts.Creatures.AI.Status
                 mover.Agent.isStopped = true;
                 mover.Agent.stoppingDistance = mover.WeaponRange / 2;
                 mover.SightDirection = ((Vector3)target).x - mover.transform.position.x > 0 ? 0 : 180;
-                Debug.DrawRay(mover.transform.position, (Vector3)target - mover.transform.position, Color.red, 10f);
                 return;
             }
             if (!mover.Agent.isStopped)
@@ -34,7 +33,6 @@ namespace Assets.Scripts.Creatures.AI.Status
                     mover.transform.position.y,
                     mover.transform.position.z + CommonFunction.GetRandomFloat(-temp, temp)
                     );
-                Debug.DrawRay(mover.transform.position, mover.TargetMove - mover.transform.position, Color.black, 10f);
                 return;
             }
             timeLeft -= Time.deltaTime;
