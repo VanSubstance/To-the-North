@@ -201,18 +201,8 @@ namespace Assets.Scripts.Creatures.Bases
             return false;
         }
 
-        /// <summary>
-        /// 예하 행동 컨트롤러들
-        /// </summary>
-        protected AbsAIStatusController[] statusCtrls;
-
         protected new void Awake()
         {
-            statusCtrls = GetComponents<AbsAIStatusController>();
-            foreach (AbsAIStatusController ctrl in statusCtrls)
-            {
-                ctrl.BaseCtrl = this;
-            }
             agent = GetComponent<NavMeshAgent>();
             animCtrl = visualTf.GetComponent<Animator>();
             base.Awake();
@@ -232,6 +222,10 @@ namespace Assets.Scripts.Creatures.Bases
                 {
                     // 시야 안에 타겟 존재 = 타겟 업데이트
                     curTarget = res.position;
+                    if (info.IsActiveBehaviour && aiStatus is not CombatStatus)
+                    {
+                        AiStatus = new CombatStatus();
+                    }
                     if (aiStatus is CombatStatus)
                     {
                         // 공격용 타겟 추가 설정
