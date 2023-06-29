@@ -12,4 +12,9 @@ public class CommonFunction
     {
         return Enum.GetValues(enumType);
     }
+
+    public static float GetRandomFloat(float s, float e)
+    {
+        return UnityEngine.Random.Range(s, e);
+    }
 }

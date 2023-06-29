@@ -4,6 +4,7 @@ using Assets.Scripts.Commons.Functions;
 using Assets.Scripts.Creatures.Controllers;
 using Assets.Scripts.Creatures.Detections;
 using Assets.Scripts.Creatures.Interfaces;
+using Assets.Scripts.Creatures.AI.Status;
 using Assets.Scripts.Items;
 using UnityEngine;
 using UnityEngine.AI;
@@ -38,14 +39,22 @@ namespace Assets.Scripts.Creatures.Bases
         }
 
         private NavMeshAgent agent;
+        public NavMeshAgent Agent
+        {
+            get
+            {
+                return agent;
+            }
+        }
 
         /// <summary>
         /// agent가 추적할 위치 설정 (절대 좌표)
         /// </summary>
-        private Vector3 TargetMove
+        public Vector3 TargetMove
         {
             set
             {
+                value = CalculationFunctions.GetDetouredPositionIfInCollider(transform.position, value);
                 float r = WeaponRange > 1 ? WeaponRange : 1;
                 if (Vector3.Distance(value, transform.position) > r)
                 {
@@ -104,7 +113,7 @@ namespace Assets.Scripts.Creatures.Bases
         /// <param name="isRandom">무작위성이 있는지</param>
         public void SetTargetToMove(Vector3 target, float timeToStay, bool isRandom = false)
         {
-            TargetMove = CalculationFunctions.GetDetouredPositionIfInCollider(transform.position, target);
+            TargetMove = target;
             isMoveOrderDone = false;
             timeStayAfterMove = timeToStay;
             if ((TargetMove - transform.position).magnitude != 0)
@@ -117,7 +126,11 @@ namespace Assets.Scripts.Creatures.Bases
         [SerializeField]
         private DetectionSightController sightCtrl;
 
-        private Vector3 TargetGaze
+
+        /// <summary>
+        /// ai가 바라볼 위치 설정 (상대 좌표)
+        /// </summary>
+        public Vector3 TargetGaze
         {
             set
             {
@@ -187,6 +200,8 @@ namespace Assets.Scripts.Creatures.Bases
         public AIStatusType statusType;
         [SerializeField]
         private AIStatusType defaultType = AIStatusType.Wander;
+
+        private IAIStatus aiStatus;
 
         private bool isPause = false;
         public bool IsPause
@@ -300,7 +315,7 @@ namespace Assets.Scripts.Creatures.Bases
                 SetTargetToGaze(targetTf.position - transform.position, 0, false);
                 if (!weapon.IsEmpty())
                 {
-                    foreach(AnimatorControllerParameter param in animCtrl.parameters)
+                    foreach (AnimatorControllerParameter param in animCtrl.parameters)
                     {
                         if (param.Equals("Attack"))
                         {
@@ -331,6 +346,7 @@ namespace Assets.Scripts.Creatures.Bases
             agent = GetComponent<NavMeshAgent>();
             animCtrl = visualTf.GetComponent<Animator>();
             base.Awake();
+            aiStatus = new IdleStatus();
 
             if (Info == null) OnDisable();
             else OnEnable();
@@ -340,11 +356,16 @@ namespace Assets.Scripts.Creatures.Bases
         {
             if (!isPause)
             {
-                CheckMove();
-                CheckGaze();
-                CheckStatus();
-                CheckParticle();
+                //CheckMove();
+                //CheckGaze();
+                //CheckStatus();
+                //CheckParticle();
             }
+        }
+
+        private void LateUpdate()
+        {
+            aiStatus.UpdateAction(this, null);
         }
 
         private void CheckStatus()
