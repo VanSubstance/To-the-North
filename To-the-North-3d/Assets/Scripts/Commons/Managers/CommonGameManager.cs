@@ -329,8 +329,19 @@ public class CommonGameManager : MonoBehaviour
         if (_info is ItemFoodInfo)
         {
             // 음식일 경우
-            UserBaseController.Instance.PlaySoundByType(Assets.Scripts.Creatures.SoundType.Eat);
             ItemFoodInfo fInfo = Instantiate((ItemFoodInfo)_info);
+            switch (fInfo.consumeType)
+            {
+                case ItemFoodInfo.ConsumeType.Burgur:
+                    UserBaseController.Instance.PlaySoundByType(Assets.Scripts.Creatures.SoundType.Burgur);
+                    break;
+                case ItemFoodInfo.ConsumeType.Chip:
+                    UserBaseController.Instance.PlaySoundByType(Assets.Scripts.Creatures.SoundType.Chip);
+                    break;
+                case ItemFoodInfo.ConsumeType.Drink:
+                    UserBaseController.Instance.PlaySoundByType(Assets.Scripts.Creatures.SoundType.Drink);
+                    break;
+            }
             while (tRemaining > 0)
             {
                 yield return new WaitForSeconds(Time.deltaTime);
@@ -349,8 +360,19 @@ public class CommonGameManager : MonoBehaviour
         else if (_info is ItemMedicineInfo)
         {
             // 의약품일 경우
-            UserBaseController.Instance.PlaySoundByType(Assets.Scripts.Creatures.SoundType.Bandage);
             ItemMedicineInfo mInfo = Instantiate((ItemMedicineInfo)_info);
+            switch (mInfo.consumeType)
+            {
+                case ConsumeType.Bandage:
+                    UserBaseController.Instance.PlaySoundByType(Assets.Scripts.Creatures.SoundType.Bandage);
+                    break;
+                case ConsumeType.Injection:
+                    UserBaseController.Instance.PlaySoundByType(Assets.Scripts.Creatures.SoundType.Injection);
+                    break;
+                case ConsumeType.Swallow:
+                    UserBaseController.Instance.PlaySoundByType(Assets.Scripts.Creatures.SoundType.Swallow);
+                    break;
+            }
             while (tRemaining > 0)
             {
                 yield return new WaitForSeconds(Time.deltaTime);

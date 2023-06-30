@@ -139,7 +139,7 @@ namespace Assets.Scripts.Items
                         CalculationFunctions.DirFromAngle(CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)) + UnityEngine.Random.Range(-InGameStatus.User.Detection.Sight.DegreeError,
                         InGameStatus.User.Detection.Sight.DegreeError)),
                         owner,
-                        info.bulletType);
+                        info.bulletType, info.TrajectoryType);
                     if (anim)
                     {
                         if (info.bulletType.Equals(ItemBulletType.None))

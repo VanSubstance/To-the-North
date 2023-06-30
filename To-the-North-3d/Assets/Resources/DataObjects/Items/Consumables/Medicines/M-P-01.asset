@@ -24,6 +24,7 @@ MonoBehaviour:
   consumableType: 2
   amountCurrent: 3
   secondConsume: 1
+  consumeType: 2
   hp: 2
   effects:
   - targetCondition: 6

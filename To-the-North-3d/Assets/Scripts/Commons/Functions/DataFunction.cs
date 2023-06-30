@@ -37,19 +37,55 @@ public static class DataFunction
     /// </summary>
     public static void LoadAudioClips()
     {
-        string rootPath = $"Sounds/";
         AudioClip[] temp;
-        /// 1. 이동 소리
-        temp = Resources.LoadAll<AudioClip>($"{rootPath}Move/Human");
+        // 1. 이동 소리
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.PathMove}/Human");
         GlobalDictionary.Sound.Move[CreatureType.Human].Run = temp[0];
         GlobalDictionary.Sound.Move[CreatureType.Human].Walk = temp[1];
-        temp = Resources.LoadAll<AudioClip>($"{rootPath}Move/FourLeg");
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.PathMove}/FourLeg");
         GlobalDictionary.Sound.Move[CreatureType.FourLeg].Run = temp[0];
         GlobalDictionary.Sound.Move[CreatureType.FourLeg].Walk = temp[1];
-        temp = Resources.LoadAll<AudioClip>($"{rootPath}Move/Slime");
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.PathMove}/Slime");
         GlobalDictionary.Sound.Move[CreatureType.Slime].Run = temp[0];
         GlobalDictionary.Sound.Move[CreatureType.Slime].Walk = temp[1];
 
+        // 2. 아이템 사용
+        // 2.1. 음식
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Interaction.Consumable.Food.PathRoot}");
+        GlobalDictionary.Sound.Interaction.Consumable.Food.Burgur = temp[0];
+        GlobalDictionary.Sound.Interaction.Consumable.Food.Chip = temp[1];
+        GlobalDictionary.Sound.Interaction.Consumable.Food.Drink = temp[2];
+
+        // 2.2. 의료
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Interaction.Consumable.Medicine.PathRoot}");
+        GlobalDictionary.Sound.Interaction.Consumable.Medicine.Bandage = temp[0];
+        GlobalDictionary.Sound.Interaction.Consumable.Medicine.Injection = temp[1];
+        GlobalDictionary.Sound.Interaction.Consumable.Medicine.Swallow = temp[2];
+
+        // 2.3. 장비
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Interaction.Equipment.PathRoot}");
+        GlobalDictionary.Sound.Interaction.Equipment.Equip = temp[0];
+        GlobalDictionary.Sound.Interaction.Equipment.Reload = temp[1];
+        GlobalDictionary.Sound.Interaction.Equipment.Unequip = temp[2];
+
+        // 2.4. 문
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Interaction.Door.PathRoot}");
+        GlobalDictionary.Sound.Interaction.Door.Close = temp[0];
+        GlobalDictionary.Sound.Interaction.Door.Lock = temp[1];
+        GlobalDictionary.Sound.Interaction.Door.Open = temp[2];
+
+        // 3. 장비
+        // 3.1. 근거리
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Battle.Weapon.Melee.PathRoot}");
+        GlobalDictionary.Sound.Battle.Weapon.Melee.Step = temp[0];
+        GlobalDictionary.Sound.Battle.Weapon.Melee.Swing = temp[1];
+
+        // 3.1. 원거리
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Battle.Weapon.Range.PathRoot}");
+        GlobalDictionary.Sound.Battle.Weapon.Range.Arrow = temp[0];
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Battle.Weapon.Range.Gun.PathRoot}");
+        GlobalDictionary.Sound.Battle.Weapon.Range.Gun.Big = temp[0];
+        GlobalDictionary.Sound.Battle.Weapon.Range.Gun.Small = temp[1];
     }
 
     public static Queue<string> LoadTextFromFile(string filePath)

@@ -24,6 +24,7 @@ MonoBehaviour:
   consumableType: 1
   amountCurrent: 2
   secondConsume: 2
+  consumeType: 1
   hunger: 20
   thirst: -5
   temperature: 1

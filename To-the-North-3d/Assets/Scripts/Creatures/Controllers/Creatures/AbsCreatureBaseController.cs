@@ -86,14 +86,23 @@ namespace Assets.Scripts.Creatures.Controllers
             curSoundType = _type;
             switch (_type)
             {
-                case SoundType.Eat:
+                case SoundType.Burgur:
+                    PlaySound(GlobalDictionary.Sound.Interaction.Consumable.Food.Burgur);
+                    break;
+                case SoundType.Chip:
                     PlaySound(GlobalDictionary.Sound.Interaction.Consumable.Food.Chip);
                     break;
                 case SoundType.Drink:
                     PlaySound(GlobalDictionary.Sound.Interaction.Consumable.Food.Drink);
                     break;
                 case SoundType.Bandage:
-                    PlaySound(GlobalDictionary.Sound.Interaction.Consumable.Medicine.Bondage);
+                    PlaySound(GlobalDictionary.Sound.Interaction.Consumable.Medicine.Bandage);
+                    break;
+                case SoundType.Injection:
+                    PlaySound(GlobalDictionary.Sound.Interaction.Consumable.Medicine.Injection);
+                    break;
+                case SoundType.Swallow:
+                    PlaySound(GlobalDictionary.Sound.Interaction.Consumable.Medicine.Swallow);
                     break;
                 case SoundType.Reload:
                     PlaySound(GlobalDictionary.Sound.Interaction.Equipment.Reload);

@@ -8,6 +8,8 @@ public static class GlobalDictionary
 {
     public static class Sound
     {
+        public static string PathRoot = $"Sounds";
+        public static string PathMove = $"{PathRoot}/Move";
         public static Dictionary<CreatureType, SoundMove> Move = new()
         {
             {
@@ -29,40 +31,51 @@ public static class GlobalDictionary
         }
         public static class Interaction
         {
+            public static string PathRoot = $"{Sound.PathRoot}/Interaction";
             public static class Consumable
             {
+                public static string PathRoot = $"{Interaction.PathRoot}/Consumable";
                 public static class Food
                 {
+                    public static string PathRoot = $"{Consumable.PathRoot}/Food";
                     public static AudioClip Drink, Chip, Burgur;
                 }
                 public static class Medicine
                 {
-                    public static AudioClip Bondage, Injection, Swallow;
+                    public static string PathRoot = $"{Consumable.PathRoot}/Medicine";
+                    public static AudioClip Bandage, Injection, Swallow;
                 }
             }
             public static class Equipment
             {
+                public static string PathRoot = $"{Interaction.PathRoot}/Equipment";
                 public static AudioClip Equip, Unequip, Reload;
             }
             public static class Door
             {
-                public static AudioClip Open, Close;
+                public static string PathRoot = $"{Interaction.PathRoot}/Door";
+                public static AudioClip Open, Close, Lock;
             }
         }
 
         public static class Battle
         {
+            public static string PathRoot = $"{Sound.PathRoot}/Battle";
             public static class Weapon
             {
+                public static string PathRoot = $"{Battle.PathRoot}/Weapon";
                 public static class Melee
                 {
+                    public static string PathRoot = $"{Weapon.PathRoot}/Melee";
                     public static AudioClip Swing, Step;
                 }
                 public static class Range
                 {
+                    public static string PathRoot = $"{Weapon.PathRoot}/Range";
                     public static AudioClip Arrow;
                     public static class Gun
                     {
+                        public static string PathRoot = $"{Range.PathRoot}/Gun";
                         public static AudioClip Small, Big;
                     }
                 }
