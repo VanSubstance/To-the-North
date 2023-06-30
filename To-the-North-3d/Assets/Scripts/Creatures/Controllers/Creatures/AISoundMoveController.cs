@@ -8,8 +8,8 @@ namespace Assets.Scripts.Creatures.Controllers
     {
         private AudioSource Speaker;
         [SerializeField]
-        protected AudioClip
-            audWalk, audRun;
+        private CreatureType creatureType;
+        private SoundType curSoundType;
 
         private NavMeshAgent agent;
 
@@ -28,6 +28,7 @@ namespace Assets.Scripts.Creatures.Controllers
         {
             if (agent.remainingDistance < 0.01f)
             {
+                curSoundType = SoundType.None;
                 Speaker.Stop();
                 Speaker.clip = null;
                 Speaker.maxDistance = 10;
@@ -35,9 +36,10 @@ namespace Assets.Scripts.Creatures.Controllers
             }
             if (agent.speed < 3)
             {
-                if (Speaker.clip == null || !Speaker.clip.Equals(audWalk))
+                if (Speaker.clip == null || !curSoundType.Equals(SoundType.Walk))
                 {
-                    Speaker.clip = audWalk;
+                    curSoundType = SoundType.Walk;
+                    Speaker.clip = GlobalDictionary.Sound.Move[creatureType].Walk;
                     Speaker.maxDistance = 15;
                 }
                 if (!Speaker.isPlaying)
@@ -48,9 +50,10 @@ namespace Assets.Scripts.Creatures.Controllers
             }
             if (agent.speed >= 3)
             {
-                if (Speaker.clip == null || !Speaker.clip.Equals(audRun))
+                if (Speaker.clip == null || !curSoundType.Equals(SoundType.Run))
                 {
-                    Speaker.clip = audRun;
+                    curSoundType = SoundType.Run;
+                    Speaker.clip = GlobalDictionary.Sound.Move[creatureType].Run;
                     Speaker.maxDistance = 20;
                 }
                 if (!Speaker.isPlaying)
