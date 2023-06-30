@@ -65101,6 +65101,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera Container
       objectReference: {fileID: 0}
+    - target: {fileID: 7660342068560341050, guid: f7a9f0d1c9da5e445a9e9cf7ff584cbc, type: 3}
+      propertyPath: m_Volume
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7a9f0d1c9da5e445a9e9cf7ff584cbc, type: 3}
 --- !u!20 &1956338073 stripped

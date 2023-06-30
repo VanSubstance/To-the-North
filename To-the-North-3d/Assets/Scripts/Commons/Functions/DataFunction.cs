@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Assets.Scripts.Components.Conversations.Objects;
 using Assets.Scripts.Components.Hovers;
+using Assets.Scripts.Creatures;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using Newtonsoft.Json;
@@ -29,6 +30,26 @@ public static class DataFunction
             jsonPath + ".json",
             JsonConvert.SerializeObject(objectToSave, Formatting.Indented)
             );
+    }
+
+    /// <summary>
+    /// 사용할 오디오클립 전부 불러오기
+    /// </summary>
+    public static void LoadAudioClips()
+    {
+        string rootPath = $"Sounds/";
+        AudioClip[] temp;
+        /// 1. 이동 소리
+        temp = Resources.LoadAll<AudioClip>($"{rootPath}Move/Human");
+        GlobalDictionary.Sound.Move[CreatureType.Human].Run = temp[0];
+        GlobalDictionary.Sound.Move[CreatureType.Human].Walk = temp[1];
+        temp = Resources.LoadAll<AudioClip>($"{rootPath}Move/FourLeg");
+        GlobalDictionary.Sound.Move[CreatureType.FourLeg].Run = temp[0];
+        GlobalDictionary.Sound.Move[CreatureType.FourLeg].Walk = temp[1];
+        temp = Resources.LoadAll<AudioClip>($"{rootPath}Move/Slime");
+        GlobalDictionary.Sound.Move[CreatureType.Slime].Run = temp[0];
+        GlobalDictionary.Sound.Move[CreatureType.Slime].Walk = temp[1];
+
     }
 
     public static Queue<string> LoadTextFromFile(string filePath)

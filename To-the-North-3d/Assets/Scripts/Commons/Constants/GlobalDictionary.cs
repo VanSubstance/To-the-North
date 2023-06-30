@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Assets.Scripts.Components.Hovers;
+using Assets.Scripts.Creatures;
 using Assets.Scripts.Users;
 using UnityEngine;
 
@@ -7,22 +8,41 @@ public static class GlobalDictionary
 {
     public static class Sound
     {
-        public static class Move
+        public static Dictionary<CreatureType, SoundMove> Move = new()
         {
-            public static SoundMove Human = new SoundMove();
-            public static SoundMove FourLeg = new SoundMove();
-            public static SoundMove Slime = new SoundMove();
-
-            public class SoundMove
             {
-                public AudioClip Move, Run;
-            }
+                CreatureType.Human,
+                new SoundMove()
+            },
+            {
+                CreatureType.FourLeg,
+                new SoundMove()
+            },
+            {
+                CreatureType.Slime,
+                new SoundMove()
+            },
+        };
+        public class SoundMove
+        {
+            public AudioClip Walk, Run;
         }
         public static class Interaction
         {
-            public static class Food
+            public static class Consumable
             {
-                public static AudioClip Drink, Chip, Burgur;
+                public static class Food
+                {
+                    public static AudioClip Drink, Chip, Burgur;
+                }
+                public static class Medicine
+                {
+                    public static AudioClip Bondage, Injection, Swallow;
+                }
+            }
+            public static class Equipment
+            {
+                public static AudioClip Equip, Unequip, Reload;
             }
             public static class Door
             {
