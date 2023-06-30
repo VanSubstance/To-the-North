@@ -46,12 +46,7 @@ namespace Assets.Scripts.Creatures.Controllers
 
         [HideInInspector]
         private AudioSource Speaker;
-        [SerializeField]
-        protected AudioClip
-            audEat, audDrink,
-            audBandage,
-            audReload
-            ;
+        private SoundType curSoundType;
 
         /// <summary>
         /// 부쉬 상태 체크
@@ -87,20 +82,30 @@ namespace Assets.Scripts.Creatures.Controllers
 
         public void PlaySoundByType(SoundType _type)
         {
-            if (_type.Equals(IsSoundInPlaying())) return;
+            if (curSoundType.Equals(_type)) return;
+            curSoundType = _type;
             switch (_type)
             {
-                case SoundType.Eat:
-                    PlaySound(audEat);
+                case SoundType.Burgur:
+                    PlaySound(GlobalDictionary.Sound.Interaction.Consumable.Food.Burgur);
+                    break;
+                case SoundType.Chip:
+                    PlaySound(GlobalDictionary.Sound.Interaction.Consumable.Food.Chip);
                     break;
                 case SoundType.Drink:
-                    PlaySound(audDrink);
+                    PlaySound(GlobalDictionary.Sound.Interaction.Consumable.Food.Drink);
                     break;
                 case SoundType.Bandage:
-                    PlaySound(audBandage);
+                    PlaySound(GlobalDictionary.Sound.Interaction.Consumable.Medicine.Bandage);
+                    break;
+                case SoundType.Injection:
+                    PlaySound(GlobalDictionary.Sound.Interaction.Consumable.Medicine.Injection);
+                    break;
+                case SoundType.Swallow:
+                    PlaySound(GlobalDictionary.Sound.Interaction.Consumable.Medicine.Swallow);
                     break;
                 case SoundType.Reload:
-                    PlaySound(audReload);
+                    PlaySound(GlobalDictionary.Sound.Interaction.Equipment.Reload);
                     break;
                 case SoundType.None:
                     StopSound();
@@ -111,16 +116,12 @@ namespace Assets.Scripts.Creatures.Controllers
         public SoundType IsSoundInPlaying()
         {
             if (!Speaker.isPlaying) return SoundType.None;
-            AudioClip c = Speaker.clip;
-            if (c.Equals(audDrink)) return SoundType.Drink;
-            if (c.Equals(audEat)) return SoundType.Eat;
-            if (c.Equals(audBandage)) return SoundType.Bandage;
-            if (c.Equals(audReload)) return SoundType.Reload;
-            return SoundType.None;
+            return curSoundType;
         }
 
         public void StopSound()
         {
+            curSoundType = SoundType.None;
             Speaker.Stop();
         }
 

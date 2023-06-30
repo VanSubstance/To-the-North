@@ -41,6 +41,7 @@ namespace Assets.Scripts.Components.Infos
         private void Update()
         {
             if (Input.GetKey(KeyCode.LeftControl)) return;
+            if (Input.GetKey(KeyCode.LeftShift)) return;
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 // 1번 핫키 사용

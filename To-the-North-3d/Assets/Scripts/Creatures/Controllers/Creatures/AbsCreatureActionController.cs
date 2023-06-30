@@ -22,13 +22,12 @@ namespace Assets.Scripts.Creatures
         [HideInInspector]
         private AudioSource Speaker;
         [SerializeField]
-        protected AudioClip
-            audWalk, audRun;
-
+        private CreatureType creatureType;
+        private SoundType curSoundType;
         protected void Awake()
         {
             detectionOrigin = detectionTf.localScale;
-            sightOrigin= sightTf.localScale;
+            sightOrigin = sightTf.localScale;
             sightOriginPos = sightTf.localPosition;
             SoundEffectManager.AddAudioSource(transform, true, out Speaker);
             Speaker.maxDistance = 15;
@@ -66,14 +65,15 @@ namespace Assets.Scripts.Creatures
         public void PlaySoundByType(SoundType _type)
         {
             if (Speaker == null) return;
-            if (_type.Equals(IsSoundInPlaying())) return;
+            if (curSoundType.Equals(_type)) return;
+            curSoundType = _type;
             switch (_type)
             {
                 case SoundType.Walk:
-                    PlaySound(audWalk);
+                    PlaySound(GlobalDictionary.Sound.Move[creatureType].Walk);
                     break;
                 case SoundType.Run:
-                    PlaySound(audRun);
+                    PlaySound(GlobalDictionary.Sound.Move[creatureType].Run);
                     break;
                 case SoundType.None:
                     StopSound();
@@ -83,17 +83,14 @@ namespace Assets.Scripts.Creatures
 
         public SoundType IsSoundInPlaying()
         {
-            if (Speaker == null) return SoundType.None;
-            if (!Speaker.isPlaying) return SoundType.None;
-            AudioClip c = Speaker.clip;
-            if (c.Equals(audWalk)) return SoundType.Walk;
-            if (c.Equals(audRun)) return SoundType.Run;
-            return SoundType.None;
+            return curSoundType;
         }
 
         public void StopSound()
         {
             if (Speaker == null) return;
+            if (!Speaker.isPlaying) return;
+            curSoundType = SoundType.None;
             Speaker.Stop();
         }
     }

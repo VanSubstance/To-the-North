@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94fd91681e2cfd445b7709446b613528, type: 3}
   m_Name: Dog
   m_EditorClassIdentifier: 
+  npcPath: 
   maxHp: 30
-  isActiveBehaviour: 0
+  isActiveBehaviour: 1
   isRunAway: 0
   sightRange: 5
   moveSpd: 4

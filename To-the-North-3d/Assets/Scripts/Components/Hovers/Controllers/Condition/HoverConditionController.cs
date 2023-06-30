@@ -61,7 +61,7 @@ namespace Assets.Scripts.Components.Hovers
             if (isOccupied) return;
             isOccupied = true;
             base.TracksMouse();
-            ConditionInfo cur = GlobalText.Conditions[type];
+            ConditionInfo cur = GlobalDictionary.Text.Conditions[type];
             title.text = cur.title;
             desc.text = cur.description;
             gameObject.SetActive(true);

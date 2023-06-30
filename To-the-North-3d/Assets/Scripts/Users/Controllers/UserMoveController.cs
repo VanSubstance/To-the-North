@@ -64,7 +64,8 @@ namespace Assets.Scripts.Users
                     TrackMovementType();
                     TrackSound();
                 }
-            } else
+            }
+            else
             {
                 rigid.velocity = Vector2.zero;
             }
@@ -232,18 +233,6 @@ namespace Assets.Scripts.Users
                 StopSound();
                 return;
             }
-            switch (InGameStatus.User.Movement.curMovement)
-            {
-                case Objects.MovementType.WALK:
-                    PlaySoundByType(SoundType.Walk);
-                    break;
-                case Objects.MovementType.RUN:
-                    PlaySoundByType(SoundType.Run);
-                    break;
-                case Objects.MovementType.CROUCH:
-                    PlaySoundByType(SoundType.Walk);
-                    break;
-            }
         }
 
         private float GetMovementSpd()
@@ -274,6 +263,7 @@ namespace Assets.Scripts.Users
                 )
             {
                 InGameStatus.User.Movement.curMovement = Objects.MovementType.CROUCH;
+                PlaySoundByType(SoundType.Walk);
                 return;
             }
             if (Input.GetKey(KeyCode.LeftShift))
@@ -284,15 +274,18 @@ namespace Assets.Scripts.Users
                     return;
                 }
                 InGameStatus.User.Movement.curMovement = Objects.MovementType.RUN;
+                PlaySoundByType(SoundType.Run);
                 return;
             }
             if (Input.GetKey(KeyCode.LeftControl))
             {
                 InGameStatus.User.Movement.curMovement = Objects.MovementType.CROUCH;
+                PlaySoundByType(SoundType.Walk);
                 Crouch();
                 return;
             }
             InGameStatus.User.Movement.curMovement = Objects.MovementType.WALK;
+            PlaySoundByType(SoundType.Walk);
             Stand();
         }
 

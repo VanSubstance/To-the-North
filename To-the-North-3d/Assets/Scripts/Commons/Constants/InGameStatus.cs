@@ -269,7 +269,7 @@ public static class InGameStatus
         {
             if (value == 0) return;
             currency += value;
-            UIInfoTextContainerController.Instance.PrintText($"{(value > 0 ? GlobalText.System.CurrencyGet : GlobalText.System.CurrencyPay)}: {(value > 0 ? value : -value)} G");
+            UIInfoTextContainerController.Instance.PrintText($"{(value > 0 ? GlobalDictionary.Text.System.CurrencyGet : GlobalDictionary.Text.System.CurrencyPay)}: {(value > 0 ? value : -value)} G");
             GlobalComponent.Common.Text.Inventory.currency.text = $"{currency} G";
         }
     }

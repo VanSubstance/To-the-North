@@ -46,11 +46,6 @@ namespace Assets.Scripts.Battles
         }
 
         private TrajectoryController trajectory;
-        [SerializeField]
-        private AudioClip[]
-            audGunPerLoudness,
-            audArrowPerLoudness,
-            audSwingPerLoudness;
 
         private void Awake()
         {
@@ -86,7 +81,7 @@ namespace Assets.Scripts.Battles
             }
         }
 
-        public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner, ItemBulletType bulletType)
+        public void Fire(ProjectileInfo _info, Vector3 startPos, Vector3 targetDir, Transform _owner, ItemBulletType bulletType, TrajectoryType trajectoryType)
         {
             float h = startPos.y;
             trajectory = TrajectoryManager.Instance.GetNewTrajectory();
@@ -112,25 +107,33 @@ namespace Assets.Scripts.Battles
                 trajectory.PlayCurve(startPos, CalculationFunctions.AngleFromDir(new Vector2(targetDir.x, targetDir.z)), 45, _info.Range);
                 trajectory = null;
             }
-            ImpactSound(bulletType);
+            ImpactSound(bulletType, trajectoryType);
         }
 
         /// <summary>
         /// 시작될 때 소리 관련 처리 함수
         /// </summary>
-        private void ImpactSound(ItemBulletType bulletType)
+        private void ImpactSound(ItemBulletType bulletType, TrajectoryType trajectoryType)
         {
             AudioClip c = null;
             switch (bulletType)
             {
                 case ItemBulletType.None:
-                    c = audSwingPerLoudness[info.LevelLoudness];
+                    switch (trajectoryType)
+                    {
+                        case TrajectoryType.Straight:
+                            c = GlobalDictionary.Sound.Battle.Weapon.Melee.Step;
+                            break;
+                        case TrajectoryType.Curve:
+                            c = GlobalDictionary.Sound.Battle.Weapon.Melee.Swing;
+                            break;
+                    }
                     break;
                 case ItemBulletType.Bullet_mm9:
-                    c = audGunPerLoudness[info.LevelLoudness];
+                    c = GlobalDictionary.Sound.Battle.Weapon.Range.Gun.Small;
                     break;
                 case ItemBulletType.Arrow:
-                    c = audArrowPerLoudness[info.LevelLoudness];
+                    c = GlobalDictionary.Sound.Battle.Weapon.Range.Arrow;
                     break;
             }
             // 소리 재생

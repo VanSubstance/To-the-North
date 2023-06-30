@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Assets.Scripts.Components.Conversations.Objects;
 using Assets.Scripts.Components.Hovers;
+using Assets.Scripts.Creatures;
 using Assets.Scripts.Items;
 using Assets.Scripts.Users;
 using Newtonsoft.Json;
@@ -29,6 +30,62 @@ public static class DataFunction
             jsonPath + ".json",
             JsonConvert.SerializeObject(objectToSave, Formatting.Indented)
             );
+    }
+
+    /// <summary>
+    /// 사용할 오디오클립 전부 불러오기
+    /// </summary>
+    public static void LoadAudioClips()
+    {
+        AudioClip[] temp;
+        // 1. 이동 소리
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.PathMove}/Human");
+        GlobalDictionary.Sound.Move[CreatureType.Human].Run = temp[0];
+        GlobalDictionary.Sound.Move[CreatureType.Human].Walk = temp[1];
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.PathMove}/FourLeg");
+        GlobalDictionary.Sound.Move[CreatureType.FourLeg].Run = temp[0];
+        GlobalDictionary.Sound.Move[CreatureType.FourLeg].Walk = temp[1];
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.PathMove}/Slime");
+        GlobalDictionary.Sound.Move[CreatureType.Slime].Run = temp[0];
+        GlobalDictionary.Sound.Move[CreatureType.Slime].Walk = temp[1];
+
+        // 2. 아이템 사용
+        // 2.1. 음식
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Interaction.Consumable.Food.PathRoot}");
+        GlobalDictionary.Sound.Interaction.Consumable.Food.Burgur = temp[0];
+        GlobalDictionary.Sound.Interaction.Consumable.Food.Chip = temp[1];
+        GlobalDictionary.Sound.Interaction.Consumable.Food.Drink = temp[2];
+
+        // 2.2. 의료
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Interaction.Consumable.Medicine.PathRoot}");
+        GlobalDictionary.Sound.Interaction.Consumable.Medicine.Bandage = temp[0];
+        GlobalDictionary.Sound.Interaction.Consumable.Medicine.Injection = temp[1];
+        GlobalDictionary.Sound.Interaction.Consumable.Medicine.Swallow = temp[2];
+
+        // 2.3. 장비
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Interaction.Equipment.PathRoot}");
+        GlobalDictionary.Sound.Interaction.Equipment.Equip = temp[0];
+        GlobalDictionary.Sound.Interaction.Equipment.Reload = temp[1];
+        GlobalDictionary.Sound.Interaction.Equipment.Unequip = temp[2];
+
+        // 2.4. 문
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Interaction.Door.PathRoot}");
+        GlobalDictionary.Sound.Interaction.Door.Close = temp[0];
+        GlobalDictionary.Sound.Interaction.Door.Lock = temp[1];
+        GlobalDictionary.Sound.Interaction.Door.Open = temp[2];
+
+        // 3. 장비
+        // 3.1. 근거리
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Battle.Weapon.Melee.PathRoot}");
+        GlobalDictionary.Sound.Battle.Weapon.Melee.Step = temp[0];
+        GlobalDictionary.Sound.Battle.Weapon.Melee.Swing = temp[1];
+
+        // 3.1. 원거리
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Battle.Weapon.Range.PathRoot}");
+        GlobalDictionary.Sound.Battle.Weapon.Range.Arrow = temp[0];
+        temp = Resources.LoadAll<AudioClip>($"{GlobalDictionary.Sound.Battle.Weapon.Range.Gun.PathRoot}");
+        GlobalDictionary.Sound.Battle.Weapon.Range.Gun.Big = temp[0];
+        GlobalDictionary.Sound.Battle.Weapon.Range.Gun.Small = temp[1];
     }
 
     public static Queue<string> LoadTextFromFile(string filePath)
@@ -188,37 +245,37 @@ public static class DataFunction
         // 텍스트 불러오기
         // 옵션 관련
         Queue<string> curQ = LoadTextFromFile("Option");
-        GlobalText.Common.ReturnToGame = curQ.Dequeue();
-        GlobalText.Common.GoToOption = curQ.Dequeue();
-        GlobalText.Common.SaveGame = curQ.Dequeue();
-        GlobalText.Common.LoadGame = curQ.Dequeue();
-        GlobalText.Common.StartGame = curQ.Dequeue();
-        GlobalText.Common.GoToDesktop = curQ.Dequeue();
-        GlobalText.Common.Loading = curQ.Dequeue();
-        GlobalText.Common.Back = curQ.Dequeue();
-        GlobalText.Common.Language = curQ.Dequeue();
+        GlobalDictionary.Text.Common.ReturnToGame = curQ.Dequeue();
+        GlobalDictionary.Text.Common.GoToOption = curQ.Dequeue();
+        GlobalDictionary.Text.Common.SaveGame = curQ.Dequeue();
+        GlobalDictionary.Text.Common.LoadGame = curQ.Dequeue();
+        GlobalDictionary.Text.Common.StartGame = curQ.Dequeue();
+        GlobalDictionary.Text.Common.GoToDesktop = curQ.Dequeue();
+        GlobalDictionary.Text.Common.Loading = curQ.Dequeue();
+        GlobalDictionary.Text.Common.Back = curQ.Dequeue();
+        GlobalDictionary.Text.Common.Language = curQ.Dequeue();
 
         // 인벤토리 관련
         curQ = LoadTextFromFile("Inventory");
-        GlobalText.Inventory.Inven = curQ.Dequeue();
-        GlobalText.Inventory.Equipment = curQ.Dequeue();
-        GlobalText.Inventory.Looting = curQ.Dequeue();
-        GlobalText.Inventory.Helmet = curQ.Dequeue();
-        GlobalText.Inventory.Mask = curQ.Dequeue();
-        GlobalText.Inventory.Body = curQ.Dequeue();
-        GlobalText.Inventory.Backpack = curQ.Dequeue();
-        GlobalText.Inventory.WeaponPri = curQ.Dequeue();
-        GlobalText.Inventory.WeaponSec = curQ.Dequeue();
-        GlobalText.Inventory.Commerce = curQ.Dequeue();
+        GlobalDictionary.Text.Inventory.Inven = curQ.Dequeue();
+        GlobalDictionary.Text.Inventory.Equipment = curQ.Dequeue();
+        GlobalDictionary.Text.Inventory.Looting = curQ.Dequeue();
+        GlobalDictionary.Text.Inventory.Helmet = curQ.Dequeue();
+        GlobalDictionary.Text.Inventory.Mask = curQ.Dequeue();
+        GlobalDictionary.Text.Inventory.Body = curQ.Dequeue();
+        GlobalDictionary.Text.Inventory.Backpack = curQ.Dequeue();
+        GlobalDictionary.Text.Inventory.WeaponPri = curQ.Dequeue();
+        GlobalDictionary.Text.Inventory.WeaponSec = curQ.Dequeue();
+        GlobalDictionary.Text.Inventory.Commerce = curQ.Dequeue();
 
         // 시스템 관련
         curQ = LoadTextFromFile("System");
-        GlobalText.System.ItemGet = curQ.Dequeue();
-        GlobalText.System.ItemPay = curQ.Dequeue();
-        GlobalText.System.QuestGet = curQ.Dequeue();
-        GlobalText.System.QuestClear = curQ.Dequeue();
-        GlobalText.System.CurrencyGet = curQ.Dequeue();
-        GlobalText.System.CurrencyPay = curQ.Dequeue();
+        GlobalDictionary.Text.System.ItemGet = curQ.Dequeue();
+        GlobalDictionary.Text.System.ItemPay = curQ.Dequeue();
+        GlobalDictionary.Text.System.QuestGet = curQ.Dequeue();
+        GlobalDictionary.Text.System.QuestClear = curQ.Dequeue();
+        GlobalDictionary.Text.System.CurrencyGet = curQ.Dequeue();
+        GlobalDictionary.Text.System.CurrencyPay = curQ.Dequeue();
 
         // 상태이상 관련
         curQ = LoadTextFromFile("Condition");
@@ -238,32 +295,32 @@ public static class DataFunction
                 if (s == string.Empty) break;
                 newCondition.description += $"{s}\n";
             }
-            GlobalText.Conditions[curType] = newCondition;
+            GlobalDictionary.Text.Conditions[curType] = newCondition;
             newCondition = new();
         }
 
         // 아이템 관련
         curQ = LoadTextFromFile("Item");
-        GlobalText.Item.Armor.tPenatration = curQ.Dequeue();
-        GlobalText.Item.Armor.tImpact = curQ.Dequeue();
-        GlobalText.Item.Armor.tHeat = curQ.Dequeue();
+        GlobalDictionary.Text.Item.Armor.tPenatration = curQ.Dequeue();
+        GlobalDictionary.Text.Item.Armor.tImpact = curQ.Dequeue();
+        GlobalDictionary.Text.Item.Armor.tHeat = curQ.Dequeue();
 
-        GlobalText.Item.Bullet.tBulletType = curQ.Dequeue();
-        GlobalText.Item.Bullet.tAccelSpd = curQ.Dequeue();
+        GlobalDictionary.Text.Item.Bullet.tBulletType = curQ.Dequeue();
+        GlobalDictionary.Text.Item.Bullet.tAccelSpd = curQ.Dequeue();
 
-        GlobalText.Item.Damage.tPwPene = curQ.Dequeue();
-        GlobalText.Item.Damage.tPwImp = curQ.Dequeue();
-        GlobalText.Item.Damage.tPwKnock = curQ.Dequeue();
-        GlobalText.Item.Damage.tDmgPene = curQ.Dequeue();
-        GlobalText.Item.Damage.tDmgImp = curQ.Dequeue();
+        GlobalDictionary.Text.Item.Damage.tPwPene = curQ.Dequeue();
+        GlobalDictionary.Text.Item.Damage.tPwImp = curQ.Dequeue();
+        GlobalDictionary.Text.Item.Damage.tPwKnock = curQ.Dequeue();
+        GlobalDictionary.Text.Item.Damage.tDmgPene = curQ.Dequeue();
+        GlobalDictionary.Text.Item.Damage.tDmgImp = curQ.Dequeue();
 
-        GlobalText.Item.Weapon.tAtkSpd = curQ.Dequeue();
-        GlobalText.Item.Weapon.tHandType = curQ.Dequeue();
+        GlobalDictionary.Text.Item.Weapon.tAtkSpd = curQ.Dequeue();
+        GlobalDictionary.Text.Item.Weapon.tHandType = curQ.Dequeue();
 
-        GlobalText.Item.WeaponRange.tReload = curQ.Dequeue();
-        GlobalText.Item.WeaponRange.tRange = curQ.Dequeue();
-        GlobalText.Item.WeaponRange.tProjSpd = curQ.Dequeue();
-        GlobalText.Item.WeaponRange.tBulletType = curQ.Dequeue();
+        GlobalDictionary.Text.Item.WeaponRange.tReload = curQ.Dequeue();
+        GlobalDictionary.Text.Item.WeaponRange.tRange = curQ.Dequeue();
+        GlobalDictionary.Text.Item.WeaponRange.tProjSpd = curQ.Dequeue();
+        GlobalDictionary.Text.Item.WeaponRange.tBulletType = curQ.Dequeue();
 
 
         switch (SceneManager.GetActiveScene().name)
@@ -282,57 +339,57 @@ public static class DataFunction
 
     private static void ApplyLanguageMainMenu()
     {
-        GlobalComponent.Common.Text.MainMenu.startGame.text = GlobalText.Common.StartGame;
-        GlobalComponent.Common.Text.MainMenu.toDesktop.text = GlobalText.Common.GoToDesktop;
+        GlobalComponent.Common.Text.MainMenu.startGame.text = GlobalDictionary.Text.Common.StartGame;
+        GlobalComponent.Common.Text.MainMenu.toDesktop.text = GlobalDictionary.Text.Common.GoToDesktop;
     }
 
     private static void ApplyLanguageLoading()
     {
-        GlobalComponent.Common.Text.Loading.loading.text = GlobalText.Common.Loading;
+        GlobalComponent.Common.Text.Loading.loading.text = GlobalDictionary.Text.Common.Loading;
     }
 
     private static void ApplyLanguageInGame()
     {
         // 옵션
-        GlobalComponent.Common.Text.Option.backToGame.text = GlobalText.Common.ReturnToGame;
-        GlobalComponent.Common.Text.Option.goToOption.text = GlobalText.Common.GoToOption;
-        GlobalComponent.Common.Text.Option.saveGame.text = GlobalText.Common.SaveGame;
-        GlobalComponent.Common.Text.Option.goToDesktop.text = GlobalText.Common.GoToDesktop;
-        GlobalComponent.Common.Text.Option.back.text = GlobalText.Common.Back;
-        GlobalComponent.Common.Text.Option.language.text = GlobalText.Common.Language;
+        GlobalComponent.Common.Text.Option.backToGame.text = GlobalDictionary.Text.Common.ReturnToGame;
+        GlobalComponent.Common.Text.Option.goToOption.text = GlobalDictionary.Text.Common.GoToOption;
+        GlobalComponent.Common.Text.Option.saveGame.text = GlobalDictionary.Text.Common.SaveGame;
+        GlobalComponent.Common.Text.Option.goToDesktop.text = GlobalDictionary.Text.Common.GoToDesktop;
+        GlobalComponent.Common.Text.Option.back.text = GlobalDictionary.Text.Common.Back;
+        GlobalComponent.Common.Text.Option.language.text = GlobalDictionary.Text.Common.Language;
 
         // 인벤토리
-        GlobalComponent.Common.Text.Inventory.inventory.text = GlobalText.Inventory.Inven;
-        GlobalComponent.Common.Text.Inventory.looting.text = GlobalText.Inventory.Looting;
-        GlobalComponent.Common.Text.Inventory.commerce.text = GlobalText.Inventory.Commerce;
-        GlobalComponent.Common.Text.Inventory.equipment.text = GlobalText.Inventory.Equipment;
-        GlobalComponent.Common.Text.Inventory.Equipment.helmet.text = GlobalText.Inventory.Helmet;
-        GlobalComponent.Common.Text.Inventory.Equipment.mask.text = GlobalText.Inventory.Mask;
-        GlobalComponent.Common.Text.Inventory.Equipment.body.text = GlobalText.Inventory.Body;
-        GlobalComponent.Common.Text.Inventory.Equipment.backpack.text = GlobalText.Inventory.Backpack;
-        GlobalComponent.Common.Text.Inventory.Equipment.weaponPrimary.text = GlobalText.Inventory.WeaponPri;
-        GlobalComponent.Common.Text.Inventory.Equipment.weaponSecondary.text = GlobalText.Inventory.WeaponSec;
+        GlobalComponent.Common.Text.Inventory.inventory.text = GlobalDictionary.Text.Inventory.Inven;
+        GlobalComponent.Common.Text.Inventory.looting.text = GlobalDictionary.Text.Inventory.Looting;
+        GlobalComponent.Common.Text.Inventory.commerce.text = GlobalDictionary.Text.Inventory.Commerce;
+        GlobalComponent.Common.Text.Inventory.equipment.text = GlobalDictionary.Text.Inventory.Equipment;
+        GlobalComponent.Common.Text.Inventory.Equipment.helmet.text = GlobalDictionary.Text.Inventory.Helmet;
+        GlobalComponent.Common.Text.Inventory.Equipment.mask.text = GlobalDictionary.Text.Inventory.Mask;
+        GlobalComponent.Common.Text.Inventory.Equipment.body.text = GlobalDictionary.Text.Inventory.Body;
+        GlobalComponent.Common.Text.Inventory.Equipment.backpack.text = GlobalDictionary.Text.Inventory.Backpack;
+        GlobalComponent.Common.Text.Inventory.Equipment.weaponPrimary.text = GlobalDictionary.Text.Inventory.WeaponPri;
+        GlobalComponent.Common.Text.Inventory.Equipment.weaponSecondary.text = GlobalDictionary.Text.Inventory.WeaponSec;
 
         // 아이템 정보
-        GlobalComponent.Common.Text.Item.Armor.tPenatration.text = GlobalText.Item.Armor.tPenatration;
-        GlobalComponent.Common.Text.Item.Armor.tImpact.text = GlobalText.Item.Armor.tImpact;
-        GlobalComponent.Common.Text.Item.Armor.tHeat.text = GlobalText.Item.Armor.tHeat;
+        GlobalComponent.Common.Text.Item.Armor.tPenatration.text = GlobalDictionary.Text.Item.Armor.tPenatration;
+        GlobalComponent.Common.Text.Item.Armor.tImpact.text = GlobalDictionary.Text.Item.Armor.tImpact;
+        GlobalComponent.Common.Text.Item.Armor.tHeat.text = GlobalDictionary.Text.Item.Armor.tHeat;
 
-        GlobalComponent.Common.Text.Item.Bullet.tBulletType.text = GlobalText.Item.Bullet.tBulletType;
-        GlobalComponent.Common.Text.Item.Bullet.tAccelSpd.text = GlobalText.Item.Bullet.tAccelSpd;
+        GlobalComponent.Common.Text.Item.Bullet.tBulletType.text = GlobalDictionary.Text.Item.Bullet.tBulletType;
+        GlobalComponent.Common.Text.Item.Bullet.tAccelSpd.text = GlobalDictionary.Text.Item.Bullet.tAccelSpd;
 
-        GlobalComponent.Common.Text.Item.Damage.tPwPene.text = GlobalText.Item.Damage.tPwPene;
-        GlobalComponent.Common.Text.Item.Damage.tPwImp.text = GlobalText.Item.Damage.tPwImp;
-        GlobalComponent.Common.Text.Item.Damage.tPwKnock.text = GlobalText.Item.Damage.tPwKnock;
-        GlobalComponent.Common.Text.Item.Damage.tDmgPene.text = GlobalText.Item.Damage.tDmgPene;
-        GlobalComponent.Common.Text.Item.Damage.tDmgImp.text = GlobalText.Item.Damage.tDmgImp;
+        GlobalComponent.Common.Text.Item.Damage.tPwPene.text = GlobalDictionary.Text.Item.Damage.tPwPene;
+        GlobalComponent.Common.Text.Item.Damage.tPwImp.text = GlobalDictionary.Text.Item.Damage.tPwImp;
+        GlobalComponent.Common.Text.Item.Damage.tPwKnock.text = GlobalDictionary.Text.Item.Damage.tPwKnock;
+        GlobalComponent.Common.Text.Item.Damage.tDmgPene.text = GlobalDictionary.Text.Item.Damage.tDmgPene;
+        GlobalComponent.Common.Text.Item.Damage.tDmgImp.text = GlobalDictionary.Text.Item.Damage.tDmgImp;
 
-        GlobalComponent.Common.Text.Item.Weapon.tAtkSpd.text = GlobalText.Item.Weapon.tAtkSpd;
-        GlobalComponent.Common.Text.Item.Weapon.tHandType.text = GlobalText.Item.Weapon.tHandType;
+        GlobalComponent.Common.Text.Item.Weapon.tAtkSpd.text = GlobalDictionary.Text.Item.Weapon.tAtkSpd;
+        GlobalComponent.Common.Text.Item.Weapon.tHandType.text = GlobalDictionary.Text.Item.Weapon.tHandType;
 
-        GlobalComponent.Common.Text.Item.WeaponRange.tBulletType.text = GlobalText.Item.WeaponRange.tBulletType;
-        GlobalComponent.Common.Text.Item.WeaponRange.tProjSpd.text = GlobalText.Item.WeaponRange.tProjSpd;
-        GlobalComponent.Common.Text.Item.WeaponRange.tRange.text = GlobalText.Item.WeaponRange.tRange;
-        GlobalComponent.Common.Text.Item.WeaponRange.tReload.text = GlobalText.Item.WeaponRange.tReload;
+        GlobalComponent.Common.Text.Item.WeaponRange.tBulletType.text = GlobalDictionary.Text.Item.WeaponRange.tBulletType;
+        GlobalComponent.Common.Text.Item.WeaponRange.tProjSpd.text = GlobalDictionary.Text.Item.WeaponRange.tProjSpd;
+        GlobalComponent.Common.Text.Item.WeaponRange.tRange.text = GlobalDictionary.Text.Item.WeaponRange.tRange;
+        GlobalComponent.Common.Text.Item.WeaponRange.tReload.text = GlobalDictionary.Text.Item.WeaponRange.tReload;
     }
 }

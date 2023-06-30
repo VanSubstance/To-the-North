@@ -6,7 +6,7 @@ namespace Assets.Scripts.Items
     [CreateAssetMenu(fileName = "Food Info", menuName = "Data Objects/Items/Consumable/Food", order = int.MaxValue)]
     public class ItemFoodInfo : ItemConsumableInfo
     {
-
+        public ConsumeType consumeType;
         [SerializeField]
         private float hunger, thirst, temperature;
         public float Hunger
@@ -41,6 +41,11 @@ namespace Assets.Scripts.Items
             {
                 temperature = value;
             }
+        }
+
+        public enum ConsumeType
+        {
+            Burgur, Chip, Drink
         }
     }
 }

@@ -5,9 +5,12 @@ namespace Assets.Scripts.Creatures
         None,
 
         Walk, Run,
-        Eat, Drink,
-        Bandage,
-        Reload,
+
+        Burgur, Drink, Chip,
+
+        Bandage, Injection, Swallow,
+
+        Equip, Unequip, Reload,
 
         GroundIn, GroundOut,
         UnderGround

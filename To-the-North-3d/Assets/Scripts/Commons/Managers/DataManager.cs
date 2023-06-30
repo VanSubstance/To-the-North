@@ -32,6 +32,11 @@ namespace Assets.Scripts.Commons
                 return _instance;
             }
         }
+
+        private void Awake()
+        {
+            DataFunction.LoadAudioClips();
+        }
         private void Start()
         {
             LoadInventoryWithAuto();

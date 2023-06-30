@@ -7,6 +7,7 @@ namespace Assets.Scripts.Items
     [CreateAssetMenu(fileName = "Medicine Info", menuName = "Data Objects/Items/Consumable/Medicine", order = int.MaxValue)]
     public class ItemMedicineInfo : ItemConsumableInfo
     {
+        public ConsumeType consumeType;
         [HideInInspector]
         public new ConsumbableType consumableType
         {
@@ -39,5 +40,10 @@ namespace Assets.Scripts.Items
     {
         public ConditionType targetCondition;
         public int countToRemove;
+    }
+
+    public enum ConsumeType
+    {
+        Bandage, Injection, Swallow
     }
 }
