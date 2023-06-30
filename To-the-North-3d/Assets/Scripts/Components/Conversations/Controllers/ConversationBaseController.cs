@@ -1,14 +1,13 @@
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Components.Buttons.Controllers;
 using Assets.Scripts.Components.Conversations.Managers;
 using Assets.Scripts.Components.Conversations.Objects;
+using Assets.Scripts.Components.Infos;
+using Assets.Scripts.Components.Windows;
 using Assets.Scripts.Components.Windows.Inventory;
 using Assets.Scripts.Items;
-using Assets.Scripts.Components.Infos;
 using UnityEngine;
-using System.Linq;
-using Assets.Scripts.Components.Windows;
-using Assets.Scripts.Commons;
-using System.Collections.Generic;
 
 namespace Assets.Scripts.Components.Conversations.Controllers
 {
@@ -152,7 +151,7 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                                         {
                                             InGameStatus.Item.PushItemToInventory(Instantiate(ib = DataFunction.LoadItemInfoByCode(cond.code)));
                                         }
-                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.ItemGet}: {ib.Title} x {cond.amount}");
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalDictionary.Text.System.ItemGet}: {ib.Title} x {cond.amount}");
                                         break;
                                     case "Pay":
                                         // 아이템을 제출해야 함 <- 선택지 고르면 아이템 소실
@@ -160,7 +159,7 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                                         {
                                             ib = InGameStatus.Item.PullItemFromInventoryByCode(cond.code);
                                         }
-                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.ItemPay}: {ib.Title} x {cond.amount}");
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalDictionary.Text.System.ItemPay}: {ib.Title} x {cond.amount}");
                                         break;
                                 }
                                 break;
@@ -182,11 +181,11 @@ namespace Assets.Scripts.Components.Conversations.Controllers
                                 {
                                     case "Start":
                                         // 퀘스트를 시작한다는 개념 <- 선택지 고르면 퀘스트 수령
-                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.QuestGet}: {WindowQuestContainerController.Instance.ActivateQuest(cond.code)}");
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalDictionary.Text.System.QuestGet}: {WindowQuestContainerController.Instance.ActivateQuest(cond.code)}");
                                         break;
                                     case "Clear":
                                         // 퀘스트를 완료했다는 개념 <- 선택지 고르면 퀘스트 사라짐
-                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalText.System.QuestClear}: {WindowQuestContainerController.Instance.ClearQuest(cond.code)}");
+                                        UIInfoTextContainerController.Instance.PrintText($"{GlobalDictionary.Text.System.QuestClear}: {WindowQuestContainerController.Instance.ClearQuest(cond.code)}");
                                         break;
                                 }
                                 break;

@@ -1,0 +1,125 @@
+using System.Collections.Generic;
+using Assets.Scripts.Components.Hovers;
+using Assets.Scripts.Users;
+using UnityEngine;
+
+public static class GlobalDictionary
+{
+    public static class Sound
+    {
+        public static class Move
+        {
+            public static SoundMove Human = new SoundMove();
+            public static SoundMove FourLeg = new SoundMove();
+            public static SoundMove Slime = new SoundMove();
+
+            public class SoundMove
+            {
+                public AudioClip Move, Run;
+            }
+        }
+        public static class Interaction
+        {
+            public static class Food
+            {
+                public static AudioClip Drink, Chip, Burgur;
+            }
+            public static class Door
+            {
+                public static AudioClip Open, Close;
+            }
+        }
+
+        public static class Battle
+        {
+            public static class Weapon
+            {
+                public static class Melee
+                {
+                    public static AudioClip Swing, Step;
+                }
+                public static class Range
+                {
+                    public static AudioClip Arrow;
+                    public static class Gun
+                    {
+                        public static AudioClip Small, Big;
+                    }
+                }
+            }
+        }
+    }
+    public static class Text
+    {
+        public static class Common
+        {
+            public static string
+                ReturnToGame,
+                GoToOption,
+                SaveGame,
+                LoadGame,
+                StartGame,
+                GoToDesktop,
+                Loading,
+                Back,
+                Language;
+        }
+
+        public static class System
+        {
+            public static string
+                ItemGet,
+                ItemPay,
+                QuestGet,
+                QuestClear,
+                CurrencyGet,
+                CurrencyPay;
+        }
+
+        public static class Inventory
+        {
+            public static string
+                Inven,
+                Looting,
+                Commerce,
+                Equipment,
+                Helmet,
+                Mask,
+                Body,
+                Backpack,
+                WeaponPri,
+                WeaponSec;
+        }
+
+        public static Dictionary<ConditionType, ConditionInfo> Conditions = new();
+
+        public static class Item
+        {
+            public static class Armor
+            {
+                public static string
+                    tPenatration, tImpact, tHeat;
+            }
+            public static class Bullet
+            {
+                public static string
+                    tBulletType, tAccelSpd;
+            }
+            public static class Damage
+            {
+                public static string
+                    tPwPene, tPwImp, tPwKnock, tDmgPene, tDmgImp;
+            }
+            public static class Weapon
+            {
+                public static string
+                    tAtkSpd, tHandType;
+            }
+            public static class WeaponRange
+            {
+                public static string
+                    tReload, tRange, tProjSpd, tBulletType;
+            }
+        }
+    }
+}
